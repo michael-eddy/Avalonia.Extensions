@@ -1,0 +1,191 @@
+<AeroWindow xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="250"
+        x:Class="Avalonia.Controls.Demo.MainWindow"
+        Title="Avalonia.Controls.Demo" CanResize="False">
+	<Panel>
+		<DockPanel VerticalAlignment="Stretch">
+			<ExperimentalAcrylicBorder DockPanel.Dock="Top" Height="142">
+				<ExperimentalAcrylicBorder.Material>
+					<ExperimentalAcrylicMaterial TintColor="Black" MaterialOpacity="0.85" TintOpacity="1" />
+				</ExperimentalAcrylicBorder.Material>
+			</ExperimentalAcrylicBorder>
+			<ExperimentalAcrylicBorder IsHitTestVisible="False">
+				<ExperimentalAcrylicBorder.Material>
+					<ExperimentalAcrylicMaterial TintColor="#222222" MaterialOpacity="0.85" TintOpacity="1" />
+				</ExperimentalAcrylicBorder.Material>
+				<TextBlock Text="{Binding #TabControl.SelectedItem.Header}" Margin="40 20" FontSize="32" FontWeight="Light" />
+			</ExperimentalAcrylicBorder>
+		</DockPanel>
+    <StackPanel Orientation="Vertical">
+      <TextBlock Text="杀杀杀杀" />
+      <Button>1234</Button>
+    </StackPanel>
+		<TabControl>
+			<TabItem Header="HorizontalItemsRepeater">
+				<StackPanel Orientation="Vertical">
+					<TextBlock Text="{Binding Message}" Foreground="Red"/>
+					<HorizontalItemsRepeater Items="{Binding Items}" Command="{Binding OnButtonClick}" Spacing="20">
+						<HorizontalItemsRepeater.ItemTemplate>
+							<DataTemplate>
+								<ItemsRepeaterContent CommandParameter="{Binding content}">
+									<TextBlock Text="{Binding content}" />
+								</ItemsRepeaterContent>
+							</DataTemplate>
+						</HorizontalItemsRepeater.ItemTemplate>
+					</HorizontalItemsRepeater>
+				</StackPanel>
+			</TabItem>
+			<TabItem Header="ListView">
+				<Grid>
+					<Grid.RowDefinitions>
+						<RowDefinition Height="auto" />
+						<RowDefinition Height="*" />
+					</Grid.RowDefinitions>
+					<TextBlock Grid.Row="0" Text="{Binding Message}" Foreground="Red"/>
+					<ListView Name="listView" Grid.Row="1" Items="{Binding Items}" Command="{Binding OnItemClick}">
+						<ListView.ItemTemplate>
+							<DataTemplate>
+								<TextBlock Text="{Binding content}" />
+							</DataTemplate>
+						</ListView.ItemTemplate>
+					</ListView>
+				</Grid>
+			</TabItem>
+			<TabItem Header="GridView">
+				<Grid>
+					<Grid.RowDefinitions>
+						<RowDefinition Height="auto" />
+						<RowDefinition Height="*" />
+					</Grid.RowDefinitions>
+					<TextBlock Grid.Row="0" Text="{Binding Message}" Foreground="Red"/>
+          <GridView Name="splitListView" Grid.Row="1" ColumnNum="2" Items="{Binding Items}" Command="{Binding OnItemClick}">
+            <GridView.ItemTemplate>
+              <DataTemplate>
+                <TextBlock Text="{Binding content}" />
+              </DataTemplate>
+            </GridView.ItemTemplate>
+          </GridView>
+				</Grid>
+			</TabItem>
+			<TabItem Header="Popup/Notify">
+				<Grid Name="PopupContent">
+					<Grid.RowDefinitions>
+						<RowDefinition Height=".2*"/>
+						<RowDefinition Height=".2*"/>
+					</Grid.RowDefinitions>
+					<StackPanel Orientation="Vertical" Grid.Row="1">
+						<Button Click="OnNotifyClick" CommandParameter="1">TopLeft / Horizontal</Button>
+						<Button Click="OnNotifyClick" CommandParameter="2">TopRight / Horizontal</Button>
+						<Button Click="OnNotifyClick" CommandParameter="3">BottomLeft / Horizontal</Button>
+						<Button Click="OnNotifyClick" CommandParameter="4">BottomRight / Horizontal</Button>
+						<Button Click="OnNotifyClick" CommandParameter="5">BottomLeft / Vertical</Button>
+						<Button Click="OnNotifyClick" CommandParameter="6">BottomRight / Vertical</Button>
+						<Button Click="OnNotifyPopupClick">Popup</Button>
+					</StackPanel>
+				</Grid>
+			</TabItem>
+			<TabItem Header="ImageBox">
+				<ListBox Name="imgList">
+					<ListBox.ItemTemplate>
+						<DataTemplate>
+							<ImageBox Source="{Binding Url}" />
+						</DataTemplate>
+					</ListBox.ItemTemplate>
+				</ListBox>
+			</TabItem>
+			<TabItem Header="Button">
+				<StackPanel Orientation="Vertical">
+					<HyperlinkButton Content="12345" />
+					<ImageContentButton Content="234567890" ImageSource="https://i0.hdslb.com/bfs/live/c8e6d780a3182c37a96e79f4ed26fcb576f2520a.png" />
+				</StackPanel>
+			</TabItem>
+			<TabItem Header="ExpandableView">
+				<ExpandableView>
+					<ExpandableView.PrimaryView>
+						<ClickableView>
+							<ImageBox Width="64" Source="https://i0.hdslb.com/bfs/live/c8e6d780a3182c37a96e79f4ed26fcb576f2520a.png" />
+						</ClickableView>
+					</ExpandableView.PrimaryView>
+					<ExpandableView.SecondView>
+						<StackPanel Orientation="Vertical">
+							<Label FontSize="20">111111111</Label>
+							<Label FontSize="20">111111111</Label>
+							<Label FontSize="20">111111111</Label>
+							<Label FontSize="20">111111111</Label>
+							<Label FontSize="20">111111111</Label>
+							<Label FontSize="20">111111111</Label>
+							<Label FontSize="20">111111111</Label>
+							<Label FontSize="20">111111111</Label>
+							<Label FontSize="20">111111111</Label>
+							<Label FontSize="20">111111111</Label>
+							<Label FontSize="20">111111111</Label>
+							<Label FontSize="20">111111111</Label>
+							<Label FontSize="20">111111111</Label>
+							<Label FontSize="20">111111111</Label>
+							<Label FontSize="20">111111111</Label>
+							<Label FontSize="20">111111111</Label>
+							<Label FontSize="20">111111111</Label>
+						</StackPanel>
+					</ExpandableView.SecondView>
+				</ExpandableView>
+			</TabItem>
+			<TabItem Header="ScrollView">
+				<ScrollView Name="scrollView">
+					<StackPanel Orientation="Vertical">
+						<Label>111111111</Label>
+						<Label>111111111</Label>
+						<Label>111111111</Label>
+						<Label>111111111</Label>
+						<Label>111111111</Label>
+						<Label>111111111</Label>
+						<Label>111111111</Label>
+						<Label>111111111</Label>
+						<Label>111111111</Label>
+						<Label>111111111</Label>
+						<Label>111111111</Label>
+						<Label>111111111</Label>
+						<Label>111111111</Label>
+					</StackPanel>
+				</ScrollView>
+			</TabItem>
+			<TabItem Header="CircleImage">
+				<StackPanel Orientation="Vertical">
+					<CircleImage Width="64" Source="https://avatars.githubusercontent.com/u/22364738" />
+				</StackPanel>
+			</TabItem>
+			<TabItem Header="ProgressRing">
+				<StackPanel Orientation="Vertical">
+					<ProgressRing Name="progressRing" />
+					<Button Name="btnStart">开始</Button>
+				</StackPanel>
+			</TabItem>
+			<TabItem Header="Label">
+				<StackPanel Orientation="Vertical">
+					<RunLabel Foreground="White" FontSize="18">
+						<Run Content="111" />
+						<Run Content="222" />
+						<Run Content="333" />
+					</RunLabel>
+					<SymbolIcon Glyph="&#xE700;" />
+					<TipLabel Content="123456" Padding="8" Background="Red" Foreground="White" />
+					<TipLabel Foreground="Red" Content="123456" Padding="8" Background="White" BorderBrush="Red" BorderThickness="1" />
+				</StackPanel>
+			</TabItem>
+			<TabItem Header="PopupMenu">
+				<StackPanel Orientation="Vertical">
+					<Button Name="btnShow" Content="纯文本" />
+					<Button Name="btnShow2" Content="自定义" />
+				</StackPanel>
+			</TabItem>
+			<TabItem Header="Chinese Textbox">
+				<StackPanel Orientation="Vertical">
+					<TextBox Text="山川异域 不共戴天" />
+					<TextPresenter Text="山川异域 不共戴天" />
+				</StackPanel>
+			</TabItem>
+		</TabControl>
+	</Panel>
+</AeroWindow>

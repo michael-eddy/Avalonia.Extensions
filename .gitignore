@@ -1,0 +1,8 @@
+.vs
+bin
+obj
+Avalonia.Extensions.Chinese/.DS_Store
+Avalonia.Extensions.Controls/.DS_Store
+Avalonia.Extensions.Controls/Controls/.DS_Store
+Avalonia.Extensions.Controls/Styles/.DS_Store
+.DS_Store

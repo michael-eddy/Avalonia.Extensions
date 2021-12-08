@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <Version>1.0.6</Version>
+        <TargetFramework>netstandard2.1</TargetFramework>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
+        <PackageProjectUrl>https://github.com/dove-team/Avalonia.Extensions</PackageProjectUrl>
+    </PropertyGroup>
+    <ItemGroup>
+        <AvaloniaResource Include="Assets\**" />
+        <None Include="..\.editorconfig" Link=".editorconfig" />
+    </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="Avalonia" Version="0.10.10" />
+        <PackageReference Include="CHSPinYinConv" Version="1.0.0" />
+    </ItemGroup>
+</Project>
