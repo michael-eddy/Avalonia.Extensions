@@ -1,19 +1,18 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <Version>1.4.8</Version>
+        <Version>1.5.0</Version>
         <Authors>michael_eddy</Authors>
         <LangVersion>latest</LangVersion>
-        <AssemblyVersion>1.4.6.0</AssemblyVersion>
         <Product>Avalonia.Extensions.Controls</Product>
         <RootNamespace>Avalonia.Extensions</RootNamespace>
         <TargetFramework>netstandard2.1</TargetFramework>
         <EnforceCodeStyleInBuild>false</EnforceCodeStyleInBuild>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
         <UserSecretsId>214483ab-ede2-45c7-ac37-b353540601d8</UserSecretsId>
-        <PackageProjectUrl>https://github.com/dove-team/Avalonia.Extensions</PackageProjectUrl>
+        <PackageProjectUrl>https://github.com/michael-eddy/Avalonia.Extensions</PackageProjectUrl>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-        <DocumentationFile></DocumentationFile>
+        <DocumentationFile />
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     </PropertyGroup>
     <ItemGroup>
