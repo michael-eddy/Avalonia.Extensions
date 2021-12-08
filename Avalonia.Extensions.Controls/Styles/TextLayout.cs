@@ -78,8 +78,8 @@ namespace Avalonia.Extensions.Styles
 		public double MaxWidth { get; }
 		public double MaxHeight { get; }
 		public int MaxLines { get; }
-		public IReadOnlyList<TextLine> TextLines { get; private set; }
 		public Size Size { get; private set; }
+		public IReadOnlyList<TextLine> TextLines { get; private set; }
 		internal TextLayout(string text, Typeface typeface, double fontSize, IBrush foreground, TextAlignment textAlignment = TextAlignment.Left, TextWrapping textWrapping = TextWrapping.NoWrap, TextTrimming textTrimming = TextTrimming.None, TextDecorationCollection textDecorations = null, double maxWidth = double.PositiveInfinity, double maxHeight = double.PositiveInfinity, double lineHeight = double.NaN, int maxLines = 0, IReadOnlyList<ValueSpan<TextRunProperties>> textStyleOverrides = null)
 		{
 			_text = (string.IsNullOrEmpty(text) ? default : new ReadOnlySlice<char>(text.AsMemory()));
@@ -120,9 +120,9 @@ namespace Avalonia.Extensions.Styles
 			TextRunProperties properties = _paragraphProperties.DefaultTextRunProperties;
 			GlyphRun glyphRun = TextShaper.Current.ShapeText(new ReadOnlySlice<char>(s_empty, startingIndex, 1), properties.Typeface, properties.FontRenderingEmSize, properties.CultureInfo);
 			List<ShapedTextCharacters> textRuns = new List<ShapedTextCharacters>
-		{
-			new ShapedTextCharacters(glyphRun, _paragraphProperties.DefaultTextRunProperties)
-		};
+			{
+				new ShapedTextCharacters(glyphRun, _paragraphProperties.DefaultTextRunProperties)
+			};
 			object[] parameters = new object[] { textRuns, TextLineMetrics.Create(textRuns, new TextRange(startingIndex, 1), MaxWidth, _paragraphProperties) };
 			return "Avalonia.Media.TextFormatting.TextLineImpl".CreateInstance<TextLine>(parameters);
 		}

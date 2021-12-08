@@ -1,8 +1,5 @@
-﻿using Avalonia.Controls;
-using Avalonia.Extensions.Media;
+﻿using Avalonia.Extensions.Media;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Avalonia.Extensions.Threading
 {

@@ -486,8 +486,9 @@ namespace Avalonia.Extensions.Chinese.PinYin
         private const int lastOfOneLevelChCode = -10247;
         private static readonly string[] CustomChinese = { "行" };
         private static readonly string[] CustomPinYin = { "Hang" };
+        /// <summary>
         /// 取拼音第一个字段
-        /// <param name="ch">
+        /// </summary>
         public static string GetFirst(char ch)
         {
             var rs = Get(ch);
@@ -495,8 +496,9 @@ namespace Avalonia.Extensions.Chinese.PinYin
                 rs = rs.Substring(0, 1);
             return rs;
         }
+        /// <summary>
         /// 取拼音第一个字段
-        /// <param name="str">
+        /// </summary>
         public static string GetFirst(string str)
         {
             if (string.IsNullOrEmpty(str))
@@ -507,8 +509,9 @@ namespace Avalonia.Extensions.Chinese.PinYin
                 sb.Append(GetFirst(chs[i]));
             return sb.ToString();
         }
+        /// <summary>
         /// 获取单字拼音
-        /// <param name="ch">
+        /// </summary>
         public static string Get(char ch)
         {
             int index = Array.IndexOf(CustomChinese, ch.ToString());
@@ -546,9 +549,11 @@ namespace Avalonia.Extensions.Chinese.PinYin
             }
             return string.Empty;
         }
+        /// <summary>
         /// 把汉字转换成拼音(全拼)
-        /// <param name="str">汉字字符串
-        /// 转换后的拼音(全拼)字符串
+        /// </summary>
+        /// <param name="str">汉字字符串</param>
+        /// <returns>转换后的拼音(全拼)字符串</returns>
         public static string Get(string str)
         {
             if (string.IsNullOrEmpty(str)) return string.Empty;

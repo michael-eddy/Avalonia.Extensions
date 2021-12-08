@@ -33,10 +33,6 @@ namespace Avalonia.Extensions.Controls
                 }
             }
         }
-        internal static string TypeName(this IControl control)
-        {
-            return control.GetType().Name;
-        }
         internal static bool AreClose(Size size1, Size size2)
         {
             return AreClose(size1.Width, size2.Width) && AreClose(size1.Height, size2.Height);
@@ -73,11 +69,9 @@ namespace Avalonia.Extensions.Controls
             try
             {
                 var type = control.GetType();
-                MethodInfo methodInfo = type.GetMethod(methodName, BindingFlags.NonPublic
-                    | BindingFlags.Instance);
+                MethodInfo methodInfo = type.GetMethod(methodName, BindingFlags.NonPublic | BindingFlags.Instance);
                 if (methodInfo == null && type.BaseType != null)
-                    methodInfo = type.BaseType.GetMethod(methodName, BindingFlags.NonPublic
-                    | BindingFlags.Instance);
+                    methodInfo = type.BaseType.GetMethod(methodName, BindingFlags.NonPublic | BindingFlags.Instance);
                 return methodInfo?.Invoke(control, parameters);
             }
             catch (Exception ex)

@@ -22,11 +22,11 @@ namespace Avalonia.Extensions.Controls
             {
                 try
                 {
-                    var contols = default(List<Type>);
+                    var contols = default(IEnumerable<Type>);
                     if (supportContols == null || supportContols.Count() == 0)
-                        contols = new List<Type> { typeof(TextBox), typeof(TextPresenter) };
+                        contols = new[] { typeof(TextBox), typeof(TextPresenter) };
                     else
-                        contols = new List<Type>(supportContols);
+                        contols = supportContols;
                     ApplyStyle(contols);
                 }
                 catch (Exception ex)
