@@ -1,4 +1,5 @@
 ﻿using Avalonia.Controls.Shapes;
+using Avalonia.Extensions.Media;
 using Avalonia.Extensions.Threading;
 using Avalonia.Interactivity;
 using Avalonia.Media;
@@ -6,12 +7,13 @@ using Avalonia.Media.Imaging;
 using Avalonia.Metadata;
 using Avalonia.Threading;
 using System;
+using System.IO;
 
 namespace Avalonia.Extensions.Controls
 {
-    public sealed class CircleImage : Ellipse
+    public sealed class CircleImage : Ellipse, IBitmapSource
     {
-        private DownloadThread Task { get; }
+        private BitmapThread Task { get; }
         /// <summary>
         /// Defines the <see cref="Source"/> property.
         /// </summary>
@@ -34,7 +36,7 @@ namespace Avalonia.Extensions.Controls
         }
         public CircleImage() : base()
         {
-            Task = new DownloadThread();
+            Task = new BitmapThread(this);
             SourceProperty.Changed.AddClassHandler<CircleImage>(OnSourceChange);
             ImageSourceProperty.Changed.AddClassHandler<CircleImage>(OnImageSourceProperty);
         }
@@ -47,45 +49,29 @@ namespace Avalonia.Extensions.Controls
                 SetSize(bitmap.Size);
             }
         }
+        public void SetBitmapSource(Stream stream)
+        {
+            if (stream != null)
+            {
+                var bitmap = new Bitmap(stream);
+                Fill = new ImageBrush { Source = bitmap };
+                DrawAgain();
+                SetSize(bitmap.Size);
+            }
+        }
         private void OnSourceChange(object sender, AvaloniaPropertyChangedEventArgs e)
         {
             if (e.NewValue is Uri uri)
             {
                 Dispatcher.UIThread.InvokeAsync(() =>
                 {
-                    switch (uri.Scheme)
+                    if (!Task.Create(uri, out string message))
                     {
-                        case "http":
-                        case "https":
-                            Task.Create(uri, (result) =>
-                            {
-                                if (result.Stream != null)
-                                {
-                                    var bitmap = new Bitmap(result.Stream);
-                                    Fill = new ImageBrush { Source = bitmap };
-                                    DrawAgain();
-                                    SetSize(bitmap.Size);
-                                }
-                            });
-                            break;
-                        case "avares":
-                            {
-                                var assets = Core.Instance.AssetLoader;
-                                using var bitmap = new Bitmap(assets.Open(uri));
-                                Fill = new ImageBrush { Source = bitmap };
-                                DrawAgain();
-                                SetSize(bitmap.Size);
-                                break;
-                            }
-                        default:
-                            {
-                                FailedMessage = "unsupport URI scheme.only support HTTP/HTTPS or avares://";
-                                var @event = new RoutedEventArgs(FailedEvent);
-                                RaiseEvent(@event);
-                                if (!@event.Handled)
-                                    @event.Handled = true;
-                                break;
-                            }
+                        FailedMessage = message;
+                        var @event = new RoutedEventArgs(FailedEvent);
+                        RaiseEvent(@event);
+                        if (!@event.Handled)
+                            @event.Handled = true;
                     }
                 });
             }

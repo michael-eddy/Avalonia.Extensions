@@ -24,11 +24,11 @@ namespace Avalonia.Extensions.Controls
         /// original image height
         /// </summary>
         public double ImageHeight { get; private set; }
-        private DownloadThread Task { get; }
+        private BitmapThread Task { get; }
         private Uri _source;
         public ImageBox() : base()
         {
-            Task = new DownloadThread();
+            Task = new BitmapThread(this);
         }
         /// <summary>
         /// error message if loading failed
@@ -53,87 +53,46 @@ namespace Avalonia.Extensions.Controls
                     LoadBitmap(value);
             }
         }
-        public void SetBitmapSource(Bitmap bitmap)
+        public void SetBitmapSource(Stream stream)
         {
-            base.Source = bitmap;
+            try
+            {
+                if (stream != null)
+                {
+                    using var bitmap = new Bitmap(stream);
+                    var width = Width.ToInt32();
+                    if (double.IsNaN(Width) || width == 0)
+                    {
+                        Width = ImageWidth = bitmap.PixelSize.Width;
+                        Height = ImageHeight = bitmap.PixelSize.Height;
+                    }
+                    else
+                    {
+                        ImageWidth = bitmap.PixelSize.Width;
+                        ImageHeight = bitmap.PixelSize.Height;
+                    }
+                    base.Source = bitmap;
+                }
+            }
+            catch { }
         }
         private void LoadBitmap(Uri uri)
         {
             Dispatcher.UIThread.InvokeAsync(() =>
             {
-                switch (uri.Scheme)
+                try
                 {
-                    case "http":
-                    case "https":
-                        {
-                            Task.Create(uri, OnDrawBitmap);
-                            break;
-                        }
-                    case "avares":
-                        {
-                            using var stream = Core.Instance.AssetLoader.Open(uri);
-                            SetSource(stream);
-                            break;
-                        }
-                    default:
-                        {
-                            FailedMessage = "unsupport URI scheme.only support HTTP/HTTPS or avares://";
-                            var @event = new RoutedEventArgs(FailedEvent);
-                            RaiseEvent(@event);
-                            if (!@event.Handled)
-                                @event.Handled = true;
-                            break;
-                        }
+                    if (!Task.Create(uri, out string message))
+                    {
+                        FailedMessage = message;
+                        var @event = new RoutedEventArgs(FailedEvent);
+                        RaiseEvent(@event);
+                        if (!@event.Handled)
+                            @event.Handled = true;
+                    }
                 }
+                catch { }
             });
-        }
-        private void SetSource(Stream stream)
-        {
-            if (stream != null)
-            {
-                using var bitmap = new Bitmap(stream);
-                var width = Width.ToInt32();
-                if (double.IsNaN(Width) || width == 0)
-                {
-                    Width = ImageWidth = bitmap.PixelSize.Width;
-                    Height = ImageHeight = bitmap.PixelSize.Height;
-                }
-                else
-                {
-                    ImageWidth = bitmap.PixelSize.Width;
-                    ImageHeight = bitmap.PixelSize.Height;
-                }
-                base.Source = bitmap;
-            }
-        }
-        private void OnDrawBitmap(DownloadThread.Result result)
-        {
-            if (result.Success)
-            {
-                Bitmap bitmap;
-                var width = Width.ToInt32();
-                if (double.IsNaN(Width) || width == 0)
-                {
-                    bitmap = new Bitmap(result.Stream);
-                    Width = ImageWidth = bitmap.PixelSize.Width;
-                    Height = ImageHeight = bitmap.PixelSize.Height;
-                }
-                else
-                {
-                    bitmap = Bitmap.DecodeToWidth(result.Stream, width);
-                    ImageWidth = bitmap.PixelSize.Width;
-                    ImageHeight = bitmap.PixelSize.Height;
-                }
-                base.Source = bitmap;
-            }
-            else
-            {
-                FailedMessage = result.Message;
-                var @event = new RoutedEventArgs(FailedEvent);
-                RaiseEvent(@event);
-                if (!@event.Handled)
-                    @event.Handled = true;
-            }
         }
         /// <summary>
         /// Defines the <see cref="Failed"/> property.
