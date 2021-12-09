@@ -296,10 +296,9 @@ namespace Avalonia.Extensions.Controls
         private static void IsDefaultChanged(AvaloniaPropertyChangedEventArgs e)
         {
             var content = e.Sender as ClickableView;
-            var isDefault = (bool)e.NewValue;
             if (content?.VisualRoot is IInputElement inputRoot)
             {
-                if (isDefault)
+                if ((bool)e.NewValue)
                     content.ListenForDefault(inputRoot);
                 else
                     content.StopListeningForDefault(inputRoot);
@@ -312,10 +311,9 @@ namespace Avalonia.Extensions.Controls
         private static void IsCancelChanged(AvaloniaPropertyChangedEventArgs e)
         {
             var content = e.Sender as ClickableView;
-            var isCancel = (bool)e.NewValue;
             if (content?.VisualRoot is IInputElement inputRoot)
             {
-                if (isCancel)
+                if ((bool)e.NewValue)
                     content.ListenForCancel(inputRoot);
                 else
                     content.StopListeningForCancel(inputRoot);

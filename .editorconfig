@@ -1,12 +1,14 @@
 ﻿[*.cs]
 dotnet_diagnostic.CS8618.severity = none
 dotnet_diagnostic.CS8632.severity = none
-dotnet_diagnostic.IDE0011.severity = none
 dotnet_diagnostic.IDE0008.severity = none
-dotnet_diagnostic.IDE0058.severity = none
-dotnet_diagnostic.IDE0046.severity = none
 dotnet_diagnostic.IDE0010.severity = none
-dotnet_diagnostic.IDE0048.severity = none
-dotnet_diagnostic.IDE0045.severity = none
-dotnet_diagnostic.IDE0090.severity = none
+dotnet_diagnostic.IDE0011.severity = none
+dotnet_diagnostic.IDE0017.severity = none
 dotnet_diagnostic.IDE0022.severity = none
+dotnet_diagnostic.IDE0045.severity = none
+dotnet_diagnostic.IDE0046.severity = none
+dotnet_diagnostic.IDE0048.severity = none
+dotnet_diagnostic.IDE0058.severity = none
+dotnet_diagnostic.IDE0090.severity = none
+dotnet_diagnostic.IDE0130.severity = none

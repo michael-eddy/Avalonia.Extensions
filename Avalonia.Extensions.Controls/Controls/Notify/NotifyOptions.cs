@@ -25,9 +25,9 @@
             MoveDelay = moveDelay;
         }
         public Size Size { get; set; }
-        public ShowPosition Position { get; set; }
         public int MovePixel { get; set; } = 1;
         public int MoveDelay { get; set; } = 20;
+        public ShowPosition Position { get; set; }
         public ScollOrientation ScollOrientation { get; set; }
         public bool IsVaidate => !((Position == ShowPosition.TopLeft || Position == ShowPosition.TopRight)
                     && ScollOrientation == ScollOrientation.Vertical);

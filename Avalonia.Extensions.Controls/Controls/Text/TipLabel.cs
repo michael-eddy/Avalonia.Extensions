@@ -25,18 +25,18 @@ namespace Avalonia.Extensions.Controls
             TextBlock = new TextBlock
             {
                 ZIndex = 1,
-                Text = this.Content,
-                Foreground = this.Foreground,
+                Text = Content,
+                Foreground = Foreground,
                 VerticalAlignment = Layout.VerticalAlignment.Center,
                 HorizontalAlignment = Layout.HorizontalAlignment.Center
             };
             DockPanel = new Border
             {
-                Padding = this.Padding,
-                Background = this.Background,
-                BorderBrush = this.BorderBrush,
-                CornerRadius = this.CornerRadius,
-                BorderThickness = this.BorderThickness
+                Padding = Padding,
+                Background = Background,
+                BorderBrush = BorderBrush,
+                CornerRadius = CornerRadius,
+                BorderThickness = BorderThickness
             };
             DockPanel.Child = TextBlock;
             Children.Add(DockPanel);

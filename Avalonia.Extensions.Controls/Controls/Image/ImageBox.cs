@@ -53,9 +53,9 @@ namespace Avalonia.Extensions.Controls
                     LoadBitmap(value);
             }
         }
-        public Bitmap BitmapSource
+        public void SetBitmapSource(Bitmap bitmap)
         {
-            set => base.Source = value;
+            base.Source = bitmap;
         }
         private void LoadBitmap(Uri uri)
         {

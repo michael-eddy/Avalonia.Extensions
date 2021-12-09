@@ -16,8 +16,8 @@ namespace Avalonia.Extensions.Controls
             ShowInTaskbar = false;
             Thread = new AnimationThread(this);
             Thread.DisposeEvent += Thread_DisposeEvent;
-            Options = new NotifyOptions(ShowPosition.BottomRight);
             SystemDecorations = SystemDecorations.None;
+            Options = new NotifyOptions(ShowPosition.BottomRight);
         }
         private void Thread_DisposeEvent(object sender, EventArgs e)
         {
@@ -54,8 +54,7 @@ namespace Avalonia.Extensions.Controls
                 {
                     case ShowPosition.BottomLeft:
                         {
-                            var top = sh - h;
-                            Position = new PixelPoint(0, top);
+                            Position = new PixelPoint(0, sh - h);
                             endPoint = Options.ScollOrientation == ScollOrientation.Vertical ? new PixelPoint(0, 0) : new PixelPoint(-w, 0);
                             break;
                         }
@@ -74,8 +73,7 @@ namespace Avalonia.Extensions.Controls
                         }
                     case ShowPosition.TopRight:
                         {
-                            var left = sw - w;
-                            Position = new PixelPoint(left, 0);
+                            Position = new PixelPoint(sw - w, 0);
                             endPoint = new PixelPoint(sw, 0);
                             break;
                         }

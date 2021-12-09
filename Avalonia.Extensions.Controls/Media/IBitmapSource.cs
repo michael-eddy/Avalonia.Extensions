@@ -6,6 +6,6 @@ namespace Avalonia.Extensions.Media
     public interface IBitmapSource
     {
         Uri Source { get; set; }
-        Bitmap BitmapSource { set; }
+        void SetBitmapSource(Bitmap bitmap);
     }
 }

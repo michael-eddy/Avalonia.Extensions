@@ -205,7 +205,8 @@ namespace Avalonia.Extensions.Controls
             Defaultstyle = newView?.DefaultStyleKey;
         }
         public ViewBase PreviousView { get; private set; }
-        protected override IItemContainerGenerator CreateItemContainerGenerator() => new ItemsGenerator(this, ContentControl.ContentProperty, ContentControl.ContentTemplateProperty);
+        protected override IItemContainerGenerator CreateItemContainerGenerator() =>
+            new ItemsGenerator(this, ContentControl.ContentProperty, ContentControl.ContentTemplateProperty);
         /// <summary>
         /// handle clild item click event,
         /// trigger the <seealso cref="Command"/> and <seealso cref="ItemClickEvent"/>
@@ -219,13 +220,13 @@ namespace Avalonia.Extensions.Controls
                 MouseClickButton = mouseButton;
                 Dispatcher.UIThread.InvokeAsync(() =>
                 {
-                    var @event = new ViewRoutedEventArgs(ItemClickEvent, mouseButton, control);
-                    RaiseEvent(@event);
+                    var args = new ViewRoutedEventArgs(ItemClickEvent, mouseButton, control);
+                    RaiseEvent(args);
                     if (control is ListViewItem viewCell)
                     {
                         SelectedItem = viewCell;
-                        if (!@event.Handled)
-                            @event.Handled = true;
+                        if (!args.Handled)
+                            args.Handled = true;
                     }
                 });
             }

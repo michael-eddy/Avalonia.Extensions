@@ -54,17 +54,17 @@ namespace Avalonia.Extensions.Controls
             Height = 60;
             Topmost = true;
             Focusable = true;
-            ListBox = new ListView();
             ShowInTaskbar = false;
-            SystemDecorations = SystemDecorations.None;
+            ListBox = new ListView();
             ListBox.SizeChange += ListBox_SizeChange;
+            SystemDecorations = SystemDecorations.None;
             ListBox.VirtualizationMode = ItemVirtualizationMode.None;
             ItemsProperty.Changed.AddClassHandler<PopupMenu>(OnItemsChange);
             ItemTemplateProperty.Changed.AddClassHandler<PopupMenu>(OnItemTemplateChanged);
         }
         private void ListBox_SizeChange(object sender, SizeRoutedEventArgs e)
         {
-            this.Width = e.Width;
+            Width = e.Width;
         }
         private void OnItemTemplateChanged(object sender, AvaloniaPropertyChangedEventArgs e)
         {

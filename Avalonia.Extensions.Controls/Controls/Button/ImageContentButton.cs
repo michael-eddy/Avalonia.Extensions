@@ -36,7 +36,7 @@ namespace Avalonia.Extensions.Controls
             stackPanel.Children.Add(image);
             text = new TextBlock
             {
-                Text = this.Content,
+                Text = Content,
                 VerticalAlignment = Layout.VerticalAlignment.Center
             };
             stackPanel.Children.Add(text);
