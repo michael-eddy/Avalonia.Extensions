@@ -8,7 +8,8 @@ namespace Avalonia.Extensions.Controls
     public class ItemsGenerator : ItemContainerGenerator
     {
         private string ChildItem { get; }
-        public ItemsGenerator(IControl owner, AvaloniaProperty contentProperty, AvaloniaProperty contentTemplateProperty) : base(owner)
+        public ItemsGenerator(IControl owner, AvaloniaProperty contentProperty, AvaloniaProperty contentTemplateProperty)
+            : base(owner)
         {
             Contract.Requires<ArgumentNullException>(owner != null);
             Contract.Requires<ArgumentNullException>(contentProperty != null);
@@ -36,12 +37,11 @@ namespace Avalonia.Extensions.Controls
             }
             else
             {
-                var result = ChildItem.Equals("ListViewItem") ? new ListViewItem() :
-                    new GridViewItem();
+                var result = ChildItem.Equals("ListViewItem") ? new ListViewItem() : new GridViewItem();
                 if (ContentTemplateProperty != null)
                     result.SetValue(ContentTemplateProperty, ItemTemplate, BindingPriority.Style);
                 result.SetValue(ContentProperty, item, BindingPriority.Style);
-                if (!(item is IControl))
+                if (item is not IControl)
                     result.DataContext = item;
                 return result;
             }
@@ -52,7 +52,7 @@ namespace Avalonia.Extensions.Controls
             if (container == null)
                 throw new IndexOutOfRangeException("Could not recycle container: not materialized.");
             container.SetValue(ContentProperty, item);
-            if (!(item is IControl))
+            if (item is not IControl)
                 container.DataContext = item;
             var info = MoveContainer(oldIndex, newIndex, item);
             RaiseRecycled(new ItemContainerEventArgs(info));

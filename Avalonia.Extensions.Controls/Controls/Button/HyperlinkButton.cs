@@ -22,8 +22,8 @@ namespace Avalonia.Extensions.Controls
         private void Initialize()
         {
             TextContent = new TextBlock();
-            TextContent.Foreground = this.Foreground;
-            TextContent.Background = this.Background;
+            TextContent.Foreground = Foreground;
+            TextContent.Background = Background;
             base.Content = TextContent;
         }
         private void OnContentChange(object sender, AvaloniaPropertyChangedEventArgs e)
@@ -32,7 +32,7 @@ namespace Avalonia.Extensions.Controls
             {
                 TextContent.Text = chars;
                 TextContent.InvalidateMeasure();
-                this.InvalidateMeasure();
+                InvalidateMeasure();
             }
         }
         public new string Content

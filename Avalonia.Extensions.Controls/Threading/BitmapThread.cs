@@ -1,47 +1,66 @@
-﻿using Avalonia.Controls;
+﻿using Avalonia.Extensions.Controls;
 using Avalonia.Extensions.Media;
 using System;
-using System.Collections.Generic;
-using System.Text;
+using System.Net.Http;
 
 namespace Avalonia.Extensions.Threading
 {
-    internal class BitmapThread : IDisposable
+    internal sealed class BitmapThread
     {
-        private int HashCode;
+        private bool Loading = false;
         private IBitmapSource Owner { get; }
-        public BitmapThread(IBitmapSource source)
+        private HttpClient HttpClient { get; }
+        public BitmapThread(IBitmapSource owner)
         {
-            Owner = source;
+            Owner = owner;
+            HttpClient = Core.Instance.GetClient();
         }
-        public void Update()
+        public bool Create(Uri uri, out string message)
         {
-            if (Owner.Source != null)
+            message = string.Empty;
+            switch (uri.Scheme)
             {
-                var hashCode = Owner.Source.GetHashCode();
-                if (HashCode != hashCode)
-                {
-                    HashCode = hashCode;
-                    switch (Owner.Source.Scheme)
+                case "http":
+                case "https":
                     {
-                        case "avares":
-                            {
-
-                                break;
-                            }
-                        case "http":
-                        case "https":
-                            {
-
-                                break;
-                            }
+                        Create(uri.AbsoluteUri);
+                        return true;
                     }
-                }
+                case "avares":
+                    {
+                        try
+                        {
+                            var assets = Core.Instance.AssetLoader;
+                            Owner.SetBitmapSource(assets.Open(uri));
+                        }
+                        catch { }
+                        return true;
+                    }
+                default:
+                    {
+                        message = "unsupport URI scheme.only support HTTP/HTTPS or avares://";
+                        return false;
+                    }
             }
         }
-        public void Dispose()
+        private async void Create(string url)
         {
-
+            if (!Loading)
+            {
+                Loading = true;
+                try
+                {
+                    if (!string.IsNullOrEmpty(url))
+                    {
+                        HttpResponseMessage hr = await HttpClient.GetAsync(url);
+                        hr.EnsureSuccessStatusCode();
+                        var stream = await hr.Content.ReadAsStreamAsync();
+                        Owner.SetBitmapSource(stream);
+                    }
+                }
+                catch { }
+                Loading = false;
+            }
         }
     }
 }

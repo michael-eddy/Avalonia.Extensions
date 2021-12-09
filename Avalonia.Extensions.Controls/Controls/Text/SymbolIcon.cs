@@ -8,9 +8,6 @@ using System;
 
 namespace Avalonia.Extensions.Controls
 {
-    /// <summary>
-    /// https://github.com/AvaloniaUI/Avalonia/tree/feature/icons/src
-    /// </summary>
     public class SymbolIcon : TemplatedControl, IStyling
     {
         public static readonly StyledProperty<string> GlyphProperty =

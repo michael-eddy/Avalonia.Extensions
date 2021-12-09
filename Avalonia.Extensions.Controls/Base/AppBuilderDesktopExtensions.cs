@@ -40,7 +40,7 @@ namespace Avalonia.Extensions.Controls
         {
             if (Application.Current.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
             {
-                if (desktop.Windows.Count(x => x is MessageBox) == desktop.Windows.Count)
+                if (desktop.Windows.Count(win => win is MessageBox || win is PopupMenu || win is PopupToast || win is NotifyWindow) == desktop.Windows.Count)
                     desktop.Shutdown();
             }
             Core.Instance.Dispose();
@@ -50,8 +50,7 @@ namespace Avalonia.Extensions.Controls
             if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
                 var style = new Style();
-                var selector = default(Selector).OfType(typeof(SymbolIcon));
-                style.Selector = selector;
+                style.Selector = default(Selector).OfType(typeof(SymbolIcon));
                 style.Setters.Add(new Setter(TemplatedControl.FontFamilyProperty,
                     new FontFamily("avares://Avalonia.Extensions.Controls/Assets/Fonts#SegMDL2")));
                 Application.Current.Styles.Add(style);

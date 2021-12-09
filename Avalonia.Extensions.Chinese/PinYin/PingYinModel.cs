@@ -6,9 +6,9 @@ namespace Avalonia.Extensions.Chinese.PinYin
     {
         public PingYinModel()
         {
-            TotalPingYin = new List<string>();
-            FirstPingYin = new List<string>();
             ListPinYin = new List<string>();
+            FirstPingYin = new List<string>();
+            TotalPingYin = new List<string>();
         }
         /// <summary>
         /// 全拼

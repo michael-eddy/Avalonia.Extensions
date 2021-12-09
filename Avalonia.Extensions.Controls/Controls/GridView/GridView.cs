@@ -102,7 +102,6 @@ namespace Avalonia.Extensions.Controls
             ChildVerticalContentAlignmentProperty.Changed.AddClassHandler<GridView>(OnChildVerticalContentAlignmentChange);
             ChildHorizontalContentAlignmentProperty.Changed.AddClassHandler<GridView>(OnChildHorizontalContentAlignmentChange);
         }
-
         private void SetColumnStyle()
         {
             try
@@ -116,7 +115,6 @@ namespace Avalonia.Extensions.Controls
                 SetColumnStyle();
             }
         }
-
         private void OnColumnNumChanged(object sender, AvaloniaPropertyChangedEventArgs e)
         {
             if (e.NewValue is int value)

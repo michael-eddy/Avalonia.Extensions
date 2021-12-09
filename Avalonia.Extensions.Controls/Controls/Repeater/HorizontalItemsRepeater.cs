@@ -117,13 +117,13 @@ namespace Avalonia.Extensions.Controls
             {
                 Dispatcher.UIThread.InvokeAsync(() =>
                 {
-                    var @event = new ViewRoutedEventArgs(ItemClickEvent, mouseButton);
+                    var args = new ViewRoutedEventArgs(ItemClickEvent, mouseButton);
                     SelectedItem = itemsRepeaterContent;
-                    RaiseEvent(@event);
-                    if (!@event.Handled && Command?.CanExecute(itemsRepeaterContent.CommandParameter) == true)
+                    RaiseEvent(args);
+                    if (!args.Handled && Command?.CanExecute(itemsRepeaterContent.CommandParameter) == true)
                     {
                         Command.Execute(itemsRepeaterContent.CommandParameter);
-                        @event.Handled = true;
+                        args.Handled = true;
                     }
                 });
             }

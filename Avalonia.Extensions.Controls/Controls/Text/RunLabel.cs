@@ -46,7 +46,7 @@ namespace Avalonia.Extensions.Controls
 		private string _text;
 		private Size _constraint;
 		private TextLayout _textLayout;
-		private AvaloniaList<string> _contents = new AvaloniaList<string>();
+		private readonly AvaloniaList<string> _contents = new AvaloniaList<string>();
 		Type IStyleable.StyleKey => typeof(TextBlock);
 		public TextLayout TextLayout => _textLayout ??= CreateTextLayout(_constraint, _text);
 		public Thickness Padding
