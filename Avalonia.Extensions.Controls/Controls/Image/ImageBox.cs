@@ -53,25 +53,28 @@ namespace Avalonia.Extensions.Controls
                     LoadBitmap(value);
             }
         }
+        public Bitmap Bitmap { get; set; }
         public void SetBitmapSource(Stream stream)
         {
             try
             {
+                if (Bitmap != null)
+                    Bitmap.Dispose();
                 if (stream != null)
                 {
-                    using var bitmap = new Bitmap(stream);
+                    Bitmap = new Bitmap(stream);
                     var width = Width.ToInt32();
                     if (double.IsNaN(Width) || width == 0)
                     {
-                        Width = ImageWidth = bitmap.PixelSize.Width;
-                        Height = ImageHeight = bitmap.PixelSize.Height;
+                        Width = ImageWidth = Bitmap.PixelSize.Width;
+                        Height = ImageHeight = Bitmap.PixelSize.Height;
                     }
                     else
                     {
-                        ImageWidth = bitmap.PixelSize.Width;
-                        ImageHeight = bitmap.PixelSize.Height;
+                        ImageWidth = Bitmap.PixelSize.Width;
+                        ImageHeight = Bitmap.PixelSize.Height;
                     }
-                    base.Source = bitmap;
+                    base.Source = Bitmap;
                 }
             }
             catch { }

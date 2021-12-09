@@ -1,4 +1,6 @@
 using Avalonia.Extensions.Controls;
+using Avalonia.Threading;
+using ReactiveUI;
 
 namespace Avalonia.Controls.Demo
 {
@@ -6,6 +8,7 @@ namespace Avalonia.Controls.Demo
     {
         public static void Main(string[] args)
         {
+            RxApp.MainThreadScheduler = AvaloniaScheduler.Instance;
             AppBuilder.Configure<App>()
                     .UsePlatformDetect()
                     .UseDoveExtensions()

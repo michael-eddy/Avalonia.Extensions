@@ -49,14 +49,17 @@ namespace Avalonia.Extensions.Controls
                 SetSize(bitmap.Size);
             }
         }
+        public Bitmap Bitmap { get; set; }
         public void SetBitmapSource(Stream stream)
         {
+            if (Bitmap != null)
+                Bitmap.Dispose();
             if (stream != null)
             {
-                var bitmap = new Bitmap(stream);
-                Fill = new ImageBrush { Source = bitmap };
+                Bitmap = new Bitmap(stream);
+                Fill = new ImageBrush { Source = Bitmap };
                 DrawAgain();
-                SetSize(bitmap.Size);
+                SetSize(Bitmap.Size);
             }
         }
         private void OnSourceChange(object sender, AvaloniaPropertyChangedEventArgs e)
