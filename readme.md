@@ -43,11 +43,11 @@ public static AppBuilder BuildAvaloniaApp()
 - [x] ClickableView
   > Views that can trigger the click event
 
-- [x] ~CellListView~ ~SplitListView~ GridView
+- [x] GridView
   > a Multiple-Column ListView/ListBox,Just like GridView in UWP
 
-- [x] ~CellListViewCell~ ~SplitListViewItem~ GridViewItem
-  > Item for ~CellListView~ ~SplitListView~ GridViewItem,inherit from ~ClickableView~ ListViewItem,with Left/Right Click Event
+- [x] GridViewItem
+  > Item for GridViewItem,inherit from ListViewItem,with Left/Right Click Event
 
 - [x] CircleImage
   > inherit from Ellipse,Round picture.Just like PersonPicture in UWP
@@ -60,7 +60,7 @@ public static AppBuilder BuildAvaloniaApp()
   > SecondView
   > > show or hide when select PrimaryView
 
-- [x] ~ImageRemote~ ImageBox
+- [x] ImageBox
   > inherit from Image,loading image from http/https/local
 
 - [x] ListView
@@ -74,9 +74,6 @@ public static AppBuilder BuildAvaloniaApp()
 
 - [x] NotifyWindow
   > Notify message window,the transition animation can be displayed according to the preset and automatically closed after a certain period of time
-
-- [x] ~PopupDialog~
-  > inherit from Popup,show message dialog and automatically shut down after a certain period of time
 
 - [x] PopupMenu
   > inherit from Window,close after selecting item and trigger the event
@@ -108,9 +105,6 @@ public static AppBuilder BuildAvaloniaApp()
 
 - [x] ImageContentButton
 > the button show Image and Text
-
--[x] ~FontIcon~ SymbolIcon
-> the `FontIcon` in UWP
 
 > # EXTEND
 
@@ -167,7 +161,3 @@ public static AppBuilder BuildAvaloniaApp()
 
 - [x] GetWindow
   > get window who own this control
-
-## 必须加入库中的功能
-1、[avalonia项目在银河麒麟操作系统arm架构上运行报错]
-(https://www.cnblogs.com/joyandjoys/p/14346935.html)
