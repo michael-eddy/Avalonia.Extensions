@@ -9,18 +9,26 @@ namespace Avalonia.Extensions.Controls
     {
         public static bool IsFirst(this IEnumerable items, object item)
         {
-            if (items != null && item != null)
+            try
             {
-                var firstItem = items.ElementAt(0);
-                return ReferenceEquals(item, firstItem);
+                if (items != null && item != null)
+                {
+                    var firstItem = items.ElementAt(0);
+                    return ReferenceEquals(item, firstItem);
+                }
             }
+            catch { }
             return false;
         }
         public static T Last<T>(this IList objs)
         {
-            var count = objs.Count;
-            if (count > 0)
-                return (T)objs.ElementAt(--count);
+            try
+            {
+                var count = objs.Count;
+                if (count > 0)
+                    return (T)objs.ElementAt(--count);
+            }
+            catch { }
             return default;
         }
         public static bool IsLast(this IEnumerable items, object item)
@@ -36,31 +44,39 @@ namespace Avalonia.Extensions.Controls
         }
         public static int IndexOf(this IEnumerable items, object item)
         {
-            if (items != null && item != null)
+            try
             {
-                if (items is IList list)
-                    return list.IndexOf(item);
-                else
+                if (items != null && item != null)
                 {
-                    int index = 0;
-                    foreach (var i in items)
+                    if (items is IList list)
+                        return list.IndexOf(item);
+                    else
                     {
-                        if (Equals(i, item))
-                            return index;
-                        ++index;
+                        int index = 0;
+                        foreach (var i in items)
+                        {
+                            if (Equals(i, item))
+                                return index;
+                            ++index;
+                        }
                     }
                 }
             }
+            catch { }
             return -1;
         }
         public static object ElementAt(this IEnumerable source, int index)
         {
-            var i = -1;
-            var enumerator = source.GetEnumerator();
-            while (enumerator.MoveNext() && ++i < index) ;
-            if (i == index)
-                return enumerator.Current;
-            throw new ArgumentOutOfRangeException(nameof(index));
+            try
+            {
+                var i = -1;
+                var enumerator = source.GetEnumerator();
+                while (enumerator.MoveNext() && ++i < index) ;
+                if (i == index)
+                    return enumerator.Current;
+            }
+            catch { }
+            return null;
         }
         public static int Count(this IEnumerable items)
         {
