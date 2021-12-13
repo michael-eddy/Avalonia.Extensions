@@ -19,10 +19,6 @@
 				<TextBlock Text="{Binding #TabControl.SelectedItem.Header}" Margin="40 20" FontSize="32" FontWeight="Light" />
 			</ExperimentalAcrylicBorder>
 		</DockPanel>
-    <StackPanel Orientation="Vertical">
-      <TextBlock Text="杀杀杀杀" />
-      <Button>1234</Button>
-    </StackPanel>
 		<TabControl>
 			<TabItem Header="HorizontalItemsRepeater">
 				<StackPanel Orientation="Vertical">
