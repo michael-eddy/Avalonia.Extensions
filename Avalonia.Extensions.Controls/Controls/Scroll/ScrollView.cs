@@ -1,16 +1,14 @@
 ﻿using Avalonia.Controls;
 using Avalonia.Extensions.Styles;
 using Avalonia.Interactivity;
-using Avalonia.Styling;
 using System;
 
 namespace Avalonia.Extensions.Controls
 {
-    public partial class ScrollView : ScrollViewer, IStyling
+    public class ScrollView : ScrollViewer, IStyling
     {
         private double lastSize = -1;
         public ScrollView() : base() { }
-        Type IStyleable.StyleKey => typeof(ScrollViewer);
         /// <summary>
         /// Defines the <see cref="ScrollTop"/> event.
         /// </summary>

@@ -90,7 +90,7 @@ namespace Avalonia.Extensions.Controls
         /// </summary>
         public GridView()
         {
-            this.AddStyles<ItemsPanelTemplate>(ItemsPanelProperty);
+            this.AddStyles(ItemsPanelProperty);
             ScrollViewer.SetVerticalScrollBarVisibility(this, ScrollBarVisibility.Auto);
             ScrollViewer.SetHorizontalScrollBarVisibility(this, ScrollBarVisibility.Disabled);
             LogicalChildren.CollectionChanged += LogicalChildren_CollectionChanged;

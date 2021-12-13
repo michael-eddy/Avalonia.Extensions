@@ -30,8 +30,8 @@
 					<HorizontalItemsRepeater Items="{Binding Items}" Command="{Binding OnButtonClick}" Spacing="20">
 						<HorizontalItemsRepeater.ItemTemplate>
 							<DataTemplate>
-								<ItemsRepeaterContent CommandParameter="{Binding content}">
-									<TextBlock Text="{Binding content}" />
+								<ItemsRepeaterContent CommandParameter="{Binding Content}">
+									<TextBlock Text="{Binding Content}" />
 								</ItemsRepeaterContent>
 							</DataTemplate>
 						</HorizontalItemsRepeater.ItemTemplate>
@@ -48,7 +48,7 @@
 					<ListView Name="listView" Grid.Row="1" Items="{Binding Items}" Command="{Binding OnItemClick}">
 						<ListView.ItemTemplate>
 							<DataTemplate>
-								<TextBlock Text="{Binding content}" />
+								<TextBlock Text="{Binding Content}" />
 							</DataTemplate>
 						</ListView.ItemTemplate>
 					</ListView>
@@ -64,7 +64,7 @@
           <GridView Name="splitListView" Grid.Row="1" ColumnNum="2" Items="{Binding Items}" Command="{Binding OnItemClick}">
             <GridView.ItemTemplate>
               <DataTemplate>
-                <TextBlock Text="{Binding content}" />
+                <TextBlock Text="{Binding Content}" />
               </DataTemplate>
             </GridView.ItemTemplate>
           </GridView>
@@ -184,6 +184,16 @@
 				<StackPanel Orientation="Vertical">
 					<TextBox Text="山川异域 不共戴天" />
 					<TextPresenter Text="山川异域 不共戴天" />
+				</StackPanel>
+			</TabItem>
+			<TabItem Header="CheckBoxList">
+				<StackPanel Orientation="Vertical">
+					<CheckBoxList Items="{Binding Items}" />
+				</StackPanel>
+			</TabItem>
+			<TabItem Header="RadioButtonList">
+				<StackPanel Orientation="Vertical">
+					<RadioButtonList Items="{Binding Items}" />
 				</StackPanel>
 			</TabItem>
 		</TabControl>

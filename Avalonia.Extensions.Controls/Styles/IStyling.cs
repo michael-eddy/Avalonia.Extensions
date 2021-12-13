@@ -11,7 +11,7 @@ namespace Avalonia.Extensions.Styles
 {
     public interface IStyling : IStyleable
     {
-        void AddStyles<T>(AvaloniaProperty avaloniaProperty)
+        void AddStyles(AvaloniaProperty avaloniaProperty)
         {
             Dispatcher.UIThread.InvokeAsync(() =>
             {
@@ -27,7 +27,8 @@ namespace Avalonia.Extensions.Styles
                             using var stream = Core.Instance.AssetLoader.Open(sourceUri);
                             var bytes = new byte[stream.Length];
                             stream.Read(bytes, 0, bytes.Length);
-                            var target = AvaloniaRuntimeXamlLoader.Parse<T>(Encoding.UTF8.GetString(bytes));
+                            var xaml = Encoding.UTF8.GetString(bytes);
+                            var target = AvaloniaRuntimeXamlLoader.Parse(xaml);
                             control.SetValue(avaloniaProperty, target);
                         }
                     }

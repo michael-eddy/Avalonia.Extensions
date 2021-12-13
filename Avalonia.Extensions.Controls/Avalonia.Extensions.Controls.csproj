@@ -22,18 +22,8 @@
         <None Remove="Styles\Xaml\RadioButtonList.xml" />
         <None Remove="Styles\Xaml\readme.txt" />
         <AvaloniaResource Include="Styles\Xaml\*.xml" />
-        <AvaloniaResource Remove="Styles\Xaml\CheckBoxList.xml" />
-        <AvaloniaResource Remove="Styles\Xaml\RadioButtonList.xml" />
         <None Include="..\.editorconfig" Link=".editorconfig" />
         <AvaloniaResource Include="Assets\Fonts\SegMDL2.ttf" />
-    </ItemGroup>
-    <ItemGroup>
-      <EmbeddedResource Include="Styles\Xaml\CheckBoxList.xml">
-        <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-      </EmbeddedResource>
-      <EmbeddedResource Include="Styles\Xaml\RadioButtonList.xml">
-        <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-      </EmbeddedResource>
     </ItemGroup>
     <ItemGroup>
         <PackageReference Include="Avalonia" Version="0.10.10" />
