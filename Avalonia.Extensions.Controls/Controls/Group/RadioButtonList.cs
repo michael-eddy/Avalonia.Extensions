@@ -11,8 +11,8 @@ namespace Avalonia.Extensions.Controls
         private string GroupId { get; }
         public RadioButtonList()
         {
-            GroupId = Guid.NewGuid().ToString("N"); 
-            AffectsMeasure<RadioButtonList>(ItemsProperty, ItemTemplateProperty);
+            GroupId = Guid.NewGuid().ToString("N");
+            this.AddStyles(ItemTemplateProperty);
         }
         [Content]
         public new IEnumerable<GroupBindingModel> Items
@@ -22,7 +22,7 @@ namespace Avalonia.Extensions.Controls
             {
                 if (value != null)
                 {
-                    foreach(var item in value)
+                    foreach (var item in value)
                         item.Id = GroupId;
                 }
                 SetValue(ItemsRepeater.ItemsProperty, value);
@@ -30,10 +30,5 @@ namespace Avalonia.Extensions.Controls
         }
         public static new readonly DirectProperty<RadioButtonList, IEnumerable<GroupBindingModel>> ItemsProperty =
             AvaloniaProperty.RegisterDirect<RadioButtonList, IEnumerable<GroupBindingModel>>(nameof(Items), o => o.Items, (o, v) => o.Items = v);
-        protected override void OnInitialized()
-        {
-            base.OnInitialized();
-            this.AddStyles(ItemTemplateProperty);
-        }
     }
 }

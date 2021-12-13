@@ -7,7 +7,10 @@ namespace Avalonia.Extensions.Controls
 {
     public class CheckBoxList : ItemsRepeater, IStyling
     {
-        public CheckBoxList() { }
+        public CheckBoxList()
+        {
+            this.AddStyles(ItemTemplateProperty);
+        }
         [Content]
         public new IEnumerable<GroupBindingModel> Items
         {
@@ -16,10 +19,5 @@ namespace Avalonia.Extensions.Controls
         }
         public static new readonly DirectProperty<CheckBoxList, IEnumerable<GroupBindingModel>> ItemsProperty =
             AvaloniaProperty.RegisterDirect<CheckBoxList, IEnumerable<GroupBindingModel>>(nameof(Items), o => o.Items, (o, v) => o.Items = v);
-        protected override void OnInitialized()
-        {
-            base.OnInitialized();
-            this.AddStyles(ItemTemplateProperty);
-        }
     }
 }
