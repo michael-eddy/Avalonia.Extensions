@@ -11,8 +11,7 @@ using System.Windows.Input;
 namespace Avalonia.Extensions.Controls
 {
     /// <summary>
-    /// the itemsrepeater layout <seealso cref="this.Orientation"/> as
-    /// <seealso cref="Orientation.Horizontal"/>
+    /// the itemsrepeater layout <seealso cref="this.Orientation"/> as <seealso cref="Orientation.Horizontal"/>
     /// </summary>
     public class HorizontalItemsRepeater : ItemsRepeater, IStyling
     {
@@ -24,7 +23,6 @@ namespace Avalonia.Extensions.Controls
         {
             DrawLayout();
         }
-        protected virtual void ContentChange(object content) { }
         /// <summary>
         /// Defines the <see cref="Loaded"/> event.
         /// </summary>
