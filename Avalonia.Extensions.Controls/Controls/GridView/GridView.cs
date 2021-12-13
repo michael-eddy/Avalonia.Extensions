@@ -3,7 +3,6 @@ using Avalonia.Controls.Primitives;
 using Avalonia.Extensions.Styles;
 using Avalonia.Interactivity;
 using Avalonia.Layout;
-using Avalonia.Markup.Xaml;
 using Avalonia.Markup.Xaml.Templates;
 using System.Collections.Specialized;
 
@@ -91,7 +90,7 @@ namespace Avalonia.Extensions.Controls
         /// </summary>
         public GridView()
         {
-            SetColumnStyle();
+            this.AddStyles<ItemsPanelTemplate>(ItemsPanelProperty);
             ScrollViewer.SetVerticalScrollBarVisibility(this, ScrollBarVisibility.Auto);
             ScrollViewer.SetHorizontalScrollBarVisibility(this, ScrollBarVisibility.Disabled);
             LogicalChildren.CollectionChanged += LogicalChildren_CollectionChanged;
@@ -101,19 +100,6 @@ namespace Avalonia.Extensions.Controls
             ChildHorizontalAlignmentProperty.Changed.AddClassHandler<GridView>(OnChildHorizontalAlignmentChange);
             ChildVerticalContentAlignmentProperty.Changed.AddClassHandler<GridView>(OnChildVerticalContentAlignmentChange);
             ChildHorizontalContentAlignmentProperty.Changed.AddClassHandler<GridView>(OnChildHorizontalContentAlignmentChange);
-        }
-        private void SetColumnStyle()
-        {
-            try
-            {
-                var target = AvaloniaRuntimeXamlLoader.Parse<ItemsPanelTemplate>(
-                    "<ItemsPanelTemplate xmlns='https://github.com/avaloniaui'><WrapPanel Orientation=\"Horizontal\"/></ItemsPanelTemplate>");
-                SetValue(ItemsPanelProperty, target);
-            }
-            catch
-            {
-                SetColumnStyle();
-            }
         }
         private void OnColumnNumChanged(object sender, AvaloniaPropertyChangedEventArgs e)
         {

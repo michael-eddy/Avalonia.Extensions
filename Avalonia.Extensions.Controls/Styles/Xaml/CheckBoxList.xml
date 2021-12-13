@@ -1,0 +1,4 @@
+﻿<DataTemplate
+    xmlns="https://github.com/avaloniaui">
+	<CheckBox GroupName="" Content="" IsChecked="" />
+</DataTemplate>

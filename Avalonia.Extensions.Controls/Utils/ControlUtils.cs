@@ -94,7 +94,15 @@ namespace Avalonia.Extensions.Controls
                 }
             }
         }
-        public static void InitStyle(this IStyling styling)
+        public static void AddStyles<T>(this IStyling styling, AvaloniaProperty avaloniaProperty)
+        {
+            try
+            {
+                styling.AddStyles<T>(avaloniaProperty);
+            }
+            catch { }
+        }
+        public static void AddResource(this IStyling styling)
         {
             try
             {

@@ -13,6 +13,11 @@ namespace Avalonia.Extensions.Controls
             GroupId = Guid.NewGuid().ToString("N");
             ItemsProperty.Changed.AddClassHandler<RadioButtonList>(OnItemsChanged);
         }
+        protected override void OnInitialized()
+        {
+            base.OnInitialized();
+            this.AddStyles<IDataTemplate>(ItemTemplateProperty);
+        }
         private void OnItemsChanged(object sender, AvaloniaPropertyChangedEventArgs e)
         {
 
