@@ -7,7 +7,7 @@
         Title="Avalonia.Controls.Demo" CanResize="False">
 	<Panel>
 		<DockPanel VerticalAlignment="Stretch">
-			<ExperimentalAcrylicBorder DockPanel.Dock="Top" Height="142">
+			<ExperimentalAcrylicBorder DockPanel.Dock="Top" Height="192">
 				<ExperimentalAcrylicBorder.Material>
 					<ExperimentalAcrylicMaterial TintColor="Black" MaterialOpacity="0.85" TintOpacity="1" />
 				</ExperimentalAcrylicBorder.Material>
@@ -26,9 +26,7 @@
 					<HorizontalItemsRepeater Items="{Binding Items}" Command="{Binding OnButtonClick}" Spacing="20">
 						<HorizontalItemsRepeater.ItemTemplate>
 							<DataTemplate>
-								<ItemsRepeaterContent CommandParameter="{Binding Content}">
-									<TextBlock Text="{Binding Content}" />
-								</ItemsRepeaterContent>
+									<CheckBox Content="{Binding Content}" IsChecked="{Binding Check}" />
 							</DataTemplate>
 						</HorizontalItemsRepeater.ItemTemplate>
 					</HorizontalItemsRepeater>
@@ -144,6 +142,19 @@
 						<Label>111111111</Label>
 						<Label>111111111</Label>
 						<Label>111111111</Label>
+						<Label>111111111</Label>
+						<Label>111111111</Label>
+						<Label>111111111</Label>
+						<Label>111111111</Label>
+						<Label>111111111</Label>
+						<Label>111111111</Label>
+						<Label>111111111</Label>
+						<Label>111111111</Label>
+						<Label>111111111</Label>
+						<Label>111111111</Label>
+						<Label>111111111</Label>
+						<Label>111111111</Label>
+						<Label>111111111</Label>
 					</StackPanel>
 				</ScrollView>
 			</TabItem>
@@ -183,14 +194,10 @@
 				</StackPanel>
 			</TabItem>
 			<TabItem Header="CheckBoxList">
-				<StackPanel Orientation="Vertical">
-					<CheckBoxList Items="{Binding Items}" />
-				</StackPanel>
+				<CheckBoxList Items="{Binding Items}" />
 			</TabItem>
 			<TabItem Header="RadioButtonList">
-				<StackPanel Orientation="Vertical">
-					<RadioButtonList Items="{Binding Items}" />
-				</StackPanel>
+				<RadioButtonList Items="{Binding Items}" />
 			</TabItem>
 		</TabControl>
 	</Panel>

@@ -14,8 +14,8 @@ namespace Avalonia.Controls.Demo
             get => message;
             set => this.RaiseAndSetIfChanged(ref message, value);
         }
-        private ObservableCollection<GroupBindingModel> items;
-        public ObservableCollection<GroupBindingModel> Items
+        private ObservableCollection<GroupViewItem> items;
+        public ObservableCollection<GroupViewItem> Items
         {
             get => items;
             private set => this.RaiseAndSetIfChanged(ref items, value);
@@ -26,11 +26,11 @@ namespace Avalonia.Controls.Demo
         {
             OnItemClick = ReactiveCommand.Create<object>(ItemClick);
             OnButtonClick = ReactiveCommand.Create<object>(ButtonClick);
-            items = new ObservableCollection<GroupBindingModel>();
+            items = new ObservableCollection<GroupViewItem>();
             for (var idx = 0; idx < 9; idx++)
             {
                 for (var idx2 = 0; idx2 < 9; idx2++)
-                    items.Add(new GroupBindingModel($"{idx}#{idx2}"));
+                    items.Add(new GroupViewItem($"{idx}#{idx2}"));
             }
         }
         private void ItemClick(object obj)

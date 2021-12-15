@@ -1,17 +1,17 @@
 ﻿namespace Avalonia.Extensions
 {
-    public sealed class GroupBindingModel
+    public sealed class GroupViewItem
     {
-        public GroupBindingModel(string content)
+        public GroupViewItem(string content)
         {
             Content = content;
         }
-        public GroupBindingModel(string content, object tag)
+        public GroupViewItem(string content, object tag)
         {
             Tag = tag;
             Content = content;
         }
-        public GroupBindingModel(string content, object tag, bool check)
+        public GroupViewItem(string content, object tag, bool check)
         {
             Tag = tag;
             Check = check;
