@@ -1,6 +1,7 @@
 ﻿using Avalonia.Extensions.Controls;
 using Avalonia.Extensions.Media;
 using System;
+using System.Diagnostics;
 using System.Net.Http;
 
 namespace Avalonia.Extensions.Threading
@@ -58,7 +59,10 @@ namespace Avalonia.Extensions.Threading
                         Owner.SetBitmapSource(stream);
                     }
                 }
-                catch { }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine(ex);
+                }
                 Loading = false;
             }
         }

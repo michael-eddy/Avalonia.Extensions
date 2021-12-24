@@ -10,7 +10,7 @@
         <None Include="..\.editorconfig" Link=".editorconfig" />
     </ItemGroup>
     <ItemGroup>
-        <PackageReference Include="Avalonia" Version="0.10.10" />
+        <PackageReference Include="Avalonia" Version="0.10.11" />
         <PackageReference Include="CHSPinYinConv" Version="1.0.0" />
     </ItemGroup>
 </Project>

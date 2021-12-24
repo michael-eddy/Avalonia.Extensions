@@ -17,8 +17,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Avalonia.Extensions.Control
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Avalonia.Extensions.Chinese", "Avalonia.Extensions.Chinese\Avalonia.Extensions.Chinese.csproj", "{A66F5B77-7F56-4AB1-B2DE-D2EC004C6F25}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Avalonia.Extensions.Fonts", "Avalonia.Extensions.Fonts\Avalonia.Extensions.Fonts.csproj", "{6919F81E-D76C-412E-9AA1-86985907C4DD}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -37,10 +35,6 @@ Global
 		{A66F5B77-7F56-4AB1-B2DE-D2EC004C6F25}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A66F5B77-7F56-4AB1-B2DE-D2EC004C6F25}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A66F5B77-7F56-4AB1-B2DE-D2EC004C6F25}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6919F81E-D76C-412E-9AA1-86985907C4DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6919F81E-D76C-412E-9AA1-86985907C4DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6919F81E-D76C-412E-9AA1-86985907C4DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6919F81E-D76C-412E-9AA1-86985907C4DD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -49,7 +43,6 @@ Global
 		{E398D33B-003A-4B1E-9C15-2392697A2ACD} = {736AFC18-0DD8-4577-8066-A26322E85F8D}
 		{C6F08B78-C20E-4BDA-89D8-55D392A86208} = {736AFC18-0DD8-4577-8066-A26322E85F8D}
 		{A66F5B77-7F56-4AB1-B2DE-D2EC004C6F25} = {736AFC18-0DD8-4577-8066-A26322E85F8D}
-		{6919F81E-D76C-412E-9AA1-86985907C4DD} = {736AFC18-0DD8-4577-8066-A26322E85F8D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {82A8C38D-510B-4067-BAB9-FA581B3F79C7}

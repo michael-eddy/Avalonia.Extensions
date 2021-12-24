@@ -126,9 +126,6 @@ namespace Avalonia.Extensions.Controls
                 });
             }
         }
-        /// <summary>
-        /// when spacing change,draw <seealso cref="Layout"/> again
-        /// </summary>
         private void DrawLayout()
         {
             Layout = new StackLayout

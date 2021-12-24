@@ -6,16 +6,13 @@
         {
             Content = content;
         }
-        public GroupViewItem(string content, object tag)
+        public GroupViewItem(string content, object tag) : this(content)
         {
             Tag = tag;
-            Content = content;
         }
-        public GroupViewItem(string content, object tag, bool check)
+        public GroupViewItem(string content, object tag, bool check) : this(content, tag)
         {
-            Tag = tag;
             Check = check;
-            Content = content;
         }
         internal string Id { get; set; }
         public object Tag { get; set; }

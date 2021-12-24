@@ -2,18 +2,17 @@
     <PropertyGroup>
         <Nullable>enable</Nullable>
         <OutputType>WinExe</OutputType>
-        <TargetFramework>netcoreapp3.1</TargetFramework>
+        <TargetFramework>net6.0</TargetFramework>
     </PropertyGroup>
     <ItemGroup>
-        <PackageReference Include="Avalonia" Version="0.10.10" />
-        <PackageReference Include="Avalonia.Desktop" Version="0.10.10" />
-        <PackageReference Include="Avalonia.ReactiveUI" Version="0.10.10" />
-        <PackageReference Include="Avalonia.Diagnostics" Version="0.10.10" />
+        <PackageReference Include="Avalonia" Version="0.10.11" />
+        <PackageReference Include="Avalonia.Desktop" Version="0.10.11" />
+        <PackageReference Include="Avalonia.ReactiveUI" Version="0.10.11" />
+        <PackageReference Include="Avalonia.Diagnostics" Version="0.10.11" />
     </ItemGroup>
     <ItemGroup>
         <None Include="..\.editorconfig" Link=".editorconfig" />
         <ProjectReference Include="..\Avalonia.Extensions.Chinese\Avalonia.Extensions.Chinese.csproj" />
         <ProjectReference Include="..\Avalonia.Extensions.Controls\Avalonia.Extensions.Controls.csproj" />
-        <ProjectReference Include="..\Avalonia.Extensions.Fonts\Avalonia.Extensions.Fonts.csproj" />
     </ItemGroup>
 </Project>

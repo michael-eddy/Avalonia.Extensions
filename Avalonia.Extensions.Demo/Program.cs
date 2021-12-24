@@ -12,7 +12,6 @@ namespace Avalonia.Controls.Demo
             AppBuilder.Configure<App>()
                     .UsePlatformDetect()
                     .UseDoveExtensions()
-                    .UseDroidSansFont()
                     .UseChineseInputSupport()
                     .LogToTrace()
             .StartWithClassicDesktopLifetime(args);
