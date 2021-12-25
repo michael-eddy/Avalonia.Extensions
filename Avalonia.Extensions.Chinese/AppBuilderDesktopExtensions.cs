@@ -5,6 +5,7 @@ using Avalonia.Media;
 using Avalonia.Styling;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 
 namespace Avalonia.Extensions.Controls
@@ -31,6 +32,7 @@ namespace Avalonia.Extensions.Controls
                 }
                 catch (Exception ex)
                 {
+                    Debug.WriteLine(ex);
                     throw ex;
                 }
             });

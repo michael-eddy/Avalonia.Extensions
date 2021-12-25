@@ -3,6 +3,7 @@ using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
 using Avalonia.Controls.Templates;
 using Avalonia.Data;
+using Avalonia.Interactivity;
 using Avalonia.Layout;
 using System;
 using System.Collections.Generic;
@@ -31,18 +32,37 @@ namespace Avalonia.Extensions.Controls
         protected override void OnInitialized()
         {
             base.OnInitialized();
-            repeater = new ItemsRepeater();
-            repeater.Items = _items;
+            repeater = new ItemsRepeater { Items = _items };
             repeater.ItemTemplate = new FuncDataTemplate<GroupViewItem>((x, _) =>
-              new CheckBox
-              {
-                  [!ContentProperty] = new Binding("Content"),
-                  [!ToggleButton.IsCheckedProperty] = new Binding(),
-                  [!ToggleButton.IsCheckedProperty] = new Binding("Check"),
-              });
+            {
+                var control = new CheckBox
+                {
+                    [!ContentProperty] = new Binding("Content"),
+                    [!ToggleButton.IsCheckedProperty] = new Binding("Check")
+                };
+                control.GetObservable(ToggleButton.IsCheckedProperty).Subscribe(OnCheckedChange);
+                return control;
+            }, true);
             DrawLayout();
             Content = repeater;
         }
+        private void OnCheckedChange(bool? obj)
+        {
+            RaiseEvent(new RoutedEventArgs(CheckedEvent));
+        }
+        /// <summary>
+        /// Raised when a <see cref="RadioButtonList"/> is checked.
+        /// </summary>
+        public event EventHandler<RoutedEventArgs> Checked
+        {
+            add => AddHandler(CheckedEvent, value);
+            remove => RemoveHandler(CheckedEvent, value);
+        }
+        /// <summary>
+        /// Defines the <see cref="Checked"/> event.
+        /// </summary>
+        public static readonly RoutedEvent<RoutedEventArgs> CheckedEvent =
+            RoutedEvent.Register<CheckBoxList, RoutedEventArgs>(nameof(Checked), RoutingStrategies.Bubble);
         /// <summary>
         ///  Gets or sets a uniform distance (in pixels) between stacked items. It is applied
         ///  in the direction of the StackLayout's Orientation.
