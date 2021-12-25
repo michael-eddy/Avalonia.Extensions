@@ -5,6 +5,7 @@ using Avalonia.Media;
 using Avalonia.Styling;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 
 namespace Avalonia.Extensions.Controls
@@ -31,6 +32,7 @@ namespace Avalonia.Extensions.Controls
                 }
                 catch (Exception ex)
                 {
+                    Debug.WriteLine(ex);
                     throw ex;
                 }
             });
@@ -44,8 +46,7 @@ namespace Avalonia.Extensions.Controls
                     supportContol.FullName.StartsWith("Avalonia.Extensions.Controls", StringComparison.OrdinalIgnoreCase))
                 {
                     var style = new Style();
-                    var selector = default(Selector).OfType(supportContol);
-                    style.Selector = selector;
+                    style.Selector = default(Selector).OfType(supportContol);
                     style.Setters.Add(new Setter(TemplatedControl.FontFamilyProperty,
                         new FontFamily("avares://Avalonia.Extensions.Chinese/Assets/Fonts#WenQuanYi Micro Hei")));
                     Application.Current.Styles.Add(style);

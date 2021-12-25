@@ -1,6 +1,7 @@
 <AeroWindow xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+		xmlns:ext="using:Avalonia.Extensions.Controls"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="250"
         x:Class="Avalonia.Controls.Demo.MainWindow"
@@ -19,10 +20,6 @@
 				<TextBlock Text="{Binding #TabControl.SelectedItem.Header}" Margin="40 20" FontSize="32" FontWeight="Light" />
 			</ExperimentalAcrylicBorder>
 		</DockPanel>
-    <StackPanel Orientation="Vertical">
-      <TextBlock Text="杀杀杀杀" />
-      <Button>1234</Button>
-    </StackPanel>
 		<TabControl>
 			<TabItem Header="HorizontalItemsRepeater">
 				<StackPanel Orientation="Vertical">
@@ -30,9 +27,7 @@
 					<HorizontalItemsRepeater Items="{Binding Items}" Command="{Binding OnButtonClick}" Spacing="20">
 						<HorizontalItemsRepeater.ItemTemplate>
 							<DataTemplate>
-								<ItemsRepeaterContent CommandParameter="{Binding content}">
-									<TextBlock Text="{Binding content}" />
-								</ItemsRepeaterContent>
+									<CheckBox Content="{Binding Content}" IsChecked="{Binding Check}" />
 							</DataTemplate>
 						</HorizontalItemsRepeater.ItemTemplate>
 					</HorizontalItemsRepeater>
@@ -48,7 +43,7 @@
 					<ListView Name="listView" Grid.Row="1" Items="{Binding Items}" Command="{Binding OnItemClick}">
 						<ListView.ItemTemplate>
 							<DataTemplate>
-								<TextBlock Text="{Binding content}" />
+								<TextBlock Text="{Binding Content}" />
 							</DataTemplate>
 						</ListView.ItemTemplate>
 					</ListView>
@@ -64,7 +59,7 @@
           <GridView Name="splitListView" Grid.Row="1" ColumnNum="2" Items="{Binding Items}" Command="{Binding OnItemClick}">
             <GridView.ItemTemplate>
               <DataTemplate>
-                <TextBlock Text="{Binding content}" />
+                <TextBlock Text="{Binding Content}" />
               </DataTemplate>
             </GridView.ItemTemplate>
           </GridView>
@@ -148,6 +143,19 @@
 						<Label>111111111</Label>
 						<Label>111111111</Label>
 						<Label>111111111</Label>
+						<Label>111111111</Label>
+						<Label>111111111</Label>
+						<Label>111111111</Label>
+						<Label>111111111</Label>
+						<Label>111111111</Label>
+						<Label>111111111</Label>
+						<Label>111111111</Label>
+						<Label>111111111</Label>
+						<Label>111111111</Label>
+						<Label>111111111</Label>
+						<Label>111111111</Label>
+						<Label>111111111</Label>
+						<Label>111111111</Label>
 					</StackPanel>
 				</ScrollView>
 			</TabItem>
@@ -185,6 +193,12 @@
 					<TextBox Text="山川异域 不共戴天" />
 					<TextPresenter Text="山川异域 不共戴天" />
 				</StackPanel>
+			</TabItem>
+			<TabItem Header="CheckBoxList">
+				<CheckBoxList Items="{Binding Items}" />
+			</TabItem>
+			<TabItem Header="RadioButtonList">
+				<RadioButtonList Items="{Binding Items}" />
 			</TabItem>
 		</TabControl>
 	</Panel>

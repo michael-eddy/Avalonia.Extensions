@@ -20,7 +20,7 @@ namespace Avalonia.Extensions.Controls
         Type IStyleable.StyleKey => typeof(TextBlock);
         public SymbolIcon()
         {
-            this.InitStyle();
+            this.AddResource();
             SetValue(FontFamilyProperty, "Segoe MDL2 Assets");
         }
         public class FontIconSource : AvaloniaObject

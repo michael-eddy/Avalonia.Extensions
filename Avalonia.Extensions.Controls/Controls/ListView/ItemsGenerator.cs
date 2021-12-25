@@ -8,8 +8,7 @@ namespace Avalonia.Extensions.Controls
     public class ItemsGenerator : ItemContainerGenerator
     {
         private string ChildItem { get; }
-        public ItemsGenerator(IControl owner, AvaloniaProperty contentProperty, AvaloniaProperty contentTemplateProperty)
-            : base(owner)
+        public ItemsGenerator(IControl owner, AvaloniaProperty contentProperty, AvaloniaProperty contentTemplateProperty) : base(owner)
         {
             Contract.Requires<ArgumentNullException>(owner != null);
             Contract.Requires<ArgumentNullException>(contentProperty != null);
@@ -32,9 +31,7 @@ namespace Avalonia.Extensions.Controls
         protected override IControl CreateContainer(object item)
         {
             if (item is ListViewItem container)
-            {
                 return container;
-            }
             else
             {
                 var result = ChildItem.Equals("ListViewItem") ? new ListViewItem() : new GridViewItem();

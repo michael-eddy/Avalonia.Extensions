@@ -50,6 +50,23 @@ namespace Avalonia.Extensions.Controls
             Type type = assembly.GetType(className);
             return (T)type.InvokeMember(methodName, BindingFlags.InvokeMethod | BindingFlags.Static | BindingFlags.Public, null, null, param);
         }
+        public static object GetPrivateField(this object obj, string fieldName)
+        {
+            try
+            {
+                var type = obj.GetType();
+                BindingFlags flag = BindingFlags.Instance | BindingFlags.NonPublic;
+                FieldInfo field = type.GetField(fieldName, flag);
+                if (field == null)
+                    return type.BaseType.GetPrivateField(obj, fieldName);
+                else
+                    return field?.GetValue(obj);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
         public static T GetPrivateField<T>(this object obj, string fieldName)
         {
             try
@@ -77,6 +94,20 @@ namespace Avalonia.Extensions.Controls
                     return type.BaseType.GetPrivateField<T>(control, fieldName);
                 else
                     return (T)field?.GetValue(control);
+            }
+            catch { }
+            return default;
+        }
+        public static object GetPrivateField(this Type type, object control, string fieldName)
+        {
+            try
+            {
+                BindingFlags flag = BindingFlags.Instance | BindingFlags.NonPublic;
+                FieldInfo field = type.GetField(fieldName, flag);
+                if (field == null)
+                    return type.BaseType.GetPrivateField(control, fieldName);
+                else
+                    return field?.GetValue(control);
             }
             catch { }
             return default;

@@ -6,7 +6,7 @@ using System;
 
 namespace Avalonia.Extensions.Controls
 {
-    public partial class ScrollView : ScrollViewer, IStyling
+    public class ScrollView : ScrollViewer, IStyling
     {
         private double lastSize = -1;
         public ScrollView() : base() { }
