@@ -3,7 +3,6 @@ using Avalonia.Controls.Primitives;
 using Avalonia.Extensions.Styles;
 using Avalonia.Interactivity;
 using Avalonia.Layout;
-using Avalonia.Markup.Xaml.Templates;
 using System.Collections.Specialized;
 
 namespace Avalonia.Extensions.Controls
@@ -154,7 +153,8 @@ namespace Avalonia.Extensions.Controls
         {
             if (item is ListBoxItem obj)
             {
-                obj.Width = CellWidth;
+                var padding = obj.Padding.Left + obj.Padding.Right;
+                obj.Width = CellWidth - padding;
                 obj.HorizontalAlignment = HorizontalAlignment.Center;
             }
         }
