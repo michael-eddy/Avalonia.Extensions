@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace Avalonia.Extensions.Chinese.PinYin
+namespace Avalonia.Extensions.Controls
 {
-    public class PinYinHelper
+    public sealed class PinYinHelper
     {
         public static PingYinModel GetTotalPingYin(string str)
         {

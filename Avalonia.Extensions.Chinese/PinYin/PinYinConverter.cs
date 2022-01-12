@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text;
 
-namespace Avalonia.Extensions.Chinese.PinYin
+namespace Avalonia.Extensions.Controls
 {
     public sealed class PinYinConverter
     {
