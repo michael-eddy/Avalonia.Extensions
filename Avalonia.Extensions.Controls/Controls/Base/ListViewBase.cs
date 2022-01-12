@@ -3,7 +3,7 @@ using System;
 
 namespace Avalonia.Extensions.Controls
 {
-    public abstract class ViewBase : AvaloniaObject
+    public abstract class ListViewBase : AvaloniaObject
     {
         internal bool IsUsed { get; set; }
         internal virtual void OnThemeChanged() { }

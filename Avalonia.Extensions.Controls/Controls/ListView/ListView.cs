@@ -172,18 +172,18 @@ namespace Avalonia.Extensions.Controls
             if (obj.Item2.Source is ListBoxItem listBoxItem)
                 OnContentClick(listBoxItem, MouseButton.Left);
         }
-        public static readonly AvaloniaProperty ViewProperty = AvaloniaProperty.Register<ListView, ViewBase>(nameof(View));
-        public ViewBase View
+        public static readonly AvaloniaProperty ViewProperty = AvaloniaProperty.Register<ListView, ListViewBase>(nameof(View));
+        public ListViewBase View
         {
-            get => (ViewBase)GetValue(ViewProperty);
+            get => (ListViewBase)GetValue(ViewProperty);
             set => SetValue(ViewProperty, value);
         }
         private static void OnViewChanged(AvaloniaObject d, AvaloniaPropertyChangedEventArgs e)
         {
             if (d is ListView listView)
             {
-                ViewBase oldView = (ViewBase)e.OldValue;
-                ViewBase newView = (ViewBase)e.NewValue;
+                ListViewBase oldView = (ListViewBase)e.OldValue;
+                ListViewBase newView = (ListViewBase)e.NewValue;
                 if (newView != null)
                 {
                     if (newView.IsUsed)
@@ -201,10 +201,10 @@ namespace Avalonia.Extensions.Controls
         Type IStyleable.StyleKey => typeof(ListBox);
         private void ApplyNewView()
         {
-            ViewBase newView = View;
+            ListViewBase newView = View;
             Defaultstyle = newView?.DefaultStyleKey;
         }
-        public ViewBase PreviousView { get; private set; }
+        public ListViewBase PreviousView { get; private set; }
         protected override IItemContainerGenerator CreateItemContainerGenerator() =>
             new ItemsGenerator(this, ContentControl.ContentProperty, ContentControl.ContentTemplateProperty);
         /// <summary>
