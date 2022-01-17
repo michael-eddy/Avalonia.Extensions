@@ -1,4 +1,5 @@
 ﻿using Avalonia.Controls;
+using Avalonia.Layout;
 using Avalonia.Extensions.Styles;
 using Avalonia.Media;
 using Avalonia.Styling;
@@ -14,8 +15,8 @@ namespace Avalonia.Extensions.Controls
         {
             SetValue(ForegroundProperty, new SolidColorBrush(Colors.Blue));
             SetValue(BackgroundProperty, new SolidColorBrush(Colors.Transparent));
-            SetValue(VerticalAlignmentProperty, Layout.VerticalAlignment.Center);
-            SetValue(HorizontalAlignmentProperty, Layout.HorizontalAlignment.Center);
+            SetValue(VerticalAlignmentProperty, VerticalAlignment.Center);
+            SetValue(HorizontalAlignmentProperty, HorizontalAlignment.Center);
             Initialize();
             ContentProperty.Changed.AddClassHandler<HyperlinkButton>(OnContentChange);
         }

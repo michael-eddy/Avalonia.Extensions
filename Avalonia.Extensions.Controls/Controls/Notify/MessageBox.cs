@@ -1,4 +1,5 @@
 ﻿using Avalonia.Controls;
+using Avalonia.Layout;
 using Avalonia.LogicalTree;
 using Avalonia.Media;
 using System;
@@ -24,8 +25,8 @@ namespace Avalonia.Extensions.Controls
                     var cancel = new Button
                     {
                         Name = "Cancel",
-                        HorizontalAlignment = Layout.HorizontalAlignment.Center,
-                        HorizontalContentAlignment = Layout.HorizontalAlignment.Center
+                        HorizontalAlignment = HorizontalAlignment.Center,
+                        HorizontalContentAlignment = HorizontalAlignment.Center
                     };
                     root.Children.Add(cancel);
                     Grid.SetColumn(cancel, 1);
@@ -70,8 +71,8 @@ namespace Avalonia.Extensions.Controls
             var ok = new Button
             {
                 Name = "Ok",
-                HorizontalAlignment = Layout.HorizontalAlignment.Center,
-                HorizontalContentAlignment = Layout.HorizontalAlignment.Center
+                HorizontalAlignment = HorizontalAlignment.Center,
+                HorizontalContentAlignment = HorizontalAlignment.Center
             };
             root.Children.Add(ok);
             Grid.SetColumn(ok, 0);
@@ -81,8 +82,8 @@ namespace Avalonia.Extensions.Controls
                 var cancel = new Button
                 {
                     Name = "Cancel",
-                    HorizontalAlignment = Layout.HorizontalAlignment.Center,
-                    HorizontalContentAlignment = Layout.HorizontalAlignment.Center
+                    HorizontalAlignment = HorizontalAlignment.Center,
+                    HorizontalContentAlignment = HorizontalAlignment.Center
                 };
                 root.Children.Add(cancel);
                 Grid.SetColumn(cancel, 1);

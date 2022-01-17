@@ -1,4 +1,5 @@
 ﻿using Avalonia.Controls;
+using Avalonia.Logging;
 using System;
 using System.Reflection;
 
@@ -64,6 +65,7 @@ namespace Avalonia.Extensions.Controls
             }
             catch (Exception ex)
             {
+                Logger.TryGet(LogEventLevel.Warning, LogArea.Control)?.Log(obj, ex.Message);
                 throw ex;
             }
         }
@@ -81,6 +83,7 @@ namespace Avalonia.Extensions.Controls
             }
             catch (Exception ex)
             {
+                Logger.TryGet(LogEventLevel.Warning, LogArea.Control)?.Log(obj, ex.Message);
                 throw ex;
             }
         }
@@ -123,6 +126,7 @@ namespace Avalonia.Extensions.Controls
             }
             catch (Exception ex)
             {
+                Logger.TryGet(LogEventLevel.Warning, LogArea.Control)?.Log(scope, ex.Message);
                 throw ex;
             }
         }
@@ -137,6 +141,7 @@ namespace Avalonia.Extensions.Controls
             }
             catch (Exception ex)
             {
+                Logger.TryGet(LogEventLevel.Warning, LogArea.Control)?.Log(obj, ex.Message);
                 throw ex;
             }
         }
@@ -151,6 +156,7 @@ namespace Avalonia.Extensions.Controls
             }
             catch (Exception ex)
             {
+                Logger.TryGet(LogEventLevel.Warning, LogArea.Control)?.Log(obj, ex.Message);
                 throw ex;
             }
         }
@@ -165,6 +171,7 @@ namespace Avalonia.Extensions.Controls
             }
             catch (Exception ex)
             {
+                Logger.TryGet(LogEventLevel.Warning, LogArea.Control)?.Log(obj, ex.Message);
                 throw ex;
             }
         }

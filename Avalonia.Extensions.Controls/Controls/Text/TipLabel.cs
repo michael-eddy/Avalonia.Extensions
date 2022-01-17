@@ -1,4 +1,5 @@
 ﻿using Avalonia.Controls;
+using Avalonia.Layout;
 using Avalonia.Media;
 using Avalonia.Metadata;
 using System;
@@ -27,8 +28,8 @@ namespace Avalonia.Extensions.Controls
                 ZIndex = 1,
                 Text = Content,
                 Foreground = Foreground,
-                VerticalAlignment = Layout.VerticalAlignment.Center,
-                HorizontalAlignment = Layout.HorizontalAlignment.Center
+                VerticalAlignment = VerticalAlignment.Center,
+                HorizontalAlignment = HorizontalAlignment.Center
             };
             DockPanel = new Border
             {

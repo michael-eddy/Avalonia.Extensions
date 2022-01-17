@@ -1,8 +1,8 @@
 ﻿using Avalonia.Extensions.Controls;
+using Avalonia.Logging;
 using Avalonia.Markup.Xaml;
 using Avalonia.Platform;
 using System;
-using System.Diagnostics;
 using System.Text;
 
 namespace Avalonia.Extensions.Styles
@@ -25,7 +25,7 @@ namespace Avalonia.Extensions.Styles
             }
             catch (Exception ex)
             {
-                Debug.WriteLine(ex);
+                Logger.TryGet(LogEventLevel.Warning, LogArea.Control)?.Log(element, ex.Message);
             }
         }
     }

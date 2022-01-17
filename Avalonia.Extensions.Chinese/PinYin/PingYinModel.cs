@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 
-namespace Avalonia.Extensions.Chinese.PinYin
+namespace Avalonia.Extensions.Controls
 {
-    public class PingYinModel
+    public sealed class PingYinModel
     {
         public PingYinModel()
         {

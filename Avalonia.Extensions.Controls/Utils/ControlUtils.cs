@@ -1,5 +1,6 @@
 ﻿using Avalonia.Controls;
 using Avalonia.Extensions.Styles;
+using Avalonia.Logging;
 using Avalonia.Media;
 using Avalonia.Platform;
 using Avalonia.Styling;
@@ -76,6 +77,7 @@ namespace Avalonia.Extensions.Controls
             }
             catch (Exception ex)
             {
+                Logger.TryGet(LogEventLevel.Warning, LogArea.Control)?.Log(control, ex.Message);
                 throw ex;
             }
         }

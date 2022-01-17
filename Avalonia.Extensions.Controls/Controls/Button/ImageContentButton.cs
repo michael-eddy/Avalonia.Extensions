@@ -1,4 +1,5 @@
 ﻿using Avalonia.Controls;
+using Avalonia.Layout;
 using Avalonia.Extensions.Styles;
 using Avalonia.Metadata;
 using Avalonia.Styling;
@@ -22,22 +23,22 @@ namespace Avalonia.Extensions.Controls
         {
             StackPanel stackPanel = new StackPanel
             {
-                Orientation = Layout.Orientation.Horizontal,
-                VerticalAlignment = Layout.VerticalAlignment.Center,
-                HorizontalAlignment = Layout.HorizontalAlignment.Center
+                Orientation = Orientation.Horizontal,
+                VerticalAlignment = VerticalAlignment.Center,
+                HorizontalAlignment = HorizontalAlignment.Center
             };
             image = new ImageBox
             {
                 Source = ImageSource,
                 Width = IconSize.Width,
                 Height = IconSize.Height,
-                VerticalAlignment = Layout.VerticalAlignment.Center
+                VerticalAlignment = VerticalAlignment.Center
             };
             stackPanel.Children.Add(image);
             text = new TextBlock
             {
                 Text = Content,
-                VerticalAlignment = Layout.VerticalAlignment.Center
+                VerticalAlignment = VerticalAlignment.Center
             };
             stackPanel.Children.Add(text);
             base.Content = stackPanel;

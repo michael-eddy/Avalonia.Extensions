@@ -1,7 +1,7 @@
 ﻿using Avalonia.Extensions.Controls;
 using Avalonia.Extensions.Media;
+using Avalonia.Logging;
 using System;
-using System.Diagnostics;
 using System.Net.Http;
 
 namespace Avalonia.Extensions.Threading
@@ -9,8 +9,8 @@ namespace Avalonia.Extensions.Threading
     internal sealed class BitmapThread
     {
         private bool Loading = false;
-        private IBitmapSource Owner { get; }
         private HttpClient HttpClient { get; }
+        private IBitmapSource Owner { get; }
         public BitmapThread(IBitmapSource owner)
         {
             Owner = owner;
@@ -61,7 +61,7 @@ namespace Avalonia.Extensions.Threading
                 }
                 catch (Exception ex)
                 {
-                    Debug.WriteLine(ex);
+                    Logger.TryGet(LogEventLevel.Warning, LogArea.Control)?.Log(Owner, ex.Message);
                 }
                 Loading = false;
             }
