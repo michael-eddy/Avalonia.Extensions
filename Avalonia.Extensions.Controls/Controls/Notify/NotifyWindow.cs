@@ -1,5 +1,6 @@
 ﻿using Avalonia.Controls;
 using Avalonia.Extensions.Threading;
+using Avalonia.Logging;
 using Avalonia.Threading;
 using System;
 
@@ -40,6 +41,7 @@ namespace Avalonia.Extensions.Controls
             }
             catch (Exception ex)
             {
+                Logger.TryGet(LogEventLevel.Warning, LogArea.Control)?.Log(this, ex.Message);
                 throw ex;
             }
         }
@@ -83,6 +85,7 @@ namespace Avalonia.Extensions.Controls
             }
             catch (Exception ex)
             {
+                Logger.TryGet(LogEventLevel.Warning, LogArea.Control)?.Log(this, ex.Message);
                 throw ex;
             }
         }

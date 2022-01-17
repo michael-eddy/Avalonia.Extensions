@@ -1,7 +1,7 @@
 ﻿using Avalonia.Controls;
 using Avalonia.Extensions.Controls;
+using Avalonia.Logging;
 using System;
-using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -35,7 +35,9 @@ namespace Avalonia.Extensions.Threading
             }
             else
             {
-                throw new NotSupportedException("when Position is Top***,the Scroll Way(ScollOrientation) cannot be Vertical!");
+                string errorMessage = "when Position is Top***,the Scroll Way(ScollOrientation) cannot be Vertical!";
+                Logger.TryGet(LogEventLevel.Warning, LogArea.Control)?.Log(this, errorMessage);
+                throw new NotSupportedException(errorMessage);
             }
         }
         public void SetPath(PixelPoint startPosition, PixelPoint endPosition)
@@ -81,7 +83,8 @@ namespace Avalonia.Extensions.Threading
                 }
                 catch (Exception ex)
                 {
-                    Debug.WriteLine("AnimationThread RunJob ERROR : " + ex.Message);
+                    Logger.TryGet(LogEventLevel.Warning, LogArea.Control)?.Log(this,
+                        "AnimationThread RunJob ERROR : " + ex.Message);
                 }
             }
         }

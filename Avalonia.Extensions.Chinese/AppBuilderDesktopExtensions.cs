@@ -1,11 +1,11 @@
 ﻿using Avalonia.Controls;
 using Avalonia.Controls.Presenters;
 using Avalonia.Controls.Primitives;
+using Avalonia.Logging;
 using Avalonia.Media;
 using Avalonia.Styling;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 
 namespace Avalonia.Extensions.Controls
@@ -32,7 +32,7 @@ namespace Avalonia.Extensions.Controls
                 }
                 catch (Exception ex)
                 {
-                    Debug.WriteLine(ex);
+                    Logger.TryGet(LogEventLevel.Warning, LogArea.Control)?.Log(builder, ex.Message);
                     throw ex;
                 }
             });

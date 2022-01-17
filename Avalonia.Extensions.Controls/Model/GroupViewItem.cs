@@ -6,6 +6,10 @@
         {
             Content = content;
         }
+        public GroupViewItem(string content, bool check) : this(content)
+        {
+            Check = check;
+        }
         public GroupViewItem(string content, object tag) : this(content)
         {
             Tag = tag;

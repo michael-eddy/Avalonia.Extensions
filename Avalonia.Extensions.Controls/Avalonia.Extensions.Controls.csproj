@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <Version>1.5.4</Version>
+        <Version>1.5.5</Version>
         <Authors>michael_eddy</Authors>
         <LangVersion>latest</LangVersion>
         <Product>Avalonia.Extensions.Controls</Product>

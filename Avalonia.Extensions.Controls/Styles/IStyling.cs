@@ -1,9 +1,9 @@
 ﻿using Avalonia.Controls;
 using Avalonia.Extensions.Controls;
+using Avalonia.Logging;
 using Avalonia.Markup.Xaml;
 using Avalonia.Styling;
 using System;
-using System.Diagnostics;
 using System.Text;
 
 namespace Avalonia.Extensions.Styles
@@ -32,7 +32,7 @@ namespace Avalonia.Extensions.Styles
             }
             catch (Exception ex)
             {
-                Debug.WriteLine(ex.Message);
+                Logger.TryGet(LogEventLevel.Warning, LogArea.Control)?.Log(this, ex.Message);
             }
         }
         void AddResource()
@@ -53,7 +53,7 @@ namespace Avalonia.Extensions.Styles
             }
             catch (Exception ex)
             {
-                Debug.WriteLine(ex.Message);
+                Logger.TryGet(LogEventLevel.Warning, LogArea.Control)?.Log(this, ex.Message);
             }
         }
     }
