@@ -10,10 +10,10 @@ namespace Avalonia.Controls.Demo
         {
             RxApp.MainThreadScheduler = AvaloniaScheduler.Instance;
             AppBuilder.Configure<App>()
+                    .LogToTrace()
                     .UsePlatformDetect()
                     .UseDoveExtensions()
                     .UseChineseInputSupport()
-                    .LogToTrace()
             .StartWithClassicDesktopLifetime(args);
         }
     }

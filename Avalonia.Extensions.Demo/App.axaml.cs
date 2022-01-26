@@ -1,4 +1,5 @@
 using Avalonia.Controls.ApplicationLifetimes;
+using Avalonia.Extensions.Controls;
 using Avalonia.Markup.Xaml;
 using ReactiveUI;
 using System;
@@ -6,7 +7,7 @@ using System.Reactive;
 
 namespace Avalonia.Controls.Demo
 {
-    public class App : Application
+    public class App : ApplicationBase
     {
         public override void Initialize()
         {
