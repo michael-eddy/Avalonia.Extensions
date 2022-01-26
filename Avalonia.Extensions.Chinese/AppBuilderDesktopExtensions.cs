@@ -28,7 +28,18 @@ namespace Avalonia.Extensions.Controls
                         contols = new[] { typeof(TextBox), typeof(TextPresenter) };
                     else
                         contols = supportContols;
-                    ApplyStyle(contols);
+                    foreach (var supportContol in contols)
+                    {
+                        if (supportContol.FullName.StartsWith("Avalonia.Controls", StringComparison.OrdinalIgnoreCase) ||
+                            supportContol.FullName.StartsWith("Avalonia.Extensions.Controls", StringComparison.OrdinalIgnoreCase))
+                        {
+                            var style = new Style();
+                            style.Selector = default(Selector).OfType(supportContol);
+                            style.Setters.Add(new Setter(TemplatedControl.FontFamilyProperty,
+                                new FontFamily("avares://Avalonia.Extensions.Chinese/Assets/Fonts#WenQuanYi Micro Hei")));
+                            Application.Current.Styles.Add(style);
+                        }
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -37,21 +48,6 @@ namespace Avalonia.Extensions.Controls
                 }
             });
             return builder;
-        }
-        private static void ApplyStyle(IEnumerable<Type> supportContols)
-        {
-            foreach (var supportContol in supportContols)
-            {
-                if (supportContol.FullName.StartsWith("Avalonia.Controls", StringComparison.OrdinalIgnoreCase) ||
-                    supportContol.FullName.StartsWith("Avalonia.Extensions.Controls", StringComparison.OrdinalIgnoreCase))
-                {
-                    var style = new Style();
-                    style.Selector = default(Selector).OfType(supportContol);
-                    style.Setters.Add(new Setter(TemplatedControl.FontFamilyProperty,
-                        new FontFamily("avares://Avalonia.Extensions.Chinese/Assets/Fonts#WenQuanYi Micro Hei")));
-                    Application.Current.Styles.Add(style);
-                }
-            }
         }
     }
 }

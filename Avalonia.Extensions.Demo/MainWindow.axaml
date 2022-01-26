@@ -8,7 +8,7 @@
         Title="Avalonia.Controls.Demo" CanResize="False">
 	<Panel>
 		<DockPanel VerticalAlignment="Stretch">
-			<ExperimentalAcrylicBorder DockPanel.Dock="Top" Height="188">
+			<ExperimentalAcrylicBorder DockPanel.Dock="Top" Height="146">
 				<ExperimentalAcrylicBorder.Material>
 					<ExperimentalAcrylicMaterial TintColor="Black" MaterialOpacity="0.85" TintOpacity="1" />
 				</ExperimentalAcrylicBorder.Material>
