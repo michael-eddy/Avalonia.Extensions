@@ -3,67 +3,79 @@ using Avalonia.Extensions.Media;
 using Avalonia.Logging;
 using System;
 using System.Net.Http;
+using System.Threading;
 
 namespace Avalonia.Extensions.Threading
 {
     internal sealed class BitmapThread
     {
-        private bool Loading = false;
         private HttpClient HttpClient { get; }
         private IBitmapSource Owner { get; }
+        internal event CompleteEventHandler CompleteEvent;
+        internal delegate void CompleteEventHandler(object sender, bool success, string message);
         public BitmapThread(IBitmapSource owner)
         {
             Owner = owner;
             HttpClient = Core.Instance.GetClient();
         }
-        public bool Create(Uri uri, out string message)
+        public void Run(Uri uri)
         {
-            message = string.Empty;
             switch (uri.Scheme)
             {
                 case "http":
                 case "https":
                     {
-                        Create(uri.AbsoluteUri);
-                        return true;
+                        ThreadPool.QueueUserWorkItem(HttpLoader, uri);
+                        break;
                     }
                 case "avares":
                     {
-                        try
-                        {
-                            var assets = Core.Instance.AssetLoader;
-                            Owner.SetBitmapSource(assets.Open(uri));
-                        }
-                        catch { }
-                        return true;
+                        ThreadPool.QueueUserWorkItem(AssetsLoader, uri);
+                        break;
                     }
                 default:
-                    {
-                        message = "unsupport URI scheme.only support HTTP/HTTPS or avares://";
-                        return false;
-                    }
+                    throw new NotSupportedException("unsupport URI scheme.only support HTTP/HTTPS or avares://");
             }
         }
-        private async void Create(string url)
+        private void AssetsLoader(object state)
         {
-            if (!Loading)
+            if (state is Uri uri)
             {
-                Loading = true;
+                try
+                {
+                    var assets = Core.Instance.AssetLoader;
+                    var stream = assets.Open(uri);
+                    Owner.SetBitmapSource(stream);
+                }
+                catch (Exception ex)
+                {
+                    CompleteEvent?.Invoke(this, false, ex.Message);
+                }
+            }
+        }
+        private void HttpLoader(object state)
+        {
+            if (state is Uri uri)
+            {
+                var url = uri.AbsoluteUri;
                 try
                 {
                     if (!string.IsNullOrEmpty(url))
                     {
-                        HttpResponseMessage hr = await HttpClient.GetAsync(url);
+                        HttpResponseMessage hr = HttpClient.GetAsync(url).GetAwaiter().GetResult();
                         hr.EnsureSuccessStatusCode();
-                        var stream = await hr.Content.ReadAsStreamAsync();
+                        var stream = hr.Content.ReadAsStreamAsync().GetAwaiter().GetResult();
                         Owner.SetBitmapSource(stream);
+                        CompleteEvent?.Invoke(this, true, string.Empty);
                     }
+                    else
+                        CompleteEvent?.Invoke(this, false, "URL cannot be NULL or EMPTY.");
                 }
                 catch (Exception ex)
                 {
+                    CompleteEvent?.Invoke(this, false, ex.Message);
                     Logger.TryGet(LogEventLevel.Warning, LogArea.Control)?.Log(Owner, ex.Message);
                 }
-                Loading = false;
             }
         }
     }

@@ -13,6 +13,7 @@ namespace Avalonia.Extensions.Threading
         private Window Window { get; }
         private NotifyOptions Options { get; set; }
         private PixelPoint StopPosition { get; set; }
+        internal bool IsDisposed { get; private set; }
         private PixelPoint StartPosition { get; set; }
         private PixelPoint LeftHorizontalNext { get; set; }
         private PixelPoint BottomVerticalNext { get; set; }
@@ -27,6 +28,7 @@ namespace Avalonia.Extensions.Threading
         {
             if (options.IsVaidate)
             {
+                IsDisposed = false;
                 Options = options;
                 LeftHorizontalNext = new PixelPoint(Options.MovePixel, 0);
                 BottomVerticalNext = new PixelPoint(0, -Options.MovePixel);
@@ -128,9 +130,13 @@ namespace Avalonia.Extensions.Threading
         {
             try
             {
-                Thread.Interrupt();
-                DisposeEvent?.Invoke(this, null);
-                GC.Collect();
+                if (!IsDisposed)
+                {
+                    IsDisposed = true;
+                    Thread.Interrupt();
+                    DisposeEvent?.Invoke(this, null);
+                    GC.Collect();
+                }
             }
             catch { }
         }

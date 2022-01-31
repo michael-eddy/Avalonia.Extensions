@@ -2,6 +2,7 @@
 using Avalonia.Extensions.Media;
 using Avalonia.Extensions.Threading;
 using Avalonia.Interactivity;
+using Avalonia.Logging;
 using Avalonia.Media;
 using Avalonia.Media.Imaging;
 using Avalonia.Metadata;
@@ -37,8 +38,20 @@ namespace Avalonia.Extensions.Controls
         public CircleImage() : base()
         {
             Task = new BitmapThread(this);
+            Task.CompleteEvent += Task_CompleteEvent;
             SourceProperty.Changed.AddClassHandler<CircleImage>(OnSourceChange);
             ImageSourceProperty.Changed.AddClassHandler<CircleImage>(OnImageSourceProperty);
+        }
+        private void Task_CompleteEvent(object sender, bool success, string message)
+        {
+            if (!success)
+            {
+                FailedMessage = message;
+                var @event = new RoutedEventArgs(FailedEvent);
+                RaiseEvent(@event);
+                if (!@event.Handled)
+                    @event.Handled = true;
+            }
         }
         private void OnImageSourceProperty(object sender, AvaloniaPropertyChangedEventArgs e)
         {
@@ -52,32 +65,33 @@ namespace Avalonia.Extensions.Controls
         public Bitmap Bitmap { get; set; }
         public void SetBitmapSource(Stream stream)
         {
-            if (Bitmap != null)
-                Bitmap.Dispose();
-            if (stream != null)
+            Dispatcher.UIThread.InvokeAsync(() =>
             {
-                Bitmap = new Bitmap(stream);
-                Fill = new ImageBrush { Source = Bitmap };
-                DrawAgain();
-                SetSize(Bitmap.Size);
-            }
+                try
+                {
+                    Bitmap?.Dispose();
+                    if (stream != null)
+                    {
+                        Bitmap = new Bitmap(stream);
+                        Fill = new ImageBrush { Source = Bitmap };
+                        DrawAgain();
+                        SetSize(Bitmap.Size);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Logger.TryGet(LogEventLevel.Warning, LogArea.Control)?.Log(this, ex.Message);
+                }
+                finally
+                {
+                    stream.Dispose();
+                }
+            });
         }
         private void OnSourceChange(object sender, AvaloniaPropertyChangedEventArgs e)
         {
             if (e.NewValue is Uri uri)
-            {
-                Dispatcher.UIThread.InvokeAsync(() =>
-                {
-                    if (!Task.Create(uri, out string message))
-                    {
-                        FailedMessage = message;
-                        var @event = new RoutedEventArgs(FailedEvent);
-                        RaiseEvent(@event);
-                        if (!@event.Handled)
-                            @event.Handled = true;
-                    }
-                });
-            }
+                Task.Run(uri);
         }
         private void SetSize(Size size)
         {
