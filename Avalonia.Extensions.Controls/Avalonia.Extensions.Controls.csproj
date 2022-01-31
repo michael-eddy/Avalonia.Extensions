@@ -16,19 +16,15 @@
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     </PropertyGroup>
     <ItemGroup>
-        <None Remove="Assets\Fonts\SegMDL2.ttf" />
-        <None Remove="Styles\Xaml\CheckBoxList.xml" />
-        <None Remove="Styles\Xaml\GridView.xml" />
-        <None Remove="Styles\Xaml\RadioButtonList.xml" />
         <None Remove="Styles\Xaml\readme.txt" />
         <AvaloniaResource Include="Styles\Xaml\*.xml" />
         <None Include="..\.editorconfig" Link=".editorconfig" />
         <AvaloniaResource Include="Assets\Fonts\SegMDL2.ttf" />
     </ItemGroup>
     <ItemGroup>
-        <PackageReference Include="Avalonia" Version="0.10.11" />
+        <PackageReference Include="Avalonia" Version="0.10.12" />
         <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
         <PackageReference Include="System.Drawing.Common" Version="6.0.0" />
-        <PackageReference Include="Avalonia.Markup.Xaml.Loader" Version="0.10.11" />
+        <PackageReference Include="Avalonia.Markup.Xaml.Loader" Version="0.10.12" />
     </ItemGroup>
 </Project>
