@@ -1,2 +1,4 @@
-# Auto detect text files and perform LF normalization
-* text=auto
+*.xaml linguist-language=csharp
+*.axaml linguist-language=csharp
+*.csproj linguist-language=csharp
+*.editorconfig linguist-language=csharp
