@@ -1,4 +1,4 @@
-*.xaml linguist-language=C#
-*.axaml linguist-language=C#
-*.csproj linguist-language=C#
-*.editorconfig linguist-language=C#
+*.xaml linguist-language=csharp
+*.axaml linguist-language=csharp
+*.csproj linguist-language=csharp
+*.editorconfig linguist-language=csharp
