@@ -2,6 +2,7 @@
 using Avalonia.Extensions.Media;
 using Avalonia.Extensions.Threading;
 using Avalonia.Interactivity;
+using Avalonia.Logging;
 using Avalonia.Media.Imaging;
 using Avalonia.Metadata;
 using Avalonia.Threading;
@@ -29,6 +30,18 @@ namespace Avalonia.Extensions.Controls
         public ImageBox() : base()
         {
             Task = new BitmapThread(this);
+            Task.CompleteEvent += Task_CompleteEvent;
+        }
+        private void Task_CompleteEvent(object sender, bool success, string message)
+        {
+            if (!success)
+            {
+                FailedMessage = message;
+                var @event = new RoutedEventArgs(FailedEvent);
+                RaiseEvent(@event);
+                if (!@event.Handled)
+                    @event.Handled = true;
+            }
         }
         /// <summary>
         /// error message if loading failed
@@ -50,51 +63,42 @@ namespace Avalonia.Extensions.Controls
             {
                 SetAndRaise(SourceProperty, ref _source, value);
                 if (value != null)
-                    LoadBitmap(value);
+                    Task.Run(value);
             }
         }
         public Bitmap Bitmap { get; set; }
         public void SetBitmapSource(Stream stream)
         {
-            try
-            {
-                if (Bitmap != null)
-                    Bitmap.Dispose();
-                if (stream != null)
-                {
-                    Bitmap = new Bitmap(stream);
-                    var width = Width.ToInt32();
-                    if (double.IsNaN(Width) || width == 0)
-                    {
-                        Width = ImageWidth = Bitmap.PixelSize.Width;
-                        Height = ImageHeight = Bitmap.PixelSize.Height;
-                    }
-                    else
-                    {
-                        ImageWidth = Bitmap.PixelSize.Width;
-                        ImageHeight = Bitmap.PixelSize.Height;
-                    }
-                    base.Source = Bitmap;
-                }
-            }
-            catch { }
-        }
-        private void LoadBitmap(Uri uri)
-        {
             Dispatcher.UIThread.InvokeAsync(() =>
             {
                 try
                 {
-                    if (!Task.Create(uri, out string message))
+                    Bitmap?.Dispose();
+                    if (stream != null)
                     {
-                        FailedMessage = message;
-                        var @event = new RoutedEventArgs(FailedEvent);
-                        RaiseEvent(@event);
-                        if (!@event.Handled)
-                            @event.Handled = true;
+                        Bitmap = new Bitmap(stream);
+                        var width = Width.ToInt32();
+                        if (double.IsNaN(Width) || width == 0)
+                        {
+                            Width = ImageWidth = Bitmap.PixelSize.Width;
+                            Height = ImageHeight = Bitmap.PixelSize.Height;
+                        }
+                        else
+                        {
+                            ImageWidth = Bitmap.PixelSize.Width;
+                            ImageHeight = Bitmap.PixelSize.Height;
+                        }
+                        base.Source = Bitmap;
                     }
                 }
-                catch { }
+                catch (Exception ex)
+                {
+                    Logger.TryGet(LogEventLevel.Warning, LogArea.Control)?.Log(this, ex.Message);
+                }
+                finally
+                {
+                    stream.Dispose();
+                }
             });
         }
         /// <summary>
