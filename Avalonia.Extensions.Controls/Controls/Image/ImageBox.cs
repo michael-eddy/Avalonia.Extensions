@@ -6,6 +6,7 @@ using Avalonia.Logging;
 using Avalonia.Media.Imaging;
 using Avalonia.Metadata;
 using Avalonia.Threading;
+using Avalonia.Visuals.Media.Imaging;
 using System;
 using System.IO;
 
@@ -48,6 +49,11 @@ namespace Avalonia.Extensions.Controls
         /// </summary>
         public string FailedMessage { get; private set; }
         /// <summary>
+        /// Defines the <see cref="InterpolationMode"/> property.
+        /// </summary>
+        public static readonly StyledProperty<BitmapInterpolationMode> InterpolationModeProperty =
+            AvaloniaProperty.Register<HyperlinkButton, BitmapInterpolationMode>(nameof(InterpolationMode), BitmapInterpolationMode.HighQuality);
+        /// <summary>
         /// Defines the <see cref="Source"/> property.
         /// </summary>
         public static new readonly DirectProperty<ImageBox, Uri> SourceProperty =
@@ -67,6 +73,14 @@ namespace Avalonia.Extensions.Controls
             }
         }
         public Bitmap Bitmap { get; set; }
+        /// <summary>
+        /// get or set image quality
+        /// </summary>
+        public BitmapInterpolationMode InterpolationMode
+        {
+            get => GetValue(InterpolationModeProperty);
+            set => SetValue(InterpolationModeProperty, value);
+        }
         public void SetBitmapSource(Stream stream)
         {
             Dispatcher.UIThread.InvokeAsync(() =>
@@ -76,8 +90,8 @@ namespace Avalonia.Extensions.Controls
                     Bitmap?.Dispose();
                     if (stream != null)
                     {
-                        Bitmap = new Bitmap(stream);
                         var width = Width.ToInt32();
+                        Bitmap = Bitmap.DecodeToWidth(stream, width, InterpolationMode);
                         if (double.IsNaN(Width) || width == 0)
                         {
                             Width = ImageWidth = Bitmap.PixelSize.Width;
