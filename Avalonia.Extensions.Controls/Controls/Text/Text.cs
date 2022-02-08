@@ -1,9 +1,9 @@
-﻿using Avalonia.Controls;
+﻿using Avalonia.Controls.Shapes;
 using Avalonia.Media;
 
 namespace Avalonia.Extensions.Controls
 {
-    internal sealed class Text : Control
+    public sealed class Text : Shape
     {
         public static readonly StyledProperty<IBrush> ForegroundProperty =
             AvaloniaProperty.Register<Text, IBrush>("Foreground", new SolidColorBrush(Colors.Black));
@@ -33,6 +33,10 @@ namespace Avalonia.Extensions.Controls
         {
             var formattedText = new FormattedText(Content, Typeface.Default, FontSize, TextAlignment.Left, TextWrapping.NoWrap, new Size(300, 300));
             context.DrawText(Foreground, new Point(0, 0), formattedText);
+        }
+        protected override Geometry CreateDefiningGeometry()
+        {
+            return default;
         }
     }
 }
