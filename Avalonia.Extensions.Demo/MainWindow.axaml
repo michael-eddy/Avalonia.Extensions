@@ -72,6 +72,9 @@
 						<RowDefinition Height=".2*"/>
 					</Grid.RowDefinitions>
 					<StackPanel Orientation="Vertical" Grid.Row="1">
+						<Canvas>
+							<Text Content="tttttttttt" />
+						</Canvas>
 						<Button Click="OnNotifyClick" CommandParameter="1">TopLeft / Horizontal</Button>
 						<Button Click="OnNotifyClick" CommandParameter="2">TopRight / Horizontal</Button>
 						<Button Click="OnNotifyClick" CommandParameter="3">BottomLeft / Horizontal</Button>

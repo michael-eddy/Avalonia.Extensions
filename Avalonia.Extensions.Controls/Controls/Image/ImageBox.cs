@@ -91,14 +91,15 @@ namespace Avalonia.Extensions.Controls
                     if (stream != null)
                     {
                         var width = Width.ToInt32();
-                        Bitmap = Bitmap.DecodeToWidth(stream, width, InterpolationMode);
                         if (double.IsNaN(Width) || width == 0)
                         {
+                            Bitmap = new Bitmap(stream);
                             Width = ImageWidth = Bitmap.PixelSize.Width;
                             Height = ImageHeight = Bitmap.PixelSize.Height;
                         }
                         else
                         {
+                            Bitmap = Bitmap.DecodeToWidth(stream, width, InterpolationMode);
                             ImageWidth = Bitmap.PixelSize.Width;
                             ImageHeight = Bitmap.PixelSize.Height;
                         }
