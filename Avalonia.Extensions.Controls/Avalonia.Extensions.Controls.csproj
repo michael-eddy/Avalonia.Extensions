@@ -23,9 +23,7 @@
     </ItemGroup>
     <ItemGroup>
         <PackageReference Include="Avalonia" Version="0.10.12" />
-        <PackageReference Include="Avalonia.Skia" Version="0.10.12" />
         <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
-        <PackageReference Include="SkiaSharp" Version="2.88.0-preview.178" />
         <PackageReference Include="System.Drawing.Common" Version="6.0.0" />
         <PackageReference Include="Avalonia.Markup.Xaml.Loader" Version="0.10.12" />
     </ItemGroup>
