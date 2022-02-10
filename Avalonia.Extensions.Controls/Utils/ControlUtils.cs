@@ -47,7 +47,7 @@ namespace Avalonia.Extensions.Controls
         }
         public static SizeF MeasureString(this IWindowImpl impl, string content, Font font, float maxWidth = 0)
         {
-            if (impl != null)
+            try
             {
                 var graphic = impl.GetGraphics();
                 StringFormat sf = StringFormat.GenericTypographic;
@@ -57,7 +57,7 @@ namespace Avalonia.Extensions.Controls
                 else
                     return graphic.MeasureString(content.Trim(), font, PointF.Empty, sf);
             }
-            return default;
+            catch { return new SizeF(); }
         }
         public static SizeF MeasureString(this string text, Font font, double maxwidth)
         {
