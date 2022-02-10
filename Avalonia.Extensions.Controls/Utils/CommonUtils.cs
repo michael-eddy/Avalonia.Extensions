@@ -10,15 +10,19 @@ namespace Avalonia.Extensions.Controls
     {
         public static Graphics GetGraphics(this IWindowImpl impl)
         {
+            Graphics graphics = null;
             try
             {
-                return Graphics.FromHwnd(impl.Handle.Handle);
+                if (impl != null)
+                    graphics = Graphics.FromHwnd(impl.Handle.Handle);
             }
-            catch
+            catch { }
+            if (graphics == null)
             {
                 Bitmap bitmap = new Bitmap(1, 1);
-                return Graphics.FromImage(bitmap);
+                graphics = Graphics.FromImage(bitmap);
             }
+            return graphics;
         }
         public static int Upper(this double value)
         {

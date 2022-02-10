@@ -24,8 +24,8 @@ namespace Avalonia.Extensions.Controls
         private Core()
         {
             InnerClasses = new List<Uri>();
-            FontDefault = new Font("Arial", 16);
             Transparent = new SolidColorBrush(Colors.Transparent);
+            FontDefault = new Font(Typeface.Default.FontFamily.Name, 16);
         }
         public void Init()
         {
