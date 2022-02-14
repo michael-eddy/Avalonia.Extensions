@@ -94,7 +94,7 @@ public static AppBuilder BuildAvaloniaApp()
   > > diff with `PopupDialog`, it's popuping in workarea who popuping in control/panel
 
 - [x] RunLabel
-> Run binding just LIKE WPF/UWP in TextBlock
+> Run binding just LIKE WPF/UWP in TextBlock,with LineBreak can wrap the text
 
 - [x] HyperlinkButton
 > the button style LIKE HyperlinkButton in UWP

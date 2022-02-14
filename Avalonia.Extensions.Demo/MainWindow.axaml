@@ -174,7 +174,9 @@
 				<StackPanel Orientation="Vertical">
 					<RunLabel Foreground="White" FontSize="18">
 						<Run Content="111" />
-						<Run Content="222" />
+						<LineBreak />
+						<Run>222</Run>
+						<LineBreak />
 						<Run Content="333" />
 					</RunLabel>
 					<SymbolIcon Glyph="&#xE700;" />

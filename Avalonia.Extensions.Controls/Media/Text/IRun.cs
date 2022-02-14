@@ -2,7 +2,7 @@
 
 namespace Avalonia.Extensions.Media
 {
-    public interface IRun : IControl
+    public interface IRuns : IControl
     {
         Runs Children { get; }
     }

@@ -12,14 +12,6 @@ namespace Avalonia.Extensions.Controls
 		private TextLayout _textLayout;
 		private string _text => this.GetPrivateField<string>("_text");
 		public TextLayout TextLayout => _textLayout ??= CreateTextLayout(_constraint, _text);
-		private (Point, Point) GetCaretPoints()
-		{
-			Rect charPos = FormattedText.HitTestTextPosition(CaretIndex);
-			double x = Math.Floor(charPos.X) + 0.5;
-			double y = Math.Floor(charPos.Y) + 0.5;
-			double b = Math.Ceiling(charPos.Bottom) - 0.5;
-			return (new Point(x, y), new Point(x, b));
-		}
 		public static readonly StyledProperty<TextTrimming> TextTrimmingProperty =
 			AvaloniaProperty.Register<RunLabel, TextTrimming>(nameof(TextTrimming));
 		public TextTrimming TextTrimming
@@ -76,8 +68,7 @@ namespace Avalonia.Extensions.Controls
 					context.FillRectangle(SelectionBrush, rect);
 			}
 			RenderInternal(context);
-			if (selectionStart != selectionEnd)
-				return;
+			if (selectionStart != selectionEnd) return;
 			IBrush caretBrush = CaretBrush?.ToImmutable();
 			if (caretBrush == null)
 			{
@@ -92,7 +83,9 @@ namespace Avalonia.Extensions.Controls
 				else
 					caretBrush = Brushes.Black;
 			}
-			var (p1, p2) = GetCaretPoints();
+			Rect charPos = FormattedText.HitTestTextPosition(CaretIndex);
+			double x = Math.Floor(charPos.X) + 0.5, y = Math.Floor(charPos.Y) + 0.5, b = Math.Ceiling(charPos.Bottom) - 0.5;
+			Point p1 = new Point(x, y), p2 = new Point(x, b);
 			context.DrawLine(new ImmutablePen(caretBrush), p1, p2);
 		}
 		protected virtual TextLayout CreateTextLayout(Size constraint, string text)
