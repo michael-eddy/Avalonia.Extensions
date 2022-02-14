@@ -173,7 +173,7 @@ namespace Avalonia.Extensions.Controls
 		{
 			IBrush background = Background;
 			if (background != null)
-				context.FillRectangle(background, new Rect(base.Bounds.Size));
+				context.FillRectangle(background, new Rect(Bounds.Size));
 			if (TextLayout == null)
 				return;
 			TextAlignment textAlignment = TextAlignment;

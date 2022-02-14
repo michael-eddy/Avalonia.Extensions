@@ -1,4 +1,5 @@
 ﻿using Avalonia.Controls.Shapes;
+using Avalonia.Extensions.Styles;
 using Avalonia.Media;
 using Avalonia.Metadata;
 using System;
@@ -7,7 +8,7 @@ using FontFamily = Avalonia.Media.FontFamily;
 
 namespace Avalonia.Extensions.Controls
 {
-    public sealed class Text : Shape
+    public class Text : Shape
     {
         /// <summary>
         /// Defines the <see cref="Content"/> property
@@ -48,8 +49,11 @@ namespace Avalonia.Extensions.Controls
             set => SetValue(FontSizeProperty, value);
         }
         private string _content;
+        private Size _constraint;
+        private TextLayout _textLayout;
         private Typeface DefaultTypeface { get; }
         private FontFamily DefaultFontFamily { get; }
+        public TextLayout TextLayout => _textLayout ??= CreateTextLayout(_constraint, _content);
         public Text()
         {
             _content = string.Empty;
@@ -59,12 +63,37 @@ namespace Avalonia.Extensions.Controls
             DefaultFontFamily = new FontFamily(FontManager.Current.DefaultFontFamilyName);
             DefaultTypeface = new Typeface(DefaultFontFamily);
         }
+        protected void InvalidateTextLayout()
+        {
+            _textLayout = null;
+        }
+        protected virtual TextLayout CreateTextLayout(Size constraint, string text)
+        {
+            if (constraint == Size.Empty)
+                return null;
+            return new TextLayout(text ?? string.Empty, new Typeface(DefaultFontFamily), FontSize, Foreground);
+        }
         public override void Render(DrawingContext context)
         {
-            var formattedText = new FormattedText(Content, DefaultTypeface, FontSize, TextAlignment.Left, TextWrapping.NoWrap, MeasureStringSize);
-            context.DrawText(Foreground, new Point(0, 0), formattedText);
+            context.FillRectangle(Avalonia.Media.Brushes.Transparent, new Rect(Bounds.Size));
+            if (TextLayout == null)
+                return;
+            using (context.PushPostTransform(Matrix.CreateTranslation(0, 0)))
+                TextLayout.Draw(context);
         }
-        protected override Size MeasureOverride(Size availableSize) => MeasureStringSize;
+        protected override Size MeasureOverride(Size availableSize)
+        {
+            if (string.IsNullOrEmpty(_content))
+                return default;
+            var padding = new Thickness(StrokeThickness);
+            availableSize = availableSize.Deflate(padding);
+            if (_constraint != availableSize)
+            {
+                _constraint = availableSize;
+                InvalidateTextLayout();
+            }
+            return (TextLayout?.Size ?? Size.Empty).Inflate(padding);
+        }
         protected override Geometry CreateDefiningGeometry() => new RectangleGeometry(new Rect(MeasureStringSize).Deflate(StrokeThickness / 2));
         private Size MeasureStringSize
         {

@@ -202,7 +202,8 @@
 			</TabItem>
 			<TabItem Header="Canvas Shape">
 				<Canvas>
-					<Text Content="now i'am the content in canvas" />
+					<Text Foreground="White" Content="now i'am the content in canvas" />
+					<Text Canvas.Left="20" Canvas.Top="20" Foreground="White" Content="现在我就在Canvas里面显示" />
 				</Canvas>
 			</TabItem>
 		</TabControl>
