@@ -3,6 +3,7 @@ using Avalonia.Media;
 using Avalonia.Metadata;
 using System;
 using System.Drawing;
+using FontFamily = Avalonia.Media.FontFamily;
 
 namespace Avalonia.Extensions.Controls
 {
@@ -47,16 +48,20 @@ namespace Avalonia.Extensions.Controls
             set => SetValue(FontSizeProperty, value);
         }
         private string _content;
+        private Typeface DefaultTypeface { get; }
+        private FontFamily DefaultFontFamily { get; }
         public Text()
         {
             _content = string.Empty;
             AffectsRender<Text>(ContentProperty);
             AffectsRender<Text>(ForegroundProperty);
             SetValue(StrokeThicknessProperty, 2);
+            DefaultFontFamily = new FontFamily(FontManager.Current.DefaultFontFamilyName);
+            DefaultTypeface = new Typeface(DefaultFontFamily);
         }
         public override void Render(DrawingContext context)
         {
-            var formattedText = new FormattedText(Content, Typeface.Default, FontSize, TextAlignment.Left, TextWrapping.NoWrap, MeasureStringSize);
+            var formattedText = new FormattedText(Content, DefaultTypeface, FontSize, TextAlignment.Left, TextWrapping.NoWrap, MeasureStringSize);
             context.DrawText(Foreground, new Point(0, 0), formattedText);
         }
         protected override Size MeasureOverride(Size availableSize) => MeasureStringSize;
@@ -71,7 +76,7 @@ namespace Avalonia.Extensions.Controls
                     var graphics = Graphics.FromImage(bitmap);
                     StringFormat sf = StringFormat.GenericTypographic;
                     sf.FormatFlags |= StringFormatFlags.MeasureTrailingSpaces;
-                    var size = graphics.MeasureString(Content.Trim(), new Font(Typeface.Default.FontFamily.Name, FontSize), PointF.Empty, sf);
+                    var size = graphics.MeasureString(Content.Trim(), new Font(DefaultTypeface.FontFamily.Name, FontSize), PointF.Empty, sf);
                     double width = Math.Ceiling(size.Width), height = Math.Ceiling(size.Height);
                     return new Size(width, height);
                 }

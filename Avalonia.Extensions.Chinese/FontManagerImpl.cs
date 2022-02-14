@@ -34,11 +34,8 @@ namespace Avalonia.Extensions.Controls
                 typeface = new Typeface(customTypeface.FontFamily.Name, fontStyle, fontWeight);
                 return true;
             }
-            string fontFamilyName = null;
-            if (fontFamily?.FamilyNames.HasFallbacks == true)
-                fontFamilyName = fontFamily.Name;
-            var fallback = SKFontManager.Default.MatchCharacter(fontFamilyName, (SKFontStyleWeight)fontWeight,
-                SKFontStyleWidth.Normal, (SKFontStyleSlant)fontStyle, _bcp47, codepoint);
+            string fontFamilyName = fontFamily?.FamilyNames.HasFallbacks == true ? fontFamily.Name : string.Empty;
+            var fallback = SKFontManager.Default.MatchCharacter(fontFamilyName, (SKFontStyleWeight)fontWeight, SKFontStyleWidth.Normal, (SKFontStyleSlant)fontStyle, _bcp47, codepoint);
             typeface = new Typeface(fallback?.FamilyName ?? _defaultFamilyName, fontStyle, fontWeight);
             return true;
         }

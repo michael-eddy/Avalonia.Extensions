@@ -6,12 +6,14 @@ using System;
 using System.Drawing;
 using System.Linq;
 using System.Threading.Tasks;
+using FontFamily = Avalonia.Media.FontFamily;
 
 namespace Avalonia.Extensions.Controls
 {
     public sealed class MessageBox : Window
     {
         private Graphics Graphic { get; }
+        private FontFamily DefaultFontFamily { get; }
         private MessageBoxButtons _buttonType;
         public MessageBoxButtons ButtonType
         {
@@ -25,12 +27,13 @@ namespace Avalonia.Extensions.Controls
                     var cancel = new Button
                     {
                         Name = "Cancel",
+                        FontFamily = DefaultFontFamily,
                         HorizontalAlignment = HorizontalAlignment.Center,
                         HorizontalContentAlignment = HorizontalAlignment.Center
                     };
                     root.Children.Add(cancel);
-                    Grid.SetColumn(cancel, 1);
                     Grid.SetRow(cancel, 1);
+                    Grid.SetColumn(cancel, 1);
                 }
             }
         }
@@ -41,6 +44,7 @@ namespace Avalonia.Extensions.Controls
             CanResize = false;
             CreateControls();
             Graphic = PlatformImpl.GetGraphics();
+            DefaultFontFamily = new FontFamily(FontManager.Current.DefaultFontFamilyName);
         }
         protected override void OnClosed(EventArgs e)
         {
@@ -65,12 +69,13 @@ namespace Avalonia.Extensions.Controls
                 TextWrapping = TextWrapping.Wrap
             };
             root.Children.Add(tb);
-            Grid.SetColumn(tb, 0);
             Grid.SetRow(tb, 0);
+            Grid.SetColumn(tb, 0);
             Grid.SetColumnSpan(tb, 2);
             var ok = new Button
             {
                 Name = "Ok",
+                FontFamily = DefaultFontFamily,
                 HorizontalAlignment = HorizontalAlignment.Center,
                 HorizontalContentAlignment = HorizontalAlignment.Center
             };
@@ -82,6 +87,7 @@ namespace Avalonia.Extensions.Controls
                 var cancel = new Button
                 {
                     Name = "Cancel",
+                    FontFamily = DefaultFontFamily,
                     HorizontalAlignment = HorizontalAlignment.Center,
                     HorizontalContentAlignment = HorizontalAlignment.Center
                 };

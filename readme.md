@@ -53,7 +53,6 @@ public static AppBuilder BuildAvaloniaApp()
   > inherit from Ellipse,Round picture.Just like PersonPicture in UWP
 
 - [x] ExpandableView
-
   > A view that shows items in a vertically scrolling two-level list
   > PrimaryView
   > > Main Item,show/hide the SecondView after selection
@@ -105,6 +104,15 @@ public static AppBuilder BuildAvaloniaApp()
 
 - [x] ImageContentButton
 > the button show Image and Text
+
+- [x] CheckBoxList
+> a grouping checkbox control
+
+- [x] RadioButtonList
+> a grouping radiobutton control
+
+- [x] Text
+> the shapes control for text content,it is a child when you are using `canvas`
 
 > # EXTEND
 
