@@ -23,11 +23,17 @@ namespace Avalonia.Extensions.Controls
             {
                 try
                 {
-                    var contols = default(IEnumerable<Type>);
+                    List<Type> contols;
                     if (supportContols == null || supportContols.Count() == 0)
-                        contols = new[] { typeof(TextBox), typeof(TextPresenter) };
+                        contols = new List<Type> { typeof(TextBox), typeof(TextPresenter) };
                     else
-                        contols = supportContols;
+                    {
+                        contols = supportContols.ToList();
+                        if (!contols.Contains(typeof(TextBox)))
+                            contols.Add(typeof(TextBox));
+                        if (!contols.Contains(typeof(TextPresenter)))
+                            contols.Add(typeof(TextPresenter));
+                    }
                     foreach (var supportContol in contols)
                     {
                         if (supportContol.FullName.StartsWith("Avalonia.Controls", StringComparison.OrdinalIgnoreCase) ||
