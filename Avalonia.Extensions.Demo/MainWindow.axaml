@@ -191,6 +191,7 @@
 			<TabItem Header="Chinese Textbox">
 				<StackPanel Orientation="Vertical">
 					<TextBox Text="山川异域 不共戴天" />
+					<TextView Text="山川异域 不共戴天" />
 					<TextPresenter Text="山川异域 不共戴天" />
 				</StackPanel>
 			</TabItem>

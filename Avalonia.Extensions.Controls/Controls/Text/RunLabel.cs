@@ -231,11 +231,8 @@ namespace Avalonia.Extensions.Controls
 			InvalidateTextLayout();
 			InvalidateMeasure();
 		}
-		private static bool IsValidMaxLines(int maxLines)
-		{
-			return maxLines >= 0;
-		}
-		private static bool IsValidLineHeight(double lineHeight)
+        private static bool IsValidMaxLines(int maxLines) => maxLines >= 0;
+        private static bool IsValidLineHeight(double lineHeight)
 		{
 			if (!double.IsNaN(lineHeight))
 				return lineHeight > 0.0;

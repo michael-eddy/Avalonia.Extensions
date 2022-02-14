@@ -114,6 +114,9 @@ public static AppBuilder BuildAvaloniaApp()
 - [x] Text
 > the shapes control for text content,it is a child when you are using `canvas`
 
+- [x] TextView
+> the control like `TextPresenter`,but it's supoort custom font in your project
+
 > # EXTEND
 
 - [x] Chinese Input Support
