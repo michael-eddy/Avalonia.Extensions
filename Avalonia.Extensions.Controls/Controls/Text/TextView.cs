@@ -11,7 +11,7 @@ namespace Avalonia.Extensions.Controls
 		private Size _constraint;
 		private TextLayout _textLayout;
 		private string _text => this.GetPrivateField<string>("_text");
-		public TextLayout TextLayout => _textLayout ??= CreateTextLayout(_constraint, _text);
+		internal TextLayout TextLayout => _textLayout ??= CreateTextLayout(_constraint, _text);
 		public static readonly StyledProperty<TextTrimming> TextTrimmingProperty =
 			AvaloniaProperty.Register<RunLabel, TextTrimming>(nameof(TextTrimming));
 		public TextTrimming TextTrimming

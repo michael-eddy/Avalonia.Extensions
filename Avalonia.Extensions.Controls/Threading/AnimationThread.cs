@@ -9,7 +9,7 @@ namespace Avalonia.Extensions.Threading
 {
     internal sealed class AnimationThread : IDisposable
     {
-        private Thread Thread { get; }
+        private Task Thread { get; }
         private Window Window { get; }
         private NotifyOptions Options { get; set; }
         private PixelPoint StopPosition { get; set; }
@@ -22,7 +22,7 @@ namespace Avalonia.Extensions.Threading
         public AnimationThread(Window window)
         {
             Window = window;
-            Thread = new Thread(RunJob) { IsBackground = true };
+            Thread = new Task(RunJob);
         }
         public void Start(NotifyOptions options)
         {
@@ -49,7 +49,7 @@ namespace Avalonia.Extensions.Threading
         }
         private async void RunJob()
         {
-            while (true)
+            while (!IsDisposed)
             {
                 try
                 {
@@ -85,8 +85,7 @@ namespace Avalonia.Extensions.Threading
                 }
                 catch (Exception ex)
                 {
-                    Logger.TryGet(LogEventLevel.Warning, LogArea.Control)?.Log(this,
-                        "AnimationThread RunJob ERROR : " + ex.Message);
+                    Logger.TryGet(LogEventLevel.Warning, LogArea.Control)?.Log(this, "AnimationThread RunJob ERROR : " + ex.Message);
                 }
             }
         }
@@ -133,7 +132,7 @@ namespace Avalonia.Extensions.Threading
                 if (!IsDisposed)
                 {
                     IsDisposed = true;
-                    Thread.Interrupt();
+                    Thread.Dispose();
                     DisposeEvent?.Invoke(this, null);
                     GC.Collect();
                 }
