@@ -15,107 +15,194 @@ using System.Reactive.Linq;
 
 namespace Avalonia.Extensions.Controls
 {
-    public class RunLabel : Control, IRun, IStyling
+	public class RunLabel : Control, IRuns, IStyling
 	{
+		/// <summary>
+		/// Defines the <see cref="Background"/> property.
+		/// </summary>
 		public static readonly StyledProperty<IBrush> BackgroundProperty =
 			Border.BackgroundProperty.AddOwner<RunLabel>();
+		/// <summary>
+		/// Defines the <see cref="Padding"/> property.
+		/// </summary>
 		public static readonly StyledProperty<Thickness> PaddingProperty =
 			Decorator.PaddingProperty.AddOwner<RunLabel>();
+		/// <summary>
+		/// Defines the <see cref="FontFamily"/> property.
+		/// </summary>
 		public static readonly AttachedProperty<FontFamily> FontFamilyProperty =
 			AvaloniaProperty.RegisterAttached<RunLabel, Control, FontFamily>(nameof(FontFamily), defaultValue: FontFamily.Default, inherits: true);
+		/// <summary>
+		/// Defines the <see cref="FontSize"/> property.
+		/// </summary>
 		public static readonly AttachedProperty<double> FontSizeProperty =
 			AvaloniaProperty.RegisterAttached<RunLabel, Control, double>(nameof(FontSize), defaultValue: 12, inherits: true);
+		/// <summary>
+		/// Defines the <see cref="FontStyle"/> property.
+		/// </summary>
 		public static readonly AttachedProperty<FontStyle> FontStyleProperty =
 			AvaloniaProperty.RegisterAttached<RunLabel, Control, FontStyle>(nameof(FontStyle), inherits: true);
+		/// <summary>
+		/// Defines the <see cref="FontWeight"/> property.
+		/// </summary>
 		public static readonly AttachedProperty<FontWeight> FontWeightProperty =
 			AvaloniaProperty.RegisterAttached<RunLabel, Control, FontWeight>(nameof(FontWeight), inherits: true, defaultValue: FontWeight.Normal);
+		/// <summary>
+		/// Defines the <see cref="Foreground"/> property.
+		/// </summary>
 		public static readonly AttachedProperty<IBrush> ForegroundProperty =
 			AvaloniaProperty.RegisterAttached<RunLabel, Control, IBrush>(nameof(Foreground), Brushes.Black, inherits: true);
+		/// <summary>
+		/// Defines the <see cref="LineHeight"/> property.
+		/// </summary>
 		public static readonly StyledProperty<double> LineHeightProperty =
 			AvaloniaProperty.Register<RunLabel, double>(nameof(LineHeight), double.NaN, validate: IsValidLineHeight);
+		/// <summary>
+		/// Defines the <see cref="MaxLines"/> property.
+		/// </summary>
 		public static readonly StyledProperty<int> MaxLinesProperty =
 			AvaloniaProperty.Register<RunLabel, int>(nameof(MaxLines), validate: IsValidMaxLines);
-		public static readonly StyledProperty<TextAlignment> TextAlignmentProperty =
-			AvaloniaProperty.Register<RunLabel, TextAlignment>(nameof(TextAlignment));
-		public static readonly StyledProperty<TextWrapping> TextWrappingProperty =
-			AvaloniaProperty.Register<RunLabel, TextWrapping>(nameof(TextWrapping));
-		public static readonly StyledProperty<TextTrimming> TextTrimmingProperty =
-			AvaloniaProperty.Register<RunLabel, TextTrimming>(nameof(TextTrimming));
-		public static readonly StyledProperty<TextDecorationCollection> TextDecorationsProperty =
-			AvaloniaProperty.Register<RunLabel, TextDecorationCollection>(nameof(TextDecorations));
+		/// <summary>
+		/// Defines the <see cref="TextAlignment"/> property.
+		/// </summary>
+		public static readonly StyledProperty<TextAlignment> TextAlignmentProperty = AvaloniaProperty.Register<RunLabel, TextAlignment>(nameof(TextAlignment));
+		/// <summary>
+		/// Defines the <see cref="TextWrappingProperty"/> property.
+		/// </summary>
+		public static readonly StyledProperty<TextWrapping> TextWrappingProperty = AvaloniaProperty.Register<RunLabel, TextWrapping>(nameof(TextWrapping));
+		/// <summary>
+		/// Defines the <see cref="TextTrimmingProperty"/> property.
+		/// </summary>
+		public static readonly StyledProperty<TextTrimming> TextTrimmingProperty = AvaloniaProperty.Register<RunLabel, TextTrimming>(nameof(TextTrimming));
+		/// <summary>
+		/// Defines the <see cref="TextDecorations"/> property.
+		/// </summary>
+		public static readonly StyledProperty<TextDecorationCollection> TextDecorationsProperty = AvaloniaProperty.Register<RunLabel, TextDecorationCollection>(nameof(TextDecorations));
+		private Runs _items;
 		private string _text;
 		private Size _constraint;
 		private TextLayout _textLayout;
 		private readonly AvaloniaList<string> _contents = new AvaloniaList<string>();
 		Type IStyleable.StyleKey => typeof(TextBlock);
 		public TextLayout TextLayout => _textLayout ??= CreateTextLayout(_constraint, _text);
+		/// <summary>
+		/// Gets or sets the padding to place around the <see cref="Children"/>.
+		/// </summary>
 		public Thickness Padding
 		{
 			get => GetValue(PaddingProperty);
 			set => SetValue(PaddingProperty, value);
 		}
+		/// <summary>
+		 /// Gets or sets a brush used to paint the control's background.
+		 /// </summary>
 		public IBrush Background
 		{
 			get => GetValue(BackgroundProperty);
 			set => SetValue(BackgroundProperty, value);
 		}
+		/// <summary>
+		/// Gets or sets the font family used to draw the control's text.
+		/// </summary>
 		public FontFamily FontFamily
 		{
 			get => GetValue(FontFamilyProperty);
 			set => SetValue(FontFamilyProperty, value);
 		}
+		/// <summary>
+		/// Gets or sets the size of the control's text in points.
+		/// </summary>
 		public double FontSize
 		{
 			get => GetValue(FontSizeProperty);
 			set => SetValue(FontSizeProperty, value);
 		}
+		/// <summary>
+		/// Gets or sets the font style used to draw the control's text.
+		/// </summary>
 		public FontStyle FontStyle
 		{
 			get => GetValue(FontStyleProperty);
 			set => SetValue(FontStyleProperty, value);
 		}
+		/// <summary>
+		/// Gets or sets the font weight used to draw the control's text.
+		/// </summary>
 		public FontWeight FontWeight
 		{
 			get => GetValue(FontWeightProperty);
 			set => SetValue(FontWeightProperty, value);
 		}
+		/// <summary>
+		 /// Gets or sets a brush used to paint the text.
+		 /// </summary>
 		public IBrush Foreground
 		{
 			get => GetValue(ForegroundProperty);
 			set => SetValue(ForegroundProperty, value);
 		}
+		/// <summary>
+		 /// Gets or sets the height of each line of content.
+		 /// </summary>
 		public double LineHeight
 		{
 			get => GetValue(LineHeightProperty);
 			set => SetValue(LineHeightProperty, value);
 		}
+		/// <summary>
+		/// Gets or sets the maximum number of text lines.
+		/// </summary>
 		public int MaxLines
 		{
 			get => GetValue(MaxLinesProperty);
 			set => SetValue(MaxLinesProperty, value);
 		}
+		/// <summary>
+		/// Gets or sets the control's text wrapping mode.
+		/// </summary>
 		public TextWrapping TextWrapping
 		{
 			get => GetValue(TextWrappingProperty);
 			set => SetValue(TextWrappingProperty, value);
 		}
+		/// <summary>
+		/// Gets or sets the control's text trimming mode.
+		/// </summary>
 		public TextTrimming TextTrimming
 		{
 			get => GetValue(TextTrimmingProperty);
 			set => SetValue(TextTrimmingProperty, value);
 		}
+		/// <summary>
+		/// Gets or sets the text alignment.
+		/// </summary>
 		public TextAlignment TextAlignment
 		{
 			get => GetValue(TextAlignmentProperty);
 			set => SetValue(TextAlignmentProperty, value);
 		}
+		/// <summary>
+		/// Gets or sets the text decorations.
+		/// </summary>
 		public TextDecorationCollection TextDecorations
 		{
 			get => GetValue(TextDecorationsProperty);
 			set => SetValue(TextDecorationsProperty, value);
 		}
+		/// <summary>
+		/// Defines the <see cref="Children"/> property.
+		/// </summary>
+		public static readonly DirectProperty<RunLabel, Runs> TextProperty =
+			AvaloniaProperty.RegisterDirect<RunLabel, Runs>(nameof(Children), o => o.Children, (o, v) => o.Children = v);
+		/// <summary>
+		/// Gets or sets the text.
+		/// </summary>
 		[Content]
-		public Runs Children { get; } = new Runs();
+		public Runs Children
+		{
+			get => _items;
+			set => SetAndRaise(TextProperty, ref _items, value);
+		}
 		static RunLabel()
 		{
 			ClipToBoundsProperty.OverrideDefaultValue<RunLabel>(true);
@@ -123,42 +210,59 @@ namespace Avalonia.Extensions.Controls
 				TextAlignmentProperty, TextDecorationsProperty);
 			AffectsMeasure<RunLabel>(FontSizeProperty, FontWeightProperty,
 				FontStyleProperty, TextWrappingProperty, FontFamilyProperty,
-				TextTrimmingProperty,  PaddingProperty, LineHeightProperty, MaxLinesProperty);
-			Observable.Merge<AvaloniaPropertyChangedEventArgs>(ForegroundProperty.Changed,
-				TextAlignmentProperty.Changed, TextWrappingProperty.Changed,
-				TextTrimmingProperty.Changed, FontSizeProperty.Changed,
-				FontStyleProperty.Changed, FontWeightProperty.Changed,
-				FontFamilyProperty.Changed, TextDecorationsProperty.Changed,
-				PaddingProperty.Changed, MaxLinesProperty.Changed, LineHeightProperty.Changed
-			).AddClassHandler<RunLabel>((x, _) => x.InvalidateTextLayout());
+				TextTrimmingProperty, PaddingProperty, LineHeightProperty, MaxLinesProperty);
+			Observable.Merge<AvaloniaPropertyChangedEventArgs>(ForegroundProperty.Changed, TextAlignmentProperty.Changed, TextWrappingProperty.Changed,
+				TextTrimmingProperty.Changed, FontSizeProperty.Changed, FontStyleProperty.Changed, FontWeightProperty.Changed, FontFamilyProperty.Changed,
+				TextDecorationsProperty.Changed, PaddingProperty.Changed, MaxLinesProperty.Changed, LineHeightProperty.Changed).AddClassHandler<RunLabel>((x, _) => x.InvalidateTextLayout());
 		}
 		public RunLabel()
 		{
+			_items = new Runs();
 			_text = string.Empty;
 			Children.CollectionChanged += ChildrenChanged;
 		}
 		protected virtual void ChildrenChanged(object sender, NotifyCollectionChangedEventArgs e)
 		{
-			IEnumerable<string> controls;
+			List<string> controls = new List<string>();
 			switch (e.Action)
 			{
 				case NotifyCollectionChangedAction.Add:
-					controls = e.NewItems.OfType<Run>().Select(x => x.Content);
-					_contents.InsertRange(e.NewStartingIndex, controls);
-					break;
+					{
+						var objs = e.NewItems.OfType<AvaloniaObject>();
+						foreach (var obj in objs)
+						{
+							if (obj is LineBreak lb)
+								controls.Add(lb.Content);
+							else if (obj is Run r)
+								controls.Add(r.Content);
+						}
+						_contents.InsertRange(e.NewStartingIndex, controls);
+						break;
+					}
 				case NotifyCollectionChangedAction.Move:
 					_contents.RemoveRange(e.OldStartingIndex, e.OldItems.Count);
 					break;
 				case NotifyCollectionChangedAction.Remove:
-					controls = e.OldItems.OfType<Run>().Select(x => x.Content);
-					_contents.RemoveAll(controls);
-					break;
+					{
+						var objs = e.NewItems.OfType<AvaloniaObject>();
+						foreach (var obj in objs)
+						{
+							if (obj is LineBreak lb)
+								controls.Add(lb.Content);
+							else if (obj is Run r)
+								controls.Add(r.Content);
+						}
+						_contents.RemoveAll(controls);
+						break;
+					}
 				case NotifyCollectionChangedAction.Replace:
 					for (var i = 0; i < e.OldItems.Count; ++i)
 					{
 						var index = i + e.OldStartingIndex;
-						var child = (Run)e.NewItems[i];
-						_contents[index] = child.Content;
+						if (e.NewItems[i] is Run child)
+							_contents[index] = child.Content;
+						else if (e.NewItems[i] is LineBreak)
+							_contents[index] = string.Empty;
 					}
 					break;
 			}
@@ -231,10 +335,7 @@ namespace Avalonia.Extensions.Controls
 			InvalidateTextLayout();
 			InvalidateMeasure();
 		}
-		private static bool IsValidMaxLines(int maxLines)
-		{
-			return maxLines >= 0;
-		}
+		private static bool IsValidMaxLines(int maxLines) => maxLines >= 0;
 		private static bool IsValidLineHeight(double lineHeight)
 		{
 			if (!double.IsNaN(lineHeight))

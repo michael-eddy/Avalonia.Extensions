@@ -174,7 +174,9 @@
 				<StackPanel Orientation="Vertical">
 					<RunLabel Foreground="White" FontSize="18">
 						<Run Content="111" />
-						<Run Content="222" />
+						<LineBreak />
+						<Run>222</Run>
+						<LineBreak />
 						<Run Content="333" />
 					</RunLabel>
 					<SymbolIcon Glyph="&#xE700;" />
@@ -191,6 +193,7 @@
 			<TabItem Header="Chinese Textbox">
 				<StackPanel Orientation="Vertical">
 					<TextBox Text="山川异域 不共戴天" />
+					<TextView Text="山川异域 不共戴天" />
 					<TextPresenter Text="山川异域 不共戴天" />
 				</StackPanel>
 			</TabItem>

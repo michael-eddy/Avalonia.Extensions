@@ -94,7 +94,7 @@ public static AppBuilder BuildAvaloniaApp()
   > > diff with `PopupDialog`, it's popuping in workarea who popuping in control/panel
 
 - [x] RunLabel
-> Run binding just LIKE WPF/UWP in TextBlock
+> Run binding just LIKE WPF/UWP in TextBlock,with LineBreak can wrap the text
 
 - [x] HyperlinkButton
 > the button style LIKE HyperlinkButton in UWP
@@ -113,6 +113,9 @@ public static AppBuilder BuildAvaloniaApp()
 
 - [x] Text
 > the shapes control for text content,it is a child when you are using `canvas`
+
+- [x] TextView
+> the control like `TextPresenter`,but it's supoort custom font in your project
 
 > # EXTEND
 

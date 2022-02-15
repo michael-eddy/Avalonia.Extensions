@@ -9,8 +9,8 @@ namespace Avalonia.Extensions.Threading
 {
     internal sealed class BitmapThread
     {
-        private HttpClient HttpClient { get; }
         private IBitmapSource Owner { get; }
+        private HttpClient HttpClient { get; }
         internal event CompleteEventHandler CompleteEvent;
         internal delegate void CompleteEventHandler(object sender, bool success, string message);
         public BitmapThread(IBitmapSource owner)
@@ -34,7 +34,10 @@ namespace Avalonia.Extensions.Threading
                         break;
                     }
                 default:
-                    throw new NotSupportedException("unsupport URI scheme.only support HTTP/HTTPS or avares://");
+                    {
+                        Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(Owner, "unsupport URI scheme.only support HTTP/HTTPS or avares://");
+                        break;
+                    }
             }
         }
         private void AssetsLoader(object state)
@@ -43,8 +46,7 @@ namespace Avalonia.Extensions.Threading
             {
                 try
                 {
-                    var assets = Core.Instance.AssetLoader;
-                    var stream = assets.Open(uri);
+                    var stream = Core.Instance.AssetLoader.Open(uri);
                     Owner.SetBitmapSource(stream);
                 }
                 catch (Exception ex)
@@ -69,7 +71,10 @@ namespace Avalonia.Extensions.Threading
                         CompleteEvent?.Invoke(this, true, string.Empty);
                     }
                     else
+                    {
                         CompleteEvent?.Invoke(this, false, "URL cannot be NULL or EMPTY.");
+                        Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(Owner, "URL cannot be NULL or EMPTY.");
+                    }
                 }
                 catch (Exception ex)
                 {
