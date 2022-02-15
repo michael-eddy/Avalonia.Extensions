@@ -19,7 +19,7 @@ namespace Avalonia.Extensions.Controls
         /// Gets or sets the content to display in this flyout
         /// </summary>
         [Content]
-        public string Content
+        public string? Content
         {
             get { return _content; }
             set { SetAndRaise(ContentProperty, ref _content, value); }
@@ -48,7 +48,7 @@ namespace Avalonia.Extensions.Controls
             get => GetValue(FontSizeProperty);
             set => SetValue(FontSizeProperty, value);
         }
-        private string _content;
+        private string? _content;
         private Size _constraint;
         private TextLayout _textLayout;
         private Typeface DefaultTypeface { get; }
@@ -67,7 +67,7 @@ namespace Avalonia.Extensions.Controls
         {
             _textLayout = null;
         }
-        protected virtual TextLayout CreateTextLayout(Size constraint, string text)
+        protected virtual TextLayout CreateTextLayout(Size constraint, string? text)
         {
             if (constraint == Size.Empty)
                 return null;
@@ -105,7 +105,7 @@ namespace Avalonia.Extensions.Controls
                     var graphics = Graphics.FromImage(bitmap);
                     StringFormat sf = StringFormat.GenericTypographic;
                     sf.FormatFlags |= StringFormatFlags.MeasureTrailingSpaces;
-                    var size = graphics.MeasureString(Content.Trim(), new Font(DefaultTypeface.FontFamily.Name, FontSize), PointF.Empty, sf);
+                    var size = graphics.MeasureString(Content?.Trim(), new Font(DefaultTypeface.FontFamily.Name, FontSize), PointF.Empty, sf);
                     double width = Math.Ceiling(size.Width), height = Math.Ceiling(size.Height);
                     return new Size(width, height);
                 }

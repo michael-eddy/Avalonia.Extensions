@@ -31,12 +31,12 @@ namespace Avalonia.Extensions.Controls
 		/// Defines the <see cref="FontFamily"/> property.
 		/// </summary>
 		public static readonly AttachedProperty<FontFamily> FontFamilyProperty =
-			AvaloniaProperty.RegisterAttached<RunLabel, Control, FontFamily>(nameof(FontFamily), defaultValue: FontFamily.Default, inherits: true);
+			AvaloniaProperty.RegisterAttached<RunLabel, Control, FontFamily>(nameof(FontFamily), FontFamily.Default, true);
 		/// <summary>
 		/// Defines the <see cref="FontSize"/> property.
 		/// </summary>
 		public static readonly AttachedProperty<double> FontSizeProperty =
-			AvaloniaProperty.RegisterAttached<RunLabel, Control, double>(nameof(FontSize), defaultValue: 12, inherits: true);
+			AvaloniaProperty.RegisterAttached<RunLabel, Control, double>(nameof(FontSize), 12, true);
 		/// <summary>
 		/// Defines the <see cref="FontStyle"/> property.
 		/// </summary>
@@ -46,12 +46,12 @@ namespace Avalonia.Extensions.Controls
 		/// Defines the <see cref="FontWeight"/> property.
 		/// </summary>
 		public static readonly AttachedProperty<FontWeight> FontWeightProperty =
-			AvaloniaProperty.RegisterAttached<RunLabel, Control, FontWeight>(nameof(FontWeight), inherits: true, defaultValue: FontWeight.Normal);
+			AvaloniaProperty.RegisterAttached<RunLabel, Control, FontWeight>(nameof(FontWeight), FontWeight.Normal, true);
 		/// <summary>
 		/// Defines the <see cref="Foreground"/> property.
 		/// </summary>
 		public static readonly AttachedProperty<IBrush> ForegroundProperty =
-			AvaloniaProperty.RegisterAttached<RunLabel, Control, IBrush>(nameof(Foreground), Brushes.Black, inherits: true);
+			AvaloniaProperty.RegisterAttached<RunLabel, Control, IBrush>(nameof(Foreground), Brushes.Black, true);
 		/// <summary>
 		/// Defines the <see cref="LineHeight"/> property.
 		/// </summary>
