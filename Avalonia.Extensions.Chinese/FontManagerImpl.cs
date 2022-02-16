@@ -41,17 +41,11 @@ namespace Avalonia.Extensions.Controls
         }
         public IGlyphTypefaceImpl CreateGlyphTypeface(Typeface typeface)
         {
-            string familyName;
-            switch (typeface.FontFamily.Name)
+            string familyName = (typeface.FontFamily?.Name ?? FontFamily.DefaultFontFamilyName) switch
             {
-                case "WenQuanYi Micro Hei":
-                case FontFamily.DefaultFontFamilyName:
-                    familyName = _defaultTypeface.FontFamily.Name;
-                    break;
-                default:
-                    familyName = typeface.FontFamily.Name;
-                    break;
-            }
+                "WenQuanYi Micro Hei" or FontFamily.DefaultFontFamilyName => _defaultTypeface.FontFamily.Name,
+                _ => typeface.FontFamily.Name,
+            };
             var skTypeface = SKTypeface.FromFamilyName(familyName, (SKFontStyleWeight)typeface.Weight, SKFontStyleWidth.Normal, (SKFontStyleSlant)typeface.Style);
             var isFakeBold = (int)typeface.Weight >= 600 && !skTypeface.IsBold;
             var isFakeItalic = typeface.Style == FontStyle.Italic && !skTypeface.IsItalic;
