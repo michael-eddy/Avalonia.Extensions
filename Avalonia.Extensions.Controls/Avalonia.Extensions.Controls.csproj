@@ -8,12 +8,7 @@
         <TargetFramework>netstandard2.1</TargetFramework>
         <EnforceCodeStyleInBuild>false</EnforceCodeStyleInBuild>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
-        <UserSecretsId>214483ab-ede2-45c7-ac37-b353540601d8</UserSecretsId>
         <PackageProjectUrl>https://github.com/michael-eddy/Avalonia.Extensions</PackageProjectUrl>
-    </PropertyGroup>
-    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-        <DocumentationFile />
-        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     </PropertyGroup>
     <ItemGroup>
         <None Remove="Styles\Xaml\readme.txt" />

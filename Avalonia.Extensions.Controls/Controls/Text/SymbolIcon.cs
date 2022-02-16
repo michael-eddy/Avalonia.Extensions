@@ -84,9 +84,9 @@ namespace Avalonia.Extensions.Controls
                 get => GetValue(FontWeightProperty);
                 set => SetValue(FontWeightProperty, value);
             }
-            public static StyledProperty<IBrush?> ForegroundProperty =
+            public static StyledProperty<IBrush> ForegroundProperty =
                 TemplatedControl.ForegroundProperty.AddOwner<FontIconSource>();
-            public IBrush? Foreground
+            public IBrush Foreground
             {
                 get => GetValue(ForegroundProperty);
                 set => SetValue(ForegroundProperty, value);

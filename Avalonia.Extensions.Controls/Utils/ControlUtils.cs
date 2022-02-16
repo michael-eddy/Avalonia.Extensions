@@ -112,7 +112,7 @@ namespace Avalonia.Extensions.Controls
             }
             catch { }
         }
-        internal static Window GetWindow(this IControl control, out bool hasBase)
+        public static Window GetWindow(this IControl control, out bool hasBase)
         {
             hasBase = false;
             Window window = null;

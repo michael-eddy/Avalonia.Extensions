@@ -4,6 +4,7 @@ using Avalonia.Extensions.Event;
 using Avalonia.Extensions.Styles;
 using Avalonia.Input;
 using Avalonia.Interactivity;
+using Avalonia.Logging;
 using Avalonia.Styling;
 using Avalonia.Threading;
 using System;
@@ -136,30 +137,37 @@ namespace Avalonia.Extensions.Controls
         private bool trigger = true;
         protected virtual void ScrollEventHandle(ScrollViewer scrollViewer)
         {
-            if (scrollViewer.Content is IControl child && child.VisualChildren.FirstOrDefault() is VirtualizingStackPanel virtualizing)
+            try
             {
-                var isFirstItem = Items.IsFirst((virtualizing.Children.FirstOrDefault() as ListBoxItem)?.Content);
-                var isLastItem = Items.IsLast((virtualizing.Children.LastOrDefault() as ListBoxItem)?.Content);
-                if (isFirstItem && !trigger)
+                if (scrollViewer.Content is IControl child && child.VisualChildren.FirstOrDefault() is VirtualizingStackPanel virtualizing)
                 {
-                    trigger = true;
-                    var args = new RoutedEventArgs(ScrollTopEvent);
-                    RaiseEvent(args);
-                    if (!args.Handled)
-                        args.Handled = true;
+                    var isFirstItem = Items.IsFirst((virtualizing.Children.FirstOrDefault() as ListBoxItem)?.Content);
+                    var isLastItem = Items.IsLast((virtualizing.Children.LastOrDefault() as ListBoxItem)?.Content);
+                    if (isFirstItem && !trigger)
+                    {
+                        trigger = true;
+                        var args = new RoutedEventArgs(ScrollTopEvent);
+                        RaiseEvent(args);
+                        if (!args.Handled)
+                            args.Handled = true;
+                    }
+                    else if (isLastItem && !trigger)
+                    {
+                        trigger = true;
+                        var args = new RoutedEventArgs(ScrollEndEvent);
+                        RaiseEvent(args);
+                        if (!args.Handled)
+                            args.Handled = true;
+                    }
+                    else if (!isFirstItem && !isLastItem)
+                    {
+                        trigger = false;
+                    }
                 }
-                else if (isLastItem && !trigger)
-                {
-                    trigger = true;
-                    var args = new RoutedEventArgs(ScrollEndEvent);
-                    RaiseEvent(args);
-                    if (!args.Handled)
-                        args.Handled = true;
-                }
-                else if (!isFirstItem && !isLastItem)
-                {
-                    trigger = false;
-                }
+            }
+            catch (Exception ex)
+            {
+                Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(this, ex.Message);
             }
         }
         private void ScrollViewer_ScrollChanged(object sender, ScrollChangedEventArgs e)
