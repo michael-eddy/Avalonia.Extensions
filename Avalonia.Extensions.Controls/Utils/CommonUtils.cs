@@ -1,4 +1,5 @@
-﻿using Avalonia.Markup.Xaml.MarkupExtensions;
+﻿using Avalonia.Controls.ApplicationLifetimes;
+using Avalonia.Markup.Xaml.MarkupExtensions;
 using Avalonia.Platform;
 using System;
 using System.Drawing;
@@ -8,6 +9,16 @@ namespace Avalonia.Extensions.Controls
 {
     public static class CommonUtils
     {
+        public static void Shutdown(this Application application, int exitCode = 0)
+        {
+            if (application.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime lifetime)
+                lifetime.Shutdown(exitCode);
+        }
+        public static void TryShutdown(this Application application, int exitCode = 0)
+        {
+            if (application.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime lifetime)
+                lifetime.TryShutdown(exitCode);
+        }
         public static Graphics GetGraphics(this IWindowImpl impl)
         {
             Graphics graphics = null;

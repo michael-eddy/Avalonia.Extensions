@@ -172,3 +172,6 @@ public static AppBuilder BuildAvaloniaApp()
 
 - [x] GetWindow
   > get window who own this control
+
+- [x] Shutdown / TryShutdown
+  > shutdown application
