@@ -5,11 +5,12 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Globalization;
 using System.Net.Http;
+using System.Threading;
 using Color = Avalonia.Media.Color;
 
 namespace Avalonia.Extensions.Controls
 {
-    public sealed class Core : IDisposable
+    internal sealed class Core : IDisposable
     {
         private static Core instance;
         public static Core Instance
@@ -29,6 +30,8 @@ namespace Avalonia.Extensions.Controls
         }
         public void Init()
         {
+            ThreadPool.SetMinThreads(5, 5);
+            ThreadPool.SetMaxThreads(20, 20);
             AssetLoader = AvaloniaLocator.Current.GetService<IAssetLoader>();
             var assets = AssetLoader.GetAssets(new Uri("avares://Avalonia.Extensions.Controls/Styles/Xaml"),
                   new Uri("avares://Avalonia.Extensions.Controls"));
