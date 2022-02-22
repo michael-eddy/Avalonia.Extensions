@@ -5,7 +5,6 @@ using Avalonia.Interactivity;
 using Avalonia.Logging;
 using Avalonia.Media.Imaging;
 using Avalonia.Metadata;
-using Avalonia.Threading;
 using Avalonia.Visuals.Media.Imaging;
 using System;
 using System.IO;
@@ -83,38 +82,35 @@ namespace Avalonia.Extensions.Controls
         }
         public void SetBitmapSource(Stream stream)
         {
-            Dispatcher.UIThread.InvokeAsync(() =>
+            try
             {
-                try
+                Bitmap?.Dispose();
+                if (stream != null)
                 {
-                    Bitmap?.Dispose();
-                    if (stream != null)
+                    var width = Width.ToInt32();
+                    if (double.IsNaN(Width) || width == 0)
                     {
-                        var width = Width.ToInt32();
-                        if (double.IsNaN(Width) || width == 0)
-                        {
-                            Bitmap = new Bitmap(stream);
-                            Width = ImageWidth = Bitmap.PixelSize.Width;
-                            Height = ImageHeight = Bitmap.PixelSize.Height;
-                        }
-                        else
-                        {
-                            Bitmap = Bitmap.DecodeToWidth(stream, width, InterpolationMode);
-                            ImageWidth = Bitmap.PixelSize.Width;
-                            ImageHeight = Bitmap.PixelSize.Height;
-                        }
-                        base.Source = Bitmap;
+                        Bitmap = new Bitmap(stream);
+                        Width = ImageWidth = Bitmap.PixelSize.Width;
+                        Height = ImageHeight = Bitmap.PixelSize.Height;
                     }
+                    else
+                    {
+                        Bitmap = Bitmap.DecodeToWidth(stream, width, InterpolationMode);
+                        ImageWidth = Bitmap.PixelSize.Width;
+                        ImageHeight = Bitmap.PixelSize.Height;
+                    }
+                    base.Source = Bitmap;
                 }
-                catch (Exception ex)
-                {
-                    Logger.TryGet(LogEventLevel.Warning, LogArea.Control)?.Log(this, ex.Message);
-                }
-                finally
-                {
-                    stream.Dispose();
-                }
-            });
+            }
+            catch (Exception ex)
+            {
+                Logger.TryGet(LogEventLevel.Warning, LogArea.Control)?.Log(this, ex.Message);
+            }
+            finally
+            {
+                stream.Dispose();
+            }
         }
         /// <summary>
         /// Defines the <see cref="Failed"/> property.

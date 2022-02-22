@@ -13,21 +13,21 @@ namespace Avalonia.Extensions.Controls
 		private string _text => this.GetPrivateField<string>("_text");
 		internal TextLayout TextLayout => _textLayout ??= CreateTextLayout(_constraint, _text);
 		public static readonly StyledProperty<TextTrimming> TextTrimmingProperty =
-			AvaloniaProperty.Register<RunLabel, TextTrimming>(nameof(TextTrimming));
+			AvaloniaProperty.Register<TextLabel, TextTrimming>(nameof(TextTrimming));
 		public TextTrimming TextTrimming
 		{
 			get => GetValue(TextTrimmingProperty);
 			set => SetValue(TextTrimmingProperty, value);
 		}
 		public static readonly StyledProperty<TextDecorationCollection> TextDecorationsProperty =
-			AvaloniaProperty.Register<RunLabel, TextDecorationCollection>(nameof(TextDecorations));
+			AvaloniaProperty.Register<TextLabel, TextDecorationCollection>(nameof(TextDecorations));
 		public TextDecorationCollection TextDecorations
 		{
 			get => GetValue(TextDecorationsProperty);
 			set => SetValue(TextDecorationsProperty, value);
 		}
 		public static readonly StyledProperty<int> MaxLinesProperty =
-			AvaloniaProperty.Register<RunLabel, int>(nameof(MaxLines), validate: IsValidMaxLines);
+			AvaloniaProperty.Register<TextLabel, int>(nameof(MaxLines), validate: IsValidMaxLines);
 		public int MaxLines
 		{
 			get => GetValue(MaxLinesProperty);
@@ -35,7 +35,7 @@ namespace Avalonia.Extensions.Controls
 		}
 		private static bool IsValidMaxLines(int maxLines) => maxLines >= 0;
 		public static readonly StyledProperty<double> LineHeightProperty =
-			AvaloniaProperty.Register<RunLabel, double>(nameof(LineHeight), double.NaN, validate: IsValidLineHeight);
+			AvaloniaProperty.Register<TextLabel, double>(nameof(LineHeight), double.NaN, validate: IsValidLineHeight);
 		public double LineHeight
 		{
 			get => GetValue(LineHeightProperty);

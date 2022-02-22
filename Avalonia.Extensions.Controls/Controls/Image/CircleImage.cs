@@ -6,7 +6,6 @@ using Avalonia.Logging;
 using Avalonia.Media;
 using Avalonia.Media.Imaging;
 using Avalonia.Metadata;
-using Avalonia.Threading;
 using System;
 using System.IO;
 
@@ -65,28 +64,25 @@ namespace Avalonia.Extensions.Controls
         public Bitmap Bitmap { get; set; }
         public void SetBitmapSource(Stream stream)
         {
-            Dispatcher.UIThread.InvokeAsync(() =>
+            try
             {
-                try
+                Bitmap?.Dispose();
+                if (stream != null)
                 {
-                    Bitmap?.Dispose();
-                    if (stream != null)
-                    {
-                        Bitmap = new Bitmap(stream);
-                        Fill = new ImageBrush { Source = Bitmap };
-                        DrawAgain();
-                        SetSize(Bitmap.Size);
-                    }
+                    Bitmap = new Bitmap(stream);
+                    Fill = new ImageBrush { Source = Bitmap };
+                    DrawAgain();
+                    SetSize(Bitmap.Size);
                 }
-                catch (Exception ex)
-                {
-                    Logger.TryGet(LogEventLevel.Warning, LogArea.Control)?.Log(this, ex.Message);
-                }
-                finally
-                {
-                    stream.Dispose();
-                }
-            });
+            }
+            catch (Exception ex)
+            {
+                Logger.TryGet(LogEventLevel.Warning, LogArea.Control)?.Log(this, ex.Message);
+            }
+            finally
+            {
+                stream.Dispose();
+            }
         }
         private void OnSourceChange(object sender, AvaloniaPropertyChangedEventArgs e)
         {

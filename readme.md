@@ -93,7 +93,7 @@ public static AppBuilder BuildAvaloniaApp()
   > inherit from Window,show message dialog and automatically shut down after a certain period of time
   > > diff with `PopupDialog`, it's popuping in workarea who popuping in control/panel
 
-- [x] RunLabel
+- [x] TextLabel
 > Run binding just LIKE WPF/UWP in TextBlock,with LineBreak can wrap the text
 
 - [x] HyperlinkButton
@@ -172,3 +172,6 @@ public static AppBuilder BuildAvaloniaApp()
 
 - [x] GetWindow
   > get window who own this control
+
+- [x] Shutdown / TryShutdown
+  > shutdown application

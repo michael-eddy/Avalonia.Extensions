@@ -172,13 +172,13 @@
 			</TabItem>
 			<TabItem Header="Label">
 				<StackPanel Orientation="Vertical">
-					<RunLabel Foreground="White" FontSize="18">
+					<TextLabel Foreground="White" FontSize="18">
 						<Run Content="111" />
 						<LineBreak />
 						<Run>222</Run>
 						<LineBreak />
 						<Run Content="333" />
-					</RunLabel>
+					</TextLabel>
 					<SymbolIcon Glyph="&#xE700;" />
 					<TipLabel Content="123456" Padding="8" Background="Red" Foreground="White" />
 					<TipLabel Foreground="Red" Content="123456" Padding="8" Background="White" BorderBrush="Red" BorderThickness="1" />
