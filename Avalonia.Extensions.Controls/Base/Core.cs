@@ -5,12 +5,11 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Globalization;
 using System.Net.Http;
-using System.Threading;
 using Color = Avalonia.Media.Color;
 
 namespace Avalonia.Extensions.Controls
 {
-    internal sealed class Core : IDisposable
+    public sealed class Core
     {
         private static Core instance;
         public static Core Instance
@@ -28,10 +27,8 @@ namespace Avalonia.Extensions.Controls
             Transparent = new SolidColorBrush(Colors.Transparent);
             FontDefault = new Font(Typeface.Default.FontFamily.Name, 16);
         }
-        public void Init()
+        internal void Init()
         {
-            ThreadPool.SetMinThreads(5, 5);
-            ThreadPool.SetMaxThreads(20, 20);
             AssetLoader = AvaloniaLocator.Current.GetService<IAssetLoader>();
             var assets = AssetLoader.GetAssets(new Uri("avares://Avalonia.Extensions.Controls/Styles/Xaml"),
                   new Uri("avares://Avalonia.Extensions.Controls"));
@@ -40,11 +37,11 @@ namespace Avalonia.Extensions.Controls
                 InnerClasses.Add(enumerator.Current);
         }
         public Font FontDefault { get; }
-        public List<Uri> InnerClasses { get; private set; }
-        public bool IsEnglish => !CultureInfo.CurrentCulture.Name.Contains("zh", StringComparison.CurrentCultureIgnoreCase);
+        internal List<Uri> InnerClasses { get; private set; }
+        internal bool IsEnglish => !CultureInfo.CurrentCulture.Name.Contains("zh", StringComparison.CurrentCultureIgnoreCase);
         public IAssetLoader AssetLoader { get; private set; }
         private HttpClient HttpClient { get; set; }
-        public HttpClient GetClient()
+        internal HttpClient GetClient()
         {
             if (HttpClient == null)
             {
@@ -54,7 +51,7 @@ namespace Avalonia.Extensions.Controls
             }
             return HttpClient;
         }
-        public void Dispose()
+        internal void Dispose()
         {
             try
             {
@@ -67,7 +64,7 @@ namespace Avalonia.Extensions.Controls
         }
         internal SolidColorBrush Transparent { get; }
         private SolidColorBrush _primaryBrush;
-        public SolidColorBrush PrimaryBrush
+        internal SolidColorBrush PrimaryBrush
         {
             get
             {
