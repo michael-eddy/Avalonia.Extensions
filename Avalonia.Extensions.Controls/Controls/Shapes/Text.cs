@@ -53,7 +53,7 @@ namespace Avalonia.Extensions.Controls
         private TextLayout _textLayout;
         private Typeface DefaultTypeface { get; }
         private FontFamily DefaultFontFamily { get; }
-        public TextLayout TextLayout => _textLayout ??= CreateTextLayout(_constraint, _content);
+        internal TextLayout TextLayout => _textLayout ??= CreateTextLayout(_constraint, _content);
         public Text()
         {
             _content = string.Empty;
@@ -67,7 +67,7 @@ namespace Avalonia.Extensions.Controls
         {
             _textLayout = null;
         }
-        protected virtual TextLayout CreateTextLayout(Size constraint, string? text)
+        internal virtual TextLayout CreateTextLayout(Size constraint, string? text)
         {
             if (constraint == Size.Empty)
                 return null;
@@ -109,7 +109,10 @@ namespace Avalonia.Extensions.Controls
                     double width = Math.Ceiling(size.Width), height = Math.Ceiling(size.Height);
                     return new Size(width, height);
                 }
-                catch { return new Size(); }
+                catch
+                {
+                    return new Size();
+                }
             }
         }
     }

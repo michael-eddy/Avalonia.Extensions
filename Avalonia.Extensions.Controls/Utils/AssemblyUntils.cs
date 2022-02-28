@@ -9,9 +9,17 @@ namespace Avalonia.Extensions.Controls
     {
         public static T CreateInstance<T>(this string assemblyPath, params object[] param)
         {
-            Type type = Type.GetType(assemblyPath);
-            object obj = Activator.CreateInstance(type, param);
-            return (T)obj;
+            try
+            {
+                Type type = Type.GetType(assemblyPath);
+                object obj = Activator.CreateInstance(type, param);
+                return (T)obj;
+            }
+            catch (Exception ex)
+            {
+                Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(assemblyPath, ex.Message);
+                throw ex;
+            }
         }
         public static T CreateInstance<T>(this string assemblyString, string className, params object[] param)
         {
@@ -22,34 +30,68 @@ namespace Avalonia.Extensions.Controls
                 else
                     return (T)Assembly.Load(assemblyString).CreateInstance(className, true, BindingFlags.Default, null, param, null, null);
             }
-            catch { }
-            return default;
+            catch (Exception ex)
+            {
+                Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(assemblyString, ex.Message);
+                throw ex;
+            }
         }
         public static void InvokeMethod(this object obj, string methodName, params object[] param)
         {
-            if (obj != null)
+            try
             {
-                var type = obj.GetType();
-                MethodInfo meth = type.GetMethod(methodName);
-                meth.Invoke(obj, param);
+                if (obj != null)
+                {
+                    var type = obj.GetType();
+                    MethodInfo meth = type.GetMethod(methodName);
+                    meth.Invoke(obj, param);
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(obj, ex.Message);
             }
         }
         public static T InvokeMethod<T>(this object obj, string methodName, params object[] param)
         {
-            var type = obj.GetType();
-            MethodInfo meth = type.GetMethod(methodName);
-            return (T)meth.Invoke(obj, param);
+            try
+            {
+                var type = obj.GetType();
+                MethodInfo meth = type.GetMethod(methodName);
+                return (T)meth.Invoke(obj, param);
+            }
+            catch (Exception ex)
+            {
+                Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(obj, ex.Message);
+                throw ex;
+            }
         }
         public static T InvokeStaticMethod<T>(this object obj, string methodName, params object[] param)
         {
-            Type type = obj.GetType();
-            return (T)type.InvokeMember(methodName, BindingFlags.InvokeMethod | BindingFlags.Static | BindingFlags.Public, null, null, param);
+            try
+            {
+                Type type = obj.GetType();
+                return (T)type.InvokeMember(methodName, BindingFlags.InvokeMethod | BindingFlags.Static | BindingFlags.Public, null, null, param);
+            }
+            catch (Exception ex)
+            {
+                Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(obj, ex.Message);
+                throw ex;
+            }
         }
         public static T InvokeStaticMethod<T>(this string assemblyString, string className, string methodName, params object[] param)
         {
-            var assembly = Assembly.Load(assemblyString);
-            Type type = assembly.GetType(className);
-            return (T)type.InvokeMember(methodName, BindingFlags.InvokeMethod | BindingFlags.Static | BindingFlags.Public, null, null, param);
+            try
+            {
+                var assembly = Assembly.Load(assemblyString);
+                Type type = assembly.GetType(className);
+                return (T)type.InvokeMember(methodName, BindingFlags.InvokeMethod | BindingFlags.Static | BindingFlags.Public, null, null, param);
+            }
+            catch (Exception ex)
+            {
+                Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(assemblyString, ex.Message);
+                throw ex;
+            }
         }
         public static object GetPrivateField(this object obj, string fieldName)
         {
@@ -98,8 +140,11 @@ namespace Avalonia.Extensions.Controls
                 else
                     return (T)field?.GetValue(control);
             }
-            catch { }
-            return default;
+            catch (Exception ex)
+            {
+                Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(type, ex.Message);
+                throw ex;
+            }
         }
         public static object GetPrivateField(this Type type, object control, string fieldName)
         {
@@ -112,8 +157,11 @@ namespace Avalonia.Extensions.Controls
                 else
                     return field?.GetValue(control);
             }
-            catch { }
-            return default;
+            catch (Exception ex)
+            {
+                Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(type, ex.Message);
+                throw ex;
+            }
         }
         public static T GetPrivateField<T>(this NameScope scope, string fieldName)
         {
@@ -126,7 +174,7 @@ namespace Avalonia.Extensions.Controls
             }
             catch (Exception ex)
             {
-                Logger.TryGet(LogEventLevel.Warning, LogArea.Control)?.Log(scope, ex.Message);
+                Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(scope, ex.Message);
                 throw ex;
             }
         }
@@ -141,7 +189,7 @@ namespace Avalonia.Extensions.Controls
             }
             catch (Exception ex)
             {
-                Logger.TryGet(LogEventLevel.Warning, LogArea.Control)?.Log(obj, ex.Message);
+                Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(obj, ex.Message);
                 throw ex;
             }
         }
@@ -156,7 +204,7 @@ namespace Avalonia.Extensions.Controls
             }
             catch (Exception ex)
             {
-                Logger.TryGet(LogEventLevel.Warning, LogArea.Control)?.Log(obj, ex.Message);
+                Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(obj, ex.Message);
                 throw ex;
             }
         }
@@ -171,7 +219,7 @@ namespace Avalonia.Extensions.Controls
             }
             catch (Exception ex)
             {
-                Logger.TryGet(LogEventLevel.Warning, LogArea.Control)?.Log(obj, ex.Message);
+                Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(obj, ex.Message);
                 throw ex;
             }
         }

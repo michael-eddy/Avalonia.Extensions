@@ -8,7 +8,7 @@ using Avalonia.Utilities;
 
 namespace Avalonia.Extensions.Styles
 {
-    public sealed class TextLayout
+    internal sealed class TextLayout
 	{
 		private readonly struct FormattedTextSource : ITextSource
 		{
@@ -74,10 +74,10 @@ namespace Avalonia.Extensions.Styles
 		private readonly TextParagraphProperties _paragraphProperties;
 		private readonly IReadOnlyList<ValueSpan<TextRunProperties>> _textStyleOverrides;
 		private readonly TextTrimming _textTrimming;
-		public double LineHeight { get; }
+		public int MaxLines { get; }
 		public double MaxWidth { get; }
 		public double MaxHeight { get; }
-		public int MaxLines { get; }
+		public double LineHeight { get; }
 		public Size Size { get; private set; }
 		public IReadOnlyList<TextLine> TextLines { get; private set; }
 		internal TextLayout(string text, Typeface typeface, double fontSize, IBrush foreground, TextAlignment textAlignment = TextAlignment.Left, TextWrapping textWrapping = TextWrapping.NoWrap, TextTrimming textTrimming = TextTrimming.None, TextDecorationCollection textDecorations = null, double maxWidth = double.PositiveInfinity, double maxHeight = double.PositiveInfinity, double lineHeight = double.NaN, int maxLines = 0, IReadOnlyList<ValueSpan<TextRunProperties>> textStyleOverrides = null)

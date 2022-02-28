@@ -49,8 +49,7 @@ namespace Avalonia.Extensions.Controls
                 }
                 catch (Exception ex)
                 {
-                    Logger.TryGet(LogEventLevel.Warning, LogArea.Control)?.Log(builder, ex.Message);
-                    throw ex;
+                    Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(builder, ex.Message);
                 }
             });
             return builder;

@@ -88,7 +88,7 @@ namespace Avalonia.Extensions.Controls
 			Point p1 = new Point(x, y), p2 = new Point(x, b);
 			context.DrawLine(new ImmutablePen(caretBrush), p1, p2);
 		}
-		protected virtual TextLayout CreateTextLayout(Size constraint, string text)
+		internal virtual TextLayout CreateTextLayout(Size constraint, string text)
 		{
 			if (constraint == Size.Empty)
 				return null;

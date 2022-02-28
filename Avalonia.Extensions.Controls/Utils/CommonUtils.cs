@@ -53,10 +53,7 @@ namespace Avalonia.Extensions.Controls
             catch { }
             return default;
         }
-        internal static double ToRadians(this double angle)
-        {
-            return Math.PI * angle / 180;
-        }
+        internal static double ToRadians(this double angle) => Math.PI * angle / 180;
         public static bool SmallerThan(this PixelPoint pixelPoint, PixelPoint point, bool inCludeEquals = false)
         {
             if (inCludeEquals && pixelPoint.X <= point.X && pixelPoint.Y <= point.Y)
@@ -105,18 +102,12 @@ namespace Avalonia.Extensions.Controls
         /// </summary>
         /// <param name="visual">target</param>
         /// <returns>size</returns>
-        public static double ActualWidth(this Visual visual)
-        {
-            return visual.Bounds.Width;
-        }
+        public static double ActualWidth(this Visual visual) => visual.Bounds.Width;
         /// <summary>
         /// only target is Initialized
         /// </summary>
         /// <param name="visual">target</param>
         /// <returns>size</returns>
-        public static double ActualHeight(this Visual visual)
-        {
-            return visual.Bounds.Height;
-        }
+        public static double ActualHeight(this Visual visual) => visual.Bounds.Height;
     }
 }

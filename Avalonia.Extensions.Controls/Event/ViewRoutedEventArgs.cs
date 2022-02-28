@@ -4,7 +4,7 @@ using Avalonia.Interactivity;
 
 namespace Avalonia.Extensions.Event
 {
-    public class ViewRoutedEventArgs : RoutedEventArgs
+    public sealed class ViewRoutedEventArgs : RoutedEventArgs
     {
         public object ClickItem { get; set; }
         public MouseButton ClickMouse { get; }
