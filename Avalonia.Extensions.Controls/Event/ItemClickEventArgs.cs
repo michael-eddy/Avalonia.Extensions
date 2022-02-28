@@ -2,7 +2,7 @@
 
 namespace Avalonia.Extensions.Event
 {
-    public class ItemClickEventArgs : EventArgs
+    public sealed class ItemClickEventArgs : EventArgs
     {
         public object Item { get; }
         public int ItemIndex { get; }

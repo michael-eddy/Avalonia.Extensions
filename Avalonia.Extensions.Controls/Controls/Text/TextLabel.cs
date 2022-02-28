@@ -84,7 +84,7 @@ namespace Avalonia.Extensions.Controls
 		private TextLayout _textLayout;
 		private readonly AvaloniaList<string> _contents = new AvaloniaList<string>();
 		Type IStyleable.StyleKey => typeof(TextBlock);
-		public TextLayout TextLayout => _textLayout ??= CreateTextLayout(_constraint, _text);
+		internal TextLayout TextLayout => _textLayout ??= CreateTextLayout(_constraint, _text);
 		/// <summary>
 		/// Gets or sets the padding to place around the <see cref="Children"/>.
 		/// </summary>
@@ -306,7 +306,7 @@ namespace Avalonia.Extensions.Controls
 			using (context.PushPostTransform(Matrix.CreateTranslation(padding.Left + offsetX, top)))
 				TextLayout.Draw(context);
 		}
-		protected virtual TextLayout CreateTextLayout(Size constraint, string text)
+		internal virtual TextLayout CreateTextLayout(Size constraint, string text)
 		{
 			if (constraint == Size.Empty)
 				return null;

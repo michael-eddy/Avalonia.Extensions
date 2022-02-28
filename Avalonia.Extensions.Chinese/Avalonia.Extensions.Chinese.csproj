@@ -16,6 +16,5 @@
         <PackageReference Include="Avalonia" Version="0.10.12" />
         <PackageReference Include="CHSPinYinConv" Version="1.0.0" />
 		<PackageReference Include="Avalonia.Skia" Version="0.10.12" />
-		<PackageReference Include="SkiaSharp" Version="2.88.0-preview.178" />
     </ItemGroup>
 </Project>

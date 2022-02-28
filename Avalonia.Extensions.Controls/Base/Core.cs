@@ -1,4 +1,5 @@
-﻿using Avalonia.Media;
+﻿using Avalonia.Logging;
+using Avalonia.Media;
 using Avalonia.Platform;
 using System;
 using System.Collections.Generic;
@@ -29,12 +30,19 @@ namespace Avalonia.Extensions.Controls
         }
         internal void Init()
         {
-            AssetLoader = AvaloniaLocator.Current.GetService<IAssetLoader>();
-            var assets = AssetLoader.GetAssets(new Uri("avares://Avalonia.Extensions.Controls/Styles/Xaml"),
-                  new Uri("avares://Avalonia.Extensions.Controls"));
-            var enumerator = assets.GetEnumerator();
-            while (enumerator.MoveNext())
-                InnerClasses.Add(enumerator.Current);
+            try
+            {
+                AssetLoader = AvaloniaLocator.Current.GetService<IAssetLoader>();
+                var assets = AssetLoader.GetAssets(new Uri("avares://Avalonia.Extensions.Controls/Styles/Xaml"),
+                      new Uri("avares://Avalonia.Extensions.Controls"));
+                var enumerator = assets.GetEnumerator();
+                while (enumerator.MoveNext())
+                    InnerClasses.Add(enumerator.Current);
+            }
+            catch(Exception ex)
+            {
+                Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(this, ex.Message);
+            }
         }
         public Font FontDefault { get; }
         internal List<Uri> InnerClasses { get; private set; }
@@ -43,13 +51,21 @@ namespace Avalonia.Extensions.Controls
         private HttpClient HttpClient { get; set; }
         internal HttpClient GetClient()
         {
-            if (HttpClient == null)
+            try
             {
-                var clientHandler = new HttpClientHandler();
-                clientHandler.ServerCertificateCustomValidationCallback += (_, _, _, _) => true;
-                HttpClient = new HttpClient(clientHandler);
+                if (HttpClient == null)
+                {
+                    var clientHandler = new HttpClientHandler();
+                    clientHandler.ServerCertificateCustomValidationCallback += (_, _, _, _) => true;
+                    HttpClient = new HttpClient(clientHandler);
+                }
+                return HttpClient;
             }
-            return HttpClient;
+            catch (Exception ex)
+            {
+                Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(this, ex.Message);
+                throw ex;
+            }
         }
         internal void Dispose()
         {
