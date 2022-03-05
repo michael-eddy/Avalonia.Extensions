@@ -2,11 +2,52 @@
 using Avalonia.Logging;
 using System;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 
 namespace Avalonia.Extensions.Controls
 {
     public static class AssemblyUntils
     {
+        public static void ReplaceMethod(MethodInfo methodToReplace, MethodInfo methodToInject)
+        {
+            try
+            {
+                RuntimeHelpers.PrepareMethod(methodToReplace.MethodHandle);
+                RuntimeHelpers.PrepareMethod(methodToInject.MethodHandle);
+                unsafe
+                {
+                    if (IntPtr.Size == 4)
+                    {
+                        int* inj = (int*)methodToInject.MethodHandle.Value.ToPointer() + 2;
+                        int* tar = (int*)methodToReplace.MethodHandle.Value.ToPointer() + 2;
+#if DEBUG
+                        byte* injInst = (byte*)*inj;
+                        byte* tarInst = (byte*)*tar;
+                        int* injSrc = (int*)(injInst + 1);
+                        int* tarSrc = (int*)(tarInst + 1);
+                        *tarSrc = ((int)injInst + 5 + *injSrc) - ((int)tarInst + 5);
+#else
+                    *tar = *inj;
+#endif
+                    }
+                    else
+                    {
+                        long* inj = (long*)methodToInject.MethodHandle.Value.ToPointer() + 1;
+                        long* tar = (long*)methodToReplace.MethodHandle.Value.ToPointer() + 1;
+#if DEBUG
+                        byte* injInst = (byte*)*inj;
+                        byte* tarInst = (byte*)*tar;
+                        int* injSrc = (int*)(injInst + 1);
+                        int* tarSrc = (int*)(tarInst + 1);
+                        *tarSrc = ((int)injInst + 5 + *injSrc) - ((int)tarInst + 5);
+#else
+                    *tar = *inj;
+#endif
+                    }
+                }
+            }
+            catch { }
+        }
         public static T CreateInstance<T>(this string assemblyPath, params object[] param)
         {
             try
@@ -57,7 +98,7 @@ namespace Avalonia.Extensions.Controls
             try
             {
                 var type = obj.GetType();
-                MethodInfo meth = type.GetMethod(methodName);
+                MethodInfo meth = type.GetMethod(methodName, BindingFlags.InvokeMethod | BindingFlags.NonPublic);
                 return (T)meth.Invoke(obj, param);
             }
             catch (Exception ex)
@@ -71,7 +112,7 @@ namespace Avalonia.Extensions.Controls
             try
             {
                 Type type = obj.GetType();
-                return (T)type.InvokeMember(methodName, BindingFlags.InvokeMethod | BindingFlags.Static | BindingFlags.Public, null, null, param);
+                return (T)type.InvokeMember(methodName, BindingFlags.InvokeMethod | BindingFlags.Static | BindingFlags.NonPublic, null, null, param);
             }
             catch (Exception ex)
             {
@@ -85,7 +126,7 @@ namespace Avalonia.Extensions.Controls
             {
                 var assembly = Assembly.Load(assemblyString);
                 Type type = assembly.GetType(className);
-                return (T)type.InvokeMember(methodName, BindingFlags.InvokeMethod | BindingFlags.Static | BindingFlags.Public, null, null, param);
+                return (T)type.InvokeMember(methodName, BindingFlags.InvokeMethod | BindingFlags.Static | BindingFlags.NonPublic, null, null, param);
             }
             catch (Exception ex)
             {
