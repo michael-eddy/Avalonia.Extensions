@@ -9,35 +9,42 @@ using System.Reflection;
 
 namespace Avalonia.Extensions.Controls
 {
-    public class EditTextView : TextBox, IStyling
+    internal class EditTextView : TextBox, IStyling
     {
-        private static TextPresenter _textPresenter;
         Type IStyleable.StyleKey => typeof(TextBox);
+        static EditTextView()
+        {
+            AffectsRender<EditTextView>(TextDecorationsProperty, MaxLinesProperty, TextTrimmingProperty,
+                LineHeightProperty, CaretBrushProperty, SelectionBrushProperty);
+        }
         protected override void OnApplyTemplate(TemplateAppliedEventArgs e)
         {
             base.OnApplyTemplate(e);
-            _textPresenter = e.NameScope.Get<TextPresenter>("PART_TextPresenter");
+            var _textPresenter = e.NameScope.Get<TextPresenter>("PART_TextPresenter");
             var newMethod = GetType().GetMethod("RenderInternal", BindingFlags.NonPublic | BindingFlags.Instance);
-            var m = _textPresenter.GetType().GetMethod("RenderInternal", BindingFlags.NonPublic | BindingFlags.Instance);
-            AssemblyUntils.ReplaceMethod(m, newMethod);
+            var oldMethod = _textPresenter.GetType().GetMethod("RenderInternal", BindingFlags.NonPublic | BindingFlags.Instance);
+            AssemblyUntils.ReplaceMethod(oldMethod, newMethod);
             SetValue(TextBlock.ForegroundProperty, Foreground);
         }
-        internal void RenderInternal(DrawingContext context)
+        internal void RenderInternal(DrawingContext context, TextPresenter _textPresenter)
         {
             IBrush background = Background;
             if (background != null)
                 context.FillRectangle(background, new Rect(Bounds.Size));
-            var _text = _textPresenter.GetPrivateField<string>("_text");
-            var _constraint = _textPresenter.GetPrivateField<Size>("_constraint");
-            var TextLayout = CreateTextLayout(_constraint, _text);
-            TextLayout.Draw(context);
+            if (_textPresenter is not null)
+            {
+                var _text = _textPresenter.GetPrivateField<string>("_text");
+                var _constraint = _textPresenter.GetPrivateField<Size>("_constraint");
+                var textLayout = CreateTextLayout(_constraint, _text);
+                textLayout.Draw(context);
+            }
         }
-        internal TextLayout CreateTextLayout(Size constraint, string text)
+        private TextLayout CreateTextLayout(Size constraint, string text)
         {
             if (constraint == Size.Empty)
                 return null;
-            return new TextLayout(text ?? string.Empty, new Typeface(FontFamily, FontStyle, FontWeight), FontSize, Foreground, TextAlignment, TextWrapping, TextTrimming, TextDecorations,
-                constraint.Width, constraint.Height, maxLines: MaxLines, lineHeight: LineHeight);
+            return new TextLayout(text ?? string.Empty, new Typeface(FontFamily, FontStyle, FontWeight), FontSize, Foreground, TextAlignment,
+                TextWrapping, TextTrimming, TextDecorations, constraint.Width, constraint.Height, maxLines: MaxLines, lineHeight: LineHeight);
         }
         public static readonly StyledProperty<TextDecorationCollection> TextDecorationsProperty =
             AvaloniaProperty.Register<TextLabel, TextDecorationCollection>(nameof(TextDecorations));

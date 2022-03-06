@@ -3,11 +3,26 @@ using Avalonia.Logging;
 using System;
 using System.Reflection;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 
 namespace Avalonia.Extensions.Controls
 {
     public static class AssemblyUntils
     {
+        public static T FromIntPtr<T>(this IntPtr ptr)
+        {
+            try
+            {
+                return (T)GCHandle.FromIntPtr(ptr).Target;
+            }
+            catch { }
+            return default;
+        }
+        public static IntPtr ToIntPtr(this object obj)
+        {
+            GCHandle objHandle = GCHandle.Alloc(obj, GCHandleType.WeakTrackResurrection);
+            return GCHandle.ToIntPtr(objHandle);
+        }
         public static void ReplaceMethod(MethodInfo methodToReplace, MethodInfo methodToInject)
         {
             try

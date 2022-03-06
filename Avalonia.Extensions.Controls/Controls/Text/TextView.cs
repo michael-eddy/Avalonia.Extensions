@@ -1,15 +1,12 @@
-﻿using Avalonia.Controls;
-using Avalonia.Controls.Presenters;
+﻿using Avalonia.Controls.Presenters;
 using Avalonia.Extensions.Styles;
 using Avalonia.Media;
 using Avalonia.Media.Immutable;
-using Avalonia.Threading;
-using Avalonia.VisualTree;
 using System;
 
 namespace Avalonia.Extensions.Controls
 {
-	public class TextView : TextPresenter
+    public class TextView : TextPresenter
 	{
 		private Size _constraint;
 		private TextLayout _textLayout;
@@ -17,7 +14,7 @@ namespace Avalonia.Extensions.Controls
 		internal TextLayout TextLayout => _textLayout ??= CreateTextLayout(_constraint, _text);
 		static TextView()
 		{
-			CaretIndexProperty.Changed.AddClassHandler<TextView>((x, e) => x.CaretIndexChanged((int)e.NewValue));
+			AffectsRender<EditTextView>(TextDecorationsProperty, MaxLinesProperty, TextTrimmingProperty, LineHeightProperty);
 		}
 		public static readonly StyledProperty<TextTrimming> TextTrimmingProperty =
 			AvaloniaProperty.Register<TextLabel, TextTrimming>(nameof(TextTrimming));
@@ -48,13 +45,6 @@ namespace Avalonia.Extensions.Controls
 			get => GetValue(LineHeightProperty);
 			set => SetValue(LineHeightProperty, value);
 		}
-		public static new readonly DirectProperty<TextView, int> CaretIndexProperty =
-           TextBox.CaretIndexProperty.AddOwner<TextView>(o => o.CaretIndex, (o, v) => o.CaretIndex = v);
-		public new int CaretIndex
-		{
-			get => this.GetPrivateField<int>("_caretIndex");
-			set => base.CaretIndex = value;
-		}
 		private static bool IsValidLineHeight(double lineHeight)
 		{
 			if (!double.IsNaN(lineHeight))
@@ -67,39 +57,6 @@ namespace Avalonia.Extensions.Controls
 			if (background != null)
 				context.FillRectangle(background, new Rect(Bounds.Size));
 			TextLayout.Draw(context);
-		}
-		private void CaretIndexChanged(int caretIndex)
-		{
-			if (this.GetVisualParent() != null)
-			{
-				var _caretTimer = this.GetPrivateField<DispatcherTimer>("_caretTimer");
-				if (_caretTimer.IsEnabled)
-				{
-					this.SetPrivateField("_caretBlink", true);
-					_caretTimer.Stop();
-					_caretTimer.Start();
-					InvalidateVisual();
-				}
-				else
-				{
-					_caretTimer.Start();
-					InvalidateVisual();
-					_caretTimer.Stop();
-				}
-				if (IsMeasureValid)
-				{
-					var rect = FormattedText.HitTestTextPosition(caretIndex);
-					this.BringIntoView(rect);
-				}
-				else
-				{
-					Dispatcher.UIThread.Post(() =>
-					{
-						var rect = FormattedText.HitTestTextPosition(caretIndex);
-						this.BringIntoView(rect);
-					}, DispatcherPriority.Render);
-				}
-			}
 		}
 		public override void Render(DrawingContext context)
 		{
@@ -139,8 +96,8 @@ namespace Avalonia.Extensions.Controls
 		{
 			if (constraint == Size.Empty)
 				return null;
-			return new TextLayout(text ?? string.Empty, new Typeface(FontFamily, FontStyle, FontWeight), FontSize, Foreground, TextAlignment, TextWrapping, TextTrimming, TextDecorations,
-				constraint.Width, constraint.Height, maxLines: MaxLines, lineHeight: LineHeight);
+			return new TextLayout(text ?? string.Empty, new Typeface(FontFamily, FontStyle, FontWeight), FontSize, Foreground, TextAlignment,
+				TextWrapping, TextTrimming, TextDecorations, constraint.Width, constraint.Height, maxLines: MaxLines, lineHeight: LineHeight);
 		}
 	}
 }
