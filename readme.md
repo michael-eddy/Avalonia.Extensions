@@ -115,7 +115,7 @@ public static AppBuilder BuildAvaloniaApp()
 > the shapes control for text content,it is a child when you are using `canvas`
 
 - [x] TextView
-> the control like `TextPresenter`,but it's supoort custom font in your project
+> the control like `TextPresenter`,but it's draw by the textLayout,so supoort custom font in your project
 
 > # EXTEND
 
