@@ -57,7 +57,7 @@ namespace Avalonia.Extensions.Controls
             try
             {
                 var type = obj.GetType();
-                MethodInfo meth = type.GetMethod(methodName);
+                MethodInfo meth = type.GetMethod(methodName, BindingFlags.InvokeMethod | BindingFlags.NonPublic);
                 return (T)meth.Invoke(obj, param);
             }
             catch (Exception ex)
@@ -71,7 +71,7 @@ namespace Avalonia.Extensions.Controls
             try
             {
                 Type type = obj.GetType();
-                return (T)type.InvokeMember(methodName, BindingFlags.InvokeMethod | BindingFlags.Static | BindingFlags.Public, null, null, param);
+                return (T)type.InvokeMember(methodName, BindingFlags.InvokeMethod | BindingFlags.Static | BindingFlags.NonPublic, null, null, param);
             }
             catch (Exception ex)
             {
@@ -85,7 +85,7 @@ namespace Avalonia.Extensions.Controls
             {
                 var assembly = Assembly.Load(assemblyString);
                 Type type = assembly.GetType(className);
-                return (T)type.InvokeMember(methodName, BindingFlags.InvokeMethod | BindingFlags.Static | BindingFlags.Public, null, null, param);
+                return (T)type.InvokeMember(methodName, BindingFlags.InvokeMethod | BindingFlags.Static | BindingFlags.NonPublic, null, null, param);
             }
             catch (Exception ex)
             {

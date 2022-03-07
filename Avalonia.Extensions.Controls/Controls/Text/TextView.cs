@@ -6,12 +6,16 @@ using System;
 
 namespace Avalonia.Extensions.Controls
 {
-	public class TextView : TextPresenter
+    public class TextView : TextPresenter
 	{
 		private Size _constraint;
 		private TextLayout _textLayout;
 		private string _text => this.GetPrivateField<string>("_text");
 		internal TextLayout TextLayout => _textLayout ??= CreateTextLayout(_constraint, _text);
+		static TextView()
+		{
+			AffectsRender<TextView>(TextDecorationsProperty, MaxLinesProperty, TextTrimmingProperty, LineHeightProperty);
+		}
 		public static readonly StyledProperty<TextTrimming> TextTrimmingProperty =
 			AvaloniaProperty.Register<TextLabel, TextTrimming>(nameof(TextTrimming));
 		public TextTrimming TextTrimming
@@ -92,8 +96,8 @@ namespace Avalonia.Extensions.Controls
 		{
 			if (constraint == Size.Empty)
 				return null;
-			return new TextLayout(text ?? string.Empty, new Typeface(FontFamily, FontStyle, FontWeight), FontSize, Foreground, TextAlignment, TextWrapping, TextTrimming, TextDecorations,
-				constraint.Width, constraint.Height, maxLines: MaxLines, lineHeight: LineHeight);
+			return new TextLayout(text ?? string.Empty, new Typeface(FontFamily, FontStyle, FontWeight), FontSize, Foreground, TextAlignment,
+				TextWrapping, TextTrimming, TextDecorations, constraint.Width, constraint.Height, maxLines: MaxLines, lineHeight: LineHeight);
 		}
 	}
 }
