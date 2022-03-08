@@ -17,6 +17,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Avalonia.Extensions.Control
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Avalonia.Extensions.Chinese", "Avalonia.Extensions.Chinese\Avalonia.Extensions.Chinese.csproj", "{A66F5B77-7F56-4AB1-B2DE-D2EC004C6F25}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Avalonia.Extensions.Media", "Avalonia.Extensions.Media\Avalonia.Extensions.Media.csproj", "{BBD7005B-064A-47F3-87A0-C47E7A2A2442}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,6 +37,10 @@ Global
 		{A66F5B77-7F56-4AB1-B2DE-D2EC004C6F25}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A66F5B77-7F56-4AB1-B2DE-D2EC004C6F25}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A66F5B77-7F56-4AB1-B2DE-D2EC004C6F25}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BBD7005B-064A-47F3-87A0-C47E7A2A2442}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BBD7005B-064A-47F3-87A0-C47E7A2A2442}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BBD7005B-064A-47F3-87A0-C47E7A2A2442}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BBD7005B-064A-47F3-87A0-C47E7A2A2442}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -43,6 +49,7 @@ Global
 		{E398D33B-003A-4B1E-9C15-2392697A2ACD} = {736AFC18-0DD8-4577-8066-A26322E85F8D}
 		{C6F08B78-C20E-4BDA-89D8-55D392A86208} = {736AFC18-0DD8-4577-8066-A26322E85F8D}
 		{A66F5B77-7F56-4AB1-B2DE-D2EC004C6F25} = {736AFC18-0DD8-4577-8066-A26322E85F8D}
+		{BBD7005B-064A-47F3-87A0-C47E7A2A2442} = {736AFC18-0DD8-4577-8066-A26322E85F8D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {82A8C38D-510B-4067-BAB9-FA581B3F79C7}

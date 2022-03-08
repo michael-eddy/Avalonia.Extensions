@@ -2,7 +2,7 @@
 
 namespace Avalonia.Extensions.Event
 {
-    public sealed class SizeRoutedEventArgs : RoutedEventArgs
+    public class SizeRoutedEventArgs : RoutedEventArgs
     {
         public Size Size { get; }
         public SizeRoutedEventArgs(RoutedEvent args, Size size) : base(args)
