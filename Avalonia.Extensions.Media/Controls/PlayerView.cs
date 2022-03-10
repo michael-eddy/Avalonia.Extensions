@@ -1,15 +1,19 @@
 ﻿using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
 using Avalonia.Controls.Templates;
+using Avalonia.Extensions.Controls;
+using Avalonia.Extensions.Event;
+using Avalonia.Interactivity;
 using Avalonia.Logging;
 using LibVLCSharp.Shared;
 using System;
+using Core = LibVLCSharp.Shared.Core;
 
 namespace Avalonia.Extensions.Media
 {
     public class PlayerView : TemplatedControl, IDisposable
     {
-        private readonly Slider slider;
+        private readonly DSlider slider;
         private readonly LibVLC _libVlc;
         private readonly Button prev;
         private readonly Button play;
@@ -19,7 +23,7 @@ namespace Avalonia.Extensions.Media
         static PlayerView() => Core.Initialize();
         public PlayerView()
         {
-            slider = new Slider();
+            slider = new DSlider();
             _libVlc = new LibVLC();
             prev = new Button { Content = "Prev" };
             play = new Button { Content = "Play", Margin = new Thickness(8, 0) };
@@ -27,11 +31,34 @@ namespace Avalonia.Extensions.Media
             _libVlc.SetUserAgent("avalonia", PlayerUserAgent);
             MediaPlayer = new MediaPlayer(_libVlc) { EnableHardwareDecoding = EnableHardwareDecoding };
             videoView = new VideoView { MediaPlayer = MediaPlayer };
+            prev.Click += Prev_Click;
+            play.Click += Play_Click;
+            next.Click += Next_Click;
+            slider.ValueChange += Slider_ValueChange;
             MediaPlayer.TimeChanged += MediaPlayer_TimeChanged;
             MediaPlayer.PositionChanged += MediaPlayer_PositionChanged;
         }
-        private void MediaPlayer_TimeChanged(object sender, MediaPlayerTimeChangedEventArgs e) => slider.Maximum = e.Time;
-        private void MediaPlayer_PositionChanged(object sender, MediaPlayerPositionChangedEventArgs e) => slider.Value = e.Position;
+        private void Next_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+        private void Play_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+        private void Prev_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+        private void Slider_ValueChange(object sender, ValueChangeEventArgs e)
+        {
+            if (e.NewValue is int value)
+                MediaPlayer.Time = value;
+        }
+        private void MediaPlayer_TimeChanged(object sender, MediaPlayerTimeChangedEventArgs e) 
+            => slider.Maximum = e.Time;
+        private void MediaPlayer_PositionChanged(object sender, MediaPlayerPositionChangedEventArgs e)
+            => slider.Value = e.Position;
         protected override void OnInitialized()
         {
             DrawTemplate();
@@ -98,6 +125,10 @@ namespace Avalonia.Extensions.Media
         {
             try
             {
+                prev.Click -= Prev_Click;
+                play.Click -= Play_Click;
+                next.Click -= Next_Click;
+                slider.ValueChange -= Slider_ValueChange;
                 MediaPlayer.TimeChanged -= MediaPlayer_TimeChanged;
                 MediaPlayer.PositionChanged -= MediaPlayer_PositionChanged;
                 MediaPlayer?.Dispose();
