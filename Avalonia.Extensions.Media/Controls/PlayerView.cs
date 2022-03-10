@@ -2,7 +2,6 @@
 using Avalonia.Controls.Primitives;
 using Avalonia.Controls.Templates;
 using Avalonia.Logging;
-using LibVLCSharp.Avalonia;
 using LibVLCSharp.Shared;
 using System;
 
@@ -10,15 +9,21 @@ namespace Avalonia.Extensions.Media
 {
     public class PlayerView : TemplatedControl, IDisposable
     {
-        static PlayerView() => Core.Initialize();
         private readonly Slider slider;
         private readonly LibVLC _libVlc;
+        private readonly Button prev;
+        private readonly Button play;
+        private readonly Button next;
         private readonly VideoView videoView;
         public MediaPlayer MediaPlayer { get; }
+        static PlayerView() => Core.Initialize();
         public PlayerView()
         {
             slider = new Slider();
             _libVlc = new LibVLC();
+            prev = new Button { Content = "Prev" };
+            play = new Button { Content = "Play", Margin = new Thickness(8, 0) };
+            next = new Button { Content = "Next", Margin = new Thickness(8, 0) };
             _libVlc.SetUserAgent("avalonia", PlayerUserAgent);
             MediaPlayer = new MediaPlayer(_libVlc) { EnableHardwareDecoding = EnableHardwareDecoding };
             videoView = new VideoView { MediaPlayer = MediaPlayer };
@@ -29,14 +34,13 @@ namespace Avalonia.Extensions.Media
         private void MediaPlayer_PositionChanged(object sender, MediaPlayerPositionChangedEventArgs e) => slider.Value = e.Position;
         protected override void OnInitialized()
         {
-            base.OnInitialized();
             DrawTemplate();
+            base.OnInitialized();
         }
         private void DrawTemplate()
         {
-            Canvas canvas = new Canvas();
+            Grid canvas = new Grid();
             canvas.Children.Add(videoView);
-            SetPosition(videoView, 0, 0, 0, 0);
             Grid grid = new Grid
             {
                 Margin = new Thickness(16),
@@ -47,11 +51,12 @@ namespace Avalonia.Extensions.Media
             grid.RowDefinitions.Add(new RowDefinition(GridLength.Auto));
             grid.Children.Add(slider);
             StackPanel stackPanel = new StackPanel { Orientation = Layout.Orientation.Horizontal };
-
+            stackPanel.Children.Add(prev);
+            stackPanel.Children.Add(play);
+            stackPanel.Children.Add(next);
             grid.Children.Add(stackPanel);
             Grid.SetRow(stackPanel, 1);
             canvas.Children.Add(grid);
-            SetPosition(grid, grid.Height, 0, 0, 0);
             Template = new FuncControlTemplate((_, _) => new Decorator { Child = canvas });
             ApplyTemplate();
         }
@@ -89,13 +94,6 @@ namespace Avalonia.Extensions.Media
         }
         public void Stop() => MediaPlayer.Stop();
         public void Pause() => MediaPlayer.Pause();
-        private void SetPosition(Control control, double top, double left, double right, double bottom)
-        {
-            Canvas.SetTop(control, top);
-            Canvas.SetBottom(control, bottom);
-            Canvas.SetLeft(control, left);
-            Canvas.SetRight(control, right);
-        }
         public virtual void Dispose()
         {
             try
