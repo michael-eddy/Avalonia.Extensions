@@ -2,67 +2,11 @@
 using Avalonia.Logging;
 using System;
 using System.Reflection;
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
 
 namespace Avalonia.Extensions.Controls
 {
     public static class AssemblyUntils
     {
-        public static T FromIntPtr<T>(this IntPtr ptr)
-        {
-            try
-            {
-                return (T)GCHandle.FromIntPtr(ptr).Target;
-            }
-            catch { }
-            return default;
-        }
-        public static IntPtr ToIntPtr(this object obj)
-        {
-            GCHandle objHandle = GCHandle.Alloc(obj, GCHandleType.WeakTrackResurrection);
-            return GCHandle.ToIntPtr(objHandle);
-        }
-        public static void ReplaceMethod(MethodInfo methodToReplace, MethodInfo methodToInject)
-        {
-            try
-            {
-                RuntimeHelpers.PrepareMethod(methodToReplace.MethodHandle);
-                RuntimeHelpers.PrepareMethod(methodToInject.MethodHandle);
-                unsafe
-                {
-                    if (IntPtr.Size == 4)
-                    {
-                        int* inj = (int*)methodToInject.MethodHandle.Value.ToPointer() + 2;
-                        int* tar = (int*)methodToReplace.MethodHandle.Value.ToPointer() + 2;
-#if DEBUG
-                        byte* injInst = (byte*)*inj;
-                        byte* tarInst = (byte*)*tar;
-                        int* injSrc = (int*)(injInst + 1);
-                        int* tarSrc = (int*)(tarInst + 1);
-                        *tarSrc = ((int)injInst + 5 + *injSrc) - ((int)tarInst + 5);
-#else
-                    *tar = *inj;
-#endif
-                    }
-                    else
-                    {
-                        long* inj = (long*)methodToInject.MethodHandle.Value.ToPointer() + 1;
-                        long* tar = (long*)methodToReplace.MethodHandle.Value.ToPointer() + 1;
-#if DEBUG
-                        byte* injInst = (byte*)*inj;
-                        byte* tarInst = (byte*)*tar;
-                        int* injSrc = (int*)(injInst + 1);
-                        int* tarSrc = (int*)(tarInst + 1);
-                        *tarSrc = ((int)injInst + 5 + *injSrc) - ((int)tarInst + 5);
-#else
-                    *tar = *inj;
-#endif
-                    }
-                }
-            }
-            catch { }
-        }
         public static T CreateInstance<T>(this string assemblyPath, params object[] param)
         {
             try

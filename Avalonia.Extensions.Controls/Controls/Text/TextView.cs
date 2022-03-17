@@ -14,7 +14,7 @@ namespace Avalonia.Extensions.Controls
 		internal TextLayout TextLayout => _textLayout ??= CreateTextLayout(_constraint, _text);
 		static TextView()
 		{
-			AffectsRender<EditTextView>(TextDecorationsProperty, MaxLinesProperty, TextTrimmingProperty, LineHeightProperty);
+			AffectsRender<TextView>(TextDecorationsProperty, MaxLinesProperty, TextTrimmingProperty, LineHeightProperty);
 		}
 		public static readonly StyledProperty<TextTrimming> TextTrimmingProperty =
 			AvaloniaProperty.Register<TextLabel, TextTrimming>(nameof(TextTrimming));
