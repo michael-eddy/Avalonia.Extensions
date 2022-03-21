@@ -34,10 +34,8 @@ namespace Avalonia.Extensions.Controls
                 }
             }
         }
-        internal static bool AreClose(Size size1, Size size2)
-        {
-            return AreClose(size1.Width, size2.Width) && AreClose(size1.Height, size2.Height);
-        }
+        public static void ShowToast(this Window window, string content) => PopupToast.Show(content, window);
+        public static bool AreClose(Size size1, Size size2) => AreClose(size1.Width, size2.Width) && AreClose(size1.Height, size2.Height);
         public static bool AreClose(double value1, double value2)
         {
             if (value1 == value2)
@@ -61,8 +59,7 @@ namespace Avalonia.Extensions.Controls
         }
         public static SizeF MeasureString(this string text, Font font, double maxwidth)
         {
-            var p = Graphics.FromImage(new Bitmap(1, 1)).MeasureString(text, font,
-                Convert.ToInt32(maxwidth * 96f / 100f));
+            var p = Graphics.FromImage(new Bitmap(1, 1)).MeasureString(text, font, Convert.ToInt32(maxwidth * 96f / 100f));
             return new SizeF(p.Width * 100f / 96f, p.Height * 100f / 96f);
         }
         public static object InvokePrivateMethod(this Control control, string methodName, object[] parameters = null)
@@ -96,22 +93,8 @@ namespace Avalonia.Extensions.Controls
                 }
             }
         }
-        public static void AddStyles(this IStyling styling, AvaloniaProperty avaloniaProperty)
-        {
-            try
-            {
-                styling.AddStyles(avaloniaProperty);
-            }
-            catch { }
-        }
-        public static void AddResource(this IStyling styling)
-        {
-            try
-            {
-                styling.AddResource();
-            }
-            catch { }
-        }
+        public static void AddStyles(this IStyling styling, AvaloniaProperty avaloniaProperty) => styling.AddStyles(avaloniaProperty);
+        public static void AddResource(this IStyling styling) => styling.AddResource();
         public static Window GetWindow(this IControl control, out bool hasBase)
         {
             hasBase = false;

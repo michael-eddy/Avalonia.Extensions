@@ -165,7 +165,7 @@ public static AppBuilder BuildAvaloniaApp()
 - [x] Shutdown / TryShutdown
   > shutdown application
 
-> # EXTEND
+> # LANGUAGE
 
 - [x] Chinese Input Support
 Need to reference [Dove.Avalonia.Controls.Extensions.ChineseInputSupport](https://www.nuget.org/packages/Dove.Avalonia.Controls.Extensions.ChineseInputSupoort/) package
