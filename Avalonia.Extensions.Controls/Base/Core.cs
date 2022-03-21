@@ -49,7 +49,7 @@ namespace Avalonia.Extensions.Controls
         internal bool IsEnglish => !CultureInfo.CurrentCulture.Name.Contains("zh", StringComparison.CurrentCultureIgnoreCase);
         public IAssetLoader AssetLoader { get; private set; }
         private HttpClient HttpClient { get; set; }
-        internal HttpClient GetClient()
+        public HttpClient GetClient()
         {
             try
             {

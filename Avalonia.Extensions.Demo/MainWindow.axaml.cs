@@ -2,6 +2,7 @@ using Avalonia.Controls.Templates;
 using Avalonia.Data;
 using Avalonia.Extensions.Controls;
 using Avalonia.Extensions.Event;
+using Avalonia.Extensions.Media;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
@@ -61,6 +62,8 @@ namespace Avalonia.Controls.Demo
             var scrollView = this.FindControl<ScrollView>("scrollView");
             scrollView.ScrollEnd += ScrollView_ScrollEnd;
             scrollView.ScrollTop += ScrollView_ScrollTop;
+            var player = this.FindControl<PlayerView>("player");
+            player.Play("http://vfx.mtime.cn/Video/2019/03/09/mp4/190309153658147087.mp4");
         }
         private void ListView_ScrollTop(object? sender, RoutedEventArgs e)
         {

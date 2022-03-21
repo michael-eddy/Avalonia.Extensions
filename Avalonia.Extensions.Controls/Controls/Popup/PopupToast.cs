@@ -16,6 +16,16 @@ namespace Avalonia.Extensions.Controls
             ShowInTaskbar = false;
             SystemDecorations = SystemDecorations.None;
         }
+        public static void Show(string content)
+        {
+            PopupToast toast = new PopupToast();
+            toast.Popup(content);
+        }
+        public static void Show(string content, PopupOptions options = default)
+        {
+            PopupToast toast = new PopupToast();
+            toast.Popup(content, options);
+        }
         public void Popup(string content)
         {
             PopupOptions options = new PopupOptions { ForegroundColor = Colors.White };
@@ -47,20 +57,16 @@ namespace Avalonia.Extensions.Controls
                 HorizontalAlignment = options.HorizontalAlignment
             };
             Background = options.Background;
-            SetLoaction();
+            var workSize = Screens.Primary.WorkingArea.Size;
+            var y = workSize.Height / 8 * 7;
+            var x = (workSize.Width - Width) / 2;
+            Position = new PixelPoint(Convert.ToInt32(x), y);
             Show();
             Dispatcher.UIThread.InvokeAsync(async () =>
             {
                 await Task.Delay(options.Timeout);
                 Close();
             });
-        }
-        public virtual void SetLoaction()
-        {
-            var workSize = Screens.Primary.WorkingArea.Size;
-            var y = workSize.Height / 8 * 7;
-            var x = (workSize.Width - Width) / 2;
-            Position = new PixelPoint(Convert.ToInt32(x), y);
         }
     }
 }

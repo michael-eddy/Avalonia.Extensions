@@ -195,6 +195,7 @@
 					<TextBox Text="山川异域 不共戴天" />
 					<TextPresenter Text="山川异域 不共戴天" />
 					<TextView Text="山川异域 不共戴天" />
+					<EditTextView Text="山川异域 不共戴天" />
 				</StackPanel>
 			</TabItem>
 			<TabItem Header="CheckBoxList">
@@ -208,6 +209,9 @@
 					<Text Foreground="White" Content="now i'am the content in canvas" />
 					<Text Canvas.Left="20" Canvas.Top="20" Foreground="White" Content="现在我就在Canvas里面显示" />
 				</Canvas>
+			</TabItem>
+			<TabItem Header="PlayerView">
+				<PlayerView x:Name="player" />
 			</TabItem>
 		</TabControl>
 	</Panel>
