@@ -62,8 +62,6 @@ namespace Avalonia.Controls.Demo
             var scrollView = this.FindControl<ScrollView>("scrollView");
             scrollView.ScrollEnd += ScrollView_ScrollEnd;
             scrollView.ScrollTop += ScrollView_ScrollTop;
-            var player = this.FindControl<PlayerView>("player");
-            player.Play("http://vfx.mtime.cn/Video/2019/03/09/mp4/190309153658147087.mp4");
         }
         private void ListView_ScrollTop(object? sender, RoutedEventArgs e)
         {
@@ -130,8 +128,8 @@ namespace Avalonia.Controls.Demo
         }
         private void OnNotifyPopupClick(object sender, RoutedEventArgs e)
         {
-            PopupToast window = new PopupToast();
-            window.Popup("大大大大大大大大大大大大大大大大大大");
+            this.ShowToast("大大大大大大大大大大大大大大大大大大");
+            PopupToast.Show("大大大大大大大大大大大大大大大大大大");
         }
         private void OnNotifyClick(object sender, RoutedEventArgs e)
         {
