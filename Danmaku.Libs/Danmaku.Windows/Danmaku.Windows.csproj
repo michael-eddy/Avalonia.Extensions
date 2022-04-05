@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{1919B32F-EDAC-49AF-B076-A07C8672DE9E}</ProjectGuid>
     <OutputType>library</OutputType>
-    <RootNamespace>Danmaku.Wpf</RootNamespace>
-    <AssemblyName>Danmaku.Wpf</AssemblyName>
+    <RootNamespace>Danmaku</RootNamespace>
+    <AssemblyName>Danmaku.Windows</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -33,7 +33,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
@@ -52,7 +51,6 @@
     <Compile Include="DanmakuView.xaml.cs">
       <DependentUpon>DanmakuView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="FullScreenDanmaku.cs" />
     <Compile Include="IDanmakuWindow.cs" />
     <Compile Include="LibLoader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -88,6 +86,12 @@
     <Content Include="libwtfdanmaku.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Avalonia.Extensions.Common\Avalonia.Extensions.Common.csproj">
+      <Project>{6274d5b0-1e70-4a39-86ff-e62f7cb31a8b}</Project>
+      <Name>Avalonia.Extensions.Common</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

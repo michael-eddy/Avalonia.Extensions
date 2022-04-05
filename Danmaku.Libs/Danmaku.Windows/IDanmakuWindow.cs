@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 
-namespace Danmaku.Wpf
+namespace Danmaku
 {
     interface IDanmakuWindow : IDisposable
     {

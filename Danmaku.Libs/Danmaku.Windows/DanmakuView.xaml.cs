@@ -1,10 +1,11 @@
-﻿using System;
+﻿using Avalonia.Extensions.Common;
+using System;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Interop;
-using static Danmaku.Wpf.WINAPI.USER32;
+using static Danmaku.WINAPI.USER32;
 
-namespace Danmaku.Wpf
+namespace Danmaku
 {
     public partial class DanmakuView : Window, IDanmakuWindow
     {
@@ -24,7 +25,22 @@ namespace Danmaku.Wpf
             IntPtr hwnd = new WindowInteropHelper(this).Handle;
             var exStyles = GetExtendedWindowStyles(hwnd);
             SetExtendedWindowStyles(hwnd, exStyles | ExtendedWindowStyles.Layered | ExtendedWindowStyles.Transparent | ExtendedWindowStyles.ToolWindow);
+            var hs = PresentationSource.FromVisual(this) as HwndSource;
+            hs.AddHook(new HwndSourceHook(WndProc));
             CreateWTF();
+        }
+        private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
+        {
+            switch ((HwndMsg)msg)
+            {
+                case HwndMsg.Pause:
+                    LibLoader.WTF_Pause(_wtf);
+                    break;
+                case HwndMsg.Play:
+                    LibLoader.WTF_Start(_wtf);
+                    break;
+            }
+            return IntPtr.Zero;
         }
         private void CreateWTF()
         {
@@ -46,15 +62,15 @@ namespace Danmaku.Wpf
                 _wtf = IntPtr.Zero;
             }
         }
-        void IDisposable.Dispose()
-        {
-            if (_wtf != IntPtr.Zero)
-                DestroyWTF();
-        }
         void IDanmakuWindow.Show()
         {
             Show();
             LibLoader.WTF_Start(_wtf);
+        }
+        void IDisposable.Dispose()
+        {
+            if (_wtf != IntPtr.Zero)
+                DestroyWTF();
         }
         void IDanmakuWindow.Close() => Close();
         void IDanmakuWindow.AddDanmaku(DanmakuType type, string comment, uint color) =>

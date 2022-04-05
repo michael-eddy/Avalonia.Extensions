@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
-namespace Danmaku.Wpf
+namespace Danmaku
 {
     partial class WINAPI
     {

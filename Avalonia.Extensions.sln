@@ -17,11 +17,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Avalonia.Extensions.Control
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Avalonia.Extensions.Chinese", "Avalonia.Extensions.Chinese\Avalonia.Extensions.Chinese.csproj", "{A66F5B77-7F56-4AB1-B2DE-D2EC004C6F25}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Avalonia.Controls.Danmaku", "Avalonia.Controls.Danmaku\Avalonia.Controls.Danmaku.csproj", "{9067A692-3D96-4019-9E4D-31F3FD29E828}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Avalonia.Extensions.Danmaku", "Avalonia.Extensions.Danmaku\Avalonia.Extensions.Danmaku.csproj", "{9067A692-3D96-4019-9E4D-31F3FD29E828}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Danmaku", "Danmaku", "{60373426-CE2D-4E22-A406-FFA8F8FE137F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Danmaku.Wpf", "Danmaku.Libs\Danmaku.Wpf\Danmaku.Wpf.csproj", "{1919B32F-EDAC-49AF-B076-A07C8672DE9E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Danmaku.Windows", "Danmaku.Libs\Danmaku.Windows\Danmaku.Windows.csproj", "{1919B32F-EDAC-49AF-B076-A07C8672DE9E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Avalonia.Extensions.Common", "Avalonia.Extensions.Common\Avalonia.Extensions.Common.csproj", "{6274D5B0-1E70-4A39-86FF-E62F7CB31A8B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -71,6 +73,14 @@ Global
 		{1919B32F-EDAC-49AF-B076-A07C8672DE9E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{1919B32F-EDAC-49AF-B076-A07C8672DE9E}.Release|x86.ActiveCfg = Release|Any CPU
 		{1919B32F-EDAC-49AF-B076-A07C8672DE9E}.Release|x86.Build.0 = Release|Any CPU
+		{6274D5B0-1E70-4A39-86FF-E62F7CB31A8B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6274D5B0-1E70-4A39-86FF-E62F7CB31A8B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6274D5B0-1E70-4A39-86FF-E62F7CB31A8B}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{6274D5B0-1E70-4A39-86FF-E62F7CB31A8B}.Debug|x86.Build.0 = Debug|Any CPU
+		{6274D5B0-1E70-4A39-86FF-E62F7CB31A8B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6274D5B0-1E70-4A39-86FF-E62F7CB31A8B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6274D5B0-1E70-4A39-86FF-E62F7CB31A8B}.Release|x86.ActiveCfg = Release|Any CPU
+		{6274D5B0-1E70-4A39-86FF-E62F7CB31A8B}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

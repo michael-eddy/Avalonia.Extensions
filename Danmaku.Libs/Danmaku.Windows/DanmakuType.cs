@@ -1,4 +1,4 @@
-﻿namespace Danmaku.Wpf
+﻿namespace Danmaku
 {
     enum DanmakuType
     {
