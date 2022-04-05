@@ -4,7 +4,7 @@ using System;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 
-namespace Avalonia.Controls.Danmaku
+namespace Avalonia.Extensions.Danmaku
 {
     public sealed class LibraryApi
     {

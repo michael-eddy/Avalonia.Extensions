@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-namespace Avalonia.Controls.Danmaku
+namespace Avalonia.Extensions.Danmaku
 {
     internal static class Untils
     {

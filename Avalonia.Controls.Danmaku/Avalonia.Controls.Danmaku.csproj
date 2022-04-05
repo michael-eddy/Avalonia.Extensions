@@ -4,21 +4,13 @@
 	  <Authors>michael_eddy</Authors>
 	  <LangVersion>latest</LangVersion>
 	  <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
-	  <RootNamespace>Avalonia.Extensions</RootNamespace>
 	  <TargetFramework>netstandard2.1</TargetFramework>
+	  <RootNamespace>Avalonia.Extensions</RootNamespace>
 	  <PackageLicenseExpression>MIT</PackageLicenseExpression>
 	  <PackageProjectUrl>https://github.com/michael-eddy/Avalonia.Extensions</PackageProjectUrl>
   </PropertyGroup>
 	<ItemGroup>
 		<PackageReference Include="Avalonia" Version="0.10.13" />
 		<PackageReference Include="MonoMac.NetStandard" Version="0.0.4" />
-	</ItemGroup>
-	<ItemGroup>
-	  <None Update="Libs\*">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </None>
-	</ItemGroup>
-	<ItemGroup>
-	  <Folder Include="Libs\" />
 	</ItemGroup>
 </Project>

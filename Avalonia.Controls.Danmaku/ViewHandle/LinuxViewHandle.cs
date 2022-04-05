@@ -1,9 +1,9 @@
 ﻿using Avalonia.Controls.Platform;
 using System;
-using static Avalonia.Controls.Danmaku.Gtk;
-using static Avalonia.Controls.Danmaku.Glib;
+using static Avalonia.Extensions.Danmaku.Gtk;
+using static Avalonia.Extensions.Danmaku.Glib;
 
-namespace Avalonia.Controls.Danmaku
+namespace Avalonia.Extensions.Danmaku
 {
     sealed class LinuxViewHandle : INativeControlHostDestroyableControlHandle
     {

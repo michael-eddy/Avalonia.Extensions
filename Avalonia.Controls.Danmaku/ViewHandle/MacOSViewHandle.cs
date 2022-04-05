@@ -2,7 +2,7 @@
 using MonoMac.AppKit;
 using System;
 
-namespace Avalonia.Controls.Danmaku
+namespace Avalonia.Extensions.Danmaku
 {
     class MacOSViewHandle : IPlatformHandle, IDisposable
     {

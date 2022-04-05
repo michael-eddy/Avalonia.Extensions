@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Avalonia.Controls.Danmaku
+namespace Avalonia.Extensions.Danmaku
 {
     static unsafe class Glib
     {

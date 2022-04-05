@@ -1,8 +1,10 @@
-﻿using Avalonia.Platform;
+﻿using Avalonia.Controls;
+using Avalonia.Logging;
+using Avalonia.Platform;
 using System;
 using System.Runtime.InteropServices;
 
-namespace Avalonia.Controls.Danmaku
+namespace Avalonia.Extensions.Danmaku
 {
     public class DanmakuView : NativeControlHost
     {
@@ -32,9 +34,12 @@ namespace Avalonia.Controls.Danmaku
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
                 LibraryApi.Windows.LoadLibrary("Libs\\libwtfdanmaku.dll");
-                _pIntPtr = LibraryApi.Windows.CreateWindowEx(0, "", "",
-                    0x800000 | 0x10000000 | 0x40000000 | 0x800000 | 0x10000 | 0x0004, X, Y, Width.ToInt32(), Height.ToInt32(), parent.Handle,
-                    IntPtr.Zero, LibraryApi.Windows.GetModuleHandle(null), IntPtr.Zero);
+                _pIntPtr = LibraryApi.Windows.CreateWindowEx(0, "WTFWindow_Create", "libwtfdanmaku",
+                      0x800000 | 0x10000000 | 0x40000000 | 0x800000 | 0x10000 | 0x0004,
+                      X, Y, Width.ToInt32(), Height.ToInt32(),
+                      parent.Handle, IntPtr.Zero, LibraryApi.Windows.GetModuleHandle(null), IntPtr.Zero);
+                if (_pIntPtr == IntPtr.Zero)
+                    Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(this, "create windows hwnd failed");
                 _platformHandle = new PlatformHandle(_pIntPtr, "HWND");
             }
             else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
