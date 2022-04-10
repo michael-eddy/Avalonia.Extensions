@@ -1,5 +1,4 @@
-﻿using Avalonia.Extensions.Common;
-using System;
+﻿using System;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Interop;

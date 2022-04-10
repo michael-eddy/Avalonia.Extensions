@@ -13,4 +13,7 @@
 		<PackageReference Include="Avalonia" Version="0.10.13" />
 		<PackageReference Include="MonoMac.NetStandard" Version="0.0.4" />
 	</ItemGroup>
+	<ItemGroup>
+	  <ProjectReference Include="..\Avalonia.Extensions.Controls\Avalonia.Extensions.Controls.csproj" />
+	</ItemGroup>
 </Project>
