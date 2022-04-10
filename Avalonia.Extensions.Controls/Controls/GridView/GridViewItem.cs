@@ -3,6 +3,7 @@ using Avalonia.Controls.Metadata;
 using Avalonia.Extensions.Styles;
 using Avalonia.Input;
 using Avalonia.Layout;
+using Avalonia.Threading;
 
 namespace Avalonia.Extensions.Controls
 {
@@ -53,9 +54,12 @@ namespace Avalonia.Extensions.Controls
         }
         protected override void OnClick(MouseButton mouseButton)
         {
-            if (Parent.Parent is GridView itemView)
-                itemView.OnContentClick(this, mouseButton);
-            base.OnClick(mouseButton);
+            Dispatcher.UIThread.InvokeAsync(() =>
+            {
+                if (Parent.Parent is GridView itemView)
+                    itemView.OnContentClick(this, mouseButton);
+                base.OnClick(mouseButton);
+            });
         }
     }
 }

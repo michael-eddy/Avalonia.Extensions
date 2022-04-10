@@ -12,7 +12,6 @@
     </ItemGroup>
     <ItemGroup>
         <None Include="..\.editorconfig" Link=".editorconfig" />
-        <ProjectReference Include="..\Avalonia.Controls.Danmaku\Avalonia.Controls.Danmaku.csproj" />
         <ProjectReference Include="..\Avalonia.Extensions.Chinese\Avalonia.Extensions.Chinese.csproj" />
         <ProjectReference Include="..\Avalonia.Extensions.Controls\Avalonia.Extensions.Controls.csproj" />
     </ItemGroup>

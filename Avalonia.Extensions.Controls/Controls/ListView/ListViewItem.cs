@@ -30,10 +30,9 @@ namespace Avalonia.Extensions.Controls
         private void IsDefaultChanged(AvaloniaPropertyChangedEventArgs e)
         {
             var content = e.Sender as ListViewItem;
-            var isDefault = (bool)e.NewValue;
             if (content?.VisualRoot is IInputElement inputRoot)
             {
-                if (isDefault)
+                if (e.NewValue is true)
                     content.ListenForDefault(inputRoot);
                 else
                     content.StopListeningForDefault(inputRoot);
@@ -42,10 +41,9 @@ namespace Avalonia.Extensions.Controls
         private void IsCancelChanged(AvaloniaPropertyChangedEventArgs e)
         {
             var content = e.Sender as ListViewItem;
-            var isCancel = (bool)e.NewValue;
             if (content?.VisualRoot is IInputElement inputRoot)
             {
-                if (isCancel)
+                if (e.NewValue is true)
                     content.ListenForCancel(inputRoot);
                 else
                     content.StopListeningForCancel(inputRoot);
