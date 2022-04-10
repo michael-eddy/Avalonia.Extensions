@@ -3,6 +3,7 @@ using Avalonia.Controls.Primitives;
 using Avalonia.Extensions.Styles;
 using Avalonia.Interactivity;
 using Avalonia.Layout;
+using Avalonia.Threading;
 using System.Collections.Specialized;
 
 namespace Avalonia.Extensions.Controls
@@ -107,47 +108,59 @@ namespace Avalonia.Extensions.Controls
         }
         private void OnChildVerticalAlignmentChange(object sender, AvaloniaPropertyChangedEventArgs e)
         {
-            for (var index = 0; index < LogicalChildren.Count; index++)
+            Dispatcher.UIThread.InvokeAsync(() =>
             {
-                if (LogicalChildren.ElementAt(index) is ListBoxItem listBoxItem)
-                    listBoxItem.VerticalAlignment = ChildVerticalAlignment;
-            }
+                for (var index = 0; index < LogicalChildren.Count; index++)
+                {
+                    if (LogicalChildren.ElementAt(index) is ListBoxItem listBoxItem)
+                        listBoxItem.VerticalAlignment = ChildVerticalAlignment;
+                }
+            }, DispatcherPriority.ApplicationIdle);
         }
         private void OnChildHorizontalAlignmentChange(object sender, AvaloniaPropertyChangedEventArgs e)
         {
-            for (var index = 0; index < LogicalChildren.Count; index++)
+            Dispatcher.UIThread.InvokeAsync(() =>
             {
-                if (LogicalChildren.ElementAt(index) is ListBoxItem listBoxItem)
-                    listBoxItem.HorizontalAlignment = ChildHorizontalAlignment;
-            }
+                for (var index = 0; index < LogicalChildren.Count; index++)
+                {
+                    if (LogicalChildren.ElementAt(index) is ListBoxItem listBoxItem)
+                        listBoxItem.HorizontalAlignment = ChildHorizontalAlignment;
+                }
+            }, DispatcherPriority.ApplicationIdle);
         }
         private void OnChildVerticalContentAlignmentChange(object sender, AvaloniaPropertyChangedEventArgs e)
         {
-            for (var index = 0; index < LogicalChildren.Count; index++)
-            {
-                if (LogicalChildren.ElementAt(index) is ListBoxItem listBoxItem)
-                    listBoxItem.VerticalContentAlignment = ChildVerticalContentAlignment;
-            }
+            Dispatcher.UIThread.InvokeAsync(() =>
+           {
+               for (var index = 0; index < LogicalChildren.Count; index++)
+               {
+                   if (LogicalChildren.ElementAt(index) is ListBoxItem listBoxItem)
+                       listBoxItem.VerticalContentAlignment = ChildVerticalContentAlignment;
+               }
+           }, DispatcherPriority.ApplicationIdle);
         }
         private void OnChildHorizontalContentAlignmentChange(object sender, AvaloniaPropertyChangedEventArgs e)
         {
-            for (var index = 0; index < LogicalChildren.Count; index++)
+            Dispatcher.UIThread.InvokeAsync(() =>
             {
-                if (LogicalChildren.ElementAt(index) is ListBoxItem listBoxItem)
-                    listBoxItem.HorizontalContentAlignment = ChildHorizontalContentAlignment;
-            }
+                for (var index = 0; index < LogicalChildren.Count; index++)
+                {
+                    if (LogicalChildren.ElementAt(index) is ListBoxItem listBoxItem)
+                        listBoxItem.HorizontalContentAlignment = ChildHorizontalContentAlignment;
+                }
+            }, DispatcherPriority.ApplicationIdle);
         }
         private void OnBoundsChange(object sender, AvaloniaPropertyChangedEventArgs e)
         {
-            if (e.NewValue is Rect rect && CellWidth != double.NaN)
+            Dispatcher.UIThread.InvokeAsync(() =>
             {
-                CellWidth = rect.Width / ColumnNum;
-                for (var index = 0; index < LogicalChildren.Count; index++)
+                if (e.NewValue is Rect rect && CellWidth != double.NaN)
                 {
-                    var item = LogicalChildren.ElementAt(index);
-                    SetItemWidth(item);
+                    CellWidth = rect.Width / ColumnNum;
+                    for (var index = 0; index < LogicalChildren.Count; index++)
+                        SetItemWidth(LogicalChildren.ElementAt(index));
                 }
-            }
+            }, DispatcherPriority.ApplicationIdle);
         }
         private void SetItemWidth(object item)
         {
@@ -160,16 +173,19 @@ namespace Avalonia.Extensions.Controls
         }
         private void LogicalChildren_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
-            if (e.NewItems != null && e.NewItems.Count > 0 && CellWidth != double.NaN)
+            Dispatcher.UIThread.InvokeAsync(() =>
             {
-                var item = e.NewItems.ElementAt(0);
-                if (item is ListBoxItem listItem)
+                if (e.NewItems != null && e.NewItems.Count > 0 && CellWidth != double.NaN)
                 {
-                    listItem.HorizontalAlignment = ChildHorizontalAlignment;
-                    listItem.HorizontalContentAlignment = ChildHorizontalContentAlignment;
+                    var item = e.NewItems.ElementAt(0);
+                    if (item is ListBoxItem listItem)
+                    {
+                        listItem.HorizontalAlignment = ChildHorizontalAlignment;
+                        listItem.HorizontalContentAlignment = ChildHorizontalContentAlignment;
+                    }
+                    SetItemWidth(item);
                 }
-                SetItemWidth(item);
-            }
+            }, DispatcherPriority.ApplicationIdle);
         }
         private bool scrollTopEnable = false;
         protected override void ScrollEventHandle(ScrollViewer scrollViewer)

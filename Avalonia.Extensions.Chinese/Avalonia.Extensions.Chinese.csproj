@@ -3,8 +3,8 @@
         <Version>1.1.6</Version>
 		<Authors>michael_eddy</Authors>
 		<LangVersion>latest</LangVersion>
-		<RootNamespace>Avalonia.Extensions</RootNamespace>
         <TargetFramework>netstandard2.1</TargetFramework>
+		<RootNamespace>Avalonia.Extensions</RootNamespace>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
         <PackageProjectUrl>https://github.com/michael-eddy/Avalonia.Extensions</PackageProjectUrl>
     </PropertyGroup>

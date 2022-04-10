@@ -172,8 +172,11 @@ namespace Avalonia.Extensions.Controls
         }
         private void ScrollViewer_ScrollChanged(object sender, ScrollChangedEventArgs e)
         {
-            if (e.Source is ScrollViewer scrollViewer)
-                ScrollEventHandle(scrollViewer);
+            Dispatcher.UIThread.InvokeAsync(() =>
+            {
+                if (e.Source is ScrollViewer scrollViewer)
+                    ScrollEventHandle(scrollViewer);
+            });
         }
         private void OnSelectionChanged((object, RoutedEventArgs) obj)
         {
