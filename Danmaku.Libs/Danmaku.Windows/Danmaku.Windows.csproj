@@ -87,11 +87,5 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\Avalonia.Extensions.Common\Avalonia.Extensions.Common.csproj">
-      <Project>{6274d5b0-1e70-4a39-86ff-e62f7cb31a8b}</Project>
-      <Name>Avalonia.Extensions.Common</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

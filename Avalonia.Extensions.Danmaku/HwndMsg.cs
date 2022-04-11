@@ -1,4 +1,4 @@
-﻿namespace Avalonia.Extensions.Common
+﻿namespace Avalonia.Extensions
 {
     public enum HwndMsg : int
     {

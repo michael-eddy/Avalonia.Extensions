@@ -13,7 +13,6 @@ namespace Avalonia.Extensions.Controls
 {
     public static class ControlUtils
     {
-        private const double Epsilon = 0.00000153;
         internal static void UpdateStyles(this StyledElement element, Styling.Styles styles)
         {
             if (styles != null && element != null)
@@ -35,14 +34,6 @@ namespace Avalonia.Extensions.Controls
             }
         }
         public static void ShowToast(this Window window, string content) => PopupToast.Show(content, window);
-        public static bool AreClose(Size size1, Size size2) => AreClose(size1.Width, size2.Width) && AreClose(size1.Height, size2.Height);
-        public static bool AreClose(double value1, double value2)
-        {
-            if (value1 == value2)
-                return true;
-            double delta = value1 - value2;
-            return (delta < Epsilon) && (delta > -Epsilon);
-        }
         public static SizeF MeasureString(this IWindowImpl impl, string content, Font font, float maxWidth = 0)
         {
             try

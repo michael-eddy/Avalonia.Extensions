@@ -1,14 +1,17 @@
 ﻿using Avalonia.Controls;
+using Avalonia.Extensions.Controls;
+using Avalonia.Extensions.Utils;
 using Avalonia.Logging;
 using Avalonia.Platform;
 using System;
-using System.Runtime.InteropServices;
+using System.Diagnostics;
 
 namespace Avalonia.Extensions.Danmaku
 {
     public class DanmakuView : NativeControlHost
     {
         private IntPtr _pIntPtr;
+        private Process _danmakuPlayer;
         private IPlatformHandle? _platformHandle = null;
         /// <summary>
         /// Defines the <see cref="X"/> property.
@@ -31,52 +34,96 @@ namespace Avalonia.Extensions.Danmaku
         protected override IPlatformHandle CreateNativeControlCore(IPlatformHandle parent)
         {
             _platformHandle = base.CreateNativeControlCore(parent);
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            try
             {
-                LibraryApi.Windows.LoadLibrary("Libs\\libwtfdanmaku.dll");
-                _pIntPtr = LibraryApi.Windows.CreateWindowEx(0, "WTFWindow_Create", "libwtfdanmaku",
-                      0x800000 | 0x10000000 | 0x40000000 | 0x800000 | 0x10000 | 0x0004,
-                      X, Y, Width.ToInt32(), Height.ToInt32(),
-                      parent.Handle, IntPtr.Zero, LibraryApi.Windows.GetModuleHandle(null), IntPtr.Zero);
-                if (_pIntPtr == IntPtr.Zero)
-                    Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(this, "create windows hwnd failed");
-                _platformHandle = new PlatformHandle(_pIntPtr, "HWND");
+                switch (Runtime.Platform)
+                {
+                    case Platforms.Windows:
+                        {
+                            LibraryApi.Windows.LoadLibrary("Libs\\libwtfdanmaku.dll");
+                            _pIntPtr = LibraryApi.Windows.CreateWindowEx(0, "WTFWindow_Create", "libwtfdanmaku",
+                                  0x800000 | 0x10000000 | 0x40000000 | 0x800000 | 0x10000 | 0x0004,
+                                  X, Y, Width.ToInt32(), Height.ToInt32(),
+                                  parent.Handle, IntPtr.Zero, LibraryApi.Windows.GetModuleHandle(null), IntPtr.Zero);
+                            if (_pIntPtr == IntPtr.Zero)
+                                Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(this, "create windows hwnd failed");
+                            _platformHandle = new PlatformHandle(_pIntPtr, "HWND");
+                            break;
+                        }
+                    case Platforms.MacOS:
+                        {
+                            _platformHandle = new MacOSViewHandle(default);
+                            break;
+                        }
+                    case Platforms.Linux:
+                        {
+                            _platformHandle = LibraryApi.Linux.CreateGtkView(parent.Handle);
+                            break;
+                        }
+                }
             }
-            else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+            catch (Exception ex)
             {
-                _platformHandle = new MacOSViewHandle(default);
+                Logger.TryGet(LogEventLevel.Error, LogArea.Visual)?.Log(this, ex.Message);
             }
-            else
-                _platformHandle = LibraryApi.Linux.CreateGtkView(parent.Handle);
             return _platformHandle;
         }
         protected override void DestroyNativeControlCore(IPlatformHandle control)
         {
-            base.DestroyNativeControlCore(control);
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-                LibraryApi.Windows.DestroyWindow(control.Handle);
-            else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
-                ((MacOSViewHandle)control).Dispose();
-            else
+            try
             {
-
+                switch (Runtime.Platform)
+                {
+                    case Platforms.MacOS:
+                        ((MacOSViewHandle)control).Dispose();
+                        break;
+                    case Platforms.Windows:
+                        LibraryApi.Windows.DestroyWindow(control.Handle);
+                        break;
+                    case Platforms.Linux:
+                        {
+                            _danmakuPlayer?.Kill();
+                            _danmakuPlayer = null;
+                            base.DestroyNativeControlCore(control);
+                            break;
+                        }
+                    default:
+                        base.DestroyNativeControlCore(control);
+                        break;
+                }
+                if (_platformHandle != null)
+                    _platformHandle = null;
+            }
+            catch (Exception ex)
+            {
+                Logger.TryGet(LogEventLevel.Error, LogArea.Visual)?.Log(this, ex.Message);
             }
             if (_platformHandle != null)
                 _platformHandle = null;
         }
         public void Load(string path)
         {
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            try
             {
-
+                switch (Runtime.Platform)
+                {
+                    case Platforms.MacOS:
+                        {
+                            break;
+                        }
+                    case Platforms.Windows:
+                        {
+                            break;
+                        }
+                    case Platforms.Linux:
+                        {
+                            break;
+                        }
+                }
             }
-            else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+            catch (Exception ex)
             {
-
-            }
-            else
-            {
-
+                Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(this, ex.Message);
             }
         }
     }
