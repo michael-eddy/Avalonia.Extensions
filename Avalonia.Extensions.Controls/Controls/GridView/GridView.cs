@@ -3,8 +3,6 @@ using Avalonia.Controls.Primitives;
 using Avalonia.Extensions.Styles;
 using Avalonia.Interactivity;
 using Avalonia.Layout;
-using Avalonia.Threading;
-using System.Collections.Specialized;
 
 namespace Avalonia.Extensions.Controls
 {
@@ -15,10 +13,6 @@ namespace Avalonia.Extensions.Controls
     /// </summary>
     public class GridView : ListView, IStyling
     {
-        /// <summary>
-        /// The width of each cell.
-        /// </summary>
-        public double CellWidth { get; private set; }
         /// <summary>
         /// Defines the <see cref="ColumnNum"/> property.
         /// </summary>
@@ -90,11 +84,9 @@ namespace Avalonia.Extensions.Controls
         /// </summary>
         public GridView()
         {
-            this.AddStyles(ItemsPanelProperty);
+            this.AddStyles(ItemsPanelProperty, ColumnNum);
             ScrollViewer.SetVerticalScrollBarVisibility(this, ScrollBarVisibility.Auto);
             ScrollViewer.SetHorizontalScrollBarVisibility(this, ScrollBarVisibility.Disabled);
-            LogicalChildren.CollectionChanged += LogicalChildren_CollectionChanged;
-            BoundsProperty.Changed.AddClassHandler<GridView>(OnBoundsChange);
             ColumnNumProperty.Changed.AddClassHandler<GridView>(OnColumnNumChanged);
             ChildVerticalAlignmentProperty.Changed.AddClassHandler<GridView>(OnChildVerticalAlignmentChange);
             ChildHorizontalAlignmentProperty.Changed.AddClassHandler<GridView>(OnChildHorizontalAlignmentChange);
@@ -103,8 +95,8 @@ namespace Avalonia.Extensions.Controls
         }
         private void OnColumnNumChanged(object sender, AvaloniaPropertyChangedEventArgs e)
         {
-            if (e.NewValue is int value)
-                CellWidth = value > 0 ? Bounds.Width / value : double.NaN;
+            if (e.NewValue != e.OldValue)
+                this.AddStyles(ItemsPanelProperty, ColumnNum);
         }
         private void OnChildVerticalAlignmentChange(object sender, AvaloniaPropertyChangedEventArgs e)
         {
@@ -149,41 +141,6 @@ namespace Avalonia.Extensions.Controls
                         listBoxItem.HorizontalContentAlignment = ChildHorizontalContentAlignment;
                 }
             }
-        }
-        private void OnBoundsChange(object sender, AvaloniaPropertyChangedEventArgs e)
-        {
-            if (e.NewValue is Rect newValue && e.OldValue is Rect oldValue
-                && newValue.Width != oldValue.Width && CellWidth != double.NaN)
-            {
-                CellWidth = newValue.Width / ColumnNum;
-                for (var index = 0; index < LogicalChildren.Count; index++)
-                    SetItemWidth(LogicalChildren.ElementAt(index));
-            }
-        }
-        private void SetItemWidth(object item)
-        {
-            if (item is ListBoxItem obj)
-            {
-                var padding = obj.Padding.Left + obj.Padding.Right;
-                obj.Width = CellWidth - padding;
-                obj.HorizontalAlignment = HorizontalAlignment.Center;
-            }
-        }
-        private void LogicalChildren_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
-        {
-            Dispatcher.UIThread.InvokeAsync(() =>
-            {
-                if (e.NewItems != null && e.NewItems.Count > 0 && CellWidth != double.NaN)
-                {
-                    var item = e.NewItems.ElementAt(0);
-                    if (item is ListBoxItem listItem)
-                    {
-                        listItem.HorizontalAlignment = ChildHorizontalAlignment;
-                        listItem.HorizontalContentAlignment = ChildHorizontalContentAlignment;
-                    }
-                    SetItemWidth(item);
-                }
-            }, DispatcherPriority.ApplicationIdle);
         }
         private bool scrollTopEnable = false;
         protected override void ScrollEventHandle(ScrollViewer scrollViewer)

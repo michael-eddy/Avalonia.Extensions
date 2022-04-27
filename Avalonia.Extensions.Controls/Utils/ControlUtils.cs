@@ -85,6 +85,7 @@ namespace Avalonia.Extensions.Controls
             }
         }
         public static void AddStyles(this IStyling styling, AvaloniaProperty avaloniaProperty) => styling.AddStyles(avaloniaProperty);
+        public static void AddStyles(this IStyling styling, AvaloniaProperty avaloniaProperty, params object[] parms) => styling.AddStyles(avaloniaProperty, parms);
         public static void AddResource(this IStyling styling) => styling.AddResource();
         public static Window GetWindow(this IControl control, out bool hasBase)
         {

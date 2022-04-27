@@ -10,7 +10,8 @@ namespace Avalonia.Extensions.Styles
 {
     public interface IStyling : IStyleable
     {
-        void AddStyles(AvaloniaProperty avaloniaProperty)
+        void AddStyles(AvaloniaProperty avaloniaProperty) => AddStyles(avaloniaProperty, null);
+        void AddStyles(AvaloniaProperty avaloniaProperty, params object[] parms)
         {
             try
             {
@@ -25,6 +26,7 @@ namespace Avalonia.Extensions.Styles
                         var bytes = new byte[stream.Length];
                         stream.Read(bytes, 0, bytes.Length);
                         var xaml = Encoding.UTF8.GetString(bytes);
+                        xaml = string.Format(xaml, parms);
                         var target = AvaloniaRuntimeXamlLoader.Parse(xaml);
                         control.SetValue(avaloniaProperty, target);
                     }
