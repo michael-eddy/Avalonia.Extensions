@@ -24,7 +24,7 @@ namespace Avalonia.Extensions.Controls
         }
         private void OnWidthChange(object sender, AvaloniaPropertyChangedEventArgs e)
         {
-            if (e.NewValue is double d)
+            if (!e.IsSameValue() && e.NewValue is double d)
             {
                 centerRound = d / 2;
                 innerRound = d * 0.8;

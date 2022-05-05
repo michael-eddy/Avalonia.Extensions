@@ -17,29 +17,35 @@ namespace Avalonia.Extensions.Controls
         }
         private void OnSecondViewChange(object sender, AvaloniaPropertyChangedEventArgs e)
         {
-            bool isVisible = false;
-            if (e.OldValue is Panel oldControl)
+            if (!e.IsSameValue())
             {
-                isVisible = oldControl.IsVisible;
-                Children.Remove(oldControl);
-            }
-            if (e.NewValue is Panel newControl)
-            {
-                newControl.IsVisible = isVisible;
-                Children.Add(newControl);
+                bool isVisible = false;
+                if (e.OldValue is Panel oldControl)
+                {
+                    isVisible = oldControl.IsVisible;
+                    Children.Remove(oldControl);
+                }
+                if (e.NewValue is Panel newControl)
+                {
+                    newControl.IsVisible = isVisible;
+                    Children.Add(newControl);
+                }
             }
         }
         private void OnPrimaryViewChange(object sender, AvaloniaPropertyChangedEventArgs e)
         {
-            if (e.OldValue is ClickableView oldControl)
+            if (!e.IsSameValue())
             {
-                oldControl.Click -= ClickView_Click;
-                Children.Remove(oldControl);
-            }
-            if (e.NewValue is ClickableView newControl)
-            {
-                newControl.Click += ClickView_Click;
-                Children.Add(newControl);
+                if (e.OldValue is ClickableView oldControl)
+                {
+                    oldControl.Click -= ClickView_Click;
+                    Children.Remove(oldControl);
+                }
+                if (e.NewValue is ClickableView newControl)
+                {
+                    newControl.Click += ClickView_Click;
+                    Children.Add(newControl);
+                }
             }
         }
         /// <summary>

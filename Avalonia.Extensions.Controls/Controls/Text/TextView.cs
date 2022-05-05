@@ -6,7 +6,7 @@ using System;
 
 namespace Avalonia.Extensions.Controls
 {
-    public class TextView : TextPresenter
+	public class TextView : TextPresenter
 	{
 		private Size _constraint;
 		private TextLayout _textLayout;

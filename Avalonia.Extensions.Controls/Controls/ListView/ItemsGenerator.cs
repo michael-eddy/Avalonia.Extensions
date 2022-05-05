@@ -5,7 +5,7 @@ using System;
 
 namespace Avalonia.Extensions.Controls
 {
-    public class ItemsGenerator : ItemContainerGenerator
+    internal class ItemsGenerator : ItemContainerGenerator
     {
         private string ChildItem { get; }
         public ItemsGenerator(IControl owner, AvaloniaProperty contentProperty, AvaloniaProperty contentTemplateProperty) : base(owner)

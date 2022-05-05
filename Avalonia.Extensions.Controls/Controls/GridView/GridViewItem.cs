@@ -24,17 +24,17 @@ namespace Avalonia.Extensions.Controls
         }
         private void OnHorizontalContentAlignmentChange(object sender, AvaloniaPropertyChangedEventArgs e)
         {
-            if (Parent is ListBoxItem item && e.NewValue is HorizontalAlignment horizontal)
+            if (!e.IsSameValue() && Parent is ListBoxItem item && e.NewValue is HorizontalAlignment horizontal)
                 item.HorizontalContentAlignment = horizontal;
         }
         private void OnVerticalContentAlignmentChange(object sender, AvaloniaPropertyChangedEventArgs e)
         {
-            if (Parent is ListBoxItem item && e.NewValue is VerticalAlignment vertical)
+            if (!e.IsSameValue() && Parent is ListBoxItem item && e.NewValue is VerticalAlignment vertical)
                 item.VerticalContentAlignment = vertical;
         }
         private void OnParentChanged(object sender, AvaloniaPropertyChangedEventArgs e)
         {
-            if (e.NewValue is ListBoxItem item)
+            if (!e.IsSameValue() && e.NewValue is ListBoxItem item)
             {
                 item.VerticalAlignment = VerticalAlignment;
                 item.HorizontalAlignment = HorizontalAlignment;
@@ -44,12 +44,12 @@ namespace Avalonia.Extensions.Controls
         }
         private void OnVerticalAlignmentChange(object sender, AvaloniaPropertyChangedEventArgs e)
         {
-            if (Parent is ListBoxItem item && e.NewValue is VerticalAlignment vertical)
+            if (!e.IsSameValue() && Parent is ListBoxItem item && e.NewValue is VerticalAlignment vertical)
                 item.VerticalAlignment = vertical;
         }
         private void OnHorizontalAlignmentChange(object sender, AvaloniaPropertyChangedEventArgs e)
         {
-            if (Parent is ListBoxItem item && e.NewValue is HorizontalAlignment horizontal)
+            if (!e.IsSameValue() && Parent is ListBoxItem item && e.NewValue is HorizontalAlignment horizontal)
                 item.HorizontalAlignment = horizontal;
         }
         protected override void OnClick(MouseButton mouseButton)

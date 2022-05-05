@@ -94,8 +94,8 @@ namespace Avalonia.Extensions.Controls
 			set => SetValue(PaddingProperty, value);
 		}
 		/// <summary>
-		 /// Gets or sets a brush used to paint the control's background.
-		 /// </summary>
+		/// Gets or sets a brush used to paint the control's background.
+		/// </summary>
 		public IBrush Background
 		{
 			get => GetValue(BackgroundProperty);
@@ -134,16 +134,16 @@ namespace Avalonia.Extensions.Controls
 			set => SetValue(FontWeightProperty, value);
 		}
 		/// <summary>
-		 /// Gets or sets a brush used to paint the text.
-		 /// </summary>
+		/// Gets or sets a brush used to paint the text.
+		/// </summary>
 		public IBrush Foreground
 		{
 			get => GetValue(ForegroundProperty);
 			set => SetValue(ForegroundProperty, value);
 		}
 		/// <summary>
-		 /// Gets or sets the height of each line of content.
-		 /// </summary>
+		/// Gets or sets the height of each line of content.
+		/// </summary>
 		public double LineHeight
 		{
 			get => GetValue(LineHeightProperty);
@@ -206,10 +206,8 @@ namespace Avalonia.Extensions.Controls
 		static TextLabel()
 		{
 			ClipToBoundsProperty.OverrideDefaultValue<TextLabel>(true);
-			AffectsRender<TextLabel>(BackgroundProperty, ForegroundProperty,
-				TextAlignmentProperty, TextDecorationsProperty);
-			AffectsMeasure<TextLabel>(FontSizeProperty, FontWeightProperty,
-				FontStyleProperty, TextWrappingProperty, FontFamilyProperty,
+			AffectsRender<TextLabel>(BackgroundProperty, ForegroundProperty, TextAlignmentProperty, TextDecorationsProperty);
+			AffectsMeasure<TextLabel>(FontSizeProperty, FontWeightProperty, FontStyleProperty, TextWrappingProperty, FontFamilyProperty,
 				TextTrimmingProperty, PaddingProperty, LineHeightProperty, MaxLinesProperty);
 			Observable.Merge<AvaloniaPropertyChangedEventArgs>(ForegroundProperty.Changed, TextAlignmentProperty.Changed, TextWrappingProperty.Changed,
 				TextTrimmingProperty.Changed, FontSizeProperty.Changed, FontStyleProperty.Changed, FontWeightProperty.Changed, FontFamilyProperty.Changed,
@@ -266,7 +264,7 @@ namespace Avalonia.Extensions.Controls
 					}
 					break;
 			}
-			_text = string.Join("", _contents);
+			_text = string.Join(string.Empty, _contents);
 			InvalidateMeasureOnChildrenChanged();
 		}
 		private protected virtual void InvalidateMeasureOnChildrenChanged()

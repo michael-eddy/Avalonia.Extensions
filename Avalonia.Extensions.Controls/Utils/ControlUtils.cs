@@ -13,6 +13,7 @@ namespace Avalonia.Extensions.Controls
 {
     public static class ControlUtils
     {
+        public static bool IsSameValue(this AvaloniaPropertyChangedEventArgs args) => args.OldValue == args.NewValue;
         internal static void UpdateStyles(this StyledElement element, Styling.Styles styles)
         {
             if (styles != null && element != null)
@@ -50,8 +51,15 @@ namespace Avalonia.Extensions.Controls
         }
         public static SizeF MeasureString(this string text, Font font, double maxwidth)
         {
-            var p = Graphics.FromImage(new Bitmap(1, 1)).MeasureString(text, font, Convert.ToInt32(maxwidth * 96f / 100f));
-            return new SizeF(p.Width * 100f / 96f, p.Height * 100f / 96f);
+            try
+            {
+                var p = Graphics.FromImage(new Bitmap(1, 1)).MeasureString(text, font, Convert.ToInt32(maxwidth * 96f / 100f));
+                return new SizeF(p.Width * 100f / 96f, p.Height * 100f / 96f);
+            }
+            catch
+            {
+                return new SizeF();
+            }
         }
         public static object InvokePrivateMethod(this Control control, string methodName, object[] parameters = null)
         {
