@@ -112,20 +112,17 @@ namespace Avalonia.Extensions.Controls
                AvaloniaProperty.RegisterDirect<TipLabel, string>(nameof(Content), o => o.Content, (o, v) => o.Content = v);
         private static void OnContentChange(TipLabel label, AvaloniaPropertyChangedEventArgs e)
         {
-            if (e.NewValue is string chars)
+            if (!e.IsSameValue() && e.NewValue is string chars)
             {
                 label.TextBlock.Text = chars;
                 var size = chars.MeasureString(label.TextBlock.GetFont(), 0);
-                if (size != null)
-                {
-                    var width = Convert.ToDouble(size.Width).Upper() + (label.Padding.Left + label.Padding.Right).Upper();
-                    label.Width = label.DockPanel.Width = width;
-                }
+                var width = Convert.ToDouble(size.Width).Upper() + (label.Padding.Left + label.Padding.Right).Upper();
+                label.Width = label.DockPanel.Width = width;
             }
         }
         private static void OnBackgroundChange(TipLabel label, AvaloniaPropertyChangedEventArgs e)
         {
-            if (e.NewValue is IBrush brush && brush != Core.Instance.Transparent)
+            if (!e.IsSameValue() && e.NewValue is IBrush brush && brush != Core.Instance.Transparent)
             {
                 label.DockPanel.Background = brush;
                 label.Background = Core.Instance.Transparent;
@@ -133,7 +130,7 @@ namespace Avalonia.Extensions.Controls
         }
         private static void OnPaddingChange(TipLabel label, AvaloniaPropertyChangedEventArgs e)
         {
-            if (e.NewValue is Thickness thickness)
+            if (!e.IsSameValue() && e.NewValue is Thickness thickness)
             {
                 label.DockPanel.Padding = thickness;
                 label.Height += thickness.Bottom + thickness.Top;
@@ -141,22 +138,22 @@ namespace Avalonia.Extensions.Controls
         }
         private static void OnBorderThicknessChange(TipLabel label, AvaloniaPropertyChangedEventArgs e)
         {
-            if (e.NewValue is Thickness thickness)
+            if (!e.IsSameValue() && e.NewValue is Thickness thickness)
                 label.DockPanel.BorderThickness = thickness;
         }
         private static void OnBorderBrushChange(TipLabel label, AvaloniaPropertyChangedEventArgs e)
         {
-            if (e.NewValue is IBrush brush)
+            if (!e.IsSameValue() && e.NewValue is IBrush brush)
                 label.DockPanel.BorderBrush = brush;
         }
         private static void OnForegroundChange(TipLabel label, AvaloniaPropertyChangedEventArgs e)
         {
-            if (e.NewValue is IBrush brush)
+            if (!e.IsSameValue() && e.NewValue is IBrush brush)
                 label.TextBlock.Foreground = brush;
         }
         private static void OnCornerRadiusChanged(TipLabel label, AvaloniaPropertyChangedEventArgs e)
         {
-            if (e.NewValue is CornerRadius radius)
+            if (!e.IsSameValue() && e.NewValue is CornerRadius radius)
                 label.DockPanel.CornerRadius = radius;
         }
     }

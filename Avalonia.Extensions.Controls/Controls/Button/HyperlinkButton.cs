@@ -29,7 +29,7 @@ namespace Avalonia.Extensions.Controls
         }
         private void OnContentChange(object sender, AvaloniaPropertyChangedEventArgs e)
         {
-            if (e.NewValue is string chars)
+            if (!e.IsSameValue() && e.NewValue is string chars)
             {
                 TextContent.Text = chars;
                 TextContent.InvalidateMeasure();

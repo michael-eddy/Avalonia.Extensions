@@ -115,7 +115,7 @@ namespace Avalonia.Extensions.Controls
         }
         private void OnBoundsChange(ListView view, AvaloniaPropertyChangedEventArgs e)
         {
-            if (e.NewValue is Size size)
+            if (!e.IsSameValue() && e.NewValue is Size size)
             {
                 var args = new SizeRoutedEventArgs(SizeChangeEvent, size);
                 RaiseEvent(args);
@@ -131,7 +131,7 @@ namespace Avalonia.Extensions.Controls
         }
         protected virtual void OnScrollChange(object sender, AvaloniaPropertyChangedEventArgs e)
         {
-            if (e.NewValue is ScrollViewer scrollViewer)
+            if (!e.IsSameValue() && e.NewValue is ScrollViewer scrollViewer)
                 scrollViewer.ScrollChanged += ScrollViewer_ScrollChanged;
         }
         private bool trigger = true;

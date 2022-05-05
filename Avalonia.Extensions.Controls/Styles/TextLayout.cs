@@ -8,7 +8,7 @@ using Avalonia.Utilities;
 
 namespace Avalonia.Extensions.Styles
 {
-    internal sealed class TextLayout
+	internal sealed class TextLayout
 	{
 		private readonly struct FormattedTextSource : ITextSource
 		{

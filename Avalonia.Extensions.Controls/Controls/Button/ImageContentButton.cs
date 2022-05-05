@@ -45,12 +45,12 @@ namespace Avalonia.Extensions.Controls
         }
         private void OnContentChange(object sender, AvaloniaPropertyChangedEventArgs e)
         {
-            if (e.NewValue is string chars && text != null)
+            if (!e.IsSameValue() && e.NewValue is string chars && text != null)
                 text.Text = chars;
         }
         private void OnImageSourceChange(object sender, AvaloniaPropertyChangedEventArgs e)
         {
-            if (e.NewValue is Uri source && image != null)
+            if (!e.IsSameValue() && e.NewValue is Uri source && image != null)
                 image.Source = source;
         }
         /// <summary>
@@ -84,7 +84,7 @@ namespace Avalonia.Extensions.Controls
             AvaloniaProperty.Register<ImageContentButton, Size>(nameof(IconSize), new Size(32, 32));
         private void OnIconSizeChange(ImageContentButton obj, AvaloniaPropertyChangedEventArgs e)
         {
-            if (e.NewValue is Size size && image != null)
+            if (!e.IsSameValue() && e.NewValue is Size size && image != null)
             {
                 image.Width = size.Width;
                 image.Height = size.Height;

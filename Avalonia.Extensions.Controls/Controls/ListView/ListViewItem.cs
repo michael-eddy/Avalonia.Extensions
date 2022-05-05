@@ -40,8 +40,7 @@ namespace Avalonia.Extensions.Controls
         }
         private void IsCancelChanged(AvaloniaPropertyChangedEventArgs e)
         {
-            var content = e.Sender as ListViewItem;
-            if (content?.VisualRoot is IInputElement inputRoot)
+            if (e.Sender is ListViewItem content && content?.VisualRoot is IInputElement inputRoot)
             {
                 if (e.NewValue is true)
                     content.ListenForCancel(inputRoot);

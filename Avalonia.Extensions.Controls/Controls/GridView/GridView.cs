@@ -7,9 +7,7 @@ using Avalonia.Layout;
 namespace Avalonia.Extensions.Controls
 {
     /// <summary>
-    /// the uwp like "GridView", it just define itempanel with wrappanel
-    /// you need to set "ColumnNum" for columns count
-    /// https://social.technet.microsoft.com/wiki/contents/articles/19395.multiple-columns-in-wpf-listbox.aspx
+    /// the uwp like "GridView",you need to set "ColumnNum" for columns count
     /// </summary>
     public class GridView : ListView, IStyling
     {
@@ -95,12 +93,12 @@ namespace Avalonia.Extensions.Controls
         }
         private void OnColumnNumChanged(object sender, AvaloniaPropertyChangedEventArgs e)
         {
-            if (e.NewValue != e.OldValue)
+            if (!e.IsSameValue())
                 this.AddStyles(ItemsPanelProperty, ColumnNum);
         }
         private void OnChildVerticalAlignmentChange(object sender, AvaloniaPropertyChangedEventArgs e)
         {
-            if (e.NewValue != e.OldValue)
+            if (!e.IsSameValue())
             {
                 for (var index = 0; index < LogicalChildren.Count; index++)
                 {
@@ -111,7 +109,7 @@ namespace Avalonia.Extensions.Controls
         }
         private void OnChildHorizontalAlignmentChange(object sender, AvaloniaPropertyChangedEventArgs e)
         {
-            if (e.NewValue != e.OldValue)
+            if (!e.IsSameValue())
             {
                 for (var index = 0; index < LogicalChildren.Count; index++)
                 {
@@ -122,7 +120,7 @@ namespace Avalonia.Extensions.Controls
         }
         private void OnChildVerticalContentAlignmentChange(object sender, AvaloniaPropertyChangedEventArgs e)
         {
-            if (e.NewValue != e.OldValue)
+            if (!e.IsSameValue())
             {
                 for (var index = 0; index < LogicalChildren.Count; index++)
                 {
@@ -133,7 +131,7 @@ namespace Avalonia.Extensions.Controls
         }
         private void OnChildHorizontalContentAlignmentChange(object sender, AvaloniaPropertyChangedEventArgs e)
         {
-            if (e.NewValue != e.OldValue)
+            if (!e.IsSameValue())
             {
                 for (var index = 0; index < LogicalChildren.Count; index++)
                 {

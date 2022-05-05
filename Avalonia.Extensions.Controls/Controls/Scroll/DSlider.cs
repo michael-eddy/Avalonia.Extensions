@@ -26,10 +26,13 @@ namespace Avalonia.Extensions.Controls
         }
         private void OnValueChange(object sender, AvaloniaPropertyChangedEventArgs e)
         {
-            var args = new ValueChangeEventArgs(ValueChangeEvent, e.NewValue, e.OldValue);
-            RaiseEvent(args);
-            if (!args.Handled)
-                args.Handled = true;
+            if (!e.IsSameValue())
+            {
+                var args = new ValueChangeEventArgs(ValueChangeEvent, e.NewValue, e.OldValue);
+                RaiseEvent(args);
+                if (!args.Handled)
+                    args.Handled = true;
+            }
         }
     }
 }

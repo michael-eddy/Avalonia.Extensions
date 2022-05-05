@@ -54,7 +54,7 @@ namespace Avalonia.Extensions.Controls
         }
         private void OnImageSourceProperty(object sender, AvaloniaPropertyChangedEventArgs e)
         {
-            if (e.NewValue is Bitmap bitmap)
+            if (!e.IsSameValue() && e.NewValue is Bitmap bitmap)
             {
                 Fill = new ImageBrush { Source = bitmap };
                 DrawAgain();
@@ -86,7 +86,7 @@ namespace Avalonia.Extensions.Controls
         }
         private void OnSourceChange(object sender, AvaloniaPropertyChangedEventArgs e)
         {
-            if (e.NewValue is Uri uri)
+            if (!e.IsSameValue() && e.NewValue is Uri uri)
                 Task.Run(uri);
         }
         private void SetSize(Size size)

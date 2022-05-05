@@ -7,7 +7,7 @@ namespace Avalonia.Extensions.Controls
 {
     public static class AssemblyUntils
     {
-        public static T CreateInstance<T>(this string assemblyPath, params object[] param)
+        internal static T CreateInstance<T>(this string assemblyPath, params object[] param)
         {
             try
             {
@@ -18,21 +18,6 @@ namespace Avalonia.Extensions.Controls
             catch (Exception ex)
             {
                 Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(assemblyPath, ex.Message);
-                throw ex;
-            }
-        }
-        public static T CreateInstance<T>(this string assemblyString, string className, params object[] param)
-        {
-            try
-            {
-                if (param == null || param.Length == 0)
-                    return (T)Assembly.Load(assemblyString).CreateInstance(className, false);
-                else
-                    return (T)Assembly.Load(assemblyString).CreateInstance(className, true, BindingFlags.Default, null, param, null, null);
-            }
-            catch (Exception ex)
-            {
-                Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(assemblyString, ex.Message);
                 throw ex;
             }
         }

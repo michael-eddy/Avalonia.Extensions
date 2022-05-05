@@ -22,6 +22,7 @@ namespace Avalonia.Extensions.Styles
                 var xaml = Encoding.UTF8.GetString(bytes);
                 var styles = AvaloniaRuntimeXamlLoader.Parse<Styling.Styles>(xaml);
                 element.UpdateStyles(styles);
+                bytes = null;
             }
             catch (Exception ex)
             {

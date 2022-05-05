@@ -68,7 +68,7 @@ namespace Avalonia.Extensions.Controls
         }
         private void OnItemTemplateChanged(object sender, AvaloniaPropertyChangedEventArgs e)
         {
-            if (e.NewValue is IDataTemplate template)
+            if (!e.IsSameValue() && e.NewValue is IDataTemplate template)
                 ListBox.ItemTemplate = template;
         }
         private void OnItemsChange(object sender, AvaloniaPropertyChangedEventArgs e)
