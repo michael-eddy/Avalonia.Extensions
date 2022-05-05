@@ -17,18 +17,20 @@ namespace Avalonia.Extensions.Styles
             {
                 if (this is Control control)
                 {
-                    string typeName = GetType().Name,
-                    sourceUrl = $"avares://Avalonia.Extensions.Controls/Styles/Xaml/{typeName}.xml";
-                    var sourceUri = new Uri(sourceUrl);
+                    string typeName = GetType().Name, xaml = string.Empty;
+                    var sourceUri = new Uri($"avares://Avalonia.Extensions.Controls/Styles/Xaml/{typeName}.xml");
                     if (!control.Resources.ContainsKey(typeName) && Core.Instance.InnerClasses.Contains(sourceUri))
                     {
                         using var stream = Core.Instance.AssetLoader.Open(sourceUri);
                         var bytes = new byte[stream.Length];
                         stream.Read(bytes, 0, bytes.Length);
-                        var xaml = Encoding.UTF8.GetString(bytes);
-                        xaml = string.Format(xaml, parms);
+                        if (parms != null && parms.Length > 0)
+                            xaml = string.Format(Encoding.UTF8.GetString(bytes), parms);
+                        else
+                            xaml = Encoding.UTF8.GetString(bytes);
                         var target = AvaloniaRuntimeXamlLoader.Parse(xaml);
                         control.SetValue(avaloniaProperty, target);
+                        bytes = null;
                     }
                 }
             }
