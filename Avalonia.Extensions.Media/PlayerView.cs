@@ -4,7 +4,6 @@ using Avalonia.Logging;
 using Avalonia.Media;
 using LibVLCSharp.Shared;
 using System;
-using System.Collections.Concurrent;
 using System.Diagnostics;
 
 namespace Avalonia.Extensions.Media
@@ -13,12 +12,13 @@ namespace Avalonia.Extensions.Media
     {
         private LibVLC? libVLC;
         private MediaPlayer? MediaPlayer;
-        private readonly Button prevButton;
         private readonly Button playButton;
-        private readonly Button nextButton;
         private readonly Button rewindButton;
         private readonly VideoView videoView;
         private readonly Button forwardButton;
+        public MediaItem Current { get; private set; }
+        protected float SeekPosition { get; private set; }
+        protected long TotalMilliseconds { get; private set; }
         public PlayerView()
         {
             videoView = new VideoView();
@@ -27,9 +27,6 @@ namespace Avalonia.Extensions.Media
                 Orientation = Layout.Orientation.Horizontal,
                 HorizontalAlignment = Layout.HorizontalAlignment.Center
             };
-            prevButton = new Button { Content = new PathIcon { Data = Geometry.Parse(SvgDic.PREV) } };
-            panel.Children.Add(prevButton);
-            prevButton.Click += PrevButton_Click;
             rewindButton = new Button { Content = new PathIcon { Data = Geometry.Parse(SvgDic.REWIND) } };
             panel.Children.Add(rewindButton);
             rewindButton.Click += RewindButton_Click;
@@ -39,9 +36,6 @@ namespace Avalonia.Extensions.Media
             forwardButton = new Button { Content = new PathIcon { Data = Geometry.Parse(SvgDic.FORWARD) } };
             panel.Children.Add(forwardButton);
             forwardButton.Click += ForwardButton_Click;
-            nextButton = new Button { Content = new PathIcon { Data = Geometry.Parse(SvgDic.SKIP) } };
-            panel.Children.Add(nextButton);
-            nextButton.Click += NextButton_Click;
             videoView.Callback += SetPlayerInfo;
             var root = new Panel
             {
@@ -54,11 +48,15 @@ namespace Avalonia.Extensions.Media
         }
         private void ForwardButton_Click(object sender, RoutedEventArgs e)
         {
-
+            float p = MediaPlayer.Position + SeekPosition;
+            if (p >= 1) p = 0.99F;
+            MediaPlayer.Position = p;
         }
         private void RewindButton_Click(object sender, RoutedEventArgs e)
         {
-
+            var p = MediaPlayer.Position - SeekPosition;
+            if (p < 0) p = 0;
+            MediaPlayer.Position = p;
         }
         private void PlayButton_Click(object sender, RoutedEventArgs e)
         {
@@ -71,58 +69,82 @@ namespace Avalonia.Extensions.Media
         {
             try
             {
-                MediaPlayer.Play();
-                playButton.Content = new PathIcon { Data = Geometry.Parse(SvgDic.PLAY) };
-                return true;
+                if (!videoView.IsDispose)
+                {
+                    MediaPlayer.Play();
+                    playButton.Content = new PathIcon { Data = Geometry.Parse(SvgDic.PLAY) };
+                    return true;
+                }
             }
             catch (Exception ex)
             {
                 Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(this, ex.Message);
-                return false;
             }
+            return false;
         }
         public bool Play(string url) => Play(new Uri(url));
         public bool Play(MediaList medias)
         {
+            if (Current != null)
+                Current.DurationChanged -= Current_DurationChanged;
             Current = new MediaItem(medias);
             return Play(Current);
         }
         public bool Play(Uri uri, params string[] options)
         {
+            if (Current != null)
+                Current.DurationChanged -= Current_DurationChanged;
             Current = new MediaItem(libVLC, uri, options);
             return Play(Current);
         }
         public bool Play(MediaInput input, params string[] options)
         {
+            if (Current != null)
+                Current.DurationChanged -= Current_DurationChanged;
             Current = new MediaItem(libVLC, input, options);
             return Play(Current);
         }
         public bool Play(int fd, params string[] options)
         {
+            if (Current != null)
+                Current.DurationChanged -= Current_DurationChanged;
             Current = new MediaItem(libVLC, fd, options);
             return Play(Current);
         }
         public bool Play(string mrl, FromType type, params string[] options)
         {
+            if (Current != null)
+                Current.DurationChanged -= Current_DurationChanged;
             Current = new MediaItem(libVLC, mrl, type, options);
             return Play(Current);
         }
-        public bool Play(MediaItem media)
+        private bool Play(MediaItem media)
         {
             try
             {
-                if (!IsMuliMedia)
-                    MediaPlayer.Play(media);
-                else
-                    Items.Add(media);
-                playButton.Content = new PathIcon { Data = Geometry.Parse(SvgDic.PLAY) };
-                return true;
+                if (!videoView.IsDispose)
+                {
+                    if (media != null)
+                    {
+                        Current.DurationChanged += Current_DurationChanged;
+                        MediaPlayer.Play(media);
+                        playButton.Content = new PathIcon { Data = Geometry.Parse(SvgDic.PLAY) };
+                        return true;
+                    }
+                    else
+                        Logger.TryGet(LogEventLevel.Information, LogArea.Control)?.Log(this, "media cannot be NULL.");
+                }
             }
             catch (Exception ex)
             {
                 Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(this, ex.Message);
-                return false;
             }
+            return false;
+        }
+        private void Current_DurationChanged(object sender, MediaDurationChangedEventArgs e)
+        {
+            TotalMilliseconds = e.Duration;
+            SeekPosition = 10000F / TotalMilliseconds;
         }
         public bool Pause()
         {
@@ -156,38 +178,18 @@ namespace Avalonia.Extensions.Media
         {
             if (videoView != null)
             {
+                MediaPlayer = new MediaPlayer(libVLC);
                 videoView.MediaPlayer = MediaPlayer;
                 videoView.MediaPlayer.Hwnd = videoView.Hndl.Handle;
+                Play(Current);
             }
         }
         protected override void OnInitialized()
         {
             base.OnInitialized();
-            libVLC = new LibVLC(enableDebugLogs: true);
+            libVLC = new LibVLC(true);
             libVLC.Log += VlcLogger_Event;
-            MediaPlayer = new MediaPlayer(libVLC);
-            MediaPlayer.Stopped += MediaPlayer_Stopped;
             Content = videoView;
-        }
-        public bool IsMuliMedia
-        {
-            get => GetValue(IsMuliMediaProperty);
-            set => SetValue(IsMuliMediaProperty, value);
-        }
-        public static readonly StyledProperty<bool> IsMuliMediaProperty = AvaloniaProperty.Register<PlayerView, bool>(nameof(IsMuliMedia), false);
-        public MediaItem Current { get; private set; }
-        private ConcurrentBag<MediaItem> Items = new ConcurrentBag<MediaItem>();
-        private void MediaPlayer_Stopped(object sender, EventArgs e)
-        {
-
-        }
-        private void NextButton_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-        private void PrevButton_Click(object sender, RoutedEventArgs e)
-        {
-
         }
         private void VlcLogger_Event(object sender, LogEventArgs e)
         {
