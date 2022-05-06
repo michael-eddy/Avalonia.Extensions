@@ -12,9 +12,7 @@ namespace Avalonia.Controls.Demo
 {
     public class MainWindow : AeroWindow
     {
-        private int Time { get; set; } = 0;
         private Button BtnStart { get; set; }
-        private Grid PopupContent { get; set; }
         private ObservableCollection<object> Collection { get; set; }
         public MainWindow()
         {
@@ -28,7 +26,6 @@ namespace Avalonia.Controls.Demo
             Width = 800;
             Height = 600;
             DataContext = new MainViewModel();
-            PopupContent = this.FindControl<Grid>("PopupContent");
             var imgList = this.FindControl<ListBox>("imgList");
             var listView = this.FindControl<ListView>("listView");
             listView.ScrollTop += ListView_ScrollTop;

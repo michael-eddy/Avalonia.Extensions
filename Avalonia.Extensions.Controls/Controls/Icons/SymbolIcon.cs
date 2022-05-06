@@ -1,5 +1,4 @@
 ﻿using Avalonia.Controls;
-using Avalonia.Controls.Primitives;
 using Avalonia.Controls.Templates;
 using Avalonia.Extensions.Styles;
 using Avalonia.Media;
@@ -8,7 +7,7 @@ using System;
 
 namespace Avalonia.Extensions.Controls
 {
-    public class SymbolIcon : TemplatedControl, IStyling
+    public class SymbolIcon : IconElement, IStyling
     {
         public static readonly StyledProperty<string> GlyphProperty =
              AvaloniaProperty.Register<SymbolIcon, string>(nameof(Glyph));
@@ -18,12 +17,16 @@ namespace Avalonia.Extensions.Controls
             set => SetValue(GlyphProperty, value);
         }
         Type IStyleable.StyleKey => typeof(TextBlock);
+        static SymbolIcon()
+        {
+            AffectsRender<SymbolIcon>(GlyphProperty);
+        }
         public SymbolIcon()
         {
             this.AddResource();
             SetValue(FontFamilyProperty, "Segoe MDL2 Assets");
         }
-        public class FontIconSource : AvaloniaObject
+        public class FontIconSource : IconSource
         {
             public static readonly StyledProperty<string> GlyphProperty =
                 SymbolIcon.GlyphProperty.AddOwner<FontIconSource>();
@@ -84,20 +87,13 @@ namespace Avalonia.Extensions.Controls
                 get => GetValue(FontWeightProperty);
                 set => SetValue(FontWeightProperty, value);
             }
-            public static StyledProperty<IBrush> ForegroundProperty =
-                TemplatedControl.ForegroundProperty.AddOwner<FontIconSource>();
-            public IBrush Foreground
+            public override IDataTemplate IconElementTemplate { get; } = new FuncDataTemplate<FontIconSource>((source, _) => new SymbolIcon
             {
-                get => GetValue(ForegroundProperty);
-                set => SetValue(ForegroundProperty, value);
-            }
-            public IDataTemplate IconElementTemplate { get; } = new FuncDataTemplate<FontIconSource>((source, _) => new SymbolIcon
-            {
+                [!ForegroundProperty] = source[!ForegroundProperty],
                 [!GlyphProperty] = source[!GlyphProperty],
+                [!FontFamilyProperty] = source[!FontFamilyProperty],
                 [!FontSizeProperty] = source[!FontSizeProperty],
                 [!FontStyleProperty] = source[!FontStyleProperty],
-                [!FontFamilyProperty] = source[!FontFamilyProperty],
-                [!ForegroundProperty] = source[!ForegroundProperty],
                 [!FontWeightProperty] = source[!FontWeightProperty]
             });
         }
