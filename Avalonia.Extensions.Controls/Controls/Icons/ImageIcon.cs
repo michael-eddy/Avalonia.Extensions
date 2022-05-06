@@ -1,10 +1,11 @@
 ﻿using Avalonia.Controls;
 using Avalonia.Controls.Templates;
+using Avalonia.Extensions.Styles;
 using Avalonia.Media;
 
 namespace Avalonia.Extensions.Controls
 {
-    public class ImageIcon : IconElement
+    public class ImageIcon : IconElement, IStyling
     {
         /// <inheritdoc cref="Image.SourceProperty" />
         public static readonly StyledProperty<IImage> SourceProperty = Image.SourceProperty.AddOwner<ImageIcon>();
@@ -17,6 +18,10 @@ namespace Avalonia.Extensions.Controls
         static ImageIcon()
         {
             AffectsRender<ImageIcon>(SourceProperty);
+        }
+        public ImageIcon()
+        {
+            this.AddResource();
         }
     }
     /// <summary>

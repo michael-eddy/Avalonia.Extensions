@@ -1,11 +1,12 @@
 ﻿using Avalonia.Controls.Primitives;
 using Avalonia.Controls.Templates;
+using Avalonia.Extensions.Styles;
 using Avalonia.Media;
 using Avalonia.Metadata;
 
 namespace Avalonia.Extensions.Controls
 {
-    public class IconSourceElement : IconElement
+    public class IconSourceElement : IconElement, IStyling
     {
         public static readonly StyledProperty<IconSource?> IconSourceProperty =
             AvaloniaProperty.Register<IconSourceElement, IconSource?>(nameof(IconSource));
@@ -14,6 +15,14 @@ namespace Avalonia.Extensions.Controls
         {
             get => GetValue(IconSourceProperty);
             set => SetValue(IconSourceProperty, value);
+        }
+        static IconSourceElement()
+        {
+            AffectsRender<IconSourceElement>(IconSourceProperty);
+        }
+        public IconSourceElement()
+        {
+            this.AddResource();
         }
     }
     public abstract class IconSource : AvaloniaObject
