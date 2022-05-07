@@ -127,37 +127,40 @@
 					</ExpandableView.SecondView>
 				</ExpandableView>
 			</TabItem>
-			<TabItem Header="ScrollView">
-				<ScrollView Name="scrollView">
-					<StackPanel Orientation="Vertical">
-						<Label>111111111</Label>
-						<Label>111111111</Label>
-						<Label>111111111</Label>
-						<Label>111111111</Label>
-						<Label>111111111</Label>
-						<Label>111111111</Label>
-						<Label>111111111</Label>
-						<Label>111111111</Label>
-						<Label>111111111</Label>
-						<Label>111111111</Label>
-						<Label>111111111</Label>
-						<Label>111111111</Label>
-						<Label>111111111</Label>
-						<Label>111111111</Label>
-						<Label>111111111</Label>
-						<Label>111111111</Label>
-						<Label>111111111</Label>
-						<Label>111111111</Label>
-						<Label>111111111</Label>
-						<Label>111111111</Label>
-						<Label>111111111</Label>
-						<Label>111111111</Label>
-						<Label>111111111</Label>
-						<Label>111111111</Label>
-						<Label>111111111</Label>
-						<Label>111111111</Label>
-					</StackPanel>
-				</ScrollView>
+			<TabItem Header="Scroll">
+				<StackPanel Orientation="Vertical">
+					<SeekSlider Minimum="0" Maximum="100" />
+					<ScrollView Name="scrollView">
+						<StackPanel Orientation="Vertical">
+							<Label>111111111</Label>
+							<Label>111111111</Label>
+							<Label>111111111</Label>
+							<Label>111111111</Label>
+							<Label>111111111</Label>
+							<Label>111111111</Label>
+							<Label>111111111</Label>
+							<Label>111111111</Label>
+							<Label>111111111</Label>
+							<Label>111111111</Label>
+							<Label>111111111</Label>
+							<Label>111111111</Label>
+							<Label>111111111</Label>
+							<Label>111111111</Label>
+							<Label>111111111</Label>
+							<Label>111111111</Label>
+							<Label>111111111</Label>
+							<Label>111111111</Label>
+							<Label>111111111</Label>
+							<Label>111111111</Label>
+							<Label>111111111</Label>
+							<Label>111111111</Label>
+							<Label>111111111</Label>
+							<Label>111111111</Label>
+							<Label>111111111</Label>
+							<Label>111111111</Label>
+						</StackPanel>
+					</ScrollView>
+				</StackPanel>
 			</TabItem>
 			<TabItem Header="CircleImage">
 				<StackPanel Orientation="Vertical">
@@ -216,6 +219,9 @@
 			</TabItem>
 			<TabItem Header="PlayerView">
 				<PlayerView x:Name="playerView" />
+			</TabItem>
+			<TabItem Header="AudioControl">
+				<AudioControl x:Name="audio" />
 			</TabItem>
 		</TabControl>
 	</Panel>

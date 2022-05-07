@@ -1,4 +1,6 @@
 ﻿using Avalonia.Controls;
+using Avalonia.Extensions.Controls;
+using Avalonia.Extensions.Event;
 using Avalonia.Interactivity;
 using Avalonia.Logging;
 using Avalonia.Media;
@@ -12,9 +14,12 @@ namespace Avalonia.Extensions.Media
     public class PlayerView : UserControl, IPlayerView
     {
         private LibVLC? libVLC;
+        private SeekSlider slider;
         private Button playButton;
         private Button rewindButton;
         private Button forwardButton;
+        private double lastOldValue = 0;
+        private double lastNewValue = 0;
         private readonly VideoView videoView;
         public MediaItem Current { get; private set; }
         protected float SeekPosition { get; private set; }
@@ -57,18 +62,29 @@ namespace Avalonia.Extensions.Media
         }
         public virtual Panel InitLatout()
         {
-            var panel = new StackPanel
-            {
-                Orientation = Layout.Orientation.Horizontal,
-                HorizontalAlignment = Layout.HorizontalAlignment.Center
-            };
+            var panel = new Grid { HorizontalAlignment = Layout.HorizontalAlignment.Center };
+            panel.RowDefinitions.Add(new RowDefinition(GridLength.Auto));
+            panel.RowDefinitions.Add(new RowDefinition(GridLength.Auto));
+            panel.ColumnDefinitions.Add(new ColumnDefinition(GridLength.Star));
+            panel.ColumnDefinitions.Add(new ColumnDefinition(GridLength.Auto));
+            panel.ColumnDefinitions.Add(new ColumnDefinition(GridLength.Auto));
+            panel.ColumnDefinitions.Add(new ColumnDefinition(GridLength.Auto));
+            panel.ColumnDefinitions.Add(new ColumnDefinition(GridLength.Star));
+            slider = new SeekSlider { Minimum = 0, HorizontalAlignment = Layout.HorizontalAlignment.Stretch };
+            slider.SetGridDef(0, 0);
+            Grid.SetColumnSpan(slider, 5);
+            panel.Children.Add(slider);
+            slider.ValueChange += Slider_ValueChange;
             rewindButton = new Button { Content = new PathIcon { Data = Geometry.Parse(SvgDic.REWIND) } };
+            rewindButton.SetGridDef(1, 1);
             panel.Children.Add(rewindButton);
             rewindButton.Click += RewindButton_Click;
             playButton = new Button { Content = new PathIcon { Data = Geometry.Parse(SvgDic.PLAY) } };
+            playButton.SetGridDef(1, 2);
             playButton.Click += PlayButton_Click;
             panel.Children.Add(playButton);
             forwardButton = new Button { Content = new PathIcon { Data = Geometry.Parse(SvgDic.FORWARD) } };
+            forwardButton.SetGridDef(1, 3);
             panel.Children.Add(forwardButton);
             forwardButton.Click += ForwardButton_Click;
             videoView.Callback += SetPlayerInfo;
@@ -80,6 +96,28 @@ namespace Avalonia.Extensions.Media
             };
             root.Children.Add(panel);
             return root;
+        }
+        private void Slider_ValueChange(object sender, ValueChangeEventArgs e)
+        {
+            var oldValue = (double)e.OldValue;
+            var position = (double)e.NewValue;
+            if ((lastOldValue == 0 && lastNewValue == 0) ||
+                (lastOldValue != 0 && lastNewValue != 0 && lastOldValue != position && lastNewValue != oldValue))
+            {
+                if (e.NewValue != e.OldValue && Math.Abs(position - oldValue) >= SeekPosition)
+                {
+                    lastNewValue = position;
+                    lastOldValue = oldValue;
+                    Dispatcher.UIThread.InvokeAsync(() =>
+                    {
+                        if (MediaPlayer != null)
+                        {
+                            MediaPlayer.Position = Convert.ToSingle(position);
+                            MediaPlayer.Play();
+                        }
+                    });
+                }
+            }
         }
         private void ForwardButton_Click(object sender, RoutedEventArgs e)
         {
@@ -170,6 +208,7 @@ namespace Avalonia.Extensions.Media
             TotalMilliseconds = e.Duration;
             Dispatcher.UIThread.InvokeAsync(() =>
             {
+                slider.Maximum = 1;
                 SeekPosition = TotalMilliseconds > 0 ? SeekSecond * 1000F / TotalMilliseconds : 0;
             });
         }
@@ -208,6 +247,8 @@ namespace Avalonia.Extensions.Media
                 if (videoView != null)
                 {
                     MediaPlayer = new MediaPlayer(libVLC);
+                    MediaPlayer.Stopped += MediaPlayer_Stopped;
+                    MediaPlayer.PositionChanged += MediaPlayer_PositionChanged;
                     videoView.MediaPlayer = MediaPlayer;
                     videoView.MediaPlayer.Hwnd = videoView.Hndl.Handle;
                     Play(Current);
@@ -217,6 +258,25 @@ namespace Avalonia.Extensions.Media
             {
                 Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(this, ex.Message);
                 throw;
+            }
+        }
+        private void MediaPlayer_Stopped(object sender, EventArgs e)
+        {
+            lastNewValue = 0;
+            lastOldValue = 0;
+        }
+        private void MediaPlayer_PositionChanged(object sender, MediaPlayerPositionChangedEventArgs e)
+        {
+            try
+            {
+                Dispatcher.UIThread.InvokeAsync(() =>
+                {
+                    slider.Value = e.Position;
+                });
+            }
+            catch (Exception ex)
+            {
+                Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(sender, ex.Message);
             }
         }
         protected override void OnInitialized()
