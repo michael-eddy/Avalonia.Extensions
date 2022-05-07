@@ -182,7 +182,7 @@ public static AppBuilder BuildAvaloniaApp()
 # WARNING
 <strong>Need to reference [Dove.Avalonia.Extensions.Media](https://www.nuget.org/packages/Dove.Avalonia.Extensions.Media/) package</strong>
 
-<strong>{if you need `VideoView` or `PlayerView`,you should install libVLC in your project before init!!! [Windows](https://www.nuget.org/packages/VideoLAN.LibVLC.Windows/) or [MAC](https://www.nuget.org/packages/VideoLAN.LibVLC.Mac/)</strong>
+<strong>if you need `VideoView` or `PlayerView`,you should install libVLC in your project before init!!! [Windows](https://www.nuget.org/packages/VideoLAN.LibVLC.Windows/) or [MAC](https://www.nuget.org/packages/VideoLAN.LibVLC.Mac/)</strong>
 
 <strong>if you need `AudioControl`,should download bass Libraries(.dll/.so/.dylib/.a) are separate for x86, x64, ARM by yourself. you can find out from [here](https://github.com/ManagedBass/ManagedBass)</strong>
 
