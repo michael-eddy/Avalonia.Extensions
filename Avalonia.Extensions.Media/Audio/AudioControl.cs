@@ -25,12 +25,13 @@ namespace Avalonia.Extensions.Media
         {
             Bass.NetPlaylist = 1;
             Bass.NetPreBuffer = 0;
-            _timer = new Timer(50);
+            _timer = new Timer(80);
             _timer.Elapsed += Timer_Elapsed;
         }
         public void Play(string url)
         {
             TitleAndArtist = IcyMeta = null;
+            Bass.NetAgent =  UserAgent;
             Bass.NetProxy = string.IsNullOrEmpty(Proxy) ? null : Proxy;
             task?.Dispose();
             task = Task.Factory.StartNew(() =>
@@ -70,6 +71,19 @@ namespace Avalonia.Extensions.Media
         {
             get => GetValue(ProxyProperty);
             set => SetValue(ProxyProperty, value);
+        }
+        /// <summary>
+        /// Defines the <see cref="UserAgent"/> property.
+        /// </summary>
+        public static readonly StyledProperty<string> UserAgentProperty =
+            AvaloniaProperty.Register<AudioControl, string>(nameof(UserAgent), null);
+        /// <summary>
+        /// 
+        /// </summary>
+        public string UserAgent
+        {
+            get => GetValue(UserAgentProperty);
+            set => SetValue(UserAgentProperty, value);
         }
         private void Timer_Elapsed(object sender, ElapsedEventArgs e)
         {
