@@ -14,6 +14,7 @@ namespace Avalonia.Controls.Demo
                     .UsePlatformDetect()
                     .UseDoveExtensions()
                     .UseChineseInputSupport()
+                    .UseMedia()
             .StartWithClassicDesktopLifetime(args);
         }
     }

@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <Version>1.7.2</Version>
+        <Version>1.7.3</Version>
         <Authors>michael_eddy</Authors>
         <LangVersion>latest</LangVersion>
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
@@ -12,6 +12,9 @@
         <PackageProjectUrl>https://github.com/michael-eddy/Avalonia.Extensions</PackageProjectUrl>
     </PropertyGroup>
     <ItemGroup>
+        <None Remove="Styles\Xaml\IconSourceElement.xml" />
+        <None Remove="Styles\Xaml\ImageIcon.xml" />
+        <None Remove="Styles\Xaml\PathIcon.xml" />
         <None Remove="Styles\Xaml\readme.txt" />
         <AvaloniaResource Include="Styles\Xaml\*.xml" />
 		<AvaloniaResource Include="Styles\Xaml\*.xaml" />

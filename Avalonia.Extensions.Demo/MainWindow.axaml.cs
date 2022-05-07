@@ -12,9 +12,7 @@ namespace Avalonia.Controls.Demo
 {
     public class MainWindow : AeroWindow
     {
-        private int Time { get; set; } = 0;
         private Button BtnStart { get; set; }
-        private Grid PopupContent { get; set; }
         private ObservableCollection<object> Collection { get; set; }
         public MainWindow()
         {
@@ -28,7 +26,6 @@ namespace Avalonia.Controls.Demo
             Width = 800;
             Height = 600;
             DataContext = new MainViewModel();
-            PopupContent = this.FindControl<Grid>("PopupContent");
             var imgList = this.FindControl<ListBox>("imgList");
             var listView = this.FindControl<ListView>("listView");
             listView.ScrollTop += ListView_ScrollTop;
@@ -62,6 +59,8 @@ namespace Avalonia.Controls.Demo
             var scrollView = this.FindControl<ScrollView>("scrollView");
             scrollView.ScrollEnd += ScrollView_ScrollEnd;
             scrollView.ScrollTop += ScrollView_ScrollTop;
+            var playerView = this.FindControl<PlayerView>("playerView");
+            playerView.Play("http://vfx.mtime.cn/Video/2019/03/18/mp4/190318231014076505.mp4");
         }
         private void ListView_ScrollTop(object? sender, RoutedEventArgs e)
         {
