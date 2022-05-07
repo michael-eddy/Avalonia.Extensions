@@ -89,46 +89,58 @@ public static AppBuilder BuildAvaloniaApp()
 - [x] ScrollView
   > inherit from ScrollViewer,extend sliding to the bottom, sliding to the top event
 
+- [x] SeekSlider
+  > inherit from `Slider`,extend value change event
+
 - [x] PopupToast
   > inherit from Window,show message dialog and automatically shut down after a certain period of time
   > > diff with `PopupDialog`, it's popuping in workarea who popuping in control/panel
 
 - [x] TextLabel
-> Run binding just LIKE WPF/UWP in TextBlock,with LineBreak can wrap the text
+  > Run binding just LIKE WPF/UWP in `TextBlock`,with `LineBreak` can wrap the text
 
 - [x] HyperlinkButton
-> the button style LIKE HyperlinkButton in UWP
+  > the button style LIKE HyperlinkButton in UWP
 
 - [x] AeroWindow
-> the window LIKE "Windows Aero" OR "Aero Grass"
+  > the window LIKE "Windows Aero" OR "Aero Grass"
 
 - [x] ImageContentButton
-> the button show Image and Text
+  > the button show Image and Text
 
 - [x] CheckBoxList
-> a grouping checkbox control
+  > a grouping checkbox control
 
 - [x] RadioButtonList
-> a grouping radiobutton control
+  > a grouping radiobutton control
 
 - [x] Text
-> the shapes control for text content,it is a child when you are using `canvas`
+  > the `Shapes` control for text content,it is a child when you are using `canvas`
+
+- [x] TipLabel
+  > the `TextBlock` with border control
 
 - [x] TextView
-> the control like `TextPresenter`,but it's draw by the textLayout,so supoort custom font in your project
+  > the control like `TextPresenter`,but it's draw by the textLayout,so supoort custom font in your project
+
+- [x] PathIcon
+  > the same control in uwp
+
+- [x] ImageIcon
+  > the icon control load from image,just like `PathIcon` and  `SymbolIcon` 
+
+- [x] SymbolIcon
+  > the same control in uwp(but the `Glyph` Only valid in XAML)
 
 > # EXTEND
 
 - [x] ActualWidth
-
   > get visable control actual width
 
 - [x] ActualHeight
-
   > get visable control actual height
 
 - [x] GetPrivateField
-
   > get control/namescope private field
 
 - [x] SetPrivateField
@@ -165,10 +177,40 @@ public static AppBuilder BuildAvaloniaApp()
 - [x] Shutdown / TryShutdown
   > shutdown application
 
+> # MEDIA
+
+# WARNING
+<strong>Need to reference [Dove.Avalonia.Extensions.Media](https://www.nuget.org/packages/Dove.Avalonia.Extensions.Media/) package</strong>
+
+<strong>if you need `VideoView` or `PlayerView`,you should install libVLC in your project before init!!! [Windows](https://www.nuget.org/packages/VideoLAN.LibVLC.Windows/) or [MAC](https://www.nuget.org/packages/VideoLAN.LibVLC.Mac/)</strong>
+
+<strong>if you need `AudioControl`,should download bass Libraries(.dll/.so/.dylib/.a) are separate for x86, x64, ARM by yourself. you can find out from [here](https://github.com/ManagedBass/ManagedBass)</strong>
+
+To enable extension the `UseAudioControl` AND `UseVideoView` method call should be present in your Program.cs file,the 1st one is for `AudioControl`,
+the 2nd one is for `VideoView` or `PlayerView`,you can also call it according to your NEEDS:
+
+```csharp
+public static AppBuilder BuildAvaloniaApp()
+    => AppBuilder.Configure<App>()
+        .UsePlatformDetect()
+        .UseVideoView()
+        .UseAudioControl()
+        .LogToTrace();
+```
+
+- [x] VideoView Support
+  > the `VideoView` in `LibVLCSharp`,modified to support use in `UserControl`
+
+- [x] PlayerView Support
+  > the custom control for `VideoView`,it's just like in uwp/wpf
+
+- [x] AudioControl Support
+  > the control playing audio without visual or occupy bounds
+
 > # LANGUAGE
 
 - [x] Chinese Input Support
-Need to reference [Dove.Avalonia.Controls.Extensions.ChineseInputSupport](https://www.nuget.org/packages/Dove.Avalonia.Controls.Extensions.ChineseInputSupoort/) package
+<strong>Need to reference [Dove.Avalonia.Controls.Extensions.ChineseInputSupport](https://www.nuget.org/packages/Dove.Avalonia.Controls.Extensions.ChineseInputSupoort/) package</strong>
 
 To enable extension the `UseChineseInputSupport` method call should be present in your Program.cs file,you defined which controls(default is TextBox and TextPresenter):
 ```csharp

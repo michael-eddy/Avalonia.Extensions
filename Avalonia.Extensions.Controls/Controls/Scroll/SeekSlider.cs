@@ -1,21 +1,24 @@
 ﻿using Avalonia.Controls;
 using Avalonia.Extensions.Event;
+using Avalonia.Extensions.Styles;
 using Avalonia.Interactivity;
+using Avalonia.Styling;
 using System;
 
 namespace Avalonia.Extensions.Controls
 {
-    public class DSlider : Slider
+    public class SeekSlider : Slider, IStyling
     {
-        public DSlider()
+        Type IStyleable.StyleKey => typeof(Slider);
+        static SeekSlider()
         {
-            ValueProperty.Changed.AddClassHandler<DSlider>(OnValueChange);
+            ValueProperty.Changed.AddClassHandler<SeekSlider>(OnValueChange);
         }
         /// <summary>
         /// Defines the <see cref="ScrollEnd"/> event.
         /// </summary>
         public static readonly RoutedEvent<ValueChangeEventArgs> ValueChangeEvent =
-           RoutedEvent.Register<DSlider, ValueChangeEventArgs>(nameof(ValueChange), RoutingStrategies.Bubble);
+           RoutedEvent.Register<SeekSlider, ValueChangeEventArgs>(nameof(ValueChange), RoutingStrategies.Bubble);
         /// <summary>
         /// 
         /// </summary>
@@ -24,12 +27,12 @@ namespace Avalonia.Extensions.Controls
             add { AddHandler(ValueChangeEvent, value); }
             remove { RemoveHandler(ValueChangeEvent, value); }
         }
-        private void OnValueChange(object sender, AvaloniaPropertyChangedEventArgs e)
+        private static void OnValueChange(object sender, AvaloniaPropertyChangedEventArgs e)
         {
-            if (!e.IsSameValue())
+            if (sender is SeekSlider slider && !e.IsSameValue())
             {
                 var args = new ValueChangeEventArgs(ValueChangeEvent, e.NewValue, e.OldValue);
-                RaiseEvent(args);
+                slider.RaiseEvent(args);
                 if (!args.Handled)
                     args.Handled = true;
             }
