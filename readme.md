@@ -180,11 +180,11 @@ public static AppBuilder BuildAvaloniaApp()
 > # MEDIA
 
 # WARNING
-Need to reference [Dove.Avalonia.Extensions.Media](https://www.nuget.org/packages/Dove.Avalonia.Extensions.Media/) package
+<strong>Need to reference [Dove.Avalonia.Extensions.Media](https://www.nuget.org/packages/Dove.Avalonia.Extensions.Media/) package</strong>
 
-$\color{red}{if you need `VideoView` or `PlayerView`,you should install libVLC in your project before init!!! [Windows](https://www.nuget.org/packages/VideoLAN.LibVLC.Windows/) or [MAC](https://www.nuget.org/packages/VideoLAN.LibVLC.Mac/)}$
+<strong>{if you need `VideoView` or `PlayerView`,you should install libVLC in your project before init!!! [Windows](https://www.nuget.org/packages/VideoLAN.LibVLC.Windows/) or [MAC](https://www.nuget.org/packages/VideoLAN.LibVLC.Mac/)</strong>
 
-<b>if you need `AudioControl`,should download bass Libraries(.dll/.so/.dylib/.a) are separate for x86, x64, ARM by yourself. you can find out from [here](https://github.com/ManagedBass/ManagedBass)</b>
+<strong>if you need `AudioControl`,should download bass Libraries(.dll/.so/.dylib/.a) are separate for x86, x64, ARM by yourself. you can find out from [here](https://github.com/ManagedBass/ManagedBass)</strong>
 
 To enable extension the `UseAudioControl` AND `UseVideoView` method call should be present in your Program.cs file,the 1st one is for `AudioControl`,
 the 2nd one is for `VideoView` or `PlayerView`,you can also call it according to your NEEDS:
@@ -210,7 +210,7 @@ public static AppBuilder BuildAvaloniaApp()
 > # LANGUAGE
 
 - [x] Chinese Input Support
-Need to reference [Dove.Avalonia.Controls.Extensions.ChineseInputSupport](https://www.nuget.org/packages/Dove.Avalonia.Controls.Extensions.ChineseInputSupoort/) package
+<strong>Need to reference [Dove.Avalonia.Controls.Extensions.ChineseInputSupport](https://www.nuget.org/packages/Dove.Avalonia.Controls.Extensions.ChineseInputSupoort/) package</strong>
 
 To enable extension the `UseChineseInputSupport` method call should be present in your Program.cs file,you defined which controls(default is TextBox and TextPresenter):
 ```csharp
