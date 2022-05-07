@@ -19,7 +19,7 @@ using System.Runtime.InteropServices;
 
 namespace Avalonia.Extensions.Media
 {
-    public class VideoView : NativeControlHost
+    public sealed class VideoView : NativeControlHost
     {
         public static readonly DirectProperty<VideoView, Maybe<MediaPlayer>> MediaPlayerProperty =
             AvaloniaProperty.RegisterDirect<VideoView, Maybe<MediaPlayer>>(nameof(MediaPlayer), o => o.MediaPlayer,
@@ -30,12 +30,12 @@ namespace Avalonia.Extensions.Media
         public static readonly StyledProperty<IBrush> BackgroundProperty = Panel.BackgroundProperty.AddOwner<VideoView>();
         private bool _isAttached;
         public IPlatformHandle Hndl;
-        private IDisposable _disposables;
+        internal IDisposable attacher;
         internal EventHandler Callback;
         private Window _floatingContent;
-        public bool IsDispose { get; protected set; }
+        private IDisposable _disposables;
         private IDisposable _isEffectivelyVisible;
-        internal IDisposable attacher;
+        public bool IsDispose { get; private set; }
         public VideoView()
         {
             IsDispose = true;
@@ -86,13 +86,13 @@ namespace Avalonia.Extensions.Media
                     _floatingContent.PointerEnter += Controls_PointerEnter;
                     _floatingContent.PointerLeave += Controls_PointerLeave;
                     _disposables = new CompositeDisposable()
-                {
-                    _floatingContent.Bind(ContentControl.ContentProperty, this.GetObservable(ContentProperty)),
-                    this.GetObservable(ContentProperty).Skip(1).Subscribe(_=> UpdateOverlayPosition()),
-                    this.GetObservable(BoundsProperty).Skip(1).Subscribe(_ => UpdateOverlayPosition()),
-                    Observable.FromEventPattern(VisualRoot, nameof(Window.PositionChanged))
-                    .Subscribe(_ => UpdateOverlayPosition())
-                };
+                    {
+                        _floatingContent.Bind(ContentControl.ContentProperty, this.GetObservable(ContentProperty)),
+                        this.GetObservable(ContentProperty).Skip(1).Subscribe(_=> UpdateOverlayPosition()),
+                        this.GetObservable(BoundsProperty).Skip(1).Subscribe(_ => UpdateOverlayPosition()),
+                        Observable.FromEventPattern(VisualRoot, nameof(Window.PositionChanged))
+                        .Subscribe(_ => UpdateOverlayPosition())
+                    };
                 }
                 ShowNativeOverlay(IsEffectivelyVisible);
             }

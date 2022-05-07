@@ -2,26 +2,61 @@
 using Avalonia.Interactivity;
 using Avalonia.Logging;
 using Avalonia.Media;
+using Avalonia.Threading;
 using LibVLCSharp.Shared;
 using System;
 using System.Diagnostics;
 
 namespace Avalonia.Extensions.Media
 {
-    public partial class PlayerView : UserControl
+    public class PlayerView : UserControl, IPlayerView
     {
         private LibVLC? libVLC;
-        private MediaPlayer? MediaPlayer;
-        private readonly Button playButton;
-        private readonly Button rewindButton;
+        private Button playButton;
+        private Button rewindButton;
+        private Button forwardButton;
         private readonly VideoView videoView;
-        private readonly Button forwardButton;
         public MediaItem Current { get; private set; }
         protected float SeekPosition { get; private set; }
         protected long TotalMilliseconds { get; private set; }
+        public MediaPlayer MediaPlayer { get; protected set; }
+        static PlayerView()
+        {
+            SeekSecondProperty.Changed.AddClassHandler<PlayerView>(OnSeekSecondChange);
+        }
         public PlayerView()
         {
             videoView = new VideoView();
+            videoView.Content = InitLatout();
+        }
+        /// <summary>
+        /// Defines the <see cref="SeekSecond"/> property.
+        /// </summary>
+        public static readonly StyledProperty<uint> SeekSecondProperty =
+            AvaloniaProperty.Register<PlayerView, uint>(nameof(SeekSecond), 10);
+        /// <summary>
+        /// 
+        /// </summary>
+        public uint SeekSecond
+        {
+            get => GetValue(SeekSecondProperty);
+            set => SetValue(SeekSecondProperty, value);
+        }
+        /// <summary>
+        /// Defines the <see cref="SeekSecond"/> property.
+        /// </summary>
+        public static readonly StyledProperty<bool> LogEnableProperty =
+            AvaloniaProperty.Register<PlayerView, bool>(nameof(LogEnable), false);
+        /// <summary>
+        /// 
+        /// </summary>
+        public bool LogEnable
+        {
+            get => GetValue(LogEnableProperty);
+            set => SetValue(LogEnableProperty, value);
+        }
+        public virtual Panel InitLatout()
+        {
             var panel = new StackPanel
             {
                 Orientation = Layout.Orientation.Horizontal,
@@ -44,7 +79,7 @@ namespace Avalonia.Extensions.Media
                 VerticalAlignment = Layout.VerticalAlignment.Bottom
             };
             root.Children.Add(panel);
-            videoView.Content = root;
+            return root;
         }
         private void ForwardButton_Click(object sender, RoutedEventArgs e)
         {
@@ -97,20 +132,6 @@ namespace Avalonia.Extensions.Media
             Current = new MediaItem(libVLC, uri, options);
             return Play(Current);
         }
-        public bool Play(MediaInput input, params string[] options)
-        {
-            if (Current != null)
-                Current.DurationChanged -= Current_DurationChanged;
-            Current = new MediaItem(libVLC, input, options);
-            return Play(Current);
-        }
-        public bool Play(int fd, params string[] options)
-        {
-            if (Current != null)
-                Current.DurationChanged -= Current_DurationChanged;
-            Current = new MediaItem(libVLC, fd, options);
-            return Play(Current);
-        }
         public bool Play(string mrl, FromType type, params string[] options)
         {
             if (Current != null)
@@ -118,7 +139,7 @@ namespace Avalonia.Extensions.Media
             Current = new MediaItem(libVLC, mrl, type, options);
             return Play(Current);
         }
-        private bool Play(MediaItem media)
+        public bool Play(MediaItem media)
         {
             try
             {
@@ -126,6 +147,9 @@ namespace Avalonia.Extensions.Media
                 {
                     if (media != null)
                     {
+                        if (Current != null)
+                            Current.DurationChanged -= Current_DurationChanged;
+                        Current = media;
                         Current.DurationChanged += Current_DurationChanged;
                         MediaPlayer.Play(media);
                         playButton.Content = new PathIcon { Data = Geometry.Parse(SvgDic.PLAY) };
@@ -144,7 +168,10 @@ namespace Avalonia.Extensions.Media
         private void Current_DurationChanged(object sender, MediaDurationChangedEventArgs e)
         {
             TotalMilliseconds = e.Duration;
-            SeekPosition = 10000F / TotalMilliseconds;
+            Dispatcher.UIThread.InvokeAsync(() =>
+            {
+                SeekPosition = TotalMilliseconds > 0 ? SeekSecond * 1000F / TotalMilliseconds : 0;
+            });
         }
         public bool Pause()
         {
@@ -176,25 +203,54 @@ namespace Avalonia.Extensions.Media
         }
         private void SetPlayerInfo(object sender, EventArgs e)
         {
-            if (videoView != null)
+            try
             {
-                MediaPlayer = new MediaPlayer(libVLC);
-                videoView.MediaPlayer = MediaPlayer;
-                videoView.MediaPlayer.Hwnd = videoView.Hndl.Handle;
-                Play(Current);
+                if (videoView != null)
+                {
+                    MediaPlayer = new MediaPlayer(libVLC);
+                    videoView.MediaPlayer = MediaPlayer;
+                    videoView.MediaPlayer.Hwnd = videoView.Hndl.Handle;
+                    Play(Current);
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(this, ex.Message);
+                throw;
             }
         }
         protected override void OnInitialized()
         {
             base.OnInitialized();
-            libVLC = new LibVLC(true);
-            libVLC.Log += VlcLogger_Event;
-            Content = videoView;
+            try
+            {
+                if (LogEnable)
+                {
+                    libVLC = new LibVLC(true);
+                    libVLC.Log += VlcLogger_Event;
+                }
+                else
+                    libVLC = new LibVLC(false);
+                Content = videoView;
+            }
+            catch (Exception ex)
+            {
+                Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(this, ex.Message);
+                throw;
+            }
         }
         private void VlcLogger_Event(object sender, LogEventArgs e)
         {
             Debug.WriteLine(e.FormattedLog);
             Logger.TryGet(LogEventLevel.Information, LogArea.Control)?.Log(this, e.FormattedLog);
+        }
+        private static void OnSeekSecondChange(object sender, AvaloniaPropertyChangedEventArgs e)
+        {
+            if (e.OldValue != e.NewValue && sender is PlayerView view)
+            {
+                var seek = (uint)e.NewValue * 1000F;
+                view.SeekPosition = seek / view.TotalMilliseconds;
+            }
         }
     }
 }
