@@ -27,6 +27,8 @@ namespace Avalonia.Extensions.Media
         public MediaPlayer MediaPlayer { get; protected set; }
         static PlayerView()
         {
+            if (!AppBuilderDesktopExtensions.IsVideoInit)
+                throw new ApplicationException("you should call UseVideoView in Program.Main init the control");
             SeekSecondProperty.Changed.AddClassHandler<PlayerView>(OnSeekSecondChange);
         }
         public PlayerView()
@@ -99,37 +101,58 @@ namespace Avalonia.Extensions.Media
         }
         private void Slider_ValueChange(object sender, ValueChangeEventArgs e)
         {
-            var oldValue = (double)e.OldValue;
-            var position = (double)e.NewValue;
-            if ((lastOldValue == 0 && lastNewValue == 0) ||
-                (lastOldValue != 0 && lastNewValue != 0 && lastOldValue != position && lastNewValue != oldValue))
+            try
             {
-                if (e.NewValue != e.OldValue && Math.Abs(position - oldValue) >= SeekPosition)
+                var oldValue = (double)e.OldValue;
+                var position = (double)e.NewValue;
+                if ((lastOldValue == 0 && lastNewValue == 0) ||
+                    (lastOldValue != 0 && lastNewValue != 0 && lastOldValue != position && lastNewValue != oldValue))
                 {
-                    lastNewValue = position;
-                    lastOldValue = oldValue;
-                    Dispatcher.UIThread.InvokeAsync(() =>
+                    if (e.NewValue != e.OldValue && Math.Abs(position - oldValue) >= SeekPosition)
                     {
-                        if (MediaPlayer != null)
+                        lastNewValue = position;
+                        lastOldValue = oldValue;
+                        Dispatcher.UIThread.InvokeAsync(() =>
                         {
-                            MediaPlayer.Position = Convert.ToSingle(position);
-                            MediaPlayer.Play();
-                        }
-                    });
+                            if (MediaPlayer != null)
+                            {
+                                MediaPlayer.Position = Convert.ToSingle(position);
+                                MediaPlayer.Play();
+                            }
+                        });
+                    }
                 }
+            }
+            catch (Exception ex)
+            {
+                Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(this, ex.Message);
             }
         }
         private void ForwardButton_Click(object sender, RoutedEventArgs e)
         {
-            float p = MediaPlayer.Position + SeekPosition;
-            if (p >= 1) p = 0.99F;
-            MediaPlayer.Position = p;
+            try
+            {
+                float p = MediaPlayer.Position + SeekPosition;
+                if (p >= 1) p = 0.99F;
+                MediaPlayer.Position = p;
+            }
+            catch (Exception ex)
+            {
+                Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(this, ex.Message);
+            }
         }
         private void RewindButton_Click(object sender, RoutedEventArgs e)
         {
-            var p = MediaPlayer.Position - SeekPosition;
-            if (p < 0) p = 0;
-            MediaPlayer.Position = p;
+            try
+            {
+                var p = MediaPlayer.Position - SeekPosition;
+                if (p < 0) p = 0;
+                MediaPlayer.Position = p;
+            }
+            catch (Exception ex)
+            {
+                Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(this, ex.Message);
+            }
         }
         private void PlayButton_Click(object sender, RoutedEventArgs e)
         {
@@ -205,12 +228,19 @@ namespace Avalonia.Extensions.Media
         }
         private void Current_DurationChanged(object sender, MediaDurationChangedEventArgs e)
         {
-            TotalMilliseconds = e.Duration;
-            Dispatcher.UIThread.InvokeAsync(() =>
+            try
             {
-                slider.Maximum = 1;
-                SeekPosition = TotalMilliseconds > 0 ? SeekSecond * 1000F / TotalMilliseconds : 0;
-            });
+                TotalMilliseconds = e.Duration;
+                Dispatcher.UIThread.InvokeAsync(() =>
+                {
+                    slider.Maximum = 1;
+                    SeekPosition = TotalMilliseconds > 0 ? SeekSecond * 1000F / TotalMilliseconds : 0;
+                });
+            }
+            catch (Exception ex)
+            {
+                Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(this, ex.Message);
+            }
         }
         public bool Pause()
         {
@@ -269,10 +299,7 @@ namespace Avalonia.Extensions.Media
         {
             try
             {
-                Dispatcher.UIThread.InvokeAsync(() =>
-                {
-                    slider.Value = e.Position;
-                });
+                Dispatcher.UIThread.InvokeAsync(() => { slider.Value = e.Position; });
             }
             catch (Exception ex)
             {
@@ -306,10 +333,17 @@ namespace Avalonia.Extensions.Media
         }
         private static void OnSeekSecondChange(object sender, AvaloniaPropertyChangedEventArgs e)
         {
-            if (e.OldValue != e.NewValue && sender is PlayerView view)
+            try
             {
-                var seek = (uint)e.NewValue * 1000F;
-                view.SeekPosition = seek / view.TotalMilliseconds;
+                if (e.OldValue != e.NewValue && sender is PlayerView view)
+                {
+                    var seek = (uint)e.NewValue * 1000F;
+                    view.SeekPosition = seek / view.TotalMilliseconds;
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(sender, ex.Message);
             }
         }
     }

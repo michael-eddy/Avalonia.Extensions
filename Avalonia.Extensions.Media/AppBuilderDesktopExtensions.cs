@@ -3,7 +3,7 @@ using Avalonia.Logging;
 using ManagedBass;
 using System;
 
-namespace Avalonia.Extensions.Controls
+namespace Avalonia.Extensions.Media
 {
     public static class AppBuilderDesktopExtensions
     {
