@@ -105,25 +105,36 @@ namespace Avalonia.Extensions.Media
         public void Controls_PointerEnter(object sender, PointerEventArgs e) => _floatingContent.Opacity = .8;
         protected override IPlatformHandle CreateNativeControlCore(IPlatformHandle parent)
         {
+            var handle = base.CreateNativeControlCore(parent);
             try
             {
-                var handle = base.CreateNativeControlCore(parent);
                 platformHandles.OnNext(Maybe<IPlatformHandle>.From(handle));
                 Hndl = handle;
                 IsDispose = false;
-                return handle;
+            }
+            catch (Exception ex)
+            {
+                Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(this, ex.Message);
             }
             finally
             {
                 Callback?.Invoke(this, default);
             }
+            return handle;
         }
         protected override void DestroyNativeControlCore(IPlatformHandle control)
         {
-            attacher.Dispose();
-            base.DestroyNativeControlCore(control);
-            IsDispose = true;
-            mediaPlayers.Value.Execute(MediaPlayerExtensions.DisposeHandle);
+            try
+            {
+                attacher.Dispose();
+                base.DestroyNativeControlCore(control);
+                IsDispose = true;
+                mediaPlayers.Value.Execute(MediaPlayerExtensions.DisposeHandle);
+            }
+            catch (Exception ex)
+            {
+                Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(this, ex.Message);
+            }
         }
         private void ShowNativeOverlay(bool show)
         {
@@ -200,17 +211,31 @@ namespace Avalonia.Extensions.Media
         protected override void OnAttachedToVisualTree(VisualTreeAttachmentEventArgs e)
         {
             base.OnAttachedToVisualTree(e);
-            _isAttached = true;
-            InitializeNativeOverlay();
-            _isEffectivelyVisible = this.GetVisualAncestors().OfType<IControl>().Select(v => v.GetObservable(IsVisibleProperty))
-                    .CombineLatest(v => !v.Any(o => !o)).DistinctUntilChanged().Subscribe(v => IsVisible = v);
+            try
+            {
+                _isAttached = true;
+                InitializeNativeOverlay();
+                _isEffectivelyVisible = this.GetVisualAncestors().OfType<IControl>().Select(v => v.GetObservable(IsVisibleProperty))
+                        .CombineLatest(v => !v.Any(o => !o)).DistinctUntilChanged().Subscribe(v => IsVisible = v);
+            }
+            catch (Exception ex)
+            {
+                Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(this, ex.Message);
+            }
         }
         protected override void OnDetachedFromVisualTree(VisualTreeAttachmentEventArgs e)
         {
             base.OnDetachedFromVisualTree(e);
-            _isEffectivelyVisible?.Dispose();
-            ShowNativeOverlay(false);
-            _isAttached = false;
+            try
+            {
+                _isEffectivelyVisible?.Dispose();
+                ShowNativeOverlay(false);
+                _isAttached = false;
+            }
+            catch (Exception ex)
+            {
+                Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(this, ex.Message);
+            }
         }
         protected override void OnDetachedFromLogicalTree(LogicalTreeAttachmentEventArgs e)
         {

@@ -2,6 +2,7 @@
     <PropertyGroup>
         <Nullable>enable</Nullable>
         <OutputType>WinExe</OutputType>
+        <Version>202205071800</Version>
         <TargetFramework>net6.0</TargetFramework>
     </PropertyGroup>
     <ItemGroup>

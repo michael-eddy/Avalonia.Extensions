@@ -1,4 +1,5 @@
 ﻿using Avalonia.Controls;
+using Avalonia.Logging;
 using ManagedBass;
 using System;
 using System.Runtime.InteropServices;
@@ -21,6 +22,11 @@ namespace Avalonia.Extensions.Media
         {
             Bass.Free();
         }
+        static AudioControl()
+        {
+            if (!AppBuilderDesktopExtensions.IsAudioInit)
+                throw new ApplicationException("you should call UseAudioControl in Program.Main init the control");
+        }
         public AudioControl()
         {
             Bass.NetPlaylist = 1;
@@ -30,34 +36,43 @@ namespace Avalonia.Extensions.Media
         }
         public void Play(string url)
         {
-            TitleAndArtist = IcyMeta = null;
-            Bass.NetAgent =  UserAgent;
-            Bass.NetProxy = string.IsNullOrEmpty(Proxy) ? null : Proxy;
-            task?.Dispose();
-            task = Task.Factory.StartNew(() =>
+            try
             {
-                int r;
-                lock (Lock)
-                    r = ++_req;
-                _timer.Stop();
-                Bass.StreamFree(_chan);
-                Status = PlayStatus.Buffering;
-                var c = Bass.CreateStream(url, 0, BassFlags.StreamDownloadBlocks | BassFlags.StreamStatus | BassFlags.AutoFree, StatusProc, new IntPtr(r));
-                lock (Lock)
+                TitleAndArtist = IcyMeta = null;
+                Bass.NetAgent = UserAgent;
+                Bass.NetProxy = string.IsNullOrEmpty(Proxy) ? null : Proxy;
+                task?.Dispose();
+                task = Task.Factory.StartNew(() =>
                 {
-                    if (r != _req)
+                    int r;
+                    lock (Lock)
+                        r = ++_req;
+                    _timer.Stop();
+                    Bass.StreamFree(_chan);
+                    Status = PlayStatus.Buffering;
+                    var c = Bass.CreateStream(url, 0, BassFlags.StreamDownloadBlocks | BassFlags.StreamStatus | BassFlags.AutoFree, StatusProc, new IntPtr(r));
+                    lock (Lock)
                     {
-                        if (c != 0)
-                            Bass.StreamFree(c);
-                        return;
+                        if (r != _req)
+                        {
+                            if (c != 0)
+                                Bass.StreamFree(c);
+                            return;
+                        }
+                        _chan = c;
                     }
-                    _chan = c;
-                }
-                if (_chan == 0)
-                    Status = PlayStatus.Error;
-                else
-                    _timer.Start();
-            });
+                    if (_chan == 0)
+                        Status = PlayStatus.Error;
+                    else
+                        _timer.Start();
+                });
+            }
+            catch (Exception ex)
+            {
+                Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(this, ex.Message);
+                task?.Dispose();
+                throw;
+            }
         }
         /// <summary>
         /// Defines the <see cref="Proxy"/> property.
@@ -87,76 +102,98 @@ namespace Avalonia.Extensions.Media
         }
         private void Timer_Elapsed(object sender, ElapsedEventArgs e)
         {
-            var progress = Bass.StreamGetFilePosition(_chan, FileStreamPosition.Buffer)
-                * 100 / Bass.StreamGetFilePosition(_chan, FileStreamPosition.End);
-            if (progress > 75 || Bass.StreamGetFilePosition(_chan, FileStreamPosition.Connected) == 0)
+            try
             {
-                _timer.Stop();
-                Status = PlayStatus.Playing;
-                var icy = Bass.ChannelGetTags(_chan, TagType.ICY);
-                if (icy == IntPtr.Zero)
-                    icy = Bass.ChannelGetTags(_chan, TagType.HTTP);
-                if (icy != IntPtr.Zero)
+                var progress = Bass.StreamGetFilePosition(_chan, FileStreamPosition.Buffer)
+                    * 100 / Bass.StreamGetFilePosition(_chan, FileStreamPosition.End);
+                if (progress > 75 || Bass.StreamGetFilePosition(_chan, FileStreamPosition.Connected) == 0)
                 {
-                    foreach (var tag in ManagedBass.Extensions.ExtractMultiStringAnsi(icy))
+                    _timer.Stop();
+                    Status = PlayStatus.Playing;
+                    var icy = Bass.ChannelGetTags(_chan, TagType.ICY);
+                    if (icy == IntPtr.Zero)
+                        icy = Bass.ChannelGetTags(_chan, TagType.HTTP);
+                    if (icy != IntPtr.Zero)
                     {
-                        var icymeta = string.Empty;
-                        if (tag.StartsWith("icy-name:"))
-                            icymeta += $"ICY Name: {tag[9..]}";
-                        if (tag.StartsWith("icy-url:"))
-                            icymeta += $"ICY Url: {tag[8..]}";
-                        IcyMeta = icymeta;
+                        foreach (var tag in ManagedBass.Extensions.ExtractMultiStringAnsi(icy))
+                        {
+                            var icymeta = string.Empty;
+                            if (tag.StartsWith("icy-name:"))
+                                icymeta += $"ICY Name: {tag[9..]}";
+                            if (tag.StartsWith("icy-url:"))
+                                icymeta += $"ICY Url: {tag[8..]}";
+                            IcyMeta = icymeta;
+                        }
                     }
+                    DoMeta();
+                    Bass.ChannelSetSync(_chan, SyncFlags.MetadataReceived, 0, MetaSync);
+                    Bass.ChannelSetSync(_chan, SyncFlags.OggChange, 0, MetaSync);
+                    Bass.ChannelSetSync(_chan, SyncFlags.End, 0, EndSync);
+                    Bass.ChannelPlay(_chan);
                 }
-                DoMeta();
-                Bass.ChannelSetSync(_chan, SyncFlags.MetadataReceived, 0, MetaSync);
-                Bass.ChannelSetSync(_chan, SyncFlags.OggChange, 0, MetaSync);
-                Bass.ChannelSetSync(_chan, SyncFlags.End, 0, EndSync);
-                Bass.ChannelPlay(_chan);
+            }
+            catch (Exception ex)
+            {
+                Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(this, ex.Message);
+                throw;
             }
         }
         private void StatusProc(IntPtr buffer, int length, IntPtr user)
         {
-            if (buffer != IntPtr.Zero && length == 0 && user.ToInt32() == _req)
+            try
             {
-                var status = Marshal.PtrToStringAnsi(buffer);
-                Status = status switch
+                if (buffer != IntPtr.Zero && length == 0 && user.ToInt32() == _req)
                 {
-                    "HTTP/1.1 200 OK" => PlayStatus.Buffered,
-                    _ => PlayStatus.Error
-                };
+                    var status = Marshal.PtrToStringAnsi(buffer);
+                    Status = status switch
+                    {
+                        "HTTP/1.1 200 OK" => PlayStatus.Buffered,
+                        _ => PlayStatus.Error
+                    };
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(this, ex.Message);
             }
         }
         private void MetaSync(int Handle, int Channel, int Data, IntPtr User) => DoMeta();
         void EndSync(int Handle, int Channel, int Data, IntPtr User) => Status = PlayStatus.Stop;
         private void DoMeta()
         {
-            var meta = Bass.ChannelGetTags(_chan, TagType.META);
-            if (meta != IntPtr.Zero)
+            try
             {
-                var data = Marshal.PtrToStringAnsi(meta);
-                var i = data.IndexOf("StreamTitle='");
-                if (i == -1)
-                    return;
-                var j = data.IndexOf("';", i);
-                if (j != -1)
-                    TitleAndArtist = $"Title: {data.Substring(i, j - i + 1)}";
-            }
-            else
-            {
-                meta = Bass.ChannelGetTags(_chan, TagType.OGG);
-                if (meta == IntPtr.Zero)
-                    return;
-                foreach (var tag in ManagedBass.Extensions.ExtractMultiStringUtf8(meta))
+                var meta = Bass.ChannelGetTags(_chan, TagType.META);
+                if (meta != IntPtr.Zero)
                 {
-                    string artist = null, title = null;
-                    if (tag.StartsWith("artist="))
-                        artist = $"Artist: {tag[7..]}";
-                    if (tag.StartsWith("title="))
-                        title = $"Title: {tag[6..]}";
-                    if (title != null)
-                        TitleAndArtist = artist != null ? $"{title} - {artist}" : title;
+                    var data = Marshal.PtrToStringAnsi(meta);
+                    var i = data.IndexOf("StreamTitle='");
+                    if (i == -1)
+                        return;
+                    var j = data.IndexOf("';", i);
+                    if (j != -1)
+                        TitleAndArtist = $"Title: {data.Substring(i, j - i + 1)}";
                 }
+                else
+                {
+                    meta = Bass.ChannelGetTags(_chan, TagType.OGG);
+                    if (meta == IntPtr.Zero)
+                        return;
+                    foreach (var tag in ManagedBass.Extensions.ExtractMultiStringUtf8(meta))
+                    {
+                        string artist = null, title = null;
+                        if (tag.StartsWith("artist="))
+                            artist = $"Artist: {tag[7..]}";
+                        if (tag.StartsWith("title="))
+                            title = $"Title: {tag[6..]}";
+                        if (title != null)
+                            TitleAndArtist = artist != null ? $"{title} - {artist}" : title;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(this, ex.Message);
             }
         }
     }
