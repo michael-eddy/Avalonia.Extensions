@@ -1,8 +1,7 @@
 # Controls Extensions for Avalonia
 
 # WARNING
-<strong>IN [Avalonia 0.10.14](https://www.nuget.org/packages/Avalonia/),the NativeControlHost may got some trouble AND CAN'T work AS SAME function AS 0.10.13. THAT'S MAKE THE `PlayerView` CANNOT WORKING NORMAL!</strong>
-
+<strong>IN [Avalonia 0.10.14](https://www.nuget.org/packages/Avalonia/),the NativeControlHost must add the app.manifest for Windows.IF NOT,THAT'S MAKE THE `PlayerView` CANNOT WORKING NORMAL!</strong>
 
 ## DEMO screenshot
 ![图片alt](/ss.png "截图")

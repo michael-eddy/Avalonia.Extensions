@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Avalonia.Extensions.Media
 {
-    public sealed class MusicPlayer : Window
+    internal sealed class MusicPlayer : Window
     {
         public MusicPlayer(PixelPoint point)
         {
