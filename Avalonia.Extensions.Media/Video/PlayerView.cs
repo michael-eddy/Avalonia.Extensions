@@ -11,7 +11,7 @@ using System.Diagnostics;
 
 namespace Avalonia.Extensions.Media
 {
-    public class PlayerView : UserControl, IPlayerView
+    public class PlayerView : UserControl, IPlayerView, IVideoView
     {
         private LibVLC? libVLC;
         private SeekSlider slider;
@@ -50,7 +50,7 @@ namespace Avalonia.Extensions.Media
             set => SetValue(SeekSecondProperty, value);
         }
         /// <summary>
-        /// Defines the <see cref="SeekSecond"/> property.
+        /// Defines the <see cref="LogEnable"/> property.
         /// </summary>
         public static readonly StyledProperty<bool> LogEnableProperty =
             AvaloniaProperty.Register<PlayerView, bool>(nameof(LogEnable), false);
@@ -168,7 +168,7 @@ namespace Avalonia.Extensions.Media
                 if (!videoView.IsDispose)
                 {
                     MediaPlayer.Play();
-                    playButton.Content = new PathIcon { Data = Geometry.Parse(SvgDic.PLAY) };
+                    playButton.Content = new PathIcon { Data = Geometry.Parse(SvgDic.PAUSE) };
                     return true;
                 }
             }
@@ -247,7 +247,7 @@ namespace Avalonia.Extensions.Media
             try
             {
                 MediaPlayer.Pause();
-                playButton.Content = new PathIcon { Data = Geometry.Parse(SvgDic.PAUSE) };
+                playButton.Content = new PathIcon { Data = Geometry.Parse(SvgDic.PLAY) };
                 return true;
             }
             catch (Exception ex)
