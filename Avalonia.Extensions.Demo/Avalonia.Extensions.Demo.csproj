@@ -4,6 +4,7 @@
         <OutputType>WinExe</OutputType>
         <Version>1.7.4</Version>
         <TargetFramework>net6.0</TargetFramework>
+        <ApplicationManifest>app.manifest</ApplicationManifest>
     </PropertyGroup>
     <ItemGroup>
         <PackageReference Include="Avalonia" Version="0.10.14" />
