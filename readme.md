@@ -1,7 +1,7 @@
 # Controls Extensions for Avalonia
 
 # WARNING
-<strong>IN [Avalonia 0.10.14](https://www.nuget.org/packages/Avalonia/),the NativeControlHost must add the app.manifest for Windows.IF NOT,THAT'S MAKE THE `PlayerView` CANNOT WORKING NORMAL!</strong>
+<strong>IN [Avalonia 0.10.14](https://www.nuget.org/packages/Avalonia/),the NativeControlHost NEED app.manifest for Windows.IF NOT,THAT'S MAKE THE `PlayerView` CANNOT WORKS NORMALLY!</strong>
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
 <assembly manifestVersion="1.0" xmlns="urn:schemas-microsoft-com:asm.v1">
