@@ -7,7 +7,7 @@ namespace Avalonia.Extensions.Controls
 {
     public static class AssemblyUntils
     {
-        internal static T CreateInstance<T>(this string assemblyPath, params object[] param)
+        public static T CreateInstance<T>(this string assemblyPath, params object[] param)
         {
             try
             {
@@ -18,6 +18,22 @@ namespace Avalonia.Extensions.Controls
             catch (Exception ex)
             {
                 Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(assemblyPath, ex.Message);
+                throw ex;
+            }
+        }
+        public static object InvokePrivateMethod(this Control control, string methodName, object[] parameters = null)
+        {
+            try
+            {
+                var type = control.GetType();
+                MethodInfo methodInfo = type.GetMethod(methodName, BindingFlags.NonPublic | BindingFlags.Instance);
+                if (methodInfo == null && type.BaseType != null)
+                    methodInfo = type.BaseType.GetMethod(methodName, BindingFlags.NonPublic | BindingFlags.Instance);
+                return methodInfo?.Invoke(control, parameters);
+            }
+            catch (Exception ex)
+            {
+                Logger.TryGet(LogEventLevel.Warning, LogArea.Control)?.Log(control, ex.Message);
                 throw ex;
             }
         }

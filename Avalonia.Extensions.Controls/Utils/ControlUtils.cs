@@ -1,13 +1,12 @@
 ﻿using Avalonia.Controls;
 using Avalonia.Extensions.Styles;
-using Avalonia.Logging;
 using Avalonia.Media;
 using Avalonia.Platform;
 using Avalonia.Styling;
+using SkiaSharp;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Reflection;
 
 namespace Avalonia.Extensions.Controls
 {
@@ -59,22 +58,6 @@ namespace Avalonia.Extensions.Controls
             catch
             {
                 return new SizeF();
-            }
-        }
-        public static object InvokePrivateMethod(this Control control, string methodName, object[] parameters = null)
-        {
-            try
-            {
-                var type = control.GetType();
-                MethodInfo methodInfo = type.GetMethod(methodName, BindingFlags.NonPublic | BindingFlags.Instance);
-                if (methodInfo == null && type.BaseType != null)
-                    methodInfo = type.BaseType.GetMethod(methodName, BindingFlags.NonPublic | BindingFlags.Instance);
-                return methodInfo?.Invoke(control, parameters);
-            }
-            catch (Exception ex)
-            {
-                Logger.TryGet(LogEventLevel.Warning, LogArea.Control)?.Log(control, ex.Message);
-                throw ex;
             }
         }
         public static IEnumerable<T> FindControls<T>(this Panel control, bool isLoop = false) where T : Control
