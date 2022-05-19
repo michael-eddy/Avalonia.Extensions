@@ -3,6 +3,7 @@ using Avalonia.Extensions.Styles;
 using Avalonia.Media;
 using Avalonia.Platform;
 using Avalonia.Styling;
+using PCLUntils.IEnumerables;
 using SkiaSharp;
 using System;
 using System.Collections.Generic;
@@ -34,31 +35,22 @@ namespace Avalonia.Extensions.Controls
             }
         }
         public static void ShowToast(this Window window, string content) => PopupToast.Show(content, window);
-        public static SizeF MeasureString(this IWindowImpl impl, string content, Font font, float maxWidth = 0)
+        public static SizeF MeasureString(this string text, double fontSize, SKTypeface typeface)
         {
             try
             {
-                var graphic = impl.GetGraphics();
-                StringFormat sf = StringFormat.GenericTypographic;
-                sf.FormatFlags |= StringFormatFlags.MeasureTrailingSpaces;
-                if (maxWidth != 0)
-                    return graphic.MeasureString(content.Trim(), font, new SizeF(maxWidth, 0), sf);
-                else
-                    return graphic.MeasureString(content.Trim(), font, PointF.Empty, sf);
+                using SKPaint paint = new SKPaint();
+                paint.Typeface = typeface;
+                paint.Style = SKPaintStyle.Fill;
+                paint.TextSize = Convert.ToSingle(fontSize);
+                SKRect result = new SKRect();
+                paint.MeasureText(text, ref result);
+                var width = Convert.ToSingle(Math.Ceiling(result.Size.Width));
+                var height = Convert.ToSingle(Math.Ceiling(result.Size.Height));
+                return new SizeF(width, height);
             }
-            catch { return new SizeF(); }
-        }
-        public static SizeF MeasureString(this string text, Font font, double maxwidth)
-        {
-            try
-            {
-                var p = Graphics.FromImage(new Bitmap(1, 1)).MeasureString(text, font, Convert.ToInt32(maxwidth * 96f / 100f));
-                return new SizeF(p.Width * 100f / 96f, p.Height * 100f / 96f);
-            }
-            catch
-            {
-                return new SizeF();
-            }
+            catch { }
+            return new SizeF();
         }
         public static IEnumerable<T> FindControls<T>(this Panel control, bool isLoop = false) where T : Control
         {
@@ -98,12 +90,6 @@ namespace Avalonia.Extensions.Controls
             }
             catch { }
             return window;
-        }
-        internal static Font GetFont(this TextBlock textBlock)
-        {
-            var fontFamily = textBlock.FontFamily.Name;
-            var fontSize = Convert.ToSingle(textBlock.FontSize);
-            return new Font(fontFamily, fontSize);
         }
         internal static double GetParagraphOffsetX(double lineWidth, double paragraphWidth, TextAlignment textAlignment)
         {

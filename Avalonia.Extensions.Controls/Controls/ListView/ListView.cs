@@ -7,6 +7,7 @@ using Avalonia.Interactivity;
 using Avalonia.Logging;
 using Avalonia.Styling;
 using Avalonia.Threading;
+using PCLUntils.IEnumerables;
 using System;
 using System.Linq;
 using System.Windows.Input;

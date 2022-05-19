@@ -1,6 +1,7 @@
 ﻿using Avalonia.Controls;
 using Avalonia.Media;
 using Avalonia.Threading;
+using SkiaSharp;
 using System;
 using System.Threading.Tasks;
 
@@ -8,12 +9,14 @@ namespace Avalonia.Extensions.Controls
 {
     public partial class PopupToast : Window
     {
+        private readonly TextBlock textBlock;
         public PopupToast() : base()
         {
             Opacity = 0.6;
             Topmost = true;
             CanResize = false;
             ShowInTaskbar = false;
+            textBlock = new TextBlock();
             SystemDecorations = SystemDecorations.None;
         }
         public static void Show(string content)
@@ -24,7 +27,8 @@ namespace Avalonia.Extensions.Controls
         public static void Show(string content, Window window)
         {
             PopupToast toast = new PopupToast();
-            var x = window.Position.X + (toast.PlatformImpl.MeasureString(content, Core.Instance.FontDefault).Width / 2);
+            var typeface = SKTypeface.FromFamilyName(toast.textBlock.FontFamily.Name);
+            var x = window.Position.X + (content.MeasureString(toast.textBlock.FontSize, typeface).Width / 2);
             var y = window.ActualHeight() + window.Position.Y - 48;
             var point = new PixelPoint(Convert.ToInt32(x), Convert.ToInt32(y));
             toast.Popup(content, point);
@@ -41,31 +45,30 @@ namespace Avalonia.Extensions.Controls
         }
         private void Popup(string content, PixelPoint? point, PopupOptions options)
         {
-            Dispatcher.UIThread.InvokeAsync(async () =>
+           Dispatcher.UIThread.InvokeAsync(async () =>
            {
                TextWrapping wrapping = TextWrapping.NoWrap;
+               textBlock.Text = content;
+               textBlock.TextWrapping = wrapping;
+               textBlock.Foreground = options.Foreground;
+               textBlock.VerticalAlignment = options.VerticalAlignment;
+               textBlock.HorizontalAlignment = options.HorizontalAlignment;
+               Content = textBlock;
+               var typeface = SKTypeface.FromFamilyName(textBlock.FontFamily.Name);
                if (double.IsNaN(options.Width))
                {
-                   var size = PlatformImpl.MeasureString(content, Core.Instance.FontDefault);
+                   var size = content.MeasureString(FontSize, typeface);
                    Width = size.Width;
                    Height = size.Height;
                }
                else
                {
-                   var size = PlatformImpl.MeasureString(content, Core.Instance.FontDefault, options.Width);
+                   var size = content.MeasureString(FontSize, typeface);
                    Width = size.Width;
                    Height = size.Height;
-                   if (PlatformImpl.MeasureString(content, Core.Instance.FontDefault).Width > size.Width)
+                   if (content.MeasureString(FontSize, typeface).Width > size.Width)
                        wrapping = TextWrapping.WrapWithOverflow;
                }
-               Content = new TextBlock
-               {
-                   Text = content,
-                   TextWrapping = wrapping,
-                   Foreground = options.Foreground,
-                   VerticalAlignment = options.VerticalAlignment,
-                   HorizontalAlignment = options.HorizontalAlignment
-               };
                Background = options.Background;
                if (!point.HasValue)
                {
@@ -81,9 +84,6 @@ namespace Avalonia.Extensions.Controls
                Close();
            }, DispatcherPriority.ApplicationIdle);
         }
-        private void Popup(string content, PopupOptions options)
-        {
-            Popup(content, null, options);
-        }
+        private void Popup(string content, PopupOptions options) => Popup(content, null, options);
     }
 }

@@ -2,8 +2,8 @@
 using Avalonia.Extensions.Styles;
 using Avalonia.Media;
 using Avalonia.Metadata;
+using SkiaSharp;
 using System;
-using System.Drawing;
 using FontFamily = Avalonia.Media.FontFamily;
 
 namespace Avalonia.Extensions.Controls
@@ -51,7 +51,7 @@ namespace Avalonia.Extensions.Controls
         private string? _content;
         private Size _constraint;
         private TextLayout _textLayout;
-        private Typeface DefaultTypeface { get; }
+        private SKTypeface DefaultTypeface { get; }
         private FontFamily DefaultFontFamily { get; }
         internal TextLayout TextLayout => _textLayout ??= CreateTextLayout(_constraint, _content);
         public Text()
@@ -61,12 +61,9 @@ namespace Avalonia.Extensions.Controls
             AffectsRender<Text>(ForegroundProperty);
             SetValue(StrokeThicknessProperty, 2);
             DefaultFontFamily = new FontFamily(FontManager.Current.DefaultFontFamilyName);
-            DefaultTypeface = new Typeface(DefaultFontFamily);
+            DefaultTypeface = SKTypeface.FromFamilyName(DefaultFontFamily.Name);
         }
-        protected void InvalidateTextLayout()
-        {
-            _textLayout = null;
-        }
+        protected void InvalidateTextLayout() => _textLayout = null;
         internal virtual TextLayout CreateTextLayout(Size constraint, string? text)
         {
             if (constraint == Size.Empty)
@@ -75,7 +72,7 @@ namespace Avalonia.Extensions.Controls
         }
         public override void Render(DrawingContext context)
         {
-            context.FillRectangle(Avalonia.Media.Brushes.Transparent, new Rect(Bounds.Size));
+            context.FillRectangle(Brushes.Transparent, new Rect(Bounds.Size));
             if (TextLayout == null)
                 return;
             using (context.PushPostTransform(Matrix.CreateTranslation(0, 0)))
@@ -101,18 +98,15 @@ namespace Avalonia.Extensions.Controls
             {
                 try
                 {
-                    using Bitmap bitmap = new Bitmap(1, 1);
-                    var graphics = Graphics.FromImage(bitmap);
-                    StringFormat sf = StringFormat.GenericTypographic;
-                    sf.FormatFlags |= StringFormatFlags.MeasureTrailingSpaces;
-                    var size = graphics.MeasureString(Content?.Trim(), new Font(DefaultTypeface.FontFamily.Name, FontSize), PointF.Empty, sf);
-                    double width = Math.Ceiling(size.Width), height = Math.Ceiling(size.Height);
-                    return new Size(width, height);
+                    if (!string.IsNullOrEmpty(Content))
+                    {
+                        var size = Content.Trim().MeasureString(FontSize, DefaultTypeface);
+                        double width = Math.Ceiling(size.Width), height = Math.Ceiling(size.Height);
+                        return new Size(width, height);
+                    }
                 }
-                catch
-                {
-                    return new Size();
-                }
+                catch { }
+                return new Size();
             }
         }
     }

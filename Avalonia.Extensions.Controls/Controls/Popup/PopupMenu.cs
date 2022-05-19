@@ -7,6 +7,7 @@ using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Metadata;
 using Avalonia.Threading;
+using PCLUntils.Objects;
 using System;
 using System.Collections;
 using System.Collections.Generic;

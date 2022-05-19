@@ -3,7 +3,6 @@ using Avalonia.Media;
 using Avalonia.Platform;
 using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Globalization;
 using System.Net.Http;
 using Color = Avalonia.Media.Color;
@@ -26,7 +25,6 @@ namespace Avalonia.Extensions.Controls
         {
             InnerClasses = new List<Uri>();
             Transparent = new SolidColorBrush(Colors.Transparent);
-            FontDefault = new Font(Typeface.Default.FontFamily.Name, 16);
         }
         internal void Init()
         {
@@ -44,7 +42,6 @@ namespace Avalonia.Extensions.Controls
                 Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(this, ex.Message);
             }
         }
-        public Font FontDefault { get; }
         internal List<Uri> InnerClasses { get; private set; }
         internal bool IsEnglish => !CultureInfo.CurrentCulture.Name.Contains("zh", StringComparison.CurrentCultureIgnoreCase);
         public IAssetLoader AssetLoader { get; private set; }

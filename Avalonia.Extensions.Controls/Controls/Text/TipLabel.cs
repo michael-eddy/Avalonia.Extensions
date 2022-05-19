@@ -2,6 +2,7 @@
 using Avalonia.Layout;
 using Avalonia.Media;
 using Avalonia.Metadata;
+using SkiaSharp;
 using System;
 
 namespace Avalonia.Extensions.Controls
@@ -115,7 +116,8 @@ namespace Avalonia.Extensions.Controls
             if (!e.IsSameValue() && e.NewValue is string chars)
             {
                 label.TextBlock.Text = chars;
-                var size = chars.MeasureString(label.TextBlock.GetFont(), 0);
+                SKTypeface typeface = SKTypeface.FromFamilyName(label.TextBlock.FontFamily.Name);
+                var size = chars.MeasureString(label.TextBlock.FontSize, typeface);
                 var width = Convert.ToDouble(size.Width).Upper() + (label.Padding.Left + label.Padding.Right).Upper();
                 label.Width = label.DockPanel.Width = width;
             }

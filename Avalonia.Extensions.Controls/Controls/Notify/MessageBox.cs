@@ -2,6 +2,7 @@
 using Avalonia.Layout;
 using Avalonia.LogicalTree;
 using Avalonia.Media;
+using SkiaSharp;
 using System;
 using System.Drawing;
 using System.Linq;
@@ -12,7 +13,6 @@ namespace Avalonia.Extensions.Controls
 {
     public sealed class MessageBox : Window
     {
-        private Graphics Graphic { get; }
         private FontFamily DefaultFontFamily { get; }
         private MessageBoxButtons _buttonType;
         public MessageBoxButtons ButtonType
@@ -43,13 +43,7 @@ namespace Avalonia.Extensions.Controls
             Height = 80;
             CanResize = false;
             CreateControls();
-            Graphic = PlatformImpl.GetGraphics();
             DefaultFontFamily = new FontFamily(FontManager.Current.DefaultFontFamilyName);
-        }
-        protected override void OnClosed(EventArgs e)
-        {
-            base.OnClosed(e);
-            Graphic.Dispose();
         }
         public override void Show()
         {
@@ -102,14 +96,9 @@ namespace Avalonia.Extensions.Controls
             Width = size.Width;
             Height = size.Height;
         }
-        public SizeF ContentSize(string content)
-        {
-            return PlatformImpl.MeasureString(content, Core.Instance.FontDefault);
-        }
+        public SizeF ContentSize(string content, double fontSize) => content.MeasureString(fontSize, SKTypeface.Default);
         public static Task<bool?> Show(string title, string message, MessageBoxButtons messageBoxButtons = MessageBoxButtons.OkNo)
-        {
-            return Show(null, title, message, messageBoxButtons);
-        }
+            => Show(null, title, message, messageBoxButtons);
         public static Task<bool?> Show(Window parent, string title, string message, MessageBoxButtons messageBoxButtons = MessageBoxButtons.OkNo)
         {
             bool? result = null;
@@ -149,7 +138,7 @@ namespace Avalonia.Extensions.Controls
         }
         private static void AutoSize(string message, MessageBox messageBox, TextBlock txtMessage)
         {
-            var size = messageBox.ContentSize(message);
+            var size = messageBox.ContentSize(message, txtMessage.FontSize);
             var rows = Math.Ceiling(size.Width / txtMessage.ActualWidth());
             var height = size.Height * (rows - 1) * 1.2;
             messageBox.Height += height;
