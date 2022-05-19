@@ -1,9 +1,6 @@
 ﻿using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml.MarkupExtensions;
-using Avalonia.Platform;
 using System;
-using System.Drawing;
-using System.Linq;
 
 namespace Avalonia.Extensions.Controls
 {
@@ -18,22 +15,6 @@ namespace Avalonia.Extensions.Controls
         {
             if (application.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime lifetime)
                 lifetime.TryShutdown(exitCode);
-        }
-        public static Graphics GetGraphics(this IWindowImpl impl)
-        {
-            Graphics graphics = null;
-            try
-            {
-                if (impl != null)
-                    graphics = Graphics.FromHwnd(impl.Handle.Handle);
-            }
-            catch { }
-            if (graphics == null)
-            {
-                Bitmap bitmap = new Bitmap(1, 1);
-                graphics = Graphics.FromImage(bitmap);
-            }
-            return graphics;
         }
         public static int Upper(this double value)
         {
@@ -67,35 +48,6 @@ namespace Avalonia.Extensions.Controls
                 return true;
             else
                 return pixelPoint.X > point.X && pixelPoint.Y > point.Y;
-        }
-        internal static int ToInt32(this object obj)
-        {
-            try
-            {
-                if (obj is int result)
-                    return result;
-                else if (obj is double d && double.IsNaN(d))
-                    return 0;
-                else
-                {
-                    if (int.TryParse(obj.ToString(), out result))
-                        return result;
-                    else
-                        return Convert.ToInt32(obj.ToString());
-                }
-            }
-            catch
-            {
-                try
-                {
-                    var num = obj.ToString().Split('.').FirstOrDefault();
-                    return string.IsNullOrEmpty(num) ? 0 : int.Parse(num);
-                }
-                catch
-                {
-                    return 0;
-                }
-            }
         }
         /// <summary>
         /// only target is Initialized

@@ -3,6 +3,7 @@ using Avalonia.Controls.Primitives;
 using Avalonia.Extensions.Styles;
 using Avalonia.Interactivity;
 using Avalonia.Layout;
+using PCLUntils.IEnumerables;
 
 namespace Avalonia.Extensions.Controls
 {

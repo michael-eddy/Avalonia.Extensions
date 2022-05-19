@@ -6,6 +6,7 @@ using Avalonia.Logging;
 using Avalonia.Media.Imaging;
 using Avalonia.Metadata;
 using Avalonia.Visuals.Media.Imaging;
+using PCLUntils.Objects;
 using System;
 using System.IO;
 

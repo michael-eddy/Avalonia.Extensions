@@ -2,6 +2,7 @@
 using Avalonia.Extensions.Threading;
 using Avalonia.Logging;
 using Avalonia.Threading;
+using PCLUntils.Objects;
 using System;
 
 namespace Avalonia.Extensions.Controls
