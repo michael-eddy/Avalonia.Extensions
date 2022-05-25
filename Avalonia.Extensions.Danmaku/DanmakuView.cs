@@ -36,7 +36,7 @@ namespace Avalonia.Extensions.Danmaku
             _platformHandle = base.CreateNativeControlCore(parent);
             try
             {
-                switch (PlantformUntils.Platform())
+                switch (PlantformUntils.Platform)
                 {
                     case Platforms.Windows:
                         {
@@ -72,7 +72,7 @@ namespace Avalonia.Extensions.Danmaku
         {
             try
             {
-                switch (PlantformUntils.Platform())
+                switch (PlantformUntils.Platform)
                 {
                     case Platforms.MacOS:
                         ((MacOSViewHandle)control).Dispose();
@@ -105,7 +105,7 @@ namespace Avalonia.Extensions.Danmaku
         {
             try
             {
-                switch (PlantformUntils.Platform())
+                switch (PlantformUntils.Platform)
                 {
                     case Platforms.MacOS:
                         {
