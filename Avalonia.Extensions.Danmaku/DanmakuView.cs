@@ -1,8 +1,8 @@
 ﻿using Avalonia.Controls;
-using Avalonia.Extensions.Controls;
-using Avalonia.Extensions.Utils;
 using Avalonia.Logging;
 using Avalonia.Platform;
+using PCLUntils;
+using PCLUntils.Plantform;
 using System;
 using System.Diagnostics;
 
@@ -36,7 +36,7 @@ namespace Avalonia.Extensions.Danmaku
             _platformHandle = base.CreateNativeControlCore(parent);
             try
             {
-                switch (Runtime.Platform)
+                switch (PlantformUntils.Platform)
                 {
                     case Platforms.Windows:
                         {
@@ -72,7 +72,7 @@ namespace Avalonia.Extensions.Danmaku
         {
             try
             {
-                switch (Runtime.Platform)
+                switch (PlantformUntils.Platform)
                 {
                     case Platforms.MacOS:
                         ((MacOSViewHandle)control).Dispose();
@@ -105,7 +105,7 @@ namespace Avalonia.Extensions.Danmaku
         {
             try
             {
-                switch (Runtime.Platform)
+                switch (PlantformUntils.Platform)
                 {
                     case Platforms.MacOS:
                         {

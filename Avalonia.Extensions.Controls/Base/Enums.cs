@@ -5,14 +5,6 @@
         Ok,
         OkNo
     }
-    public enum Platforms
-    {
-        UnSupport,
-        Android,
-        Linux,
-        Windows,
-        MacOS
-    }
     public enum ShowPosition
     {
         TopLeft,
