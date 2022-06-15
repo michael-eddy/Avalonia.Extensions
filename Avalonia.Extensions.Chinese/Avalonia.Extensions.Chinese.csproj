@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <Version>1.1.8</Version>
+        <Version>1.1.9</Version>
 		<Authors>michael_eddy</Authors>
 		<LangVersion>latest</LangVersion>
         <TargetFramework>netstandard2.1</TargetFramework>
@@ -13,8 +13,8 @@
         <None Include="..\.editorconfig" Link=".editorconfig" />
     </ItemGroup>
     <ItemGroup>
-        <PackageReference Include="Avalonia" Version="0.10.14" />
+        <PackageReference Include="Avalonia" Version="0.10.15" />
         <PackageReference Include="CHSPinYinConv" Version="1.0.0" />
-		<PackageReference Include="Avalonia.Skia" Version="0.10.14" />
+		<PackageReference Include="Avalonia.Skia" Version="0.10.15" />
     </ItemGroup>
 </Project>
