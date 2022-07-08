@@ -7,10 +7,10 @@
         <ApplicationManifest>app.manifest</ApplicationManifest>
     </PropertyGroup>
     <ItemGroup>
-        <PackageReference Include="Avalonia" Version="0.10.15" />
-        <PackageReference Include="Avalonia.Desktop" Version="0.10.15" />
-        <PackageReference Include="Avalonia.ReactiveUI" Version="0.10.15" />
-        <PackageReference Include="Avalonia.Diagnostics" Version="0.10.15" />
+        <PackageReference Include="Avalonia" Version="0.10.16" />
+        <PackageReference Include="Avalonia.Desktop" Version="0.10.16" />
+        <PackageReference Include="Avalonia.ReactiveUI" Version="0.10.16" />
+        <PackageReference Include="Avalonia.Diagnostics" Version="0.10.16" />
 		<PackageReference Include="VideoLAN.LibVLC.Windows" Version="3.0.17.4" />
 	</ItemGroup>
 	<ItemGroup>
