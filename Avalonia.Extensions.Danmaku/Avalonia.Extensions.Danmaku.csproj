@@ -10,7 +10,7 @@
 	  <PackageProjectUrl>https://github.com/michael-eddy/Avalonia.Extensions</PackageProjectUrl>
   </PropertyGroup>
 	<ItemGroup>
-		<PackageReference Include="Avalonia" Version="0.10.16" />
+		<PackageReference Include="Avalonia" Version="0.10.17" />
 		<PackageReference Include="MonoMac.NetStandard" Version="0.0.4" />
 	</ItemGroup>
 	<ItemGroup>

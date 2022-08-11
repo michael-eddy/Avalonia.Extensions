@@ -2,6 +2,7 @@
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Controls.Primitives;
 using Avalonia.Logging;
+using Avalonia.Markup.Xaml.Styling;
 using Avalonia.Media;
 using Avalonia.Platform;
 using Avalonia.Styling;
@@ -29,6 +30,7 @@ namespace Avalonia.Extensions.Controls
                 {
                     Logger.TryGet(LogEventLevel.Warning, LogArea.Control)?.Log(builder, ex.Message);
                 }
+                InitXamlStyle(builder);
                 if (Application.Current.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
                 {
                     Dispatcher.UIThread.InvokeAsync(() =>
@@ -50,6 +52,19 @@ namespace Avalonia.Extensions.Controls
                 }
             });
             return builder;
+        }
+        private static void InitXamlStyle(object builder)
+        {
+            try
+            {
+                StyleInclude styleInclude = new StyleInclude(new Uri("avares://Avalonia.Extensions.Controls/Styles"));
+                styleInclude.Source = new Uri("avares://Avalonia.Extensions.Controls/Styles/Xaml/ProgressRing.xaml");
+                Application.Current.Styles.Add(styleInclude);
+            }
+            catch (Exception ex)
+            {
+                Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(builder, ex.Message);
+            }
         }
         private static void MainWindow_Closed(object sender, EventArgs e)
         {
@@ -75,8 +90,7 @@ namespace Avalonia.Extensions.Controls
                 {
                     var style = new Style();
                     style.Selector = default(Selector).OfType(typeof(SymbolIcon));
-                    style.Setters.Add(new Setter(TemplatedControl.FontFamilyProperty,
-                        new FontFamily("avares://Avalonia.Extensions.Controls/Assets/Fonts#SegMDL2")));
+                    style.Setters.Add(new Setter(TemplatedControl.FontFamilyProperty, new FontFamily("avares://Avalonia.Extensions.Controls/Assets/Fonts#SegMDL2")));
                     Application.Current.Styles.Add(style);
                 }
             }

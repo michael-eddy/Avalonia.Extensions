@@ -106,10 +106,7 @@ namespace Avalonia.Controls.Demo
         private void BtnStart_Click(object? sender, RoutedEventArgs e)
         {
             var progressRing = this.FindControl<ProgressRing>("progressRing");
-            if (!progressRing.IsVisible)
-                progressRing.Show();
-            else
-                progressRing.Hidden();
+            progressRing.IsActive = !progressRing.IsActive;
         }
         private void SplitListView_ItemRightClick(object? sender, ViewRoutedEventArgs e)
         {
