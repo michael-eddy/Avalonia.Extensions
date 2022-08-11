@@ -1,119 +1,76 @@
-﻿using Avalonia.Controls;
-using Avalonia.Controls.Shapes;
+﻿using Avalonia.Controls.Primitives;
 using Avalonia.Media;
-using Avalonia.Threading;
 using System;
-using System.Threading.Tasks;
 
 namespace Avalonia.Extensions.Controls
 {
-    public class ProgressRing : Canvas
+    public class ProgressRing : TemplatedControl
     {
-        private double centerRound, innerRound;
-        private readonly SolidColorBrush fillBrush;
+        private const string LargeState = ":large";
+        private const string SmallState = ":small";
+        private const string InactiveState = ":inactive";
+        private const string ActiveState = ":active";
+        private double _maxSideLength = 10;
+        private double _ellipseDiameter = 10;
+        private Thickness _ellipseOffset = new Thickness(2);
         public ProgressRing() : base()
         {
-            WidthProperty.Changed.AddClassHandler<ProgressRing>(OnWidthChange);
-            fillBrush = new SolidColorBrush(Colors.White);
-            if (double.IsNaN(Width) && double.IsNaN(Height))
-            {
-                Width = 128;
-                Height = 128;
-            }
-            ZIndex = int.MaxValue;
+            SetValue(WidthProperty, 80);
+            SetValue(HeightProperty, 80);
         }
-        private void OnWidthChange(object sender, AvaloniaPropertyChangedEventArgs e)
+        public bool IsActive
         {
-            if (!e.IsSameValue() && e.NewValue is double d)
-            {
-                centerRound = d / 2;
-                innerRound = d * 0.8;
-            }
+            get => GetValue(IsActiveProperty);
+            set => SetValue(IsActiveProperty, value);
         }
-        protected override void OnInitialized()
+        public static readonly StyledProperty<bool> IsActiveProperty = AvaloniaProperty.Register<ProgressRing, bool>(nameof(IsActive), true, notifying: OnIsActiveChanged);
+        private static void OnIsActiveChanged(IAvaloniaObject obj, bool arg2) => ((ProgressRing)obj).UpdateVisualStates();
+        public static readonly DirectProperty<ProgressRing, double> MaxSideLengthProperty =
+            AvaloniaProperty.RegisterDirect<ProgressRing, double>(nameof(MaxSideLength), o => o.MaxSideLength);
+        public double MaxSideLength
         {
-            base.OnInitialized();
-            IsVisible = false;
-            DrawBase();
-            DrawAnimation();
+            get => _maxSideLength;
+            private set => SetAndRaise(MaxSideLengthProperty, ref _maxSideLength, value);
         }
-        private Ellipse _moving;
-        private double _movingLeft, _movingTop, _movingRadian = -90;
-        private void DrawAnimation()
+        public static readonly DirectProperty<ProgressRing, double> EllipseDiameterProperty =
+            AvaloniaProperty.RegisterDirect<ProgressRing, double>(nameof(EllipseDiameter), o => o.EllipseDiameter);
+        public double EllipseDiameter
         {
-            Dispatcher.UIThread.InvokeAsync(async () =>
-            {
-                while (IsVisible)
-                {
-                    double round = (Width - innerRound) / 2;
-                    var movingRange = centerRound - round / 2;
-                    if (_moving == null)
-                    {
-                        _moving = new Ellipse
-                        {
-                            ZIndex = 2,
-                            Width = round,
-                            Height = round,
-                            Fill = fillBrush
-                        };
-                        _moving.Measure(new Size(round, round));
-                        _moving.Arrange(new Rect(0, 0, round, round));
-                        Children.Add(_moving);
-                    }
-                    _movingRadian += 1;
-                    if (_movingRadian == 360)
-                        _movingRadian = 0;
-                    var radian = _movingRadian.ToRadians();
-                    var pointX = movingRange + movingRange * Math.Cos(radian);
-                    var pointY = movingRange + movingRange * Math.Sin(radian);
-                    _movingTop = pointY;
-                    _movingLeft = pointX;
-                    SetTop(_moving, _movingTop);
-                    SetLeft(_moving, _movingLeft);
-                    await Task.Delay(30);
-                }
-            });
+            get => _ellipseDiameter;
+            private set => SetAndRaise(EllipseDiameterProperty, ref _ellipseDiameter, value);
         }
-        private void DrawBase()
+        public static readonly DirectProperty<ProgressRing, Thickness> EllipseOffsetProperty =
+            AvaloniaProperty.RegisterDirect<ProgressRing, Thickness>(nameof(EllipseOffset), o => o.EllipseOffset);
+        public Thickness EllipseOffset
         {
-            Dispatcher.UIThread.InvokeAsync(() =>
-            {
-                var target = new Ellipse
-                {
-                    ZIndex = 1,
-                    Width = innerRound,
-                    Height = innerRound,
-                    Fill = fillBrush
-                };
-                target.Measure(new Size(innerRound, innerRound));
-                target.Arrange(new Rect(0, 0, innerRound, innerRound));
-                Children.Add(target);
-                var top = centerRound - innerRound / 2;
-                SetLeft(target, top);
-                SetTop(target, top);
-
-                target = new Ellipse
-                {
-                    Width = Width,
-                    Height = Width,
-                    Fill = Core.Instance.PrimaryBrush
-                };
-                target.Measure(new Size(Width, Width));
-                target.Arrange(new Rect(0, 0, Width, Width));
-                Children.Add(target);
-                var circleBounds = centerRound - Width / 2;
-                SetLeft(target, circleBounds);
-                SetTop(target, circleBounds);
-            });
+            get => _ellipseOffset;
+            private set => SetAndRaise(EllipseOffsetProperty, ref _ellipseOffset, value);
         }
-        public void Show()
+        protected override void OnApplyTemplate(TemplateAppliedEventArgs e)
         {
-            IsVisible = true;
-            DrawAnimation();
+            base.OnApplyTemplate(e);
+            double maxSideLength = Math.Min(Width, Height);
+            double ellipseDiameter = 0.1 * maxSideLength;
+            if (maxSideLength <= 40)
+                ellipseDiameter += 1;
+            EllipseDiameter = ellipseDiameter;
+            MaxSideLength = maxSideLength;
+            EllipseOffset = new Thickness(0, maxSideLength / 2 - ellipseDiameter, 0, 0);
+            UpdateVisualStates();
         }
-        public void Hidden()
+        public override void Render(DrawingContext context)
         {
-            IsVisible = false;
+            base.Render(context);
+            UpdateVisualStates();
+        }
+        private void UpdateVisualStates()
+        {
+            PseudoClasses.Remove(ActiveState);
+            PseudoClasses.Remove(InactiveState);
+            PseudoClasses.Remove(SmallState);
+            PseudoClasses.Remove(LargeState);
+            PseudoClasses.Add(IsActive ? ActiveState : InactiveState);
+            PseudoClasses.Add(_maxSideLength < 60 ? SmallState : LargeState);
         }
     }
 }

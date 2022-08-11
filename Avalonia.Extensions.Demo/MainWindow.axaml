@@ -169,7 +169,7 @@
 			</TabItem>
 			<TabItem Header="ProgressRing">
 				<StackPanel Orientation="Vertical">
-					<ProgressRing Name="progressRing" />
+					<ProgressRing Name="progressRing" Foreground="Cyan" IsActive="True" />
 					<Button Name="btnStart">开始</Button>
 				</StackPanel>
 			</TabItem>
