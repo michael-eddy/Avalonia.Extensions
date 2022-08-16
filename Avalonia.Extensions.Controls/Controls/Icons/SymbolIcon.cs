@@ -1,13 +1,10 @@
 ﻿using Avalonia.Controls;
 using Avalonia.Controls.Templates;
-using Avalonia.Extensions.Styles;
 using Avalonia.Media;
-using Avalonia.Styling;
-using System;
 
 namespace Avalonia.Extensions.Controls
 {
-    public class SymbolIcon : IconElement, IStyling
+    public class SymbolIcon : IconElement
     {
         public static readonly StyledProperty<string> GlyphProperty =
              AvaloniaProperty.Register<SymbolIcon, string>(nameof(Glyph));
@@ -16,14 +13,12 @@ namespace Avalonia.Extensions.Controls
             get => GetValue(GlyphProperty);
             set => SetValue(GlyphProperty, value);
         }
-        Type IStyleable.StyleKey => typeof(TextBlock);
         static SymbolIcon()
         {
             AffectsRender<SymbolIcon>(GlyphProperty);
         }
         public SymbolIcon()
         {
-            this.AddResource();
             SetValue(FontFamilyProperty, "Segoe MDL2 Assets");
         }
         public class FontIconSource : IconSource
