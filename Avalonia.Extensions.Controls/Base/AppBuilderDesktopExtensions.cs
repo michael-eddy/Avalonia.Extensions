@@ -57,9 +57,13 @@ namespace Avalonia.Extensions.Controls
         {
             try
             {
-                StyleInclude styleInclude = new StyleInclude(new Uri("avares://Avalonia.Extensions.Controls/Styles"));
-                styleInclude.Source = new Uri("avares://Avalonia.Extensions.Controls/Styles/Xaml/ProgressRing.xaml");
-                Application.Current.Styles.Add(styleInclude);
+                var xamls = new[] { "ProgressRing", "IconSourceElement", "ImageIcon", "PathIcon", "SymbolIcon" };
+                foreach (var xaml in xamls)
+                {
+                    StyleInclude styleInclude = new StyleInclude(new Uri("avares://Avalonia.Extensions.Controls/Styles"));
+                    styleInclude.Source = new Uri($"avares://Avalonia.Extensions.Controls/Styles/Xaml/{xaml}.xaml");
+                    Application.Current.Styles.Add(styleInclude);
+                }
             }
             catch (Exception ex)
             {

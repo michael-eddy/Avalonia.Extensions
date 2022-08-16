@@ -8,8 +8,8 @@ namespace Avalonia.Extensions.Controls
     {
         private const string LargeState = ":large";
         private const string SmallState = ":small";
-        private const string InactiveState = ":inactive";
         private const string ActiveState = ":active";
+        private const string InactiveState = ":inactive";
         private double _maxSideLength = 10;
         private double _ellipseDiameter = 10;
         private Thickness _ellipseOffset = new Thickness(2);
@@ -24,7 +24,7 @@ namespace Avalonia.Extensions.Controls
             set => SetValue(IsActiveProperty, value);
         }
         public static readonly StyledProperty<bool> IsActiveProperty = AvaloniaProperty.Register<ProgressRing, bool>(nameof(IsActive), true, notifying: OnIsActiveChanged);
-        private static void OnIsActiveChanged(IAvaloniaObject obj, bool arg2) => ((ProgressRing)obj).UpdateVisualStates();
+        private static void OnIsActiveChanged(IAvaloniaObject obj, bool arg2) => ((ProgressRing)obj)?.UpdateVisualStates();
         public static readonly DirectProperty<ProgressRing, double> MaxSideLengthProperty =
             AvaloniaProperty.RegisterDirect<ProgressRing, double>(nameof(MaxSideLength), o => o.MaxSideLength);
         public double MaxSideLength
@@ -50,7 +50,7 @@ namespace Avalonia.Extensions.Controls
         {
             base.OnApplyTemplate(e);
             double maxSideLength = Math.Min(Width, Height);
-            double ellipseDiameter = 0.1 * maxSideLength;
+            double ellipseDiameter = maxSideLength * .1;
             if (maxSideLength <= 40)
                 ellipseDiameter += 1;
             EllipseDiameter = ellipseDiameter;
