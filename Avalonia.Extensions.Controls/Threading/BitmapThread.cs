@@ -11,8 +11,6 @@ namespace Avalonia.Extensions.Threading
     {
         private IBitmapSource Owner { get; }
         private HttpClient HttpClient { get; }
-        internal event CompleteEventHandler CompleteEvent;
-        internal delegate void CompleteEventHandler(object sender, bool success, string message);
         public BitmapThread(IBitmapSource owner)
         {
             Owner = owner;
@@ -38,17 +36,17 @@ namespace Avalonia.Extensions.Threading
                                         hr.EnsureSuccessStatusCode();
                                         var stream = hr.Content.ReadAsStreamAsync().GetAwaiter().GetResult();
                                         Owner.SetBitmapSource(stream);
-                                        CompleteEvent?.Invoke(this, true, string.Empty);
+                                        Owner.ResultSet(true, string.Empty);
                                     }
                                     else
                                     {
-                                        CompleteEvent?.Invoke(this, false, "URL cannot be NULL or EMPTY.");
+                                        Owner.ResultSet(false, "URL cannot be NULL or EMPTY.");
                                         Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(Owner, "URL cannot be NULL or EMPTY.");
                                     }
                                 }
                                 catch (Exception ex)
                                 {
-                                    CompleteEvent?.Invoke(this, false, ex.Message);
+                                    Owner.ResultSet(false, ex.Message);
                                     Logger.TryGet(LogEventLevel.Warning, LogArea.Control)?.Log(Owner, ex.Message);
                                 }
                             }, DispatcherPriority.ApplicationIdle);
@@ -65,7 +63,7 @@ namespace Avalonia.Extensions.Threading
                                 }
                                 catch (Exception ex)
                                 {
-                                    CompleteEvent?.Invoke(this, false, ex.Message);
+                                    Owner.ResultSet(false, ex.Message);
                                 }
                             }, DispatcherPriority.ApplicationIdle);
                             break;
@@ -79,6 +77,7 @@ namespace Avalonia.Extensions.Threading
             }
             catch (Exception ex)
             {
+                Owner.ResultSet(false, ex.Message);
                 Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(this, ex.Message);
             }
         }

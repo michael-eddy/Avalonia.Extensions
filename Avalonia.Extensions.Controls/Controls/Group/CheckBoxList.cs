@@ -25,10 +25,7 @@ namespace Avalonia.Extensions.Controls
             if (repeater != null)
                 repeater.Items = _items;
         }
-        private void OrOrientationChange(object sender, AvaloniaPropertyChangedEventArgs e)
-        {
-            DrawLayout();
-        }
+        private void OrOrientationChange(object sender, AvaloniaPropertyChangedEventArgs e) => DrawLayout();
         protected override void OnInitialized()
         {
             base.OnInitialized();
@@ -46,10 +43,7 @@ namespace Avalonia.Extensions.Controls
             DrawLayout();
             Content = repeater;
         }
-        private void OnCheckedChange(bool? obj)
-        {
-            RaiseEvent(new RoutedEventArgs(CheckedEvent));
-        }
+        private void OnCheckedChange(bool? obj) => RaiseEvent(new RoutedEventArgs(CheckedEvent));
         /// <summary>
         /// Raised when a <see cref="RadioButtonList"/> is checked.
         /// </summary>

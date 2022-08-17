@@ -57,7 +57,7 @@ namespace Avalonia.Extensions.Controls
         {
             try
             {
-                var xamls = new[] { "ProgressRing", "IconSourceElement", "ImageIcon", "PathIcon", "SymbolIcon" };
+                var xamls = new[] { "ProgressRing", "IconSourceElement", "ImageIcon", "PathIcon", "SymbolIcon", "EditTextView" };
                 foreach (var xaml in xamls)
                 {
                     StyleInclude styleInclude = new StyleInclude(new Uri("avares://Avalonia.Extensions.Controls/Styles"));

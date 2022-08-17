@@ -2,6 +2,11 @@
 <Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup />
   <ItemGroup>
+    <AvaloniaResource Update="Styles\Xaml\EditTextView.xaml">
+      <SubType>Designer</SubType>
+    </AvaloniaResource>
+  </ItemGroup>
+  <ItemGroup>
     <EmbeddedResource Update="Styles\Xaml\CheckBoxList.xml">
       <SubType>Designer</SubType>
     </EmbeddedResource>

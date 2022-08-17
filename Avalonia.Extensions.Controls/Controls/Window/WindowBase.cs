@@ -4,7 +4,7 @@ using PCLUntils.Objects;
 
 namespace Avalonia.Extensions.Controls
 {
-    public class WindowBase : Window
+    public abstract class WindowBase : Window
     {
         public WindowBase() : base()
         {

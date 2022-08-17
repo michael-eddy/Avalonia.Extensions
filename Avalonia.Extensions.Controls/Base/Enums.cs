@@ -1,5 +1,11 @@
 ﻿namespace Avalonia.Extensions.Controls
 {
+    internal enum CharClass
+    {
+        CharClassUnknown,
+        CharClassWhitespace,
+        CharClassAlphaNumeric,
+    }
     public enum MessageBoxButtons
     {
         Ok,

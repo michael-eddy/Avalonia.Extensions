@@ -2,13 +2,10 @@
 using Avalonia.Extensions.Media;
 using Avalonia.Extensions.Threading;
 using Avalonia.Interactivity;
-using Avalonia.Logging;
 using Avalonia.Media.Imaging;
 using Avalonia.Metadata;
 using Avalonia.Visuals.Media.Imaging;
-using PCLUntils.Objects;
 using System;
-using System.IO;
 
 namespace Avalonia.Extensions.Controls
 {
@@ -21,33 +18,21 @@ namespace Avalonia.Extensions.Controls
         /// <summary>
         /// original image width
         /// </summary>
-        public double ImageWidth { get; private set; }
+        public double ImageWidth { get; internal set; }
         /// <summary>
         /// original image height
         /// </summary>
-        public double ImageHeight { get; private set; }
+        public double ImageHeight { get; internal set; }
         private BitmapThread Task { get; }
         private Uri _source;
         public ImageBox() : base()
         {
             Task = new BitmapThread(this);
-            Task.CompleteEvent += Task_CompleteEvent;
-        }
-        private void Task_CompleteEvent(object sender, bool success, string message)
-        {
-            if (!success)
-            {
-                FailedMessage = message;
-                var @event = new RoutedEventArgs(FailedEvent);
-                RaiseEvent(@event);
-                if (!@event.Handled)
-                    @event.Handled = true;
-            }
         }
         /// <summary>
         /// error message if loading failed
         /// </summary>
-        public string FailedMessage { get; private set; }
+        public string FailedMessage { get; internal set; }
         /// <summary>
         /// Defines the <see cref="InterpolationMode"/> property.
         /// </summary>
@@ -81,38 +66,7 @@ namespace Avalonia.Extensions.Controls
             get => GetValue(InterpolationModeProperty);
             set => SetValue(InterpolationModeProperty, value);
         }
-        public void SetBitmapSource(Stream stream)
-        {
-            try
-            {
-                Bitmap?.Dispose();
-                if (stream != null)
-                {
-                    var width = Width.ToInt32();
-                    if (double.IsNaN(Width) || width == 0)
-                    {
-                        Bitmap = new Bitmap(stream);
-                        Width = ImageWidth = Bitmap.PixelSize.Width;
-                        Height = ImageHeight = Bitmap.PixelSize.Height;
-                    }
-                    else
-                    {
-                        Bitmap = Bitmap.DecodeToWidth(stream, width, InterpolationMode);
-                        ImageWidth = Bitmap.PixelSize.Width;
-                        ImageHeight = Bitmap.PixelSize.Height;
-                    }
-                    base.Source = Bitmap;
-                }
-            }
-            catch (Exception ex)
-            {
-                Logger.TryGet(LogEventLevel.Warning, LogArea.Control)?.Log(this, ex.Message);
-            }
-            finally
-            {
-                stream.Dispose();
-            }
-        }
+        public void SetSource() => base.Source = Bitmap;
         /// <summary>
         /// Defines the <see cref="Failed"/> property.
         /// </summary>
