@@ -9,8 +9,8 @@ namespace Avalonia.Extensions.Controls
 {
     internal class TextBoxTextInputMethodClient : ITextInputMethodClient
     {
+        private TextView _presenter;
         private InputElement _parent;
-        private TextPresenter _presenter;
         private IDisposable _subscription;
         public Rect CursorRectangle
         {
@@ -23,8 +23,7 @@ namespace Avalonia.Extensions.Controls
                     return default;
                 var type = _presenter.GetType().BaseType;
                 var meth = type.GetMethod("GetCursorRectangle", BindingFlags.InvokeMethod | BindingFlags.NonPublic | BindingFlags.Instance);
-                var rect = (Rect)meth.Invoke(_presenter, null);
-                return rect.TransformToAABB(transform.Value);
+                return ((Rect)meth.Invoke(_presenter, null)).TransformToAABB(transform.Value);
             }
         }
         public event EventHandler CursorRectangleChanged;
@@ -38,7 +37,7 @@ namespace Avalonia.Extensions.Controls
         public string TextBeforeCursor => null;
         public string TextAfterCursor => null;
         private void OnCaretIndexChanged(int index) => CursorRectangleChanged?.Invoke(this, EventArgs.Empty);
-        public void SetPresenter(TextPresenter presenter, InputElement parent)
+        public void SetPresenter(TextView presenter, InputElement parent)
         {
             _parent = parent;
             _subscription?.Dispose();

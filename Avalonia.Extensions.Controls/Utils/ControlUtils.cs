@@ -1,5 +1,7 @@
 ﻿using Avalonia.Controls;
 using Avalonia.Extensions.Styles;
+using Avalonia.Logging;
+using Avalonia.Markup.Xaml;
 using Avalonia.Media;
 using Avalonia.Platform;
 using Avalonia.Styling;
@@ -8,13 +10,33 @@ using SkiaSharp;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Reflection;
+using System.Text;
 
 namespace Avalonia.Extensions.Controls
 {
     public static class ControlUtils
     {
         public static bool IsSameValue(this AvaloniaPropertyChangedEventArgs args) => args.OldValue == args.NewValue;
+        public static void ApplyTheme(this StyledElement element, Uri sourceUri)
+        {
+            if (!Core.Instance.InnerClasses.Contains(sourceUri))
+                return;
+            try
+            {
+                var assets = AvaloniaLocator.Current.GetService<IAssetLoader>();
+                using var stream = assets.Open(sourceUri);
+                var bytes = new byte[stream.Length];
+                stream.Read(bytes);
+                var xaml = Encoding.UTF8.GetString(bytes);
+                var styles = AvaloniaRuntimeXamlLoader.Parse<Styling.Styles>(xaml);
+                element.UpdateStyles(styles);
+                bytes = null;
+            }
+            catch (Exception ex)
+            {
+                Logger.TryGet(LogEventLevel.Warning, LogArea.Control)?.Log(element, ex.Message);
+            }
+        }
         internal static void UpdateStyles(this StyledElement element, Styling.Styles styles)
         {
             if (styles != null && element != null)

@@ -1,6 +1,7 @@
 ﻿using Avalonia.Controls.Shapes;
 using Avalonia.Extensions.Styles;
 using Avalonia.Media;
+using Avalonia.Media.TextFormatting;
 using Avalonia.Metadata;
 using SkiaSharp;
 using System;

@@ -41,11 +41,8 @@
                        DockPanel.Dock="Top">
                             <TextBlock.IsVisible>
                                 <MultiBinding Converter="{x:Static BoolConverters.And}">
-                                    <Binding RelativeSource="{RelativeSource TemplatedParent}"
-                           Path="UseFloatingWatermark"/>
-                                    <Binding RelativeSource="{RelativeSource TemplatedParent}"
-                           Path="Text"
-                           Converter="{x:Static StringConverters.IsNotNullOrEmpty}"/>
+                                    <Binding RelativeSource="{RelativeSource TemplatedParent}" Path="UseFloatingWatermark"/>
+                                    <Binding RelativeSource="{RelativeSource TemplatedParent}" Path="Text" Converter="{x:Static StringConverters.IsNotNullOrEmpty}"/>
                                 </MultiBinding>
                             </TextBlock.IsVisible>
                         </TextBlock>
@@ -56,12 +53,9 @@
                               HorizontalScrollBarVisibility="{TemplateBinding (ScrollViewer.HorizontalScrollBarVisibility)}"
                               VerticalScrollBarVisibility="{TemplateBinding (ScrollViewer.VerticalScrollBarVisibility)}">
                                     <Panel>
-                                        <TextBlock Name="watermark"
-                              Opacity="0.5"
-                              Text="{TemplateBinding Watermark}"
-                              TextAlignment="{TemplateBinding TextAlignment}"
-                              TextWrapping="{TemplateBinding TextWrapping}"
-                              IsVisible="{TemplateBinding Text, Converter={x:Static StringConverters.IsNullOrEmpty}}"/>
+                                        <TextBlock Name="watermark" Opacity="0.5" Text="{TemplateBinding Watermark}" 
+                                TextAlignment="{TemplateBinding TextAlignment}" TextWrapping="{TemplateBinding TextWrapping}"
+                                IsVisible="{TemplateBinding Text, Converter={x:Static StringConverters.IsNullOrEmpty}}"/>
                                         <TextView Name="PART_TextView"
                                     Text="{TemplateBinding Text, Mode=TwoWay}"
                                     CaretIndex="{TemplateBinding CaretIndex}"
