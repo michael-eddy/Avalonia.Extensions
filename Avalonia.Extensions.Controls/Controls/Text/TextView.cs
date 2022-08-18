@@ -1,16 +1,19 @@
 ﻿using Avalonia.Controls.Presenters;
+using Avalonia.Extensions.Styles;
 using Avalonia.Media;
 using Avalonia.Media.Immutable;
 using Avalonia.Media.TextFormatting;
+using Avalonia.Styling;
 using PCLUntils.Assemblly;
 using System;
 
 namespace Avalonia.Extensions.Controls
 {
-	public class TextView : TextPresenter
+	public class TextView : TextPresenter, IStyling
 	{
 		private Size _constraint;
 		private TextLayout _textLayout;
+		Type IStyleable.StyleKey => typeof(TextPresenter);
 		private string _text => this.GetPrivateField<string>("_text");
 		internal TextLayout TextLayout => _textLayout ??= CreateTextLayout(_constraint, _text);
 		static TextView()
