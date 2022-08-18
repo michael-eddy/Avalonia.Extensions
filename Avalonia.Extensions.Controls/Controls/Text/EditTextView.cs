@@ -1,5 +1,4 @@
 ﻿using Avalonia.Controls;
-using Avalonia.Controls.Metadata;
 using Avalonia.Controls.Primitives;
 using Avalonia.Logging;
 using System;
@@ -7,8 +6,6 @@ using System.Reflection;
 
 namespace Avalonia.Extensions.Controls
 {
-    [PseudoClasses(":empty")]
-    [TemplatePart("PART_TextView", typeof(TextView))]
     public class EditTextView : TextBox
     {
         protected override void OnApplyTemplate(TemplateAppliedEventArgs e)
