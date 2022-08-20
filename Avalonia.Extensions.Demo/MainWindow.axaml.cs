@@ -1,3 +1,4 @@
+using Avalonia.Controls.Presenters;
 using Avalonia.Controls.Templates;
 using Avalonia.Data;
 using Avalonia.Extensions.Controls;
@@ -7,6 +8,7 @@ using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 
 namespace Avalonia.Controls.Demo
 {
@@ -36,6 +38,8 @@ namespace Avalonia.Controls.Demo
             splitListView.ItemClick += SplitListView_ItemRightClick;
             BtnStart = this.FindControl<Button>("btnStart");
             BtnStart.Click += BtnStart_Click;
+            var etvBtn = this.FindControl<Button>("etvBtn");
+            etvBtn.Click += EtvBtn_Click;
             var btnShow = this.FindControl<Button>("btnShow");
             btnShow.Click += BtnShow_Click;
             var btnShow2 = this.FindControl<Button>("btnShow2");
@@ -63,6 +67,11 @@ namespace Avalonia.Controls.Demo
             playerView.Play("http://vfx.mtime.cn/Video/2019/03/18/mp4/190318231014076505.mp4");
             var audio = this.FindControl<AudioControl>("audio");
             audio.Play("http://downsc.chinaz.net/Files/DownLoad/sound1/201906/11582.mp3");
+        }
+        private void EtvBtn_Click(object? sender, RoutedEventArgs e)
+        {
+            var etv = this.FindControl<EditTextView>("etv");
+            Debug.WriteLine(etv.Text);
         }
         private void ListView_ScrollTop(object? sender, RoutedEventArgs e)
         {

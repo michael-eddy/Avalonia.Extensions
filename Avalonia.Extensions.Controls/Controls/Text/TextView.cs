@@ -2,6 +2,7 @@
 using Avalonia.Extensions.Styles;
 using Avalonia.Media;
 using Avalonia.Media.Immutable;
+using Avalonia.Utilities;
 using PCLUntils.Assemblly;
 using System;
 
@@ -18,21 +19,21 @@ namespace Avalonia.Extensions.Controls
 			AffectsRender<TextView>(TextDecorationsProperty, MaxLinesProperty, TextTrimmingProperty, LineHeightProperty);
 		}
 		public static readonly StyledProperty<TextTrimming> TextTrimmingProperty =
-			AvaloniaProperty.Register<TextLabel, TextTrimming>(nameof(TextTrimming));
+			AvaloniaProperty.Register<TextView, TextTrimming>(nameof(TextTrimming));
 		public TextTrimming TextTrimming
 		{
 			get => GetValue(TextTrimmingProperty);
 			set => SetValue(TextTrimmingProperty, value);
 		}
 		public static readonly StyledProperty<TextDecorationCollection> TextDecorationsProperty =
-			AvaloniaProperty.Register<TextLabel, TextDecorationCollection>(nameof(TextDecorations));
+			AvaloniaProperty.Register<TextView, TextDecorationCollection>(nameof(TextDecorations));
 		public TextDecorationCollection TextDecorations
 		{
 			get => GetValue(TextDecorationsProperty);
 			set => SetValue(TextDecorationsProperty, value);
 		}
 		public static readonly StyledProperty<int> MaxLinesProperty =
-			AvaloniaProperty.Register<TextLabel, int>(nameof(MaxLines), validate: IsValidMaxLines);
+			AvaloniaProperty.Register<TextView, int>(nameof(MaxLines), validate: IsValidMaxLines);
 		public int MaxLines
 		{
 			get => GetValue(MaxLinesProperty);
@@ -40,7 +41,7 @@ namespace Avalonia.Extensions.Controls
 		}
 		private static bool IsValidMaxLines(int maxLines) => maxLines >= 0;
 		public static readonly StyledProperty<double> LineHeightProperty =
-			AvaloniaProperty.Register<TextLabel, double>(nameof(LineHeight), double.NaN, validate: IsValidLineHeight);
+			AvaloniaProperty.Register<TextView, double>(nameof(LineHeight), double.NaN, validate: IsValidLineHeight);
 		public double LineHeight
 		{
 			get => GetValue(LineHeightProperty);
@@ -99,6 +100,16 @@ namespace Avalonia.Extensions.Controls
 				return null;
 			return new TextLayout(text ?? string.Empty, new Typeface(FontFamily, FontStyle, FontWeight), FontSize, Foreground, TextAlignment,
 				TextWrapping, TextTrimming, TextDecorations, constraint.Width, constraint.Height, maxLines: MaxLines, lineHeight: LineHeight);
+		}
+		protected override Size MeasureOverride(Size availableSize)
+		{
+			_textLayout = null;
+			return base.MeasureOverride(availableSize);
+		}
+		protected override Size ArrangeOverride(Size finalSize)
+		{
+			_textLayout = null;
+			return base.ArrangeOverride(finalSize);
 		}
 	}
 }

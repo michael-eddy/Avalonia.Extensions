@@ -149,6 +149,9 @@ public static AppBuilder BuildAvaloniaApp()
 - [x] TextView
   > the control like `TextPresenter`,but it's draw by the textLayout,so supoort custom font in your project
 
+- [x] EditTextView
+  > the control like `TexBox`,but it's draw by the textLayout,so supoort custom font in your project
+
 - [x] PathIcon
   > the same control in uwp
 
