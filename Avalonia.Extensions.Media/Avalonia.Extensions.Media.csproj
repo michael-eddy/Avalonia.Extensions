@@ -15,9 +15,7 @@
     <PackageReference Include="ManagedBass" Version="3.1.1" />
     <PackageReference Include="LibVLCSharp.Avalonia" Version="3.6.6" />
     <PackageReference Include="CSharpFunctionalExtensions" Version="2.31.1" />
-    <!--<PackageReference Include="Dove.Avalonia.Controls.Extensions" Version="1.8.4" />-->
-  </ItemGroup>
-  <ItemGroup>
+    <!--<PackageReference Include="Dove.Avalonia.Controls.Extensions" Version="1.8.7" />-->
     <ProjectReference Include="..\Avalonia.Extensions.Controls\Avalonia.Extensions.Controls.csproj" />
   </ItemGroup>
 </Project>

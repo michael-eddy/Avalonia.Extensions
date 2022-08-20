@@ -60,7 +60,7 @@ namespace Avalonia.Extensions.Controls
             try
             {
                 var themeDict = Core.Instance.GetThemeType() == FluentThemeMode.Dark ? "Base/BaseDark" : "Base/BaseLight";
-                var xamls = new[] { themeDict, "Xaml/ProgressRing", "Xaml/IconSourceElement", "Xaml/ImageIcon", "Xaml/PathIcon", "Xaml/SymbolIcon", "Xaml/EditTextView" };
+                var xamls = new[] { themeDict, "Xaml/ExtControls" };
                 foreach (var xaml in xamls)
                 {
                     StyleInclude styleInclude = new StyleInclude(new Uri("avares://Avalonia.Extensions.Controls/Styles"));
