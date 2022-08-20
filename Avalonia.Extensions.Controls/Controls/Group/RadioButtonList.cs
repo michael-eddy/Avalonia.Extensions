@@ -20,17 +20,14 @@ namespace Avalonia.Extensions.Controls
             GroupId = Guid.NewGuid().ToString("N");
             _items = new AvaloniaList<GroupViewItem>();
             ItemsProperty.Changed.AddClassHandler<RadioButtonList>(OnItemsChange);
-            OrientationProperty.Changed.AddClassHandler<RadioButtonList>(OrOrientationChange);
+            OrientationProperty.Changed.AddClassHandler<RadioButtonList>(OrientationChange);
         }
         private void OnItemsChange(object sender, AvaloniaPropertyChangedEventArgs e)
         {
             if (repeater != null)
                 repeater.Items = _items;
         }
-        private void OrOrientationChange(object sender, AvaloniaPropertyChangedEventArgs e)
-        {
-            DrawLayout();
-        }
+        private void OrientationChange(object sender, AvaloniaPropertyChangedEventArgs e) => DrawLayout();
         protected override void OnInitialized()
         {
             base.OnInitialized();
@@ -48,10 +45,7 @@ namespace Avalonia.Extensions.Controls
             DrawLayout();
             Content = repeater;
         }
-        private void OnCheckedChange(bool? obj)
-        {
-            RaiseEvent(new RoutedEventArgs(CheckedEvent));
-        }
+        private void OnCheckedChange(bool? obj) => RaiseEvent(new RoutedEventArgs(CheckedEvent));
         /// <summary>
         /// Raised when a <see cref="RadioButtonList"/> is checked.
         /// </summary>

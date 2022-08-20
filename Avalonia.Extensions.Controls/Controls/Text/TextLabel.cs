@@ -5,6 +5,7 @@ using Avalonia.Extensions.Styles;
 using Avalonia.Layout;
 using Avalonia.LogicalTree;
 using Avalonia.Media;
+using Avalonia.Media.TextFormatting;
 using Avalonia.Metadata;
 using Avalonia.Styling;
 using System;

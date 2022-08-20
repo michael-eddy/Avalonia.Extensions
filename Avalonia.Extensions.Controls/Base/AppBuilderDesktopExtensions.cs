@@ -6,7 +6,9 @@ using Avalonia.Markup.Xaml.Styling;
 using Avalonia.Media;
 using Avalonia.Platform;
 using Avalonia.Styling;
+using Avalonia.Themes.Fluent;
 using Avalonia.Threading;
+using PCLUntils.IEnumerables;
 using System;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -57,11 +59,12 @@ namespace Avalonia.Extensions.Controls
         {
             try
             {
-                var xamls = new[] { "ProgressRing", "IconSourceElement", "ImageIcon", "PathIcon", "SymbolIcon" };
+                var themeDict = Core.Instance.GetThemeType() == FluentThemeMode.Dark ? "Base/BaseDark" : "Base/BaseLight";
+                var xamls = new[] { themeDict, "Xaml/ExtControls" };
                 foreach (var xaml in xamls)
                 {
                     StyleInclude styleInclude = new StyleInclude(new Uri("avares://Avalonia.Extensions.Controls/Styles"));
-                    styleInclude.Source = new Uri($"avares://Avalonia.Extensions.Controls/Styles/Xaml/{xaml}.xaml");
+                    styleInclude.Source = new Uri($"avares://Avalonia.Extensions.Controls/Styles/{xaml}.xaml");
                     Application.Current.Styles.Add(styleInclude);
                 }
             }

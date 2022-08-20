@@ -1,6 +1,7 @@
 ﻿using Avalonia.Logging;
 using Avalonia.Platform;
 using System;
+using System.Runtime.InteropServices;
 
 namespace Avalonia.Extensions.Controls
 {
@@ -8,13 +9,16 @@ namespace Avalonia.Extensions.Controls
     {
         public override void RegisterServices()
         {
-            try
+            if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
-                AvaloniaLocator.CurrentMutable.Bind<IFontManagerImpl>().ToConstant(new FontManagerImpl());
-            }
-            catch (Exception ex)
-            {
-                Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(this, ex.Message);
+                try
+                {
+                    AvaloniaLocator.CurrentMutable.Bind<IFontManagerImpl>().ToConstant(new FontManagerImpl());
+                }
+                catch (Exception ex)
+                {
+                    Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(this, ex.Message);
+                }
             }
             base.RegisterServices();
         }

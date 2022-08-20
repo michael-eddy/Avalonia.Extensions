@@ -196,7 +196,9 @@
 				<StackPanel Orientation="Vertical">
 					<TextBox Text="山川异域 不共戴天" />
 					<TextPresenter Text="山川异域 不共戴天" />
-					<TextView Text="山川异域 不共戴天" />
+					<EditTextView Name="etv" Text="山川异域 不共戴天" />
+					<TextView Name="tv" Text="山川异域 不共戴天" />
+					<Button Content="Show Content" Name="etvBtn" />
 				</StackPanel>
 			</TabItem>
 			<TabItem Header="CheckBoxList">
