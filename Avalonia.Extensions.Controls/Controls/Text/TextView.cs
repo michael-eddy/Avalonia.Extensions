@@ -1,8 +1,7 @@
 ﻿using Avalonia.Controls.Presenters;
-using Avalonia.Extensions.Styles;
 using Avalonia.Media;
 using Avalonia.Media.Immutable;
-using Avalonia.Utilities;
+using Avalonia.Media.TextFormatting;
 using PCLUntils.Assemblly;
 using System;
 

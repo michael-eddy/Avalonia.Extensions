@@ -60,7 +60,7 @@ namespace Avalonia.Extensions.Controls
         /// Defines the <see cref="IsDefaultProperty"/> property.
         /// </summary>
         public static readonly StyledProperty<bool> IsDefaultProperty =
-            AvaloniaProperty.Register<ClickableView, bool>(nameof(IsDefault));
+            AvaloniaProperty.Register<ListViewItem, bool>(nameof(IsDefault));
         /// <summary>
         /// Gets or sets a value indicating whether the clickableview is the Cancel clickableview for the window.
         /// </summary>
@@ -73,14 +73,14 @@ namespace Avalonia.Extensions.Controls
         /// Defines the <see cref="IsCancelProperty"/> property.
         /// </summary>
         public static readonly StyledProperty<bool> IsCancelProperty =
-            AvaloniaProperty.Register<ClickableView, bool>(nameof(IsCancel));
+            AvaloniaProperty.Register<ListViewItem, bool>(nameof(IsCancel));
         public bool IsPressed
         {
             get => GetValue(IsPressedProperty);
             private set => SetValue(IsPressedProperty, value);
         }
         public static readonly StyledProperty<bool> IsPressedProperty =
-           AvaloniaProperty.Register<ClickableView, bool>(nameof(IsPressed));
+           AvaloniaProperty.Register<ListViewItem, bool>(nameof(IsPressed));
         /// <summary>
         /// Invokes the <see cref="Click"/> event.
         /// </summary>

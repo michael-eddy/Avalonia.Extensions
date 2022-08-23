@@ -1,6 +1,5 @@
 ﻿<Styles xmlns="https://github.com/avaloniaui"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        x:Class="Avalonia.Themes.Fluent.Controls.FluentControls">
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <StyleInclude Source="avares://Avalonia.Extensions.Controls/Styles/Xaml/PathIcon.xaml"/>
     <StyleInclude Source="avares://Avalonia.Extensions.Controls/Styles/Xaml/ImageIcon.xaml"/>
     <StyleInclude Source="avares://Avalonia.Extensions.Controls/Styles/Xaml/SymbolIcon.xaml"/>

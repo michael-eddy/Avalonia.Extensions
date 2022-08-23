@@ -29,8 +29,7 @@
         public int MoveDelay { get; set; } = 20;
         public ShowPosition Position { get; set; }
         public ScollOrientation ScollOrientation { get; set; }
-        public bool IsVaidate => !((Position == ShowPosition.TopLeft || Position == ShowPosition.TopRight)
-                    && ScollOrientation == ScollOrientation.Vertical);
+        public bool IsVaidate => !((Position == ShowPosition.TopLeft || Position == ShowPosition.TopRight) && ScollOrientation == ScollOrientation.Vertical);
         public void Update(NotifyOptions options)
         {
             Size = options.Size;

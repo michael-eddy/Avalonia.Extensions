@@ -50,7 +50,7 @@ namespace Avalonia.Extensions.Controls
         /// Defines the <see cref="ClickMode"/> property.
         /// </summary>
         public static readonly StyledProperty<ClickMode> ClickModeProperty =
-            AvaloniaProperty.Register<ClickableView, ClickMode>(nameof(ClickMode), ClickMode.Press);
+            AvaloniaProperty.Register<ListView, ClickMode>(nameof(ClickMode), ClickMode.Press);
         /// <summary>
         /// Gets or sets a value indicating how the <see cref="ClickableView"/> should react to clicks.
         /// </summary>
