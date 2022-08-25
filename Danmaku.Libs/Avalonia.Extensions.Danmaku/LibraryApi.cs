@@ -24,6 +24,8 @@ namespace Avalonia.Extensions.Danmaku
             public static extern IntPtr GetModuleHandle(string lpModuleName);
             [DllImport("user32.dll", CharSet = CharSet.Unicode, EntryPoint = "SendMessageW")]
             public static extern IntPtr SendMessage(IntPtr hWnd, int Msg, ref SETTEXTEX wParam, byte[] lParam);
+            [DllImport("kernel32.dll")]
+            public static extern uint GetLastError();
             [DllImport("user32.dll", SetLastError = true)]
             public static extern IntPtr CreateWindowEx(int dwExStyle, string lpClassName, string lpWindowName, uint dwStyle, int x, int y,
                 int nWidth, int nHeight, IntPtr hWndParent, IntPtr hMenu, IntPtr hInstance, IntPtr lpParam);

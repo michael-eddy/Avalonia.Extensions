@@ -6,6 +6,8 @@ using PCLUntils.Plantform;
 using System;
 using System.Diagnostics;
 using System.IO;
+using System.Runtime.InteropServices;
+using static Avalonia.Extensions.Danmaku.LibraryApi.Windows;
 
 namespace Avalonia.Extensions.Danmaku
 {
@@ -41,13 +43,14 @@ namespace Avalonia.Extensions.Danmaku
                 {
                     case Platforms.Windows:
                         {
-                            string path = Path.Combine(Environment.CurrentDirectory, "Danmaku.Windows.dll");
-                            LibraryApi.Windows.LoadLibrary(path);
-                            _pIntPtr = LibraryApi.Windows.CreateWindowEx(0, "DanmakuView", null,
+                            string path = Path.Combine(Environment.CurrentDirectory, "Danmaku.Windows.exe");
+                            LoadLibrary(path);
+                            _pIntPtr = CreateWindowEx(0, "DanmakuView", null,
                                   0x800000 | 0x10000000 | 0x40000000 | 0x800000 | 0x10000 | 0x0004, X, Y, Width.ToInt32(), Height.ToInt32(),
-                                  parent.Handle, IntPtr.Zero, LibraryApi.Windows.GetModuleHandle(null), IntPtr.Zero);
+                                  parent.Handle, IntPtr.Zero, IntPtr.Zero, IntPtr.Zero);
                             if (_pIntPtr == IntPtr.Zero)
                                 Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(this, "create windows hwnd failed");
+                            var b = GetLastError();
                             _platformHandle = new PlatformHandle(_pIntPtr, "HWND");
                             break;
                         }
