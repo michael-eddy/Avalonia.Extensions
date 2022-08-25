@@ -3,9 +3,9 @@ using System.Runtime.InteropServices;
 
 namespace Danmaku
 {
-    partial class WINAPI
+    public partial class WINAPI
     {
-        internal static class USER32
+        public static class USER32
         {
             const string MODULENAME = nameof(USER32);
             public const int GWL_STYLE = -16;

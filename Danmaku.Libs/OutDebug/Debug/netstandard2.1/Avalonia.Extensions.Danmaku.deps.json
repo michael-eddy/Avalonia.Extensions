@@ -11,6 +11,7 @@
         "dependencies": {
           "Avalonia": "0.10.18",
           "Avalonia.Extensions.Controls": "1.8.8",
+          "Danmaku.Windows": "1.0.0",
           "MonoMac.NetStandard": "0.0.4"
         },
         "runtime": {
@@ -445,6 +446,11 @@
         "runtime": {
           "Avalonia.Extensions.Controls.dll": {}
         }
+      },
+      "Danmaku.Windows/1.0.0": {
+        "runtime": {
+          "Danmaku.Windows.exe": {}
+        }
       }
     }
   },
@@ -728,6 +734,11 @@
       "hashPath": "system.valuetuple.4.5.0.nupkg.sha512"
     },
     "Avalonia.Extensions.Controls/1.8.8": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Danmaku.Windows/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

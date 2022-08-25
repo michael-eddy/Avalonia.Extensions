@@ -1,6 +1,6 @@
 ﻿namespace Danmaku
 {
-    enum DanmakuType
+    public enum DanmakuType
     {
         Scrolling = 1,
         Bottom = 4,

@@ -41,10 +41,10 @@ namespace Avalonia.Extensions.Danmaku
                 {
                     case Platforms.Windows:
                         {
-                            LibraryApi.Windows.LoadLibrary("Danmaku.Windows.dll");
-                            _pIntPtr = LibraryApi.Windows.CreateWindowEx(0, "DanmakuView", "libwtfdanmaku",
-                                  0x800000 | 0x10000000 | 0x40000000 | 0x800000 | 0x10000 | 0x0004,
-                                  X, Y, Width.ToInt32(), Height.ToInt32(),
+                            string path = Path.Combine(Environment.CurrentDirectory, "Danmaku.Windows.dll");
+                            LibraryApi.Windows.LoadLibrary(path);
+                            _pIntPtr = LibraryApi.Windows.CreateWindowEx(0, "DanmakuView", null,
+                                  0x800000 | 0x10000000 | 0x40000000 | 0x800000 | 0x10000 | 0x0004, X, Y, Width.ToInt32(), Height.ToInt32(),
                                   parent.Handle, IntPtr.Zero, LibraryApi.Windows.GetModuleHandle(null), IntPtr.Zero);
                             if (_pIntPtr == IntPtr.Zero)
                                 Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(this, "create windows hwnd failed");

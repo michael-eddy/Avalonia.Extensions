@@ -8,7 +8,7 @@ namespace Danmaku
         Pause = 0x01,
         Play = 0x02
     }
-    interface IDanmakuWindow : IDisposable
+    public interface IDanmakuWindow : IDisposable
     {
         void Show();
         void Close();

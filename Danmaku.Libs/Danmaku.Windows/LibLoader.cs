@@ -3,7 +3,7 @@ using System.Runtime.InteropServices;
 
 namespace Danmaku
 {
-    sealed class LibLoader
+   public sealed class LibLoader
     {
         private const string LibLoaderName = "libwtfdanmaku.dll";
         [DllImport(LibLoaderName, CallingConvention = CallingConvention.StdCall)]

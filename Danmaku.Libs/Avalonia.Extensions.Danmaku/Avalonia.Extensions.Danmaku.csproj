@@ -16,6 +16,7 @@
 	</ItemGroup>
 	<ItemGroup>
 	  <ProjectReference Include="..\..\Avalonia.Extensions.Controls\Avalonia.Extensions.Controls.csproj" />
+	  <ProjectReference Include="..\Danmaku.Windows\Danmaku.Windows.csproj" />
 	</ItemGroup>
 	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
 	  <Exec Command="xcopy $(OutDir)\*.dll ..\OutDebug /f /y /i" />
