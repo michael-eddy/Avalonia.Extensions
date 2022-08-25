@@ -18,6 +18,6 @@
 	  <ProjectReference Include="..\..\Avalonia.Extensions.Controls\Avalonia.Extensions.Controls.csproj" />
 	</ItemGroup>
 	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
-	  <Exec Command="xcopy $(OutDir)\*.dll ..\OutDebug&#xD;&#xA;del /q/a/f/s $(OutDir)\*.*&#xD;&#xA;rd /q/s ..\OutDebug\Debug" />
+	  <Exec Command="xcopy $(OutDir)\*.dll ..\OutDebug /f /y /i" />
 	</Target>
 </Project>

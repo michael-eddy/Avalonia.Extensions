@@ -5,6 +5,7 @@ using PCLUntils;
 using PCLUntils.Plantform;
 using System;
 using System.Diagnostics;
+using System.IO;
 
 namespace Avalonia.Extensions.Danmaku
 {
@@ -40,8 +41,8 @@ namespace Avalonia.Extensions.Danmaku
                 {
                     case Platforms.Windows:
                         {
-                            LibraryApi.Windows.LoadLibrary("Libs\\libwtfdanmaku.dll");
-                            _pIntPtr = LibraryApi.Windows.CreateWindowEx(0, "WTFWindow_Create", "libwtfdanmaku",
+                            LibraryApi.Windows.LoadLibrary("Danmaku.Windows.dll");
+                            _pIntPtr = LibraryApi.Windows.CreateWindowEx(0, "DanmakuView", "libwtfdanmaku",
                                   0x800000 | 0x10000000 | 0x40000000 | 0x800000 | 0x10000 | 0x0004,
                                   X, Y, Width.ToInt32(), Height.ToInt32(),
                                   parent.Handle, IntPtr.Zero, LibraryApi.Windows.GetModuleHandle(null), IntPtr.Zero);
