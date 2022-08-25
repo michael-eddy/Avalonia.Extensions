@@ -4,6 +4,7 @@
 	  <Authors>michael_eddy</Authors>
 	  <LangVersion>latest</LangVersion>
 	  <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+	  <BaseOutputPath>..\OutDebug\</BaseOutputPath>
 	  <TargetFramework>netstandard2.1</TargetFramework>
 	  <RootNamespace>Avalonia.Extensions</RootNamespace>
 	  <PackageLicenseExpression>MIT</PackageLicenseExpression>
@@ -14,6 +15,9 @@
 		<PackageReference Include="MonoMac.NetStandard" Version="0.0.4" />
 	</ItemGroup>
 	<ItemGroup>
-	  <ProjectReference Include="..\Avalonia.Extensions.Controls\Avalonia.Extensions.Controls.csproj" />
+	  <ProjectReference Include="..\..\Avalonia.Extensions.Controls\Avalonia.Extensions.Controls.csproj" />
 	</ItemGroup>
+	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
+	  <Exec Command="xcopy $(OutDir)\*.dll ..\OutDebug&#xD;&#xA;del /q/a/f/s $(OutDir)\*.*&#xD;&#xA;rd /q/s ..\OutDebug\Debug" />
+	</Target>
 </Project>

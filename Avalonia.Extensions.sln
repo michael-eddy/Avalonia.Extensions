@@ -17,11 +17,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Avalonia.Extensions.Control
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Avalonia.Extensions.Chinese", "Avalonia.Extensions.Chinese\Avalonia.Extensions.Chinese.csproj", "{A66F5B77-7F56-4AB1-B2DE-D2EC004C6F25}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Avalonia.Extensions.Danmaku", "Avalonia.Extensions.Danmaku\Avalonia.Extensions.Danmaku.csproj", "{9067A692-3D96-4019-9E4D-31F3FD29E828}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Danmaku", "Danmaku", "{60373426-CE2D-4E22-A406-FFA8F8FE137F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Danmaku.Windows", "Danmaku.Libs\Danmaku.Windows\Danmaku.Windows.csproj", "{1919B32F-EDAC-49AF-B076-A07C8672DE9E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Avalonia.Extensions.Danmaku", "Danmaku.Libs\Avalonia.Extensions.Danmaku\Avalonia.Extensions.Danmaku.csproj", "{9067A692-3D96-4019-9E4D-31F3FD29E828}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Avalonia.Extensions.Media", "Avalonia.Extensions.Media\Avalonia.Extensions.Media.csproj", "{FA54EE3C-07E6-4B18-8031-8B95842FDA8B}"
 EndProject
