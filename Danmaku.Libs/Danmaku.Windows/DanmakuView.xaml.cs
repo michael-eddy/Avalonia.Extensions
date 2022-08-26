@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.IO;
 using System.Windows;
 using System.Windows.Interop;
 using static Danmaku.WINAPI.USER32;
@@ -17,16 +18,25 @@ namespace Danmaku
         {
             (this as IDanmakuWindow).Dispose();
         }
-        private void WtfDanmakuWindow_Load(object sender, EventArgs e)
+        private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            ShowInTaskbar = false;
-            Topmost = true;
-            IntPtr hwnd = new WindowInteropHelper(this).Handle;
-            var exStyles = GetExtendedWindowStyles(hwnd);
-            SetExtendedWindowStyles(hwnd, exStyles | ExtendedWindowStyles.Layered | ExtendedWindowStyles.Transparent | ExtendedWindowStyles.ToolWindow);
-            var hs = PresentationSource.FromVisual(this) as HwndSource;
-            hs.AddHook(new HwndSourceHook(WndProc));
-            CreateWTF();
+            try
+            {
+                File.WriteAllText(DateTime.Now.ToString("yyyyMMddHHmmss"), "start");
+                ShowInTaskbar = false;
+                Topmost = true;
+                IntPtr hwnd = new WindowInteropHelper(this).Handle;
+                var exStyles = GetExtendedWindowStyles(hwnd);
+                SetExtendedWindowStyles(hwnd, exStyles | ExtendedWindowStyles.Layered | ExtendedWindowStyles.Transparent | ExtendedWindowStyles.ToolWindow);
+                var hs = PresentationSource.FromVisual(this) as HwndSource;
+                hs.AddHook(new HwndSourceHook(WndProc));
+                CreateWTF();
+                File.WriteAllText(DateTime.Now.ToString("yyyyMMddHHmmss"), "success");
+            }
+            catch (Exception ex)
+            {
+                File.WriteAllText(DateTime.Now.ToString("yyyyMMddHHmmss"), ex.ToString());
+            }
         }
         private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {

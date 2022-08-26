@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" Width="800" Height="600"
         mc:Ignorable="d" Closing="Window_Closing" SizeChanged="Window_SizeChanged" WindowState="Maximized"
-        Title="FullOverlay" WindowStyle="None" AllowsTransparency="True" Background="{x:Null}">
+        Title="FullOverlay" WindowStyle="None" AllowsTransparency="True" Background="{x:Null}" Loaded="Window_Loaded">
     <Window.Resources>
         <Storyboard x:Key="Storyboard1" />
     </Window.Resources>

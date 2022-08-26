@@ -13,7 +13,7 @@ namespace Avalonia.Extensions.Danmaku
 {
     public class DanmakuView : NativeControlHost
     {
-        private IntPtr _pIntPtr;
+        private IntPtr winPtr;
         private Process _danmakuPlayer;
         private IPlatformHandle? _platformHandle = null;
         /// <summary>
@@ -45,13 +45,34 @@ namespace Avalonia.Extensions.Danmaku
                         {
                             string path = Path.Combine(Environment.CurrentDirectory, "Danmaku.Windows.exe");
                             LoadLibrary(path);
-                            _pIntPtr = CreateWindowEx(0, "DanmakuView", null,
-                                  0x800000 | 0x10000000 | 0x40000000 | 0x800000 | 0x10000 | 0x0004, X, Y, Width.ToInt32(), Height.ToInt32(),
-                                  parent.Handle, IntPtr.Zero, IntPtr.Zero, IntPtr.Zero);
-                            if (_pIntPtr == IntPtr.Zero)
-                                Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(this, "create windows hwnd failed");
-                            var b = GetLastError();
-                            _platformHandle = new PlatformHandle(_pIntPtr, "HWND");
+                            IntPtr hInstance = GetModuleHandle(null);
+                            WNDCLASSEX wc = new WNDCLASSEX
+                            {
+                                cbSize = (uint)Marshal.SizeOf(typeof(WNDCLASSEX)),
+                                style = 0,
+                                lpfnWndProc = WindowProc,
+                                cbClsExtra = 0,
+                                cbWndExtra = 0,
+                                hInstance = hInstance,
+                                hIcon = LoadIcon(IntPtr.Zero, IDI_APPLICATION),
+                                hCursor = LoadCursor(IntPtr.Zero, IDC_ARROW),
+                                hbrBackground = (IntPtr)(COLOR_WINDOW + 1),
+                                lpszMenuName = null,
+                                lpszClassName = "DanmakuView",
+                                hIconSm = LoadIcon(IntPtr.Zero, IDI_APPLICATION)
+                            };
+                            var windowClass = RegisterClassEx(ref wc);
+                            if (windowClass == 0)
+                                Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(this, "RegisterClassEx failed.");
+                            else
+                            {
+                                winPtr = CreateWindowEx(0, "DanmakuView", null,
+                                      0x800000 | 0x10000000 | 0x40000000 | 0x800000 | 0x10000 | 0x0004, X, Y, Width.ToInt32(), Height.ToInt32(),
+                                      parent.Handle, IntPtr.Zero, hInstance, IntPtr.Zero);
+                                if (winPtr == IntPtr.Zero)
+                                    Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(this, "create windows hwnd failed");
+                            }
+                            _platformHandle = new PlatformHandle(winPtr, "HWND");
                             break;
                         }
                     case Platforms.MacOS:
@@ -72,6 +93,47 @@ namespace Avalonia.Extensions.Danmaku
             }
             return _platformHandle;
         }
+        private static readonly WndProc WindowProc = _WindowProc;
+        private static IntPtr _WindowProc(IntPtr hWnd, uint msg, IntPtr wParam, IntPtr lParam)
+        {
+            switch (msg)
+            {
+                case WM_CLOSE:
+                    DestroyWindow(hWnd);
+                    break;
+                case WM_DESTROY:
+                    PostQuitMessage(0);
+                    break;
+                default:
+                    return DefWindowProc(hWnd, msg, wParam, lParam);
+            }
+
+            return IntPtr.Zero;
+        }
+        public void Play()
+        {
+            try
+            {
+                COPYDATASTRUCT data = new COPYDATASTRUCT();
+                PostMessage(winPtr, 0x02, 0, ref data);
+            }
+            catch (Exception ex)
+            {
+                Logger.TryGet(LogEventLevel.Error, LogArea.Animations)?.Log(this, ex.Message);
+            }
+        }
+        public void Pause()
+        {
+            try
+            {
+                COPYDATASTRUCT data = new COPYDATASTRUCT();
+                PostMessage(winPtr, 0x01, 0, ref data);
+            }
+            catch(Exception ex)
+            {
+                Logger.TryGet(LogEventLevel.Error, LogArea.Animations)?.Log(this, ex.Message);
+            }
+        }
         protected override void DestroyNativeControlCore(IPlatformHandle control)
         {
             try
@@ -82,7 +144,7 @@ namespace Avalonia.Extensions.Danmaku
                         ((MacOSViewHandle)control).Dispose();
                         break;
                     case Platforms.Windows:
-                        LibraryApi.Windows.DestroyWindow(control.Handle);
+                        DestroyWindow(control.Handle);
                         break;
                     case Platforms.Linux:
                         {
@@ -104,31 +166,6 @@ namespace Avalonia.Extensions.Danmaku
             }
             if (_platformHandle != null)
                 _platformHandle = null;
-        }
-        public void Load(string path)
-        {
-            try
-            {
-                switch (PlantformUntils.Platform)
-                {
-                    case Platforms.MacOS:
-                        {
-                            break;
-                        }
-                    case Platforms.Windows:
-                        {
-                            break;
-                        }
-                    case Platforms.Linux:
-                        {
-                            break;
-                        }
-                }
-            }
-            catch (Exception ex)
-            {
-                Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(this, ex.Message);
-            }
         }
     }
 }

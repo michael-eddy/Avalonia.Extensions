@@ -10,12 +10,43 @@ namespace Avalonia.Extensions.Danmaku
     {
         internal sealed class Windows
         {
+            public const uint WM_CLOSE = 0x0010;
+            public const uint WM_DESTROY = 0x0002;
+            public const int COLOR_WINDOW = 5;
+            public const int IDC_ARROW = 32512;
+            public const int IDI_APPLICATION = 32512;
             [StructLayout(LayoutKind.Sequential)]
             public struct SETTEXTEX
             {
                 public uint Flags;
                 public uint Codepage;
             }
+            [StructLayout(LayoutKind.Sequential)]
+            public struct WNDCLASSEX
+            {
+                public uint cbSize;
+                public uint style;
+                [MarshalAs(UnmanagedType.FunctionPtr)]
+                public WndProc lpfnWndProc;
+                public int cbClsExtra;
+                public int cbWndExtra;
+                public IntPtr hInstance;
+                public IntPtr hIcon;
+                public IntPtr hCursor;
+                public IntPtr hbrBackground;
+                public string lpszMenuName;
+                public string lpszClassName;
+                public IntPtr hIconSm;
+            }
+            [StructLayout(LayoutKind.Sequential)]
+            public struct COPYDATASTRUCT
+            {
+                public IntPtr dwData;
+                public int cbData;
+                [MarshalAs(UnmanagedType.LPStr)]
+                public string lpData;
+            }
+            public delegate IntPtr WndProc(IntPtr hWnd, uint msg, IntPtr wParam, IntPtr lParam);
             [DllImport("kernel32.dll")]
             public static extern IntPtr LoadLibrary(string lib);
             [DllImport("user32.dll", SetLastError = true)]
@@ -26,9 +57,23 @@ namespace Avalonia.Extensions.Danmaku
             public static extern IntPtr SendMessage(IntPtr hWnd, int Msg, ref SETTEXTEX wParam, byte[] lParam);
             [DllImport("kernel32.dll")]
             public static extern uint GetLastError();
+            [DllImport("user32.dll", EntryPoint = "PostQuitMessage")]
+            public static extern void PostQuitMessage(int nExitCode);
+            [DllImport("user32.dll", EntryPoint = "RegisterClassEx")]
+            [return: MarshalAs(UnmanagedType.U2)]
+            public static extern ushort RegisterClassEx([In] ref WNDCLASSEX lpwcx);
+            [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
+            public static extern IntPtr LoadIcon(IntPtr hInstance, int lpIconName);
+            [DllImport("user32.dll", EntryPoint = "LoadCursor")]
+            public static extern IntPtr LoadCursor(IntPtr hInstance, int lpCursorName);
             [DllImport("user32.dll", SetLastError = true)]
             public static extern IntPtr CreateWindowEx(int dwExStyle, string lpClassName, string lpWindowName, uint dwStyle, int x, int y,
                 int nWidth, int nHeight, IntPtr hWndParent, IntPtr hMenu, IntPtr hInstance, IntPtr lpParam);
+            [DllImport("User32.dll", EntryPoint = "PostMessage")]
+            public static extern int PostMessage(IntPtr hWnd, int Msg, int wParam, ref COPYDATASTRUCT lParam);
+            public static readonly WndProc DefWindowProc = _DefWindowProc;
+            [DllImport("user32.dll", EntryPoint = "DefWindowProc")]
+            private static extern IntPtr _DefWindowProc(IntPtr hWnd, uint uMsg, IntPtr wParam, IntPtr lParam);
         }
         internal sealed class Linux
         {
