@@ -15,6 +15,7 @@ namespace Avalonia.Extensions.Danmaku
     {
         private IntPtr winPtr;
         private Process _danmakuPlayer;
+        private static bool init = false;
         private IPlatformHandle? _platformHandle = null;
         /// <summary>
         /// Defines the <see cref="X"/> property.
@@ -57,7 +58,7 @@ namespace Avalonia.Extensions.Danmaku
                                 hIcon = LoadIcon(IntPtr.Zero, IDI_APPLICATION),
                                 hCursor = LoadCursor(IntPtr.Zero, IDC_ARROW),
                                 hbrBackground = (IntPtr)(COLOR_WINDOW + 1),
-                                lpszMenuName = null,
+                                lpszMenuName = "DanmakuView",
                                 lpszClassName = "DanmakuView",
                                 hIconSm = LoadIcon(IntPtr.Zero, IDI_APPLICATION)
                             };
@@ -71,6 +72,10 @@ namespace Avalonia.Extensions.Danmaku
                                       parent.Handle, IntPtr.Zero, hInstance, IntPtr.Zero);
                                 if (winPtr == IntPtr.Zero)
                                     Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(this, "create windows hwnd failed");
+                                else
+                                {
+                                    var code = ShowWindow(winPtr, 5);
+                                }
                             }
                             _platformHandle = new PlatformHandle(winPtr, "HWND");
                             break;
@@ -93,7 +98,7 @@ namespace Avalonia.Extensions.Danmaku
             }
             return _platformHandle;
         }
-        private static readonly WndProc WindowProc = _WindowProc;
+        private readonly WndProc WindowProc = _WindowProc;
         private static IntPtr _WindowProc(IntPtr hWnd, uint msg, IntPtr wParam, IntPtr lParam)
         {
             switch (msg)
@@ -105,9 +110,22 @@ namespace Avalonia.Extensions.Danmaku
                     PostQuitMessage(0);
                     break;
                 default:
-                    return DefWindowProc(hWnd, msg, wParam, lParam);
+                    {
+                        try
+                        {
+                            return DefWindowProc(hWnd, msg, wParam, lParam);
+                        }
+                        finally
+                        {
+                            if (!init)
+                            {
+                                init = true;
+                                COPYDATASTRUCT data = new COPYDATASTRUCT();
+                                PostMessage(hWnd, 0x03, 0, ref data);
+                            }
+                        }
+                    }
             }
-
             return IntPtr.Zero;
         }
         public void Play()

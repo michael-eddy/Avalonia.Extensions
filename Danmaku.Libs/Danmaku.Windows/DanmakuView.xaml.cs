@@ -18,7 +18,14 @@ namespace Danmaku
         {
             (this as IDanmakuWindow).Dispose();
         }
-        private void Window_Loaded(object sender, RoutedEventArgs e)
+        protected override void OnSourceInitialized(EventArgs e)
+        {
+            base.OnSourceInitialized(e);
+            var hs = PresentationSource.FromVisual(this) as HwndSource;
+            hs.AddHook(new HwndSourceHook(WndProc));
+        }
+        private void Window_Loaded(object sender, RoutedEventArgs e) => Init();
+        private void Init()
         {
             try
             {
@@ -28,8 +35,6 @@ namespace Danmaku
                 IntPtr hwnd = new WindowInteropHelper(this).Handle;
                 var exStyles = GetExtendedWindowStyles(hwnd);
                 SetExtendedWindowStyles(hwnd, exStyles | ExtendedWindowStyles.Layered | ExtendedWindowStyles.Transparent | ExtendedWindowStyles.ToolWindow);
-                var hs = PresentationSource.FromVisual(this) as HwndSource;
-                hs.AddHook(new HwndSourceHook(WndProc));
                 CreateWTF();
                 File.WriteAllText(DateTime.Now.ToString("yyyyMMddHHmmss"), "success");
             }
@@ -47,6 +52,9 @@ namespace Danmaku
                     break;
                 case HwndMsg.Play:
                     LibLoader.WTF_Start(_wtf);
+                    break;
+                case HwndMsg.Init:
+                    Init();
                     break;
             }
             return IntPtr.Zero;

@@ -69,6 +69,8 @@ namespace Avalonia.Extensions.Danmaku
             [DllImport("user32.dll", SetLastError = true)]
             public static extern IntPtr CreateWindowEx(int dwExStyle, string lpClassName, string lpWindowName, uint dwStyle, int x, int y,
                 int nWidth, int nHeight, IntPtr hWndParent, IntPtr hMenu, IntPtr hInstance, IntPtr lpParam);
+            [DllImport("user32.dll", EntryPoint = "ShowWindow", CharSet = CharSet.Auto)]
+            public static extern int ShowWindow(IntPtr hwnd, int nCmdShow);
             [DllImport("User32.dll", EntryPoint = "PostMessage")]
             public static extern int PostMessage(IntPtr hWnd, int Msg, int wParam, ref COPYDATASTRUCT lParam);
             public static readonly WndProc DefWindowProc = _DefWindowProc;
