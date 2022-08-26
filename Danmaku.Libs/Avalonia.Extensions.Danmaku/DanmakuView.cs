@@ -47,9 +47,8 @@ namespace Avalonia.Extensions.Danmaku
                             var handle = GetModuleHandle(null);
                             window = LibLoader.WTFWindow_Create(handle, 1);
                             LibLoader.WTFWindow_SetCustomWndProc(window, MyWndProc);
-                            LibLoader.WTFWindow_Initialize(window, WS_EX_NOREDIRECTIONBITMAP, 1280, 720, "Danmaku");
+                            LibLoader.WTFWindow_Initialize(window, WS_EX_NOREDIRECTIONBITMAP, Width.ToInt32(), Height.ToInt32(), "Danmaku");
                             LibLoader.WTFWindow_SetHitTestOverEnabled(window, 0);
-                            LibLoader.WTFWindow_RunMessageLoop(window);
                             _platformHandle = new PlatformHandle(window, "HWND");
                             break;
                         }
@@ -68,6 +67,11 @@ namespace Avalonia.Extensions.Danmaku
             catch (Exception ex)
             {
                 Logger.TryGet(LogEventLevel.Error, LogArea.Visual)?.Log(this, ex.Message);
+            }
+            finally
+            {
+                if (PlantformUntils.Platform == Platforms.Windows)
+                    LibLoader.WTFWindow_RunMessageLoop(window);
             }
             return _platformHandle;
         }
