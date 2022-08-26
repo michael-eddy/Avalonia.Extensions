@@ -29,14 +29,12 @@ namespace Danmaku
         {
             try
             {
-                File.WriteAllText(DateTime.Now.ToString("yyyyMMddHHmmss"), "start");
                 ShowInTaskbar = false;
                 Topmost = true;
                 IntPtr hwnd = new WindowInteropHelper(this).Handle;
                 var exStyles = GetExtendedWindowStyles(hwnd);
                 SetExtendedWindowStyles(hwnd, exStyles | ExtendedWindowStyles.Layered | ExtendedWindowStyles.Transparent | ExtendedWindowStyles.ToolWindow);
                 CreateWTF();
-                File.WriteAllText(DateTime.Now.ToString("yyyyMMddHHmmss"), "success");
             }
             catch (Exception ex)
             {

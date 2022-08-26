@@ -147,7 +147,7 @@ namespace Avalonia.Extensions.Danmaku
                 COPYDATASTRUCT data = new COPYDATASTRUCT();
                 PostMessage(winPtr, 0x01, 0, ref data);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Logger.TryGet(LogEventLevel.Error, LogArea.Animations)?.Log(this, ex.Message);
             }
