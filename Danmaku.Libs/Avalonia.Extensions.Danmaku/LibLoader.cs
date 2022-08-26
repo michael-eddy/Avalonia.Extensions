@@ -3,21 +3,10 @@ using System.Runtime.InteropServices;
 
 namespace Avalonia.Extensions.Danmaku
 {
-   public sealed class LibLoader
+    public sealed class LibLoader
     {
         private const string LibLoaderName = "libwtfdanmaku.dll";
-        [DllImport(LibLoaderName, CallingConvention = CallingConvention.StdCall)]
-        public static extern IntPtr WTFWindow_Create(IntPtr Handle, int cmdshow); 
-        [DllImport(LibLoaderName, CallingConvention = CallingConvention.StdCall)]
-        public static extern IntPtr WTFWindow_SetCustomWndProc(IntPtr Handle, SystemApi.Windows.WndProc wndproc);
-        [DllImport(LibLoaderName, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
-        public static extern void WTFWindow_Initialize(IntPtr Handle, long a, int b, int c, string d);
-        [DllImport(LibLoaderName, CallingConvention = CallingConvention.StdCall)]
-        public static extern IntPtr WTFWindow_DefaultWindowProc(IntPtr window, IntPtr hWnd, uint msg, IntPtr wParam, IntPtr lParam);
-        [DllImport(LibLoaderName, CallingConvention = CallingConvention.StdCall)]
-        public static extern int WTFWindow_RunMessageLoop(IntPtr Handle);
-        [DllImport(LibLoaderName, CallingConvention = CallingConvention.StdCall)]
-        public static extern void WTFWindow_SetHitTestOverEnabled(IntPtr Handle, int b);
+        public delegate IntPtr WndProc(IntPtr hWnd, uint msg, IntPtr wParam, IntPtr lParam);
         [DllImport(LibLoaderName, CallingConvention = CallingConvention.StdCall)]
         public static extern IntPtr WTF_CreateInstance();
         [DllImport(LibLoaderName, CallingConvention = CallingConvention.StdCall)]
@@ -30,10 +19,6 @@ namespace Avalonia.Extensions.Danmaku
         public static extern void WTF_Terminate(IntPtr instance);
         [DllImport(LibLoaderName, CallingConvention = CallingConvention.StdCall)]
         public static extern void WTF_LoadBilibiliFile(IntPtr instance, byte[] filePath);
-        [DllImport(LibLoaderName, CallingConvention = CallingConvention.StdCall)]
-        public static extern void WTF_LoadBilibiliFileW(IntPtr instance, string filePath);
-        [DllImport(LibLoaderName, CallingConvention = CallingConvention.StdCall)]
-        public static extern void WTF_LoadBilibiliXml(IntPtr instance, ref byte str);
         [DllImport(LibLoaderName, CallingConvention = CallingConvention.StdCall)]
         public static extern void WTF_AddDanmaku(IntPtr instance, int type, long time, string comment, int fontSize, int fontColor, long timestamp, int danmakuId);
         [DllImport(LibLoaderName, CallingConvention = CallingConvention.StdCall)]
@@ -72,8 +57,5 @@ namespace Avalonia.Extensions.Danmaku
         public static extern void WTF_SetDanmakuStyle(IntPtr instance, int style);
         [DllImport(LibLoaderName, CallingConvention = CallingConvention.StdCall)]
         public static extern void WTF_SetCompositionOpacity(IntPtr instance, float opacity);
-        [DllImport(LibLoaderName, CallingConvention = CallingConvention.StdCall)]
-        public static extern void WTF_SetDanmakuTypeVisibility(IntPtr instance, int parms);
-
     }
 }

@@ -16,7 +16,7 @@ namespace Avalonia.Danmaku.Demo
         private void InitializeComponent()
         {
             var danmaku = this.FindControl<DanmakuView>("danmaku");
-
+            danmaku.Load("200887808.xml");
         }
     }
 }
