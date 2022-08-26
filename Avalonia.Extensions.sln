@@ -25,8 +25,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Avalonia.Extensions.Media",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Avalonia.Danamku.Demo", "Danmaku.Libs\Avalonia.Extensions.Demo\Avalonia.Danamku.Demo.csproj", "{514055BC-2CAF-41F5-9558-0E3FF77BBCFF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Danmaku.Windows", "Danmaku.Libs\Danmaku.Windows\Danmaku.Windows.csproj", "{B5C3B16A-C8E4-498C-AA58-C21FD9DA4EBE}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -109,18 +107,6 @@ Global
 		{514055BC-2CAF-41F5-9558-0E3FF77BBCFF}.Release|x64.Build.0 = Release|Any CPU
 		{514055BC-2CAF-41F5-9558-0E3FF77BBCFF}.Release|x86.ActiveCfg = Release|Any CPU
 		{514055BC-2CAF-41F5-9558-0E3FF77BBCFF}.Release|x86.Build.0 = Release|Any CPU
-		{B5C3B16A-C8E4-498C-AA58-C21FD9DA4EBE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B5C3B16A-C8E4-498C-AA58-C21FD9DA4EBE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B5C3B16A-C8E4-498C-AA58-C21FD9DA4EBE}.Debug|x64.ActiveCfg = Debug|x64
-		{B5C3B16A-C8E4-498C-AA58-C21FD9DA4EBE}.Debug|x64.Build.0 = Debug|x64
-		{B5C3B16A-C8E4-498C-AA58-C21FD9DA4EBE}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{B5C3B16A-C8E4-498C-AA58-C21FD9DA4EBE}.Debug|x86.Build.0 = Debug|Any CPU
-		{B5C3B16A-C8E4-498C-AA58-C21FD9DA4EBE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B5C3B16A-C8E4-498C-AA58-C21FD9DA4EBE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B5C3B16A-C8E4-498C-AA58-C21FD9DA4EBE}.Release|x64.ActiveCfg = Release|x64
-		{B5C3B16A-C8E4-498C-AA58-C21FD9DA4EBE}.Release|x64.Build.0 = Release|x64
-		{B5C3B16A-C8E4-498C-AA58-C21FD9DA4EBE}.Release|x86.ActiveCfg = Release|Any CPU
-		{B5C3B16A-C8E4-498C-AA58-C21FD9DA4EBE}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -132,7 +118,6 @@ Global
 		{9067A692-3D96-4019-9E4D-31F3FD29E828} = {60373426-CE2D-4E22-A406-FFA8F8FE137F}
 		{FA54EE3C-07E6-4B18-8031-8B95842FDA8B} = {736AFC18-0DD8-4577-8066-A26322E85F8D}
 		{514055BC-2CAF-41F5-9558-0E3FF77BBCFF} = {60373426-CE2D-4E22-A406-FFA8F8FE137F}
-		{B5C3B16A-C8E4-498C-AA58-C21FD9DA4EBE} = {60373426-CE2D-4E22-A406-FFA8F8FE137F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {82A8C38D-510B-4067-BAB9-FA581B3F79C7}

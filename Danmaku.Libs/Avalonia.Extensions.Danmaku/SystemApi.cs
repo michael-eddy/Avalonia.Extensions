@@ -6,15 +6,29 @@ using System.Threading.Tasks;
 
 namespace Avalonia.Extensions.Danmaku
 {
-    public sealed class LibraryApi
+    public sealed class SystemApi
     {
-        internal sealed class Windows
+        public sealed class Windows
         {
             public const uint WM_CLOSE = 0x0010;
             public const uint WM_DESTROY = 0x0002;
+            public const uint WM_SIZE = 0x0005;
+            public const int WM_LBUTTONDOWN = 0x0201;
+            public const int WM_RBUTTONDOWN = 0x0204;
+            public const int WM_DPICHANGED = 0x02E0;
             public const int COLOR_WINDOW = 5;
             public const int IDC_ARROW = 32512;
             public const int IDI_APPLICATION = 32512;
+            public const int WTF_DANMAKU_STYLE_OUTLINE = 1;
+            public const int WTF_DANMAKU_TYPE_SCROLLING_VISIBLE = 1;
+            public const int WTF_DANMAKU_TYPE_BOTTOM_VISIBLE = 2;
+            public const int WTF_DANMAKU_TYPE_TOP_VISIBLE = 4;
+            public const int WTF_DANMAKU_TYPE_RESERVE_VISIBLE = 8;
+            public const int WTF_DANMAKU_TYPE_POSITION_VISIBLE = 16;
+            public const int WTF_DANMAKU_TYPE_ADVANCED_VISIBLE = 32;
+            public const long WS_EX_NOREDIRECTIONBITMAP = 0x00200000L;
+            public const long SIZE_RESTORED = 0;
+            public const long SIZE_MAXIMIZED = 2;
             [StructLayout(LayoutKind.Sequential)]
             public struct SETTEXTEX
             {
