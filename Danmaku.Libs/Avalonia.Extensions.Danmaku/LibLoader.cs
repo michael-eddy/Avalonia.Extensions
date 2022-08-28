@@ -14,11 +14,11 @@ namespace Avalonia.Extensions.Danmaku
         [DllImport(LibLoaderName, CallingConvention = CallingConvention.StdCall)]
         public static extern void WTF_InitializeWithHwnd(IntPtr instance, IntPtr hwnd);
         [DllImport(LibLoaderName, CallingConvention = CallingConvention.StdCall)]
-        public static extern int WTF_InitializeOffscreen(IntPtr instance, uint initialWidth, uint initialHeight);
-        [DllImport(LibLoaderName, CallingConvention = CallingConvention.StdCall)]
-        public static extern void WTF_Terminate(IntPtr instance);
+        public static extern void WTF_SetDanmakuTypeVisibility(IntPtr instance, int parms);
         [DllImport(LibLoaderName, CallingConvention = CallingConvention.StdCall)]
         public static extern void WTF_LoadBilibiliFile(IntPtr instance, byte[] filePath);
+        [DllImport(LibLoaderName, CallingConvention = CallingConvention.StdCall)]
+        public static extern void WTF_LoadBilibiliXml(IntPtr instance, ref byte str);
         [DllImport(LibLoaderName, CallingConvention = CallingConvention.StdCall)]
         public static extern void WTF_AddDanmaku(IntPtr instance, int type, long time, string comment, int fontSize, int fontColor, long timestamp, int danmakuId);
         [DllImport(LibLoaderName, CallingConvention = CallingConvention.StdCall)]
