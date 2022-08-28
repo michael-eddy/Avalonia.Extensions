@@ -14,15 +14,15 @@ namespace Avalonia.Extensions.Danmaku
         private IPlatformHandle? _platformHandle = null;
         static DanmakuView()
         {
-            WidthProperty.Changed.AddClassHandler<DanmakuView>((view, e) => view.Resize(e.NewValue.ToInt32(), view.Height));
-            HeightProperty.Changed.AddClassHandler<DanmakuView>((view, e) => view.Resize(view.Width, e.NewValue.ToInt32()));
-            BoundsProperty.Changed.AddClassHandler<DanmakuView>((view, e) =>
-            {
-                if (e.NewValue is Rect rect)
-                    view.Resize(rect.Width, rect.Height);
-            });
+            WidthProperty.Changed.AddClassHandler<DanmakuView>(OnWidthChange);
+            HeightProperty.Changed.AddClassHandler<DanmakuView>(OnHeightChange);
+            BoundsProperty.Changed.AddClassHandler<DanmakuView>(OnBoundsChange);
+            FontScaleProperty.Changed.AddClassHandler<DanmakuView>(OnFontScaleChange);
+            FontNameProperty.Changed.AddClassHandler<DanmakuView>(OnFontNameChange);
+            FontWeightProperty.Changed.AddClassHandler<DanmakuView>(OnFontWeightChange);
+            CompositionOpacityProperty.Changed.AddClassHandler<DanmakuView>(OnCompositionOpacity);
         }
-        protected void Resize(double width, double height)
+        private void Resize(double width, double height)
         {
             if (wtf != IntPtr.Zero)
             {
@@ -48,6 +48,36 @@ namespace Avalonia.Extensions.Danmaku
             get => GetValue(YProperty);
             set => SetValue(YProperty, value);
         }
+        public static readonly StyledProperty<DanmakuStyle> StyleProperty = AvaloniaProperty.Register<DanmakuView, DanmakuStyle>(nameof(Style), DanmakuStyle.OutLine);
+        public DanmakuStyle Style
+        {
+            get => GetValue(StyleProperty);
+            set => SetValue(StyleProperty, value);
+        }
+        public static readonly StyledProperty<string> FontNameProperty = AvaloniaProperty.Register<DanmakuView, string>(nameof(FontName), "SimHei");
+        public string FontName
+        {
+            get => GetValue(FontNameProperty);
+            set => SetValue(FontNameProperty, value);
+        }
+        public static readonly StyledProperty<int> FontWeightProperty = AvaloniaProperty.Register<DanmakuView, int>(nameof(FontWeight), 700);
+        public int FontWeight
+        {
+            get => GetValue(FontWeightProperty);
+            set => SetValue(FontWeightProperty, value);
+        }
+        public static readonly StyledProperty<float> FontScaleProperty = AvaloniaProperty.Register<DanmakuView, float>(nameof(FontScale), 1f);
+        public float FontScale
+        {
+            get => GetValue(FontScaleProperty);
+            set => SetValue(FontScaleProperty, value);
+        }
+        public static readonly StyledProperty<float> CompositionOpacityProperty = AvaloniaProperty.Register<DanmakuView, float>(nameof(CompositionOpacity), .9f);
+        public float CompositionOpacity
+        {
+            get => GetValue(CompositionOpacityProperty);
+            set => SetValue(CompositionOpacityProperty, value);
+        }
         protected override IPlatformHandle CreateNativeControlCore(IPlatformHandle parent)
         {
             _platformHandle = base.CreateNativeControlCore(parent);
@@ -59,11 +89,7 @@ namespace Avalonia.Extensions.Danmaku
                         {
                             wtf = LibLoader.WTF_CreateInstance();
                             LibLoader.WTF_InitializeWithHwnd(wtf, parent.Handle);
-                            LibLoader.WTF_SetFontName(wtf, "SimHei");
-                            LibLoader.WTF_SetFontWeight(wtf, 700);
-                            LibLoader.WTF_SetFontScaleFactor(wtf, 1.0f);
-                            LibLoader.WTF_SetDanmakuStyle(wtf, 1);
-                            LibLoader.WTF_SetCompositionOpacity(wtf, 0.9f);
+                            Init();
                             _platformHandle = new PlatformHandle(wtf, "HWND");
                             break;
                         }
@@ -77,6 +103,24 @@ namespace Avalonia.Extensions.Danmaku
                 Logger.TryGet(LogEventLevel.Error, LogArea.Visual)?.Log(this, ex.Message);
             }
             return _platformHandle;
+        }
+        private void Init()
+        {
+            LibLoader.WTF_SetFontName(wtf, FontName);
+            LibLoader.WTF_SetFontWeight(wtf, FontWeight);
+            LibLoader.WTF_SetFontScaleFactor(wtf, FontScale);
+            LibLoader.WTF_SetDanmakuStyle(wtf, (int)Style);
+            LibLoader.WTF_SetCompositionOpacity(wtf, CompositionOpacity);
+        }
+        private void ReInit()
+        {
+            switch (PlantformUntils.Platform)
+            {
+                case Platforms.Windows:
+                    DestoryWindows();
+                    Init();
+                    break;
+            }
         }
         protected override void DestroyNativeControlCore(IPlatformHandle control)
         {

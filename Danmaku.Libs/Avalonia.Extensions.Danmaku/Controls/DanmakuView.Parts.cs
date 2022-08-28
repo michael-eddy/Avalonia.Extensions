@@ -5,6 +5,9 @@ using System;
 using Avalonia.Threading;
 using System.IO;
 using System.Text;
+using System.Security.Cryptography;
+using System.Reactive;
+using System.Xml.Linq;
 
 namespace Avalonia.Extensions.Danmaku
 {
@@ -37,6 +40,39 @@ namespace Avalonia.Extensions.Danmaku
 				Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(this, ex.Message);
 			}
 		}
+		public void SetDanmakuTypeVisibility(DanmakuTypeVisable visableType)
+		{
+			try
+			{
+                LibLoader.WTF_SetDanmakuTypeVisibility(wtf, (int)visableType);
+			}
+			catch (Exception ex)
+			{
+				Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(this, ex.Message);
+			}
+		}
+        public void AddDanmaku(DanmakuType type, long time, string comment, int fontSize, int fontColor, long timestamp, int danmakuId)
+		{
+			try
+			{
+				LibLoader.WTF_AddDanmaku(wtf, (int)type, time, comment, fontSize, fontColor, timestamp, danmakuId);
+			}
+			catch (Exception ex)
+			{
+				Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(this, ex.Message);
+			}
+		}
+		public void AddLiveDanmaku(DanmakuType type, long time, string comment, int fontSize, int fontColor, long timestamp, int danmakuId)
+		{
+			try
+			{
+				LibLoader.WTF_AddLiveDanmaku(wtf, (int)type, time, comment, fontSize, fontColor, timestamp, danmakuId);
+			}
+			catch (Exception ex)
+			{
+				Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(this, ex.Message);
+			}
+		}
         public void Play()
 		{
 			try
@@ -54,7 +90,7 @@ namespace Avalonia.Extensions.Danmaku
 				Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(this, ex.Message);
 			}
 		}
-        public void Pause()
+		public void Pause()
 		{
 			try
 			{
@@ -72,7 +108,7 @@ namespace Avalonia.Extensions.Danmaku
 			}
 		}
 		public void SeekTo(long milliseconds)
-        {
+		{
 			try
 			{
 				switch (PlantformUntils.Platform)
@@ -87,7 +123,7 @@ namespace Avalonia.Extensions.Danmaku
 			{
 				Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(this, ex.Message);
 			}
-        }
+		}
 		public long GetCurrentPosition()
 		{
 			try
@@ -123,16 +159,14 @@ namespace Avalonia.Extensions.Danmaku
 				Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(this, ex.Message);
 			}
 		}
-        private void DestoryWindows()
+		private void DestoryWindows()
 		{
 			try
 			{
 				if (LibLoader.WTF_IsRunning(wtf) != 0)
-				{
 					LibLoader.WTF_Stop(wtf);
-					LibLoader.WTF_ReleaseInstance(wtf);
-					wtf = IntPtr.Zero;
-				}
+				LibLoader.WTF_ReleaseInstance(wtf);
+				wtf = IntPtr.Zero;
 			}
 			catch (Exception ex)
 			{
