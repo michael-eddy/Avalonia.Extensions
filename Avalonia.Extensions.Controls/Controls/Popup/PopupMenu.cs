@@ -63,10 +63,7 @@ namespace Avalonia.Extensions.Controls
             ItemsProperty.Changed.AddClassHandler<PopupMenu>(OnItemsChange);
             ItemTemplateProperty.Changed.AddClassHandler<PopupMenu>(OnItemTemplateChanged);
         }
-        private void ListBox_SizeChange(object sender, SizeRoutedEventArgs e)
-        {
-            Width = e.Width;
-        }
+        private void ListBox_SizeChange(object sender, SizeRoutedEventArgs e) => Width = e.Width;
         private void OnItemTemplateChanged(object sender, AvaloniaPropertyChangedEventArgs e)
         {
             if (!e.IsSameValue() && e.NewValue is IDataTemplate template)

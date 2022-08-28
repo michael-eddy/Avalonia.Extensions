@@ -1,10 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
+        <Version>1.7.4</Version>
         <Nullable>enable</Nullable>
         <OutputType>WinExe</OutputType>
-        <Version>1.7.4</Version>
         <TargetFramework>net6.0</TargetFramework>
         <ApplicationManifest>app.manifest</ApplicationManifest>
+        <Platforms>AnyCPU;x64</Platforms>
     </PropertyGroup>
     <ItemGroup>
         <PackageReference Include="Avalonia" Version="0.10.18" />

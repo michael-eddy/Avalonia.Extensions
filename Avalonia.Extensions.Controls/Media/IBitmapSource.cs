@@ -23,7 +23,15 @@ namespace Avalonia.Extensions.Media
                 {
                     if (this is CircleImage circle)
                     {
-                        Bitmap = new Bitmap(stream);
+                        var width = circle.Width.ToInt32();
+                        if (double.IsNaN(circle.Width) || width == 0)
+                        {
+                            Bitmap = new Bitmap(stream);
+                            circle.Width = Bitmap.PixelSize.Width;
+                            circle.Height = Bitmap.PixelSize.Height;
+                        }
+                        else
+                            Bitmap = Bitmap.DecodeToWidth(stream, width, circle.InterpolationMode);
                         circle.Fill = new ImageBrush { Source = Bitmap };
                         circle.DrawAgain();
                         circle.SetSize(Bitmap.Size);

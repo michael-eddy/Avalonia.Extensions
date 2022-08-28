@@ -23,10 +23,7 @@ namespace Avalonia.Extensions.Controls
         }
         private void Thread_DisposeEvent(object sender, EventArgs e)
         {
-            Dispatcher.UIThread.InvokeAsync(() =>
-            {
-                Close();
-            });
+            Dispatcher.UIThread.InvokeAsync(Close);
         }
         public void Show(NotifyOptions options)
         {

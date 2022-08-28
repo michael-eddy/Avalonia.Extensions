@@ -5,6 +5,7 @@ using Avalonia.Interactivity;
 using Avalonia.Media;
 using Avalonia.Media.Imaging;
 using Avalonia.Metadata;
+using Avalonia.Visuals.Media.Imaging;
 using System;
 
 namespace Avalonia.Extensions.Controls
@@ -22,6 +23,11 @@ namespace Avalonia.Extensions.Controls
         /// </summary>
         public static readonly StyledProperty<Bitmap?> ImageSourceProperty =
             AvaloniaProperty.Register<CircleImage, Bitmap?>(nameof(ImageSource));
+        /// <summary>
+        /// Defines the <see cref="InterpolationMode"/> property.
+        /// </summary>
+        public static readonly StyledProperty<BitmapInterpolationMode> InterpolationModeProperty =
+            AvaloniaProperty.Register<CircleImage, BitmapInterpolationMode>(nameof(InterpolationMode), BitmapInterpolationMode.HighQuality);
         /// <summary>
         /// Defines the <see cref="Failed"/> property.
         /// </summary>
@@ -84,6 +90,14 @@ namespace Avalonia.Extensions.Controls
         {
             get => GetValue(ImageSourceProperty);
             set => SetValue(ImageSourceProperty, value);
+        }
+        /// <summary>
+        /// get or set image quality
+        /// </summary>
+        public BitmapInterpolationMode InterpolationMode
+        {
+            get => GetValue(InterpolationModeProperty);
+            set => SetValue(InterpolationModeProperty, value);
         }
         /// <summary>
         /// Raised when the image load failed.
