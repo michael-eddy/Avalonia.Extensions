@@ -20,9 +20,4 @@
 	<ItemGroup>
 	  <ProjectReference Include="..\..\Avalonia.Extensions.Controls\Avalonia.Extensions.Controls.csproj" />
 	</ItemGroup>
-	<ItemGroup>
-	  <None Update="libwtfdanmaku.dll">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </None>
-	</ItemGroup>
 </Project>
