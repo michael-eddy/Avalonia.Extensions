@@ -67,16 +67,9 @@ namespace Avalonia.Extensions.Danmaku
                             _platformHandle = new PlatformHandle(wtf, "HWND");
                             break;
                         }
-                    case Platforms.MacOS:
-                        {
-                            _platformHandle = new MacOSViewHandle(default);
-                            break;
-                        }
-                    case Platforms.Linux:
-                        {
-                            _platformHandle = SystemApi.Linux.CreateGtkView(parent.Handle);
-                            break;
-                        }
+                    default:
+                        Logger.TryGet(LogEventLevel.Error, LogArea.Visual)?.Log(this, "now it just only support windows!");
+                        break;
                 }
             }
             catch (Exception ex)
@@ -93,12 +86,6 @@ namespace Avalonia.Extensions.Danmaku
                 {
                     case Platforms.Windows:
                         DestoryWindows();
-                        base.DestroyNativeControlCore(control);
-                        break;
-                    case Platforms.MacOS:
-                        ((MacOSViewHandle)control).Dispose();
-                        break;
-                    case Platforms.Linux:
                         base.DestroyNativeControlCore(control);
                         break;
                     default:

@@ -42,17 +42,11 @@ namespace Avalonia.Extensions.Danmaku
         [DllImport(LibLoaderName, CallingConvention = CallingConvention.StdCall)]
         public static extern int WTF_IsRunning(IntPtr instance);
         [DllImport(LibLoaderName, CallingConvention = CallingConvention.StdCall)]
-        public static extern float WTF_GetFontScaleFactor(IntPtr instance);
-        [DllImport(LibLoaderName, CallingConvention = CallingConvention.StdCall)]
         public static extern void WTF_SetFontScaleFactor(IntPtr instance, float factor);
         [DllImport(LibLoaderName, CallingConvention = CallingConvention.StdCall)]
         public static extern void WTF_SetFontName(IntPtr instance, string fontName);
         [DllImport(LibLoaderName, CallingConvention = CallingConvention.StdCall)]
         public static extern void WTF_SetFontWeight(IntPtr instance, int dwriteFontWeight);
-        [DllImport(LibLoaderName, CallingConvention = CallingConvention.StdCall)]
-        public static extern void WTF_SetFontStyle(IntPtr instance, int dwriteFontStyle);
-        [DllImport(LibLoaderName, CallingConvention = CallingConvention.StdCall)]
-        public static extern void WTF_SetFontStretch(IntPtr instance, int dwriteFontStretch);
         [DllImport(LibLoaderName, CallingConvention = CallingConvention.StdCall)]
         public static extern void WTF_SetDanmakuStyle(IntPtr instance, int style);
         [DllImport(LibLoaderName, CallingConvention = CallingConvention.StdCall)]

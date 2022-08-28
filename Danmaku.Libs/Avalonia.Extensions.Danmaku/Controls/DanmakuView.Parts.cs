@@ -10,7 +10,7 @@ namespace Avalonia.Extensions.Danmaku
 {
 	public partial class DanmakuView
 	{
-		protected void Load(string filePath)
+		public void Load(string filePath)
 		{
 			try
 			{
@@ -37,7 +37,7 @@ namespace Avalonia.Extensions.Danmaku
 				Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(this, ex.Message);
 			}
 		}
-		protected void Play()
+        public void Play()
 		{
 			try
 			{
@@ -54,7 +54,7 @@ namespace Avalonia.Extensions.Danmaku
 				Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(this, ex.Message);
 			}
 		}
-		protected void Pause()
+        public void Pause()
 		{
 			try
 			{
@@ -71,7 +71,59 @@ namespace Avalonia.Extensions.Danmaku
 				Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(this, ex.Message);
 			}
 		}
-		private void DestoryWindows()
+		public void SeekTo(long milliseconds)
+        {
+			try
+			{
+				switch (PlantformUntils.Platform)
+				{
+					case Platforms.Windows:
+						if (wtf != IntPtr.Zero)
+							LibLoader.WTF_SeekTo(wtf, milliseconds);
+						break;
+				}
+			}
+			catch (Exception ex)
+			{
+				Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(this, ex.Message);
+			}
+        }
+		public long GetCurrentPosition()
+		{
+			try
+			{
+				switch (PlantformUntils.Platform)
+				{
+					case Platforms.Windows:
+						if (wtf != IntPtr.Zero)
+							return LibLoader.WTF_GetCurrentPosition(wtf);
+						break;
+				}
+			}
+			catch (Exception ex)
+			{
+				Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(this, ex.Message);
+			}
+			return 0;
+		}
+		public void SetDpi(uint dpiX, uint dpiY)
+		{
+			try
+			{
+				switch (PlantformUntils.Platform)
+				{
+					case Platforms.Windows:
+						if (wtf != IntPtr.Zero)
+							LibLoader.WTF_SetDpi(wtf, dpiX, dpiY);
+						break;
+				}
+			}
+			catch (Exception ex)
+			{
+				Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(this, ex.Message);
+			}
+		}
+        private void DestoryWindows()
 		{
 			try
 			{
