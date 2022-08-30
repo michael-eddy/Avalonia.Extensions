@@ -1,12 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
 	  <Version>1.0.1</Version>
-	  <Platform>x86</Platform>
-	  <!--<Platform>x64</Platform>-->
+	  <!--<Platform>x86</Platform>-->
+	  <Platform>x64</Platform>
 	  <Authors>michael_eddy</Authors>
 	  <LangVersion>latest</LangVersion>
-	  <PlatformTarget>x86</PlatformTarget>
-	  <!--<PlatformTarget>x64</PlatformTarget>-->
+	  <!--<PlatformTarget>x86</PlatformTarget>-->
+	  <PlatformTarget>x64</PlatformTarget>
 	  <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
 	  <RootNamespace>Avalonia.Extensions.Danmaku</RootNamespace>
 	  <TargetFramework>netstandard2.1</TargetFramework>

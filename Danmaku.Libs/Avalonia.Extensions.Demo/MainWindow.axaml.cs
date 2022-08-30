@@ -7,11 +7,12 @@ namespace Avalonia.Danmaku.Demo
 {
     public class MainWindow : AeroWindow
     {
-
         public MainWindow()
         {
             AvaloniaXamlLoader.Load(this);
+            Width = 800;
             InitializeComponent();
+            this.AttachDevTools();
         }
         private void InitializeComponent()
         {

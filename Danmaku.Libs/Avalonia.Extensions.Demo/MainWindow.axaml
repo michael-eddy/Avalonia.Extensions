@@ -6,6 +6,27 @@
         x:Class="Avalonia.Danmaku.Demo.MainWindow"
         Title="Avalonia.Danmaku.Demo" CanResize="False">
 	<Panel>
-		<DanmakuView Name="danmaku" />
+		<DockPanel VerticalAlignment="Stretch">
+			<ExperimentalAcrylicBorder DockPanel.Dock="Top" Height="146">
+				<ExperimentalAcrylicBorder.Material>
+					<ExperimentalAcrylicMaterial TintColor="Black" MaterialOpacity="0.85" TintOpacity="1" />
+				</ExperimentalAcrylicBorder.Material>
+			</ExperimentalAcrylicBorder>
+			<ExperimentalAcrylicBorder IsHitTestVisible="False">
+				<ExperimentalAcrylicBorder.Material>
+					<ExperimentalAcrylicMaterial TintColor="#222222" MaterialOpacity="0.85" TintOpacity="1" />
+				</ExperimentalAcrylicBorder.Material>
+				<TextBlock Text="{Binding #TabControl.SelectedItem.Header}" Margin="40 20" FontSize="32" FontWeight="Light" />
+			</ExperimentalAcrylicBorder>
+		</DockPanel>
+		<TabControl>
+			<TabItem Header="DanmakuNativeView">
+				<DanmakuNativeView />
+			</TabItem>
+			<TabItem Header="DanmakuView">
+				<DanmakuView Name="danmaku" />
+			</TabItem>
+		</TabControl>
 	</Panel>
+	<DanmakuScrollView />
 </AeroWindow>
