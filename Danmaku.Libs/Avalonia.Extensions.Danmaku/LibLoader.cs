@@ -3,10 +3,9 @@ using System.Runtime.InteropServices;
 
 namespace Avalonia.Extensions.Danmaku
 {
-    public sealed class LibLoader
+    sealed class LibLoader
     {
         private const string LibLoaderName = "libwtfdanmaku.dll";
-        public delegate IntPtr WndProc(IntPtr hWnd, uint msg, IntPtr wParam, IntPtr lParam);
         [DllImport(LibLoaderName, CallingConvention = CallingConvention.StdCall)]
         public static extern IntPtr WTF_CreateInstance();
         [DllImport(LibLoaderName, CallingConvention = CallingConvention.StdCall)]
@@ -18,7 +17,7 @@ namespace Avalonia.Extensions.Danmaku
         [DllImport(LibLoaderName, CallingConvention = CallingConvention.StdCall)]
         public static extern void WTF_LoadBilibiliFile(IntPtr instance, byte[] filePath);
         [DllImport(LibLoaderName, CallingConvention = CallingConvention.StdCall)]
-        public static extern void WTF_LoadBilibiliXml(IntPtr instance, ref byte str);
+        public static extern void WTF_LoadBilibiliXml(IntPtr instance, string str);
         [DllImport(LibLoaderName, CallingConvention = CallingConvention.StdCall)]
         public static extern void WTF_AddDanmaku(IntPtr instance, int type, long time, string comment, int fontSize, int fontColor, long timestamp, int danmakuId);
         [DllImport(LibLoaderName, CallingConvention = CallingConvention.StdCall)]

@@ -5,15 +5,40 @@ using System;
 using Avalonia.Threading;
 using System.IO;
 using System.Text;
-using System.Security.Cryptography;
-using System.Reactive;
-using System.Xml.Linq;
 
 namespace Avalonia.Extensions.Danmaku
 {
 	public partial class DanmakuView
 	{
-		public void Load(string filePath)
+		public void Load(string xml)
+		{
+			try
+			{
+				switch (PlantformUntils.Platform)
+				{
+					case Platforms.Windows:
+						Dispatcher.UIThread.InvokeAsync(() =>
+						{
+							if (!string.IsNullOrEmpty(xml))
+							{
+								while (wtf != IntPtr.Zero)
+								{
+									LibLoader.WTF_LoadBilibiliXml(wtf, xml);
+									LibLoader.WTF_Start(wtf);
+									Resize(Bounds.Width, Bounds.Height);
+									break;
+								}
+							}
+						});
+						break;
+				}
+			}
+			catch (Exception ex)
+			{
+				Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(this, ex.Message);
+			}
+		}
+		public void Load(FileInfo filePath)
 		{
 			try
 			{
@@ -24,9 +49,9 @@ namespace Avalonia.Extensions.Danmaku
 						{
 							while (wtf != IntPtr.Zero)
 							{
-								if (!File.Exists(filePath))
-									throw new FileNotFoundException($"File [{filePath}] not found!");
-								LibLoader.WTF_LoadBilibiliFile(wtf, Encoding.ASCII.GetBytes(filePath));
+								if (!filePath.Exists)
+									throw new FileNotFoundException($"File [{filePath.FullName}] not found!");
+								LibLoader.WTF_LoadBilibiliFile(wtf, Encoding.ASCII.GetBytes(filePath.FullName));
 								LibLoader.WTF_Start(wtf);
 								Resize(Bounds.Width, Bounds.Height);
 								break;
@@ -44,14 +69,14 @@ namespace Avalonia.Extensions.Danmaku
 		{
 			try
 			{
-                LibLoader.WTF_SetDanmakuTypeVisibility(wtf, (int)visableType);
+				LibLoader.WTF_SetDanmakuTypeVisibility(wtf, (int)visableType);
 			}
 			catch (Exception ex)
 			{
 				Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(this, ex.Message);
 			}
 		}
-        public void AddDanmaku(DanmakuType type, long time, string comment, int fontSize, int fontColor, long timestamp, int danmakuId)
+		public void AddDanmaku(DanmakuType type, long time, string comment, int fontSize, int fontColor, long timestamp, int danmakuId)
 		{
 			try
 			{
@@ -73,7 +98,7 @@ namespace Avalonia.Extensions.Danmaku
 				Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(this, ex.Message);
 			}
 		}
-        public void Play()
+		public void Play()
 		{
 			try
 			{
