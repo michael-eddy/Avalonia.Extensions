@@ -3,14 +3,16 @@ using Avalonia.Extensions.Styles;
 using Avalonia.Media;
 using Avalonia.Media.TextFormatting;
 using Avalonia.Metadata;
+using Avalonia.Styling;
 using SkiaSharp;
 using System;
 using FontFamily = Avalonia.Media.FontFamily;
 
 namespace Avalonia.Extensions.Controls
 {
-    public class Text : Shape
+    public class Text : Shape, IStyling
     {
+        Type IStyleable.StyleKey => typeof(Shape);
         /// <summary>
         /// Defines the <see cref="Content"/> property
         /// </summary>

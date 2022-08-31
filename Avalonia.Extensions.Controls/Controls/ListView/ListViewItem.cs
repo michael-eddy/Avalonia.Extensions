@@ -3,6 +3,7 @@ using Avalonia.Controls.Metadata;
 using Avalonia.Data;
 using Avalonia.Extensions.Styles;
 using Avalonia.Input;
+using Avalonia.Styling;
 using Avalonia.VisualTree;
 using System;
 using System.Linq;
@@ -12,7 +13,7 @@ namespace Avalonia.Extensions.Controls
     [PseudoClasses(":pressed", ":selected")]
     public class ListViewItem : ListBoxItem, IStyling
     {
-        public Type StyleKey => typeof(ListBoxItem);
+        Type IStyleable.StyleKey => typeof(ListBoxItem);
         private ClickMode ClickMode
         {
             get
