@@ -4,6 +4,7 @@ using Avalonia.Extensions.Styles;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Layout;
+using Avalonia.Styling;
 using Avalonia.Threading;
 using PCLUntils.Assemblly;
 using System;
@@ -17,6 +18,7 @@ namespace Avalonia.Extensions.Controls
     public class VerticalItemsRepeater : ItemsRepeater, IStyling
     {
         private ICommand _command;
+        Type IStyleable.StyleKey => typeof(ItemsRepeater);
         /// <summary>
         /// create an instance
         /// </summary>

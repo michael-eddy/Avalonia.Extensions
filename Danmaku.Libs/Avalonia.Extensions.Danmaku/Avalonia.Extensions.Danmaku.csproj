@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-	  <Version>1.0.1</Version>
+	  <Version>1.0.2</Version>
 	  <!--<Platform>x86</Platform>-->
 	  <Platform>x64</Platform>
 	  <Authors>michael_eddy</Authors>
@@ -8,9 +8,9 @@
 	  <!--<PlatformTarget>x86</PlatformTarget>-->
 	  <PlatformTarget>x64</PlatformTarget>
 	  <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
-	  <RootNamespace>Avalonia.Extensions.Danmaku</RootNamespace>
 	  <TargetFramework>netstandard2.1</TargetFramework>
 	  <PackageLicenseExpression>MIT</PackageLicenseExpression>
+	  <RootNamespace>Avalonia.Extensions.Danmaku</RootNamespace>
 	  <PackageProjectUrl>https://github.com/michael-eddy/Avalonia.Extensions</PackageProjectUrl>
   </PropertyGroup>
 	<ItemGroup>

@@ -3,11 +3,13 @@ using Avalonia.Extensions.Styles;
 using Avalonia.Interactivity;
 using Avalonia.Layout;
 using Avalonia.Styling;
+using System;
 
 namespace Avalonia.Extensions.Controls
 {
     public partial class ExpandableView : StackPanel, ITemplatedControl, IStyling
     {
+        Type IStyleable.StyleKey => typeof(ExpandableView);
         public ExpandableView() : base()
         {
             Status = ExpandStatus.Collapsed;

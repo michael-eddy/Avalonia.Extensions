@@ -56,13 +56,13 @@
 						<RowDefinition Height="*" />
 					</Grid.RowDefinitions>
 					<TextBlock Grid.Row="0" Text="{Binding Message}" Foreground="Red"/>
-          <GridView Name="splitListView" Grid.Row="1" ColumnNum="2" Items="{Binding Items}" Command="{Binding OnItemClick}">
-            <GridView.ItemTemplate>
-              <DataTemplate>
-                <TextBlock Text="{Binding Content}" />
-              </DataTemplate>
-            </GridView.ItemTemplate>
-          </GridView>
+				  <GridView Name="splitListView" Grid.Row="1" ColumnNum="2" Items="{Binding Items}" Command="{Binding OnItemClick}">
+					<GridView.ItemTemplate>
+					  <DataTemplate>
+						<TextBlock Text="{Binding Content}" />
+					  </DataTemplate>
+					</GridView.ItemTemplate>
+				  </GridView>
 				</Grid>
 			</TabItem>
 			<TabItem Header="Popup/Notify">

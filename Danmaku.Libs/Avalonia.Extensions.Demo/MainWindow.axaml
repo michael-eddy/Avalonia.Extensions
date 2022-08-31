@@ -7,7 +7,7 @@
         Title="Avalonia.Danmaku.Demo" CanResize="False">
 	<Panel>
 		<DockPanel VerticalAlignment="Stretch">
-			<ExperimentalAcrylicBorder DockPanel.Dock="Top" Height="146">
+			<ExperimentalAcrylicBorder DockPanel.Dock="Top" Height="46">
 				<ExperimentalAcrylicBorder.Material>
 					<ExperimentalAcrylicMaterial TintColor="Black" MaterialOpacity="0.85" TintOpacity="1" />
 				</ExperimentalAcrylicBorder.Material>
@@ -21,12 +21,11 @@
 		</DockPanel>
 		<TabControl>
 			<TabItem Header="DanmakuNativeView">
-				<DanmakuNativeView />
+				<DanmakuNativeView Name="danmakuView" />
 			</TabItem>
-			<TabItem Header="DanmakuView">
-				<DanmakuView Name="danmaku" />
+				<TabItem Header="DanmakuView">
+					<DanmakuView Name="danmaku" />
 			</TabItem>
 		</TabControl>
 	</Panel>
-	<DanmakuScrollView />
 </AeroWindow>

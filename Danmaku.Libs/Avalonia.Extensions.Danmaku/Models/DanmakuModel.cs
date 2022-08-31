@@ -12,7 +12,7 @@ namespace Avalonia.Extensions.Danmaku
         /// <summary>
         /// 弹幕颜色
         /// </summary>
-        public Color Color { get; set; }
+        public SolidColorBrush Color { get; set; }
         /// <summary>
         /// 弹幕出现时间
         /// </summary>

@@ -1,4 +1,5 @@
 ﻿using Avalonia.Logging;
+using Avalonia.Media;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -40,7 +41,7 @@ namespace Avalonia.Extensions.Danmaku
                                 Time = double.Parse(danmaku[0]),
                                 Location = location,
                                 Size = double.Parse(danmaku[2]),
-                                Color = danmaku[3].ToColor(true),
+                                Color = new SolidColorBrush(danmaku[3].ToColor(true)),
                                 SendTime = danmaku[4],
                                 Pool = danmaku[5],
                                 SendID = danmaku[6],

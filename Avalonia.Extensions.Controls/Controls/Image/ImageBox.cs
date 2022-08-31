@@ -1,9 +1,11 @@
 ﻿using Avalonia.Controls;
 using Avalonia.Extensions.Media;
+using Avalonia.Extensions.Styles;
 using Avalonia.Extensions.Threading;
 using Avalonia.Interactivity;
 using Avalonia.Media.Imaging;
 using Avalonia.Metadata;
+using Avalonia.Styling;
 using Avalonia.Visuals.Media.Imaging;
 using System;
 
@@ -13,8 +15,9 @@ namespace Avalonia.Extensions.Controls
     /// Inherited from <see cref="Image"/>.
     /// Used to display HTTP/HTTPS/Local pictures
     /// </summary>
-    public sealed class ImageBox : Image, IBitmapSource
+    public sealed class ImageBox : Image, IStyling, IBitmapSource
     {
+        Type IStyleable.StyleKey => typeof(ImageBox);
         /// <summary>
         /// original image width
         /// </summary>
