@@ -206,6 +206,19 @@ public static AppBuilder BuildAvaloniaApp()
 - [x] Shutdown / TryShutdown
   > shutdown application
 
+> # DANMAKU
+
+# WARNING
+<strong>Need to reference [Dove.Avalonia.Controls.Extensions.Danmaku](https://www.nuget.org/packages/Dove.Avalonia.Controls.Extensions.Danmaku/) package</strong>
+
+> # CONTROLS
+
+- [x] DanmakuView
+  > use libwtfdanmaku libs draw danmaku,only work's on Windows
+
+- [x] DanmakuNativeView
+  > use Avalonia Animation draw danmaku,for all platforms 
+
 > # MEDIA
 
 # WARNING
