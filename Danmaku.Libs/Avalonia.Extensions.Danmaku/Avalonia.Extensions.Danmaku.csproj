@@ -16,5 +16,6 @@
 	<ItemGroup>
 		<PackageReference Include="Avalonia" Version="0.10.18" />
 		<PackageReference Include="Dove.Avalonia.Controls.Extensions" Version="1.8.9" />
+		<PackageReference Include="Dove.Avalonia.Extensions.Media" Version="1.0.8" />
 	</ItemGroup>
 </Project>

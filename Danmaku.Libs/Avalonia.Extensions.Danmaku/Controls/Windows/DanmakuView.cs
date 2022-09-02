@@ -1,9 +1,11 @@
 ﻿using Avalonia.Controls;
+using Avalonia.Extensions.Media;
 using Avalonia.Logging;
 using Avalonia.Platform;
 using PCLUntils;
 using PCLUntils.Plantform;
 using System;
+using System.Numerics;
 using System.Threading;
 
 namespace Avalonia.Extensions.Danmaku
@@ -11,6 +13,23 @@ namespace Avalonia.Extensions.Danmaku
     public partial class DanmakuView : NativeControlHost
     {
         private IntPtr wtf = IntPtr.Zero;
+        private PlayerView player;
+        public PlayerView Player
+        {
+            get => player;
+            set
+            {
+                if (player != null)
+                {
+                    player.MediaPlayer.Paused += MediaPlayer_Paused;
+                    player.MediaPlayer.Playing += MediaPlayer_Playing;
+                    player.MediaPlayer.Opening += MediaPlayer_Opening;
+                    player.MediaPlayer.Stopped += MediaPlayer_Stopped;
+                    player.MediaPlayer.PositionChanged += MediaPlayer_PositionChanged;
+                }
+                player = value;
+            }
+        }
         private IPlatformHandle? _platformHandle = null;
         static DanmakuView()
         {
