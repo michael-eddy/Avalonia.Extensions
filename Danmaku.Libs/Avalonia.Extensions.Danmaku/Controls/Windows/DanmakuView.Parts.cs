@@ -5,7 +5,6 @@ using System;
 using Avalonia.Threading;
 using System.IO;
 using System.Text;
-using LibVLCSharp.Shared;
 
 namespace Avalonia.Extensions.Danmaku
 {
@@ -198,21 +197,6 @@ namespace Avalonia.Extensions.Danmaku
 			{
 				Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(this, ex.Message);
 			}
-			finally
-			{
-				player.MediaPlayer.Paused -= MediaPlayer_Paused;
-				player.MediaPlayer.Playing -= MediaPlayer_Playing;
-				player.MediaPlayer.Opening -= MediaPlayer_Opening;
-				player.MediaPlayer.Stopped -= MediaPlayer_Stopped;
-			}
-		}
-		private void MediaPlayer_Opening(object sender, EventArgs e) => Init();
-		private void MediaPlayer_Playing(object sender, EventArgs e) => Play();
-		private void MediaPlayer_Stopped(object sender, EventArgs e) => DestoryWindows();
-		private void MediaPlayer_Paused(object sender, EventArgs e) => Pause();
-		private void MediaPlayer_PositionChanged(object sender, MediaPlayerPositionChangedEventArgs e)
-		{
-
 		}
 	}
 }

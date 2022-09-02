@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>Dove.Avalonia.Controls.Extensions.Danmaku</id>
+    <version>1.0.3</version>
+    <title>Dove.Avalonia.Extensions.Danmaku</title>
+    <authors>michael_eddy</authors>
+    <owners>michael_eddy</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <license type="expression">MIT</license>
+    <projectUrl>https://github.com/michael-eddy/Avalonia.Extensions/</projectUrl>
+    <description>Danmaku Controls Extensions for Avalonia.</description>
+    <tags>avalonia avaloniaui mvvm rx reactive extensions android ios mac forms wpf net netstandard net461 uwp xamarin</tags>
+    <repository type="git" url="https://github.com/michael-eddy/Avalonia.Extensions" commit="d6d5127b4716408a2b2f6dfdb75b8131aace2197" />
+    <dependencies>
+      <group targetFramework=".NETStandard2.1">
+        <dependency id="Avalonia" version="0.10.18" exclude="Build,Analyzers" />
+        <dependency id="Dove.Avalonia.Controls.Extensions" version="1.8.9" exclude="Build,Analyzers" />
+      </group>
+    </dependencies>
+    <references>
+      <reference file="libs\.dll" />
+    </references>
+  </metadata>
+</package>
