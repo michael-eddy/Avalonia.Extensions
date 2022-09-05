@@ -2,35 +2,26 @@
 using PCLUntils.Plantform;
 using PCLUntils;
 using System;
-using Avalonia.Threading;
 using System.IO;
 using System.Text;
+using Avalonia.Threading;
+using System.Net.Http;
+using Avalonia.Extensions.Controls;
 
 namespace Avalonia.Extensions.Danmaku
 {
 	public partial class DanmakuView
 	{
-		public void Load(string xml)
+		private byte[] xml;
+		private void Load()
 		{
 			try
 			{
-				switch (PlantformUntils.Platform)
+				if (xml != null && wtf != IntPtr.Zero)
 				{
-					case Platforms.Windows:
-						Dispatcher.UIThread.InvokeAsync(() =>
-						{
-							if (!string.IsNullOrEmpty(xml))
-							{
-								while (wtf != IntPtr.Zero)
-								{
-									LibLoader.WTF_LoadBilibiliXml(wtf, xml);
-									LibLoader.WTF_Start(wtf);
-									Resize(Bounds.Width, Bounds.Height);
-									break;
-								}
-							}
-						});
-						break;
+					LibLoader.WTF_LoadBilibiliXml(wtf, xml);
+					LibLoader.WTF_Start(wtf);
+					Resize(Bounds.Width, Bounds.Height);
 				}
 			}
 			catch (Exception ex)
@@ -38,32 +29,77 @@ namespace Avalonia.Extensions.Danmaku
 				Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(this, ex.Message);
 			}
 		}
-		public void Load(FileInfo filePath)
+        public void Load(string xml, Encoding encoding)
 		{
 			try
 			{
 				switch (PlantformUntils.Platform)
 				{
 					case Platforms.Windows:
-						Dispatcher.UIThread.InvokeAsync(() =>
 						{
-							while (wtf != IntPtr.Zero)
+							if (!string.IsNullOrEmpty(xml))
 							{
-								if (!filePath.Exists)
-									throw new FileNotFoundException($"File [{filePath.FullName}] not found!");
-								LibLoader.WTF_LoadBilibiliFile(wtf, Encoding.ASCII.GetBytes(filePath.FullName));
-								LibLoader.WTF_Start(wtf);
-								Resize(Bounds.Width, Bounds.Height);
-								break;
+								this.xml = encoding.GetBytes(xml);
+								if (wtf != IntPtr.Zero)
+								{
+									LibLoader.WTF_LoadBilibiliXml(wtf, this.xml);
+									LibLoader.WTF_Start(wtf);
+									Resize(Bounds.Width, Bounds.Height);
+								}
 							}
-						});
-						break;
+							break;
+						}
 				}
 			}
 			catch (Exception ex)
 			{
 				Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(this, ex.Message);
 			}
+		}
+		public void Load(Uri uri)
+		{
+			Dispatcher.UIThread.InvokeAsync(() =>
+			{
+				try
+				{
+					switch (uri.Scheme)
+					{
+						case "file":
+							FileInfo fileInfo = new FileInfo(uri.ToString().Replace("file:///", ""));
+							if (fileInfo.Exists)
+							{
+								using var fs = fileInfo.OpenRead();
+								ReadStream(fs);
+							}
+							break;
+						case "avares":
+							ReadStream(Core.Instance.AssetLoader.Open(uri));
+							break;
+						case "http":
+						case "https":
+							HttpResponseMessage hr = httpClient.GetAsync(uri).GetAwaiter().GetResult();
+							hr.EnsureSuccessStatusCode();
+							var stream = hr.Content.ReadAsStreamAsync().GetAwaiter().GetResult();
+							ReadStream(stream);
+							break;
+					}
+					void ReadStream(Stream stream)
+					{
+						xml = new byte[stream.Length];
+						stream.Read(xml);
+						if (wtf != IntPtr.Zero)
+						{
+							LibLoader.WTF_LoadBilibiliXml(wtf, xml);
+							LibLoader.WTF_Start(wtf);
+							Resize(Bounds.Width, Bounds.Height);
+						}
+					}
+				}
+				catch (Exception ex)
+				{
+					Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(this, ex.Message);
+				}
+			});
 		}
 		public void SetDanmakuTypeVisibility(DanmakuTypeVisable visableType)
 		{
@@ -188,7 +224,8 @@ namespace Avalonia.Extensions.Danmaku
 		{
 			try
 			{
-				if (LibLoader.WTF_IsRunning(wtf) != 0)
+				xml = null;
+                if (LibLoader.WTF_IsRunning(wtf) != 0)
 					LibLoader.WTF_Stop(wtf);
 				LibLoader.WTF_ReleaseInstance(wtf);
 				wtf = IntPtr.Zero;

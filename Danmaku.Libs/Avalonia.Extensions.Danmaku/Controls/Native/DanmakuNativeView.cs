@@ -2,15 +2,12 @@
 using Avalonia.Extensions.Controls;
 using Avalonia.Extensions.Danmaku.Controls.Native;
 using Avalonia.Logging;
-using Avalonia.Media;
 using Avalonia.Threading;
-using SkiaSharp;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
-using System.Reflection;
 using System.Text;
 
 namespace Avalonia.Extensions.Danmaku
