@@ -1,5 +1,6 @@
 ﻿using Avalonia.Controls;
 using Avalonia.Extensions.Controls;
+using Avalonia.Extensions.Danmaku;
 using Avalonia.Extensions.Event;
 using Avalonia.Interactivity;
 using Avalonia.Logging;
@@ -8,6 +9,7 @@ using Avalonia.Threading;
 using LibVLCSharp.Shared;
 using System;
 using System.Diagnostics;
+using System.Text;
 
 namespace Avalonia.Extensions.Media
 {
@@ -25,6 +27,8 @@ namespace Avalonia.Extensions.Media
         protected float SeekPosition { get; private set; }
         protected long TotalMilliseconds { get; private set; }
         public MediaPlayer MediaPlayer { get; protected set; }
+        private DanmakuView danmakuView;
+        public DanmakuView DanmakuView => danmakuView ??= new DanmakuView();
         static PlayerView()
         {
             if (!AppBuilderDesktopExtensions.IsVideoInit)
@@ -268,6 +272,28 @@ namespace Avalonia.Extensions.Media
             {
                 Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(this, ex.Message);
                 return false;
+            }
+        }
+        public void LoadDanmaku(string xml, Encoding encoding)
+        {
+            try
+            {
+                DanmakuView.Load(xml, encoding);
+            }
+            catch (Exception ex)
+            {
+                Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(this, ex.Message);
+            }
+        }
+        public void LoadDanmaku(Uri uri)
+        {
+            try
+            {
+                DanmakuView.Load(uri);
+            }
+            catch (Exception ex)
+            {
+                Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(this, ex.Message);
             }
         }
         private void SetPlayerInfo(object sender, EventArgs e)

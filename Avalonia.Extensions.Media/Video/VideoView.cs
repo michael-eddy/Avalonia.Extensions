@@ -72,7 +72,7 @@ namespace Avalonia.Extensions.Media
                     return;
                 if (_floatingContent == null && Content != null)
                 {
-                    _floatingContent = new Window()
+                    _floatingContent = new Window
                     {
                         Opacity = 1,
                         CanResize = false,
@@ -85,13 +85,12 @@ namespace Avalonia.Extensions.Media
                     };
                     _floatingContent.PointerEnter += Controls_PointerEnter;
                     _floatingContent.PointerLeave += Controls_PointerLeave;
-                    _disposables = new CompositeDisposable()
+                    _disposables = new CompositeDisposable
                     {
                         _floatingContent.Bind(ContentControl.ContentProperty, this.GetObservable(ContentProperty)),
                         this.GetObservable(ContentProperty).Skip(1).Subscribe(_=> UpdateOverlayPosition()),
                         this.GetObservable(BoundsProperty).Skip(1).Subscribe(_ => UpdateOverlayPosition()),
-                        Observable.FromEventPattern(VisualRoot, nameof(Window.PositionChanged))
-                        .Subscribe(_ => UpdateOverlayPosition())
+                        Observable.FromEventPattern(VisualRoot, nameof(Window.PositionChanged)).Subscribe(_ => UpdateOverlayPosition())
                     };
                 }
                 ShowNativeOverlay(IsEffectivelyVisible);
