@@ -14,7 +14,7 @@ namespace Avalonia.Extensions.Danmaku
                 Architecture.X86 => "x86",
                 _ => throw new NotSupportedException("current arch is not support!"),
             };
-            dllInvoke = new DllInvoke($"{arch}\\libwtfdanmaku.dll");
+            dllInvoke = new DllInvoke($"libwtfdanmaku_{arch}.dll");
         }
         private delegate IntPtr CreateInstance();
         public static IntPtr WTF_CreateInstance() =>
