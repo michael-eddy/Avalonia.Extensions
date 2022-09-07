@@ -2,7 +2,6 @@
 using Avalonia.Media;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Text.RegularExpressions;
 using System.Xml;
 
@@ -10,7 +9,7 @@ namespace Avalonia.Extensions.Danmaku
 {
     public sealed class DanmakuParser
     {
-        private static DanmakuParser instance = new DanmakuParser();
+        private static readonly DanmakuParser instance = new DanmakuParser();
         public static DanmakuParser Instance => instance;
         private DanmakuParser() { }
         public List<DanmakuModel> ParseBiliBiliXml(string xmlStr)
@@ -51,7 +50,7 @@ namespace Avalonia.Extensions.Danmaku
                         }
                         catch (Exception ex)
                         {
-                            Debug.WriteLine("ParseBiliBiliXml:" + ex.ToString());
+                            Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(this, $"ParseBiliBiliXml:{ex.Message}");
                         }
                     }
                 }

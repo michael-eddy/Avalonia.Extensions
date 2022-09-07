@@ -10,7 +10,7 @@ using System.Threading;
 
 namespace Avalonia.Extensions.Danmaku
 {
-    public partial class DanmakuView : NativeControlHost
+    public partial class DanmakuView : NativeControlHost, IDanmakuView
     {
         private IntPtr wtf = IntPtr.Zero;
         private readonly HttpClient httpClient;
@@ -125,7 +125,7 @@ namespace Avalonia.Extensions.Danmaku
             switch (PlantformUntils.Platform)
             {
                 case Platforms.Windows:
-                    DestoryWindows();
+                    Destory();
                     Init();
                     break;
             }
@@ -137,7 +137,7 @@ namespace Avalonia.Extensions.Danmaku
                 switch (PlantformUntils.Platform)
                 {
                     case Platforms.Windows:
-                        DestoryWindows();
+                        Destory();
                         base.DestroyNativeControlCore(control);
                         break;
                     default:

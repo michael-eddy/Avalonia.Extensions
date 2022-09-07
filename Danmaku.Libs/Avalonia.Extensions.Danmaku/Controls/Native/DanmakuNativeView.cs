@@ -12,7 +12,7 @@ using System.Text;
 
 namespace Avalonia.Extensions.Danmaku
 {
-    public class DanmakuNativeView : Panel, IDisposable
+    public class DanmakuNativeView : Panel, IDanmakuView, IDisposable
     {
         internal readonly Random random;
         private readonly HttpClient httpClient;
@@ -99,7 +99,7 @@ namespace Avalonia.Extensions.Danmaku
                 view.PartWidth = Convert.ToInt32(rect.Width / 2);
             }
         }
-        public void LoadXml(string xml)
+        public void Load(string xml, Encoding _ = null)
         {
             Timeline = 0;
             if (!string.IsNullOrEmpty(xml))
@@ -123,7 +123,7 @@ namespace Avalonia.Extensions.Danmaku
         }
         public void SeekTo(long position) => Timeline = position;
         public void Stop() => timer.Stop();
-        public void LoadFile(Uri uri)
+        public void Load(Uri uri)
         {
             switch (uri.Scheme)
             {
@@ -189,17 +189,21 @@ namespace Avalonia.Extensions.Danmaku
             {
                 var bytes = new byte[stream.Length];
                 stream.Read(bytes);
-                LoadXml(Encoding.UTF8.GetString(bytes));
+                Load(Encoding.UTF8.GetString(bytes));
             }
             catch (Exception ex)
             {
                 Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(this, ex.Message);
             }
         }
-        void IDisposable.Dispose()
+        public void Dispose()
         {
             Stop();
             danmakus = null;
+        }
+        public void Destory()
+        {
+            Dispose();
         }
     }
 }
