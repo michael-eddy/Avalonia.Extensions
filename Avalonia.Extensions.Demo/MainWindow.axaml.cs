@@ -6,6 +6,7 @@ using Avalonia.Extensions.Media;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
+using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 
@@ -64,6 +65,7 @@ namespace Avalonia.Controls.Demo
             scrollView.ScrollTop += ScrollView_ScrollTop;
             var playerView = this.FindControl<PlayerView>("playerView");
             playerView.Play("http://vfx.mtime.cn/Video/2019/03/18/mp4/190318231014076505.mp4");
+            playerView.LoadDanmaku(new Uri("file:///D:\\200887808.xml"));
             var audio = this.FindControl<AudioControl>("audio");
             audio.Play("http://downsc.chinaz.net/Files/DownLoad/sound1/201906/11582.mp3");
         }
@@ -88,7 +90,7 @@ namespace Avalonia.Controls.Demo
                 {
                     case "btnShow":
                         {
-                            PopupMenu popupMenu = new PopupMenu();
+                            PopupMenu popupMenu = new PopupMenu{ Opacity = 0 };
                             popupMenu.Items = new[] { "1234", "1234", "1234", "1234" };
                             popupMenu.ItemClick += PopupMenu_ItemClick;
                             popupMenu.Show(control);
@@ -96,7 +98,7 @@ namespace Avalonia.Controls.Demo
                         }
                     case "btnShow2":
                         {
-                            PopupMenu popupMenu = new PopupMenu();
+                            PopupMenu popupMenu = new PopupMenu{ Opacity = 0 };
                             popupMenu.Items = new[] { new CustomBindingModel("1234"), new CustomBindingModel("1234"),
                                     new CustomBindingModel("1234"), new CustomBindingModel("1234") };
                             popupMenu.ItemTemplate = new FuncDataTemplate<CustomBindingModel>((x, _) => new TextBlock { [!TextBlock.TextProperty] = new Binding("Content") });
@@ -181,7 +183,7 @@ namespace Avalonia.Controls.Demo
                         break;
                     }
             }
-            NotifyWindow window = new NotifyWindow();
+            NotifyWindow window = new NotifyWindow{ Opacity = 0 };
             window.Content = new TextBlock { Text = "大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大" };
             var options = new NotifyOptions(position, new Size(160, 60), orientation);
             window.Show(options);

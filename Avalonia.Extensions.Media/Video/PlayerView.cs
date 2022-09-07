@@ -1,6 +1,5 @@
 ﻿using Avalonia.Controls;
 using Avalonia.Extensions.Controls;
-using Avalonia.Extensions.Danmaku;
 using Avalonia.Extensions.Event;
 using Avalonia.Interactivity;
 using Avalonia.Logging;
@@ -8,7 +7,6 @@ using Avalonia.Media;
 using Avalonia.Threading;
 using LibVLCSharp.Shared;
 using System;
-using System.Diagnostics;
 using System.Text;
 
 namespace Avalonia.Extensions.Media
@@ -27,8 +25,6 @@ namespace Avalonia.Extensions.Media
         protected float SeekPosition { get; private set; }
         protected long TotalMilliseconds { get; private set; }
         public MediaPlayer MediaPlayer { get; protected set; }
-        private DanmakuView danmakuView;
-        public DanmakuView DanmakuView => danmakuView ??= new DanmakuView();
         static PlayerView()
         {
             if (!AppBuilderDesktopExtensions.IsVideoInit)
@@ -274,28 +270,8 @@ namespace Avalonia.Extensions.Media
                 return false;
             }
         }
-        public void LoadDanmaku(string xml, Encoding encoding)
-        {
-            try
-            {
-                DanmakuView.Load(xml, encoding);
-            }
-            catch (Exception ex)
-            {
-                Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(this, ex.Message);
-            }
-        }
-        public void LoadDanmaku(Uri uri)
-        {
-            try
-            {
-                DanmakuView.Load(uri);
-            }
-            catch (Exception ex)
-            {
-                Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(this, ex.Message);
-            }
-        }
+        public bool LoadDanmaku(Uri uri) => videoView.LoadDanmaku(uri);
+        public bool LoadDanmaku(string xml, Encoding encoding) => videoView.LoadDanmaku(xml, encoding);
         private void SetPlayerInfo(object sender, EventArgs e)
         {
             try
@@ -352,11 +328,8 @@ namespace Avalonia.Extensions.Media
                 throw;
             }
         }
-        private void VlcLogger_Event(object sender, LogEventArgs e)
-        {
-            Debug.WriteLine(e.FormattedLog);
+        private void VlcLogger_Event(object sender, LogEventArgs e) =>
             Logger.TryGet(LogEventLevel.Information, LogArea.Control)?.Log(this, e.FormattedLog);
-        }
         private static void OnSeekSecondChange(object sender, AvaloniaPropertyChangedEventArgs e)
         {
             try

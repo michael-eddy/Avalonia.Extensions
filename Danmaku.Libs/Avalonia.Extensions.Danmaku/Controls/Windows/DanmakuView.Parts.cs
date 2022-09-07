@@ -29,7 +29,7 @@ namespace Avalonia.Extensions.Danmaku
 				Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(this, ex.Message);
 			}
 		}
-        public void Load(string xml, Encoding encoding)
+		public void Load(string xml, Encoding encoding)
 		{
 			try
 			{
@@ -134,7 +134,7 @@ namespace Avalonia.Extensions.Danmaku
 				Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(this, ex.Message);
 			}
 		}
-		public void Play()
+		public void Start()
 		{
 			try
 			{
@@ -151,7 +151,7 @@ namespace Avalonia.Extensions.Danmaku
 				Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(this, ex.Message);
 			}
 		}
-		public void Pause()
+		public void Stop()
 		{
 			try
 			{
@@ -220,12 +220,12 @@ namespace Avalonia.Extensions.Danmaku
 				Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(this, ex.Message);
 			}
 		}
-		private void DestoryWindows()
+		public void Destory()
 		{
 			try
 			{
 				xml = null;
-                if (LibLoader.WTF_IsRunning(wtf) != 0)
+				if (LibLoader.WTF_IsRunning(wtf) != 0)
 					LibLoader.WTF_Stop(wtf);
 				LibLoader.WTF_ReleaseInstance(wtf);
 				wtf = IntPtr.Zero;

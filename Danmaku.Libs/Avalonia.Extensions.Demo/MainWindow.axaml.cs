@@ -21,7 +21,7 @@ namespace Avalonia.Danmaku.Demo
             var danmaku = this.FindControl<DanmakuView>("danmaku");
             danmaku.Load(uri);
             var danmakuView = this.FindControl<DanmakuNativeView>("danmakuView");
-            danmakuView.LoadFile(uri);
+            danmakuView.Load(uri);
             danmakuView.Start();
         }
     }

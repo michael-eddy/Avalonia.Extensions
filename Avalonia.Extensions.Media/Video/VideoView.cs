@@ -1,5 +1,6 @@
 ﻿using Avalonia.Controls;
 using Avalonia.Data;
+using Avalonia.Extensions.Danmaku;
 using Avalonia.Input;
 using Avalonia.Logging;
 using Avalonia.LogicalTree;
@@ -10,12 +11,15 @@ using Avalonia.Threading;
 using Avalonia.VisualTree;
 using CSharpFunctionalExtensions;
 using LibVLCSharp.Shared;
+using PCLUntils;
+using PCLUntils.Plantform;
 using System;
 using System.Linq;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using System.Runtime.InteropServices;
+using System.Text;
 
 namespace Avalonia.Extensions.Media
 {
@@ -27,14 +31,18 @@ namespace Avalonia.Extensions.Media
         private readonly BehaviorSubject<Maybe<MediaPlayer>> mediaPlayers = new BehaviorSubject<Maybe<MediaPlayer>>(Maybe<MediaPlayer>.None);
         private readonly BehaviorSubject<Maybe<IPlatformHandle>> platformHandles = new BehaviorSubject<Maybe<IPlatformHandle>>(Maybe<IPlatformHandle>.None);
         public static readonly StyledProperty<object> ContentProperty = ContentControl.ContentProperty.AddOwner<VideoView>();
+        public static readonly StyledProperty<IDanmakuView> DanmakuViewProperty =
+            AvaloniaProperty.Register<VideoView, IDanmakuView>(nameof(DanmakuView));
         public static readonly StyledProperty<IBrush> BackgroundProperty = Panel.BackgroundProperty.AddOwner<VideoView>();
         private bool _isAttached;
         public IPlatformHandle Hndl;
         internal IDisposable attacher;
         internal EventHandler Callback;
         private Window _floatingContent;
+        private Window _floatingDanmaku;
         private IDisposable _disposables;
         private IDisposable _isEffectivelyVisible;
+        private IDisposable _danmakuDisposables;
         public bool IsDispose { get; private set; }
         public VideoView()
         {
@@ -46,6 +54,8 @@ namespace Avalonia.Extensions.Media
             });
             ContentProperty.Changed.AddClassHandler<VideoView>((s, _) => s.InitializeNativeOverlay());
             IsVisibleProperty.Changed.AddClassHandler<VideoView>((s, _) => s.ShowNativeOverlay(s.IsVisible));
+            DanmakuViewProperty.Changed.AddClassHandler<VideoView>((s, _) => s.InitializeDanamakuOverlay());
+            DanmakuView = PlantformUntils.Platform == Platforms.Windows ? new DanmakuView { Opacity = 0 } : new DanmakuNativeView { Opacity = 0 };
         }
         public MediaPlayer MediaPlayer
         {
@@ -58,12 +68,51 @@ namespace Avalonia.Extensions.Media
             get => GetValue(ContentProperty);
             set => SetValue(ContentProperty, value);
         }
+        public IDanmakuView DanmakuView
+        {
+            get => GetValue(DanmakuViewProperty);
+            set => SetValue(DanmakuViewProperty, value);
+        }
         public IBrush Background
         {
             get => GetValue(BackgroundProperty);
             set => SetValue(BackgroundProperty, value);
         }
         public void SetContent(object o) => Content = o;
+        private void InitializeDanamakuOverlay()
+        {
+            try
+            {
+                if (!((IVisual)this).IsAttachedToVisualTree)
+                    return;
+                if (_floatingDanmaku == null && DanmakuView != null)
+                {
+                    _floatingDanmaku = new Window
+                    {
+                        Opacity = 0,
+                        ZIndex = 99,
+                        CanResize = false,
+                        ShowInTaskbar = false,
+                        Background = Brushes.Transparent,
+                        SystemDecorations = SystemDecorations.None,
+                        SizeToContent = SizeToContent.WidthAndHeight,
+                        TransparencyLevelHint = WindowTransparencyLevel.Transparent
+                    };
+                    _danmakuDisposables = new CompositeDisposable
+                    {
+                        _floatingDanmaku.Bind(ContentControl.ContentProperty, this.GetObservable(DanmakuViewProperty)),
+                        this.GetObservable(BoundsProperty).Skip(1).Subscribe(_ => UpdateDanmakuPosition()),
+                        this.GetObservable(DanmakuViewProperty).Skip(1).Subscribe(_=> UpdateDanmakuPosition()),
+                        Observable.FromEventPattern(VisualRoot, nameof(Window.PositionChanged)).Subscribe(_ => UpdateDanmakuPosition())
+                    };
+                }
+                _floatingDanmaku.Show(VisualRoot as Window);
+            }
+            catch(Exception ex)
+            {
+                Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(this, ex.Message);
+            }
+        }
         private void InitializeNativeOverlay()
         {
             try
@@ -74,14 +123,14 @@ namespace Avalonia.Extensions.Media
                 {
                     _floatingContent = new Window
                     {
-                        Opacity = 1,
+                        Opacity = 0,
+                        ZIndex = 100,
                         CanResize = false,
-                        ZIndex = 2147483647,
                         ShowInTaskbar = false,
                         Background = Brushes.Transparent,
                         SystemDecorations = SystemDecorations.None,
                         SizeToContent = SizeToContent.WidthAndHeight,
-                        TransparencyLevelHint = WindowTransparencyLevel.Transparent,
+                        TransparencyLevelHint = WindowTransparencyLevel.Transparent
                     };
                     _floatingContent.PointerEnter += Controls_PointerEnter;
                     _floatingContent.PointerLeave += Controls_PointerLeave;
@@ -207,6 +256,62 @@ namespace Avalonia.Extensions.Media
                 Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(this, ex.Message);
             }
         }
+        private void UpdateDanmakuPosition()
+        {
+            try
+            {
+                if (_floatingDanmaku == null) return;
+                bool forceSetWidth = false, forceSetHeight = false;
+                var topLeft = new Point();
+                var child = _floatingDanmaku.Presenter?.Child;
+                if (child?.IsArrangeValid == true)
+                {
+                    switch (child.HorizontalAlignment)
+                    {
+                        case Layout.HorizontalAlignment.Right:
+                            topLeft = topLeft.WithX(Bounds.Width - _floatingDanmaku.Bounds.Width);
+                            break;
+                        case Layout.HorizontalAlignment.Center:
+                            topLeft = topLeft.WithX((Bounds.Width - _floatingDanmaku.Bounds.Width) / 2);
+                            break;
+                        case Layout.HorizontalAlignment.Stretch:
+                            forceSetWidth = true;
+                            break;
+                    }
+                    switch (child.VerticalAlignment)
+                    {
+                        case Layout.VerticalAlignment.Bottom:
+                            topLeft = topLeft.WithY(Bounds.Height - _floatingDanmaku.Bounds.Height);
+                            break;
+                        case Layout.VerticalAlignment.Center:
+                            topLeft = topLeft.WithY((Bounds.Height - _floatingDanmaku.Bounds.Height) / 2);
+                            break;
+                        case Layout.VerticalAlignment.Stretch:
+                            forceSetHeight = true;
+                            break;
+                    }
+                }
+                if (forceSetWidth && forceSetHeight)
+                    _floatingDanmaku.SizeToContent = SizeToContent.Manual;
+                else if (forceSetHeight)
+                    _floatingDanmaku.SizeToContent = SizeToContent.Width;
+                else if (forceSetWidth)
+                    _floatingDanmaku.SizeToContent = SizeToContent.Height;
+                else
+                    _floatingDanmaku.SizeToContent = SizeToContent.Manual;
+                _floatingDanmaku.Width = forceSetWidth ? Bounds.Width : double.NaN;
+                _floatingDanmaku.Height = forceSetHeight ? Bounds.Height : double.NaN;
+                _floatingDanmaku.MaxWidth = Bounds.Width;
+                _floatingDanmaku.MaxHeight = Bounds.Height;
+                var newPosition = this.PointToScreen(topLeft);
+                if (newPosition != _floatingDanmaku.Position)
+                    _floatingDanmaku.Position = newPosition;
+            }
+            catch (Exception ex)
+            {
+                Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(this, ex.Message);
+            }
+        }
         protected override void OnAttachedToVisualTree(VisualTreeAttachmentEventArgs e)
         {
             base.OnAttachedToVisualTree(e);
@@ -214,6 +319,7 @@ namespace Avalonia.Extensions.Media
             {
                 _isAttached = true;
                 InitializeNativeOverlay();
+                InitializeDanamakuOverlay();
                 _isEffectivelyVisible = this.GetVisualAncestors().OfType<IControl>().Select(v => v.GetObservable(IsVisibleProperty))
                         .CombineLatest(v => !v.Any(o => !o)).DistinctUntilChanged().Subscribe(v => IsVisible = v);
             }
@@ -228,6 +334,7 @@ namespace Avalonia.Extensions.Media
             try
             {
                 _isEffectivelyVisible?.Dispose();
+                _floatingDanmaku.Hide();
                 ShowNativeOverlay(false);
                 _isAttached = false;
             }
@@ -239,10 +346,40 @@ namespace Avalonia.Extensions.Media
         protected override void OnDetachedFromLogicalTree(LogicalTreeAttachmentEventArgs e)
         {
             base.OnDetachedFromLogicalTree(e);
+            _danmakuDisposables?.Dispose();
+            _danmakuDisposables = null;
             _disposables?.Dispose();
             _disposables = null;
+            _floatingDanmaku?.Close();
+            _floatingDanmaku = null;
             _floatingContent?.Close();
             _floatingContent = null;
+        }
+        public bool LoadDanmaku(Uri uri)
+        {
+            try
+            {
+                DanmakuView.Load(uri);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(this, ex.Message);
+                return false;
+            }
+        }
+        public bool LoadDanmaku(string xml, Encoding encoding)
+        {
+            try
+            {
+                DanmakuView.Load(xml, encoding);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(this, ex.Message);
+                return false;
+            }
         }
     }
     public static class MediaPlayerExtensions
