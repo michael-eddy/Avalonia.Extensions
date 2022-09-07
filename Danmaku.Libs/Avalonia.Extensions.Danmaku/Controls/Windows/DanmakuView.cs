@@ -1,9 +1,11 @@
 ﻿using Avalonia.Controls;
+using Avalonia.Extensions.Controls;
 using Avalonia.Logging;
 using Avalonia.Platform;
 using PCLUntils;
 using PCLUntils.Plantform;
 using System;
+using System.Net.Http;
 using System.Threading;
 
 namespace Avalonia.Extensions.Danmaku
@@ -11,6 +13,7 @@ namespace Avalonia.Extensions.Danmaku
     public partial class DanmakuView : NativeControlHost
     {
         private IntPtr wtf = IntPtr.Zero;
+        private readonly HttpClient httpClient;
         private IPlatformHandle? _platformHandle = null;
         static DanmakuView()
         {
@@ -21,6 +24,10 @@ namespace Avalonia.Extensions.Danmaku
             FontNameProperty.Changed.AddClassHandler<DanmakuView>(OnFontNameChange);
             FontWeightProperty.Changed.AddClassHandler<DanmakuView>(OnFontWeightChange);
             CompositionOpacityProperty.Changed.AddClassHandler<DanmakuView>(OnCompositionOpacity);
+        }
+        public DanmakuView()
+        {
+            httpClient = Core.Instance.GetClient();
         }
         private void Resize(double width, double height)
         {
@@ -111,6 +118,7 @@ namespace Avalonia.Extensions.Danmaku
             LibLoader.WTF_SetFontScaleFactor(wtf, FontScale);
             LibLoader.WTF_SetDanmakuStyle(wtf, (int)Style);
             LibLoader.WTF_SetCompositionOpacity(wtf, CompositionOpacity);
+            Load();
         }
         private void ReInit()
         {

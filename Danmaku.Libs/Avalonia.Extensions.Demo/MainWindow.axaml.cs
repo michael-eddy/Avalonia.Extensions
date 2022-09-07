@@ -17,10 +17,11 @@ namespace Avalonia.Danmaku.Demo
         }
         private void InitializeComponent()
         {
+            var uri = new Uri("file:///D:\\200887808.xml");
             var danmaku = this.FindControl<DanmakuView>("danmaku");
-            danmaku.Load("D:\\200887808.xml");
+            danmaku.Load(uri);
             var danmakuView = this.FindControl<DanmakuNativeView>("danmakuView");
-            danmakuView.LoadFile(new Uri("file:///D:\\200887808.xml"));
+            danmakuView.LoadFile(uri);
             danmakuView.Start();
         }
     }
