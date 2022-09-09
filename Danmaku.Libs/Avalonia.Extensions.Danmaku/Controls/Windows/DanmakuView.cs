@@ -15,6 +15,7 @@ namespace Avalonia.Extensions.Danmaku
         private IntPtr wtf = IntPtr.Zero;
         private readonly HttpClient httpClient;
         private IPlatformHandle? _platformHandle = null;
+        public DanmakuView() => httpClient = Core.Instance.GetClient();
         static DanmakuView()
         {
             WidthProperty.Changed.AddClassHandler<DanmakuView>(OnWidthChange);
@@ -24,10 +25,6 @@ namespace Avalonia.Extensions.Danmaku
             FontNameProperty.Changed.AddClassHandler<DanmakuView>(OnFontNameChange);
             FontWeightProperty.Changed.AddClassHandler<DanmakuView>(OnFontWeightChange);
             CompositionOpacityProperty.Changed.AddClassHandler<DanmakuView>(OnCompositionOpacity);
-        }
-        public DanmakuView()
-        {
-            httpClient = Core.Instance.GetClient();
         }
         private void Resize(double width, double height)
         {
@@ -125,7 +122,7 @@ namespace Avalonia.Extensions.Danmaku
             switch (PlantformUntils.Platform)
             {
                 case Platforms.Windows:
-                    Destory();
+                    Dispose();
                     Init();
                     break;
             }
@@ -137,13 +134,10 @@ namespace Avalonia.Extensions.Danmaku
                 switch (PlantformUntils.Platform)
                 {
                     case Platforms.Windows:
-                        Destory();
-                        base.DestroyNativeControlCore(control);
-                        break;
-                    default:
-                        base.DestroyNativeControlCore(control);
+                        Dispose();
                         break;
                 }
+                base.DestroyNativeControlCore(control);
             }
             catch (Exception ex)
             {

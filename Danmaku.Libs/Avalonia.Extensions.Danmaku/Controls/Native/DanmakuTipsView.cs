@@ -5,7 +5,7 @@ using Avalonia.Styling;
 using SkiaSharp;
 using System;
 
-namespace Avalonia.Extensions.Danmaku.Controls.Native
+namespace Avalonia.Extensions.Danmaku
 {
     public class DanmakuTipsView : TextBlock, IStyling
     {

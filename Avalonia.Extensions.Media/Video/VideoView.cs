@@ -52,6 +52,7 @@ namespace Avalonia.Extensions.Media
                 var playerAndHandle = from h in x.First from mp in x.Second select new { n = h, m = mp };
                 playerAndHandle.Execute(a => a.m.SetHandle(a.n));
             });
+            Background = new SolidColorBrush(Colors.Transparent);
             ContentProperty.Changed.AddClassHandler<VideoView>((s, _) => s.InitializeNativeOverlay());
             IsVisibleProperty.Changed.AddClassHandler<VideoView>((s, _) => s.ShowNativeOverlay(s.IsVisible));
             DanmakuViewProperty.Changed.AddClassHandler<VideoView>((s, _) => s.InitializeDanamakuOverlay());
@@ -334,7 +335,7 @@ namespace Avalonia.Extensions.Media
             try
             {
                 _isEffectivelyVisible?.Dispose();
-                _floatingDanmaku.Hide();
+                _floatingDanmaku?.Hide();
                 ShowNativeOverlay(false);
                 _isAttached = false;
             }

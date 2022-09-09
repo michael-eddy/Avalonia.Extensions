@@ -47,5 +47,7 @@ namespace Avalonia.Extensions.Danmaku
                 }
             }
         }
+        internal static uint ToUInt32(this object obj) =>
+            (uint)obj.ToInt32();
     }
 }

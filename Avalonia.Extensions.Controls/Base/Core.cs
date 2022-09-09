@@ -10,7 +10,6 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Net.Http;
-using Color = Avalonia.Media.Color;
 
 namespace Avalonia.Extensions.Controls
 {
@@ -66,7 +65,7 @@ namespace Avalonia.Extensions.Controls
                 while (enumerator.MoveNext())
                     InnerClasses.Add(enumerator.Current);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(this, ex.Message);
             }
@@ -82,6 +81,7 @@ namespace Avalonia.Extensions.Controls
                 if (HttpClient == null)
                 {
                     var clientHandler = new HttpClientHandler();
+                    clientHandler.ClientCertificateOptions = ClientCertificateOption.Manual;
                     clientHandler.ServerCertificateCustomValidationCallback += (_, _, _, _) => true;
                     HttpClient = new HttpClient(clientHandler);
                 }
@@ -100,20 +100,9 @@ namespace Avalonia.Extensions.Controls
                 InnerClasses.Clear();
                 HttpClient.Dispose();
                 InnerClasses = null;
-                _primaryBrush = null;
             }
             catch { }
         }
         internal SolidColorBrush Transparent { get; }
-        private SolidColorBrush _primaryBrush;
-        internal SolidColorBrush PrimaryBrush
-        {
-            get
-            {
-                if (_primaryBrush == null)
-                    _primaryBrush = new SolidColorBrush(Color.FromRgb(139, 68, 172));
-                return _primaryBrush;
-            }
-        }
     }
 }
