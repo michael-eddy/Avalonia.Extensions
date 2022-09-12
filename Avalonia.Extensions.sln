@@ -25,6 +25,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Avalonia.Extensions.Media",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Avalonia.Danamku.Demo", "Danmaku.Libs\Avalonia.Extensions.Demo\Avalonia.Danamku.Demo.csproj", "{514055BC-2CAF-41F5-9558-0E3FF77BBCFF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Avalonia.Extensions.WebView", "Avalonia.Extensions.WebView\Avalonia.Extensions.WebView.csproj", "{866CA9E7-E500-4403-838D-8DB4E51E0AD7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -55,6 +57,10 @@ Global
 		{514055BC-2CAF-41F5-9558-0E3FF77BBCFF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{514055BC-2CAF-41F5-9558-0E3FF77BBCFF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{514055BC-2CAF-41F5-9558-0E3FF77BBCFF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{866CA9E7-E500-4403-838D-8DB4E51E0AD7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{866CA9E7-E500-4403-838D-8DB4E51E0AD7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{866CA9E7-E500-4403-838D-8DB4E51E0AD7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{866CA9E7-E500-4403-838D-8DB4E51E0AD7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -66,6 +72,7 @@ Global
 		{9067A692-3D96-4019-9E4D-31F3FD29E828} = {60373426-CE2D-4E22-A406-FFA8F8FE137F}
 		{FA54EE3C-07E6-4B18-8031-8B95842FDA8B} = {736AFC18-0DD8-4577-8066-A26322E85F8D}
 		{514055BC-2CAF-41F5-9558-0E3FF77BBCFF} = {60373426-CE2D-4E22-A406-FFA8F8FE137F}
+		{866CA9E7-E500-4403-838D-8DB4E51E0AD7} = {736AFC18-0DD8-4577-8066-A26322E85F8D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {82A8C38D-510B-4067-BAB9-FA581B3F79C7}

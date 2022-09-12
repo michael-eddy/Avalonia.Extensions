@@ -19,5 +19,6 @@
         <ProjectReference Include="..\Avalonia.Extensions.Chinese\Avalonia.Extensions.Chinese.csproj" />
         <ProjectReference Include="..\Avalonia.Extensions.Controls\Avalonia.Extensions.Controls.csproj" />
         <ProjectReference Include="..\Avalonia.Extensions.Media\Avalonia.Extensions.Media.csproj" />
+        <ProjectReference Include="..\Avalonia.Extensions.WebView\Avalonia.Extensions.WebView.csproj" />
     </ItemGroup>
 </Project>
