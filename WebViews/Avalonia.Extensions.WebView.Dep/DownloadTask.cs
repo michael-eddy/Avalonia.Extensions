@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace Avalonia.Extensions
+namespace Avalonia.Extensions.Controls
 {
     internal sealed class DownloadTask
     {

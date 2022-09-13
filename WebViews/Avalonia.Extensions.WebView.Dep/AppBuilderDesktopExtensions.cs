@@ -1,4 +1,5 @@
 ﻿using Avalonia.Controls;
+using Avalonia.Extensions.WebView.Dep;
 using Avalonia.Logging;
 using CefNet;
 using System;
@@ -16,7 +17,7 @@ namespace Avalonia.Extensions.Controls
         /// <param name="initAuto">automatically initializing dependencies</param>
         /// <param name="eventHandler">Occurs when a new message is received from a different process. Do not keep a reference to or attempt to access the message outside of an event handler.</param>
         /// <returns></returns>
-        public static TAppBuilder UseWebView<TAppBuilder>(this TAppBuilder builder,bool initAuto =true, EventHandler<CefProcessMessageReceivedEventArgs> eventHandler = null)
+        public static TAppBuilder UseWebView<TAppBuilder>(this TAppBuilder builder, bool initAuto = true, EventHandler<CefProcessMessageReceivedEventArgs> eventHandler = null)
            where TAppBuilder : AppBuilderBase<TAppBuilder>, new()
         {
             builder.AfterSetup((_) =>
