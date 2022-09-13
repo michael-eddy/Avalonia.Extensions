@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Avalonia.Extensions.Controls
+namespace Avalonia.Extensions.WebView
 {
     internal sealed class DownloadTask
     {

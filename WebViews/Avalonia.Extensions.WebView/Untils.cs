@@ -1,10 +1,8 @@
 ﻿using Avalonia.Controls;
-using CefNet;
-using System.IO;
 
 namespace Avalonia.Extensions
 {
-    public static class Untils
+    internal static class Untils
     {
         public static TabControl FindTabControl(this Control tab)
         {

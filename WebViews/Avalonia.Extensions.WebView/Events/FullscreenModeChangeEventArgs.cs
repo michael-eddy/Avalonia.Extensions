@@ -1,7 +1,6 @@
-﻿using Avalonia.Extensions.Controls;
-using Avalonia.Interactivity;
+﻿using Avalonia.Interactivity;
 
-namespace Avalonia.Extensions.Events
+namespace Avalonia.Extensions.WebView
 {
     public sealed class FullscreenModeChangeEventArgs : RoutedEventArgs
     {

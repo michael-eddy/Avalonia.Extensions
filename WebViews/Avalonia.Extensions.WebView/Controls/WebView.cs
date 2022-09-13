@@ -1,10 +1,9 @@
-﻿using Avalonia.Extensions.Events;
-using Avalonia.Interactivity;
+﻿using Avalonia.Interactivity;
 using System;
 
-namespace Avalonia.Extensions.Controls
+namespace Avalonia.Extensions.WebView
 {
-    sealed class WebView : CefNet.Avalonia.WebView
+    public sealed class WebView : CefNet.Avalonia.WebView
     {
         public static RoutedEvent<FullscreenModeChangeEventArgs> FullscreenEvent =
             RoutedEvent.Register<WebViewGlue, FullscreenModeChangeEventArgs>("Fullscreen", RoutingStrategies.Bubble);

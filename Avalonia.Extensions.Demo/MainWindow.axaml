@@ -228,6 +228,9 @@
 					<Button Command="{Binding OnAudioClick}">Open Music Player Window</Button>
 				</StackPanel>
 			</TabItem>
+			<TabItem Header="WebView">
+				<WebView Name="webView" />
+			</TabItem>
 		</TabControl>
 	</Panel>
 </AeroWindow>

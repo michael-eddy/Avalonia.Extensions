@@ -9,7 +9,7 @@ using CefNet;
 using System;
 using Avalonia.VisualTree;
 
-namespace Avalonia.Extensions.Controls
+namespace Avalonia.Extensions.WebView
 {
     public class WebViewTab : TabItem, IStyleable
     {

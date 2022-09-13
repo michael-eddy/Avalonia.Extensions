@@ -3,7 +3,7 @@ using Avalonia.Media;
 using CefNet;
 using CefNet.Internal;
 
-namespace Avalonia.Extensions.Controls
+namespace Avalonia.Extensions.WebView
 {
     public sealed class WebViewGlue : AvaloniaWebViewGlue
     {

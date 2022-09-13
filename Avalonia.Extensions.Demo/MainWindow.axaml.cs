@@ -3,6 +3,7 @@ using Avalonia.Data;
 using Avalonia.Extensions.Controls;
 using Avalonia.Extensions.Event;
 using Avalonia.Extensions.Media;
+using Avalonia.Extensions.WebView;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
@@ -68,6 +69,8 @@ namespace Avalonia.Controls.Demo
             playerView.LoadDanmaku(new Uri("file:///D:\\200887808.xml"));
             var audio = this.FindControl<AudioControl>("audio");
             audio.Play("http://downsc.chinaz.net/Files/DownLoad/sound1/201906/11582.mp3");
+            var webView = this.FindControl<WebView>("webView");
+            webView.Navigate("bing.com");
         }
         private void EtvBtn_Click(object? sender, RoutedEventArgs e)
         {

@@ -5,14 +5,14 @@
 		<Authors>michael_eddy</Authors>
 		<LangVersion>latest</LangVersion>
 		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-		<RootNamespace>Avalonia.Extensions</RootNamespace>
 		<TargetFramework>netstandard2.1</TargetFramework>
 		<EnforceCodeStyleInBuild>false</EnforceCodeStyleInBuild>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<RootNamespace>Avalonia.Extensions.WebView</RootNamespace>
 		<PackageProjectUrl>https://github.com/michael-eddy/Avalonia.Extensions</PackageProjectUrl>
 	</PropertyGroup>
 	<ItemGroup>
 		<PackageReference Include="Avalonia" Version="0.10.18" />
-		<PackageReference Include="CefNet.Avalonia" Version="105.3.22248.142" />
+		<PackageReference Include="Downloader" Version="2.3.8" />
 	</ItemGroup>
 </Project>
