@@ -5,7 +5,7 @@ VisualStudioVersion = 17.0.31919.166
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Avalonia.Controls", "Avalonia.Controls", "{736AFC18-0DD8-4577-8066-A26322E85F8D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Avalonia.Extensions.Demo", "Avalonia.Extensions.Demo\Avalonia.Extensions.Demo.csproj", "{E398D33B-003A-4B1E-9C15-2392697A2ACD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Avalonia.Extensions.Demo", "Controls\Avalonia.Extensions.Demo\Avalonia.Extensions.Demo.csproj", "{E398D33B-003A-4B1E-9C15-2392697A2ACD}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{28A7A1E6-B47C-4241-8227-645D8D769F23}"
 	ProjectSection(SolutionItems) = preProject
@@ -13,17 +13,23 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		readme.md = readme.md
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Avalonia.Extensions.Controls", "Avalonia.Extensions.Controls\Avalonia.Extensions.Controls.csproj", "{C6F08B78-C20E-4BDA-89D8-55D392A86208}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Avalonia.Extensions.Controls", "Controls\Avalonia.Extensions.Controls\Avalonia.Extensions.Controls.csproj", "{C6F08B78-C20E-4BDA-89D8-55D392A86208}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Avalonia.Extensions.Chinese", "Avalonia.Extensions.Chinese\Avalonia.Extensions.Chinese.csproj", "{A66F5B77-7F56-4AB1-B2DE-D2EC004C6F25}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Avalonia.Extensions.Chinese", "Controls\Avalonia.Extensions.Chinese\Avalonia.Extensions.Chinese.csproj", "{A66F5B77-7F56-4AB1-B2DE-D2EC004C6F25}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Avalonia.Controls.Danmaku", "Avalonia.Controls.Danmaku", "{60373426-CE2D-4E22-A406-FFA8F8FE137F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Avalonia.Extensions.Danmaku", "Danmaku.Libs\Avalonia.Extensions.Danmaku\Avalonia.Extensions.Danmaku.csproj", "{9067A692-3D96-4019-9E4D-31F3FD29E828}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Avalonia.Extensions.Danmaku", "Danmakus\Avalonia.Extensions.Danmaku\Avalonia.Extensions.Danmaku.csproj", "{9067A692-3D96-4019-9E4D-31F3FD29E828}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Avalonia.Extensions.Media", "Avalonia.Extensions.Media\Avalonia.Extensions.Media.csproj", "{FA54EE3C-07E6-4B18-8031-8B95842FDA8B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Avalonia.Extensions.Media", "Controls\Avalonia.Extensions.Media\Avalonia.Extensions.Media.csproj", "{FA54EE3C-07E6-4B18-8031-8B95842FDA8B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Avalonia.Danamku.Demo", "Danmaku.Libs\Avalonia.Extensions.Demo\Avalonia.Danamku.Demo.csproj", "{514055BC-2CAF-41F5-9558-0E3FF77BBCFF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Avalonia.Danamku.Demo", "Danmakus\Avalonia.Extensions.Demo\Avalonia.Danamku.Demo.csproj", "{514055BC-2CAF-41F5-9558-0E3FF77BBCFF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Avalonia.Controls.WebView", "Avalonia.Controls.WebView", "{528356C1-0DA1-4E0A-A93D-4D05159A819F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Avalonia.Extensions.WebView.Dep", "WebViews\Avalonia.Extensions.WebView.Dep\Avalonia.Extensions.WebView.Dep.csproj", "{C6445620-4C71-46EB-B1BE-8057EF5346B4}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Avalonia.Extensions.WebView", "WebViews\Avalonia.Extensions.WebView\Avalonia.Extensions.WebView.csproj", "{B15231C5-8CE6-4B45-A8A2-BD8C3582353D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -55,6 +61,14 @@ Global
 		{514055BC-2CAF-41F5-9558-0E3FF77BBCFF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{514055BC-2CAF-41F5-9558-0E3FF77BBCFF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{514055BC-2CAF-41F5-9558-0E3FF77BBCFF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C6445620-4C71-46EB-B1BE-8057EF5346B4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C6445620-4C71-46EB-B1BE-8057EF5346B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C6445620-4C71-46EB-B1BE-8057EF5346B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C6445620-4C71-46EB-B1BE-8057EF5346B4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B15231C5-8CE6-4B45-A8A2-BD8C3582353D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B15231C5-8CE6-4B45-A8A2-BD8C3582353D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B15231C5-8CE6-4B45-A8A2-BD8C3582353D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B15231C5-8CE6-4B45-A8A2-BD8C3582353D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -66,6 +80,8 @@ Global
 		{9067A692-3D96-4019-9E4D-31F3FD29E828} = {60373426-CE2D-4E22-A406-FFA8F8FE137F}
 		{FA54EE3C-07E6-4B18-8031-8B95842FDA8B} = {736AFC18-0DD8-4577-8066-A26322E85F8D}
 		{514055BC-2CAF-41F5-9558-0E3FF77BBCFF} = {60373426-CE2D-4E22-A406-FFA8F8FE137F}
+		{C6445620-4C71-46EB-B1BE-8057EF5346B4} = {528356C1-0DA1-4E0A-A93D-4D05159A819F}
+		{B15231C5-8CE6-4B45-A8A2-BD8C3582353D} = {528356C1-0DA1-4E0A-A93D-4D05159A819F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {82A8C38D-510B-4067-BAB9-FA581B3F79C7}

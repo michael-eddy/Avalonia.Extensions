@@ -1,12 +1,17 @@
 using Avalonia.Extensions.Controls;
+using Avalonia.Extensions.WebView;
 using Avalonia.Extensions.Media;
 using Avalonia.Threading;
 using ReactiveUI;
+using System;
+using CefNet;
+using System.IO;
 
 namespace Avalonia.Controls.Demo
 {
     class Program
     {
+        [STAThread]
         public static void Main(string[] args)
         {
             RxApp.MainThreadScheduler = AvaloniaScheduler.Instance;
@@ -15,6 +20,7 @@ namespace Avalonia.Controls.Demo
                     .UsePlatformDetect()
                     .UseDoveExtensions()
                     .UseChineseInputSupport()
+                    .UseWebView()
                     .UseVideoView().UseAudioControl()
             .StartWithClassicDesktopLifetime(args);
         }

@@ -17,7 +17,7 @@
 	<ItemGroup>
 		<None Include="..\.editorconfig" Link=".editorconfig" />
         <ProjectReference Include="..\Avalonia.Extensions.Chinese\Avalonia.Extensions.Chinese.csproj" />
-        <ProjectReference Include="..\Avalonia.Extensions.Controls\Avalonia.Extensions.Controls.csproj" />
         <ProjectReference Include="..\Avalonia.Extensions.Media\Avalonia.Extensions.Media.csproj" />
+        <ProjectReference Include="..\WebViews\Avalonia.Extensions.WebView\Avalonia.Extensions.WebView.csproj" />
     </ItemGroup>
 </Project>

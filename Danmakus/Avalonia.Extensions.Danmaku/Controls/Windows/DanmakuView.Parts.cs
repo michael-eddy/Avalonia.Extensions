@@ -220,7 +220,7 @@ namespace Avalonia.Extensions.Danmaku
 				Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(this, ex.Message);
 			}
 		}
-		public void Destory()
+		public void Dispose()
 		{
 			try
 			{

@@ -1,6 +1,5 @@
 ﻿using Avalonia.Controls;
 using Avalonia.Extensions.Controls;
-using Avalonia.Extensions.Danmaku.Controls.Native;
 using Avalonia.Logging;
 using Avalonia.Threading;
 using System;
@@ -12,7 +11,7 @@ using System.Text;
 
 namespace Avalonia.Extensions.Danmaku
 {
-    public class DanmakuNativeView : Panel, IDanmakuView, IDisposable
+    public class DanmakuNativeView : Panel, IDanmakuView
     {
         internal readonly Random random;
         private readonly HttpClient httpClient;
@@ -200,10 +199,6 @@ namespace Avalonia.Extensions.Danmaku
         {
             Stop();
             danmakus = null;
-        }
-        public void Destory()
-        {
-            Dispose();
         }
     }
 }
