@@ -15,7 +15,7 @@
         <None Remove="Styles\Xaml\readme.txt" />
         <AvaloniaResource Include="Styles\*\*.xml" />
 		<AvaloniaResource Include="Styles\*\*.xaml" />
-        <None Include="..\.editorconfig" Link=".editorconfig" />
+        <None Include="..\..\.editorconfig" Link=".editorconfig" />
         <AvaloniaResource Include="Assets\Fonts\SegMDL2.ttf" />
     </ItemGroup>
     <ItemGroup>

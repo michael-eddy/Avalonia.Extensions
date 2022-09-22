@@ -4,8 +4,6 @@ using Avalonia.Extensions.Media;
 using Avalonia.Threading;
 using ReactiveUI;
 using System;
-using CefNet;
-using System.IO;
 
 namespace Avalonia.Controls.Demo
 {
@@ -20,7 +18,7 @@ namespace Avalonia.Controls.Demo
                     .UsePlatformDetect()
                     .UseDoveExtensions()
                     .UseChineseInputSupport()
-                    .UseWebView()
+                    .UseWebView(true)
                     .UseVideoView().UseAudioControl()
             .StartWithClassicDesktopLifetime(args);
         }

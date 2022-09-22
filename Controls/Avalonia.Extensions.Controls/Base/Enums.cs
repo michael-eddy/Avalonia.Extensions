@@ -34,4 +34,12 @@
         Default = 5000,
         Long = 8000
     }
+    public enum OS
+    {
+        Linux,
+        OSX,
+        Windows,
+        Android,
+        Unknow
+    }
 }
