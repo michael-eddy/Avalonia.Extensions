@@ -10,10 +10,12 @@
   </PropertyGroup>
 	<ItemGroup>
 		<PackageReference Include="Avalonia" Version="0.10.18" />
-		<PackageReference Include="Dove.Avalonia.Controls.Extensions" Version="1.8.9" />
+		<!--<PackageReference Include="Dove.Avalonia.Controls.Extensions" Version="1.8.9" />-->
+		<ProjectReference Include="..\..\Controls\Avalonia.Extensions.Controls\Avalonia.Extensions.Controls.csproj" />
 	</ItemGroup>
 	<ItemGroup>
-	  <None Update="libwtfdanmaku*.dll">
+		<None Include="..\..\.editorconfig" Link=".editorconfig" />
+		<None Update="libwtfdanmaku*.dll">
 	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	  </None>
 	</ItemGroup>

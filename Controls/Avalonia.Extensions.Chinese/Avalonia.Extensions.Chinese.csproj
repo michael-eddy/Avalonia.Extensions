@@ -10,7 +10,7 @@
     </PropertyGroup>
     <ItemGroup>
         <AvaloniaResource Include="Assets\**" />
-        <None Include="..\.editorconfig" Link=".editorconfig" />
+        <None Include="..\..\.editorconfig" Link=".editorconfig" />
     </ItemGroup>
     <ItemGroup>
         <PackageReference Include="Avalonia" Version="0.10.18" />
