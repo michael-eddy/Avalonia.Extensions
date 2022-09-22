@@ -13,11 +13,10 @@
   </PropertyGroup>
   <ItemGroup>
 	  <None Include="..\..\.editorconfig" Link=".editorconfig" />
-	  <PackageReference Include="Avalonia" Version="0.10.18" />
 	  <PackageReference Include="Downloader" Version="2.4.1" />
 	  <PackageReference Include="SharpCompress" Version="0.32.2" />
 	  <PackageReference Include="CefNet.Avalonia" Version="105.3.22248.142" />
 	  <!--<PackageReference Include="Dove.Avalonia.Controls.Extensions" Version="1.8.10" />-->
-    <ProjectReference Include="..\..\Controls\Avalonia.Extensions.Controls\Avalonia.Extensions.Controls.csproj" />
+      <ProjectReference Include="..\..\Controls\Avalonia.Extensions.Controls\Avalonia.Extensions.Controls.csproj" />
   </ItemGroup>
 </Project>
