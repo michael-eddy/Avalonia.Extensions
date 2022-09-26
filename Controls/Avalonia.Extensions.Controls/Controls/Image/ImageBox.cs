@@ -40,7 +40,7 @@ namespace Avalonia.Extensions.Controls
         /// Defines the <see cref="InterpolationMode"/> property.
         /// </summary>
         public static readonly StyledProperty<BitmapInterpolationMode> InterpolationModeProperty =
-            AvaloniaProperty.Register<ImageBox, BitmapInterpolationMode>(nameof(InterpolationMode), BitmapInterpolationMode.HighQuality);
+            AvaloniaProperty.Register<ImageBox, BitmapInterpolationMode>(nameof(InterpolationMode), BitmapInterpolationMode.MediumQuality);
         /// <summary>
         /// Defines the <see cref="Source"/> property.
         /// </summary>
@@ -56,8 +56,7 @@ namespace Avalonia.Extensions.Controls
             set
             {
                 SetAndRaise(SourceProperty, ref _source, value);
-                if (value != null)
-                    Task.Run(value);
+                Task.Run(value);
             }
         }
         public Bitmap Bitmap { get; set; }

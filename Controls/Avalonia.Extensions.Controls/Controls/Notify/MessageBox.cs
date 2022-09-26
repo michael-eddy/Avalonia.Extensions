@@ -1,10 +1,10 @@
 ﻿using Avalonia.Controls;
 using Avalonia.Layout;
+using Avalonia.Logging;
 using Avalonia.LogicalTree;
 using Avalonia.Media;
 using SkiaSharp;
 using System;
-using System.Drawing;
 using System.Linq;
 using System.Threading.Tasks;
 using FontFamily = Avalonia.Media.FontFamily;
@@ -23,36 +23,46 @@ namespace Avalonia.Extensions.Controls
                 _buttonType = value;
                 if (ButtonType == MessageBoxButtons.OkNo)
                 {
-                    var root = Content as Grid;
-                    var cancel = new Button
+                    var cancel = this.GetLogicalDescendants().OfType<Button>().FirstOrDefault(x => x.Name == "Cancel");
+                    if (cancel == null && Content is Grid root)
                     {
-                        Name = "Cancel",
-                        FontFamily = DefaultFontFamily,
-                        HorizontalAlignment = HorizontalAlignment.Center,
-                        HorizontalContentAlignment = HorizontalAlignment.Center
-                    };
-                    root.Children.Add(cancel);
-                    Grid.SetRow(cancel, 1);
-                    Grid.SetColumn(cancel, 1);
+                        cancel = new Button
+                        {
+                            Name = "Cancel",
+                            FontFamily = DefaultFontFamily,
+                            HorizontalAlignment = HorizontalAlignment.Center,
+                            HorizontalContentAlignment = HorizontalAlignment.Center
+                        };
+                        root.Children.Add(cancel);
+                        Grid.SetRow(cancel, 1);
+                        Grid.SetColumn(cancel, 1);
+                    }
                 }
             }
         }
         public MessageBox() : base()
         {
-            Width = 400;
             Height = 80;
+            Width = 400;
             CanResize = false;
-            CreateControls();
             DefaultFontFamily = new FontFamily(FontManager.Current.DefaultFontFamilyName);
+            CreateControls();
         }
         public override void Show()
         {
-            base.Show();
-            Topmost = true;
+            try
+            {
+                base.Show();
+                Topmost = true;
+            }
+            catch (Exception ex)
+            {
+                Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(this, ex.Message);
+            }
         }
         private void CreateControls()
         {
-            Grid root = new Grid
+            var root = new Grid
             {
                 RowDefinitions = RowDefinitions.Parse("*,*"),
                 ColumnDefinitions = ColumnDefinitions.Parse("*,*")
@@ -60,6 +70,7 @@ namespace Avalonia.Extensions.Controls
             var tb = new TextBlock
             {
                 Name = "Message",
+                FontFamily = DefaultFontFamily,
                 TextWrapping = TextWrapping.Wrap
             };
             root.Children.Add(tb);
@@ -96,7 +107,7 @@ namespace Avalonia.Extensions.Controls
             Width = size.Width;
             Height = size.Height;
         }
-        public SizeF ContentSize(string content, double fontSize) => content.MeasureString(fontSize, SKTypeface.Default);
+        public Size ContentSize(string content, double fontSize) => content.MeasureString(fontSize, SKTypeface.Default);
         public static Task<bool?> Show(string title, string message, MessageBoxButtons messageBoxButtons = MessageBoxButtons.OkNo)
             => Show(null, title, message, messageBoxButtons);
         public static Task<bool?> Show(Window parent, string title, string message, MessageBoxButtons messageBoxButtons = MessageBoxButtons.OkNo)

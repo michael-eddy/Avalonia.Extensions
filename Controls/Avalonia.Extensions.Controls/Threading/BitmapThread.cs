@@ -18,6 +18,7 @@ namespace Avalonia.Extensions.Threading
         }
         public void Run(Uri uri)
         {
+            if (uri == null) return;
             try
             {
                 switch (uri.Scheme)

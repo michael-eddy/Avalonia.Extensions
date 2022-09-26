@@ -9,7 +9,6 @@ using PCLUntils.IEnumerables;
 using SkiaSharp;
 using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Text;
 
 namespace Avalonia.Extensions.Controls
@@ -58,7 +57,7 @@ namespace Avalonia.Extensions.Controls
             }
         }
         public static void ShowToast(this Window window, string content) => PopupToast.Show(content, window);
-        public static SizeF MeasureString(this string text, double fontSize, SKTypeface typeface)
+        public static Size MeasureString(this string text, double fontSize, SKTypeface typeface)
         {
             try
             {
@@ -70,10 +69,10 @@ namespace Avalonia.Extensions.Controls
                 paint.MeasureText(text, ref result);
                 var width = Convert.ToSingle(Math.Ceiling(result.Size.Width));
                 var height = Convert.ToSingle(Math.Ceiling(result.Size.Height));
-                return new SizeF(width, height);
+                return new Size(width, height);
             }
             catch { }
-            return new SizeF();
+            return new Size();
         }
         public static IEnumerable<T> FindControls<T>(this Panel control, bool isLoop = false) where T : Control
         {
