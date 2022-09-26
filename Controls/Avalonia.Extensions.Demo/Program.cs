@@ -18,7 +18,7 @@ namespace Avalonia.Controls.Demo
                     .UsePlatformDetect()
                     .UseDoveExtensions()
                     .UseChineseInputSupport()
-                    .UseWebView(true)
+                    //.UseWebView(true)
                     .UseVideoView().UseAudioControl()
             .StartWithClassicDesktopLifetime(args);
         }
