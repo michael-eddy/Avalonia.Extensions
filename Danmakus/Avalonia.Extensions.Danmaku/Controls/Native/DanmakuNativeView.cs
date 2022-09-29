@@ -145,7 +145,7 @@ namespace Avalonia.Extensions.Danmaku
                             {
                                 Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(this, ex.Message);
                             }
-                        }, DispatcherPriority.ApplicationIdle);
+                        }, DispatcherPriority.MaxValue);
                         break;
                     }
                 case "avares":
@@ -160,7 +160,7 @@ namespace Avalonia.Extensions.Danmaku
                             {
                                 Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(this, ex.Message);
                             }
-                        }, DispatcherPriority.ApplicationIdle);
+                        }, DispatcherPriority.MaxValue);
                         break;
                     }
                 case "http":
@@ -179,7 +179,7 @@ namespace Avalonia.Extensions.Danmaku
                             {
                                 Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(this, ex.Message);
                             }
-                        }, DispatcherPriority.ApplicationIdle);
+                        }, DispatcherPriority.MaxValue);
                         break;
                     }
             }
