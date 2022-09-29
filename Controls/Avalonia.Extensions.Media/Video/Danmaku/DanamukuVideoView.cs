@@ -47,7 +47,6 @@ namespace Avalonia.Extensions.Media
             Background = new SolidColorBrush(Colors.Transparent);
             ContentProperty.Changed.AddClassHandler<DanamukuVideoView>((s, _) => s.InitializeNativeOverlay());
             IsVisibleProperty.Changed.AddClassHandler<DanamukuVideoView>((s, _) => s.ShowNativeOverlay(s.IsVisible));
-            Content = new DanmakuNativeView();
         }
         public MediaPlayer MediaPlayer
         {
@@ -75,17 +74,14 @@ namespace Avalonia.Extensions.Media
                 {
                     _floatingContent = new Window
                     {
-                        Opacity = 0,
                         ZIndex = 100,
                         CanResize = false,
                         ShowInTaskbar = false,
-                        Background = Brushes.Transparent,
                         SystemDecorations = SystemDecorations.None,
                         SizeToContent = SizeToContent.WidthAndHeight,
+                        Background = new SolidColorBrush(Colors.Transparent),
                         TransparencyLevelHint = WindowTransparencyLevel.Transparent
                     };
-                    _floatingContent.PointerEnter += Controls_PointerEnter;
-                    _floatingContent.PointerLeave += Controls_PointerLeave;
                     _disposables = new CompositeDisposable
                     {
                         _floatingContent.Bind(ContentControl.ContentProperty, this.GetObservable(ContentProperty)),
@@ -101,8 +97,6 @@ namespace Avalonia.Extensions.Media
                 Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(this, ex.Message);
             }
         }
-        public void Controls_PointerLeave(object sender, PointerEventArgs e) => _floatingContent.Opacity = 0;
-        public void Controls_PointerEnter(object sender, PointerEventArgs e) => _floatingContent.Opacity = .8;
         protected override IPlatformHandle CreateNativeControlCore(IPlatformHandle parent)
         {
             var handle = base.CreateNativeControlCore(parent);
