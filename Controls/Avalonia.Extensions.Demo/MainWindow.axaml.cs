@@ -3,7 +3,6 @@ using Avalonia.Data;
 using Avalonia.Extensions.Controls;
 using Avalonia.Extensions.Event;
 using Avalonia.Extensions.Media;
-using Avalonia.Extensions.WebView;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
@@ -66,7 +65,9 @@ namespace Avalonia.Controls.Demo
             scrollView.ScrollTop += ScrollView_ScrollTop;
             var playerView = this.FindControl<PlayerView>("playerView");
             playerView.Play("http://vfx.mtime.cn/Video/2019/03/18/mp4/190318231014076505.mp4");
-            playerView.LoadDanmaku(new Uri("file:///D:\\200887808.xml"));
+            var playerView2 = this.FindControl<DanmakuPlayerView>("playerView2");
+            playerView2.Play("http://vfx.mtime.cn/Video/2019/03/18/mp4/190318231014076505.mp4");
+            playerView2.LoadDanmaku(new Uri("file:///D:\\200887808.xml"));
             var audio = this.FindControl<AudioControl>("audio");
             audio.Play("http://downsc.chinaz.net/Files/DownLoad/sound1/201906/11582.mp3");
             //var webView = this.FindControl<WebView>("webView");

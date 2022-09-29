@@ -58,6 +58,8 @@ namespace Avalonia.Extensions.Danmaku
 		}
 		public void Load(Uri uri)
 		{
+			if (uri == null) 
+				return;
 			Dispatcher.UIThread.InvokeAsync(() =>
 			{
 				try

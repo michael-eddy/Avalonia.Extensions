@@ -1,9 +1,10 @@
-﻿using System;
+﻿using Avalonia.Controls;
+using System;
 using System.Text;
 
 namespace Avalonia.Extensions.Danmaku
 {
-    public interface IDanmakuView : IDisposable
+    public interface IDanmakuView : IControl, IDisposable
     {
         void Start();
         void SeekTo(long position);

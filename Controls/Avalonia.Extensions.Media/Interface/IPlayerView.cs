@@ -7,6 +7,6 @@ namespace Avalonia.Extensions.Media
         bool Play();
         bool Pause();
         bool Stop();
-        Panel InitLatout();
+        IControl InitLatout();
     }
 }

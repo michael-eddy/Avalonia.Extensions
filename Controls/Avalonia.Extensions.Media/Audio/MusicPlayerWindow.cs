@@ -49,7 +49,7 @@ namespace Avalonia.Extensions.Media
             videoView.MediaPlayer = mediaPlayer;
             Content = InitLatout();
         }
-        public Panel InitLatout()
+        public IControl InitLatout()
         {
             Grid root = new Grid();
             root.RowDefinitions.Add(new RowDefinition(0, GridUnitType.Pixel));

@@ -26,16 +26,16 @@ namespace Avalonia.Extensions.Threading
                     case "http":
                     case "https":
                         {
-                            Dispatcher.UIThread.InvokeAsync(() =>
+                            Dispatcher.UIThread.InvokeAsync(async() =>
                             {
                                 var url = uri.AbsoluteUri;
                                 try
                                 {
                                     if (!string.IsNullOrEmpty(url))
                                     {
-                                        HttpResponseMessage hr = HttpClient.GetAsync(url).GetAwaiter().GetResult();
+                                        var hr = await HttpClient.GetAsync(url);
                                         hr.EnsureSuccessStatusCode();
-                                        var stream = hr.Content.ReadAsStreamAsync().GetAwaiter().GetResult();
+                                        var stream = await hr.Content.ReadAsStreamAsync();
                                         Owner.SetBitmapSource(stream);
                                         Owner.ResultSet(true, string.Empty);
                                     }
