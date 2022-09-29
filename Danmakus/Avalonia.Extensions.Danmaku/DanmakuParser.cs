@@ -26,27 +26,33 @@ namespace Avalonia.Extensions.Danmaku
                     {
                         try
                         {
-                            string node = item.Attributes["p"].Value;
-                            string[] danmaku = node.Split(',');
-                            var location = danmaku[1] switch
+                            string node = item.Attributes["p"]?.Value;
+                            if (!string.IsNullOrEmpty(node))
                             {
-                                "7" => DanmakuLocation.Position,
-                                "4" => DanmakuLocation.Bottom,
-                                "5" => DanmakuLocation.Top,
-                                _ => DanmakuLocation.Roll,
-                            };
-                            danmakus.Add(new DanmakuModel
-                            {
-                                Time = double.Parse(danmaku[0]),
-                                Location = location,
-                                Size = double.Parse(danmaku[2]),
-                                Color = new SolidColorBrush(danmaku[3].ToColor(true)),
-                                SendTime = danmaku[4],
-                                Pool = danmaku[5],
-                                SendID = danmaku[6],
-                                RowID = danmaku[7],
-                                Text = item.InnerText
-                            });
+                                string[] danmaku = node.Split(',');
+                                var location = danmaku[1] switch
+                                {
+                                    "7" => DanmakuLocation.Position,
+                                    "4" => DanmakuLocation.Bottom,
+                                    "5" => DanmakuLocation.Top,
+                                    _ => DanmakuLocation.Roll,
+                                };
+                                if (double.TryParse(danmaku[0], out double time) && double.TryParse(danmaku[2], out double size))
+                                {
+                                    danmakus.Add(new DanmakuModel
+                                    {
+                                        Time = time,
+                                        Location = location,
+                                        Size = size,
+                                        Color = new SolidColorBrush(danmaku[3].ToColor(true)),
+                                        SendTime = danmaku[4],
+                                        Pool = danmaku[5],
+                                        SendID = danmaku[6],
+                                        RowID = danmaku[7],
+                                        Text = item.InnerText
+                                    });
+                                }
+                            }
                         }
                         catch (Exception ex)
                         {

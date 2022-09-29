@@ -69,7 +69,7 @@
 				<Grid Name="PopupContent">
 					<Grid.RowDefinitions>
 						<RowDefinition Height=".2*"/>
-						<RowDefinition Height=".2*"/>
+						<RowDefinition Height="*"/>
 					</Grid.RowDefinitions>
 					<StackPanel Orientation="Vertical" Grid.Row="1">
 						<Button Click="OnNotifyClick" CommandParameter="1">TopLeft / Horizontal</Button>
@@ -109,20 +109,6 @@
 							<Label FontSize="20">111111111</Label>
 							<Label FontSize="20">111111111</Label>
 							<Label FontSize="20">111111111</Label>
-							<Label FontSize="20">111111111</Label>
-							<Label FontSize="20">111111111</Label>
-							<Label FontSize="20">111111111</Label>
-							<Label FontSize="20">111111111</Label>
-							<Label FontSize="20">111111111</Label>
-							<Label FontSize="20">111111111</Label>
-							<Label FontSize="20">111111111</Label>
-							<Label FontSize="20">111111111</Label>
-							<Label FontSize="20">111111111</Label>
-							<Label FontSize="20">111111111</Label>
-							<Label FontSize="20">111111111</Label>
-							<Label FontSize="20">111111111</Label>
-							<Label FontSize="20">111111111</Label>
-							<Label FontSize="20">111111111</Label>
 						</StackPanel>
 					</ExpandableView.SecondView>
 				</ExpandableView>
@@ -132,27 +118,6 @@
 					<SeekSlider Minimum="0" Maximum="100" />
 					<ScrollView Name="scrollView">
 						<StackPanel Orientation="Vertical">
-							<Label>111111111</Label>
-							<Label>111111111</Label>
-							<Label>111111111</Label>
-							<Label>111111111</Label>
-							<Label>111111111</Label>
-							<Label>111111111</Label>
-							<Label>111111111</Label>
-							<Label>111111111</Label>
-							<Label>111111111</Label>
-							<Label>111111111</Label>
-							<Label>111111111</Label>
-							<Label>111111111</Label>
-							<Label>111111111</Label>
-							<Label>111111111</Label>
-							<Label>111111111</Label>
-							<Label>111111111</Label>
-							<Label>111111111</Label>
-							<Label>111111111</Label>
-							<Label>111111111</Label>
-							<Label>111111111</Label>
-							<Label>111111111</Label>
 							<Label>111111111</Label>
 							<Label>111111111</Label>
 							<Label>111111111</Label>
@@ -221,6 +186,9 @@
 			</TabItem>
 			<TabItem Header="PlayerView">
 				<PlayerView x:Name="playerView" />
+			</TabItem>
+			<TabItem Header="DanmakuPlayerView">
+				<DanmakuPlayerView x:Name="playerView2" />
 			</TabItem>
 			<TabItem Header="AudioControl">
 				<StackPanel Orientation="Vertical">

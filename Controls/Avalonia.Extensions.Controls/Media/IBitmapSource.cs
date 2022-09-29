@@ -62,7 +62,7 @@ namespace Avalonia.Extensions.Media
             }
             finally
             {
-                stream.Dispose();
+                stream?.Dispose();
             }
         }
         void ResultSet(bool success, string message)

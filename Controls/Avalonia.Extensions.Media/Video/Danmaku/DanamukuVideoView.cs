@@ -1,5 +1,6 @@
 ﻿using Avalonia.Controls;
 using Avalonia.Data;
+using Avalonia.Extensions.Danmaku;
 using Avalonia.Input;
 using Avalonia.Logging;
 using Avalonia.LogicalTree;
@@ -8,33 +9,34 @@ using Avalonia.Metadata;
 using Avalonia.Platform;
 using Avalonia.VisualTree;
 using CSharpFunctionalExtensions;
-using LibVLCSharp.Shared;
 using System;
-using System.Linq;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
+using System.Text;
+using LibVLCSharp.Shared;
+using System.Linq;
 
 namespace Avalonia.Extensions.Media
 {
-    public sealed class VideoView : NativeControlHost
+    public sealed class DanamukuVideoView : NativeControlHost
     {
-        public static readonly DirectProperty<VideoView, Maybe<MediaPlayer>> MediaPlayerProperty =
-            AvaloniaProperty.RegisterDirect<VideoView, Maybe<MediaPlayer>>(nameof(MediaPlayer), o => o.MediaPlayer,
+        public static readonly DirectProperty<DanamukuVideoView, Maybe<MediaPlayer>> MediaPlayerProperty =
+            AvaloniaProperty.RegisterDirect<DanamukuVideoView, Maybe<MediaPlayer>>(nameof(MediaPlayer), o => o.MediaPlayer,
                 (o, v) => o.MediaPlayer = v.GetValueOrDefault(), defaultBindingMode: BindingMode.TwoWay);
         private readonly BehaviorSubject<Maybe<MediaPlayer>> mediaPlayers = new BehaviorSubject<Maybe<MediaPlayer>>(Maybe<MediaPlayer>.None);
         private readonly BehaviorSubject<Maybe<IPlatformHandle>> platformHandles = new BehaviorSubject<Maybe<IPlatformHandle>>(Maybe<IPlatformHandle>.None);
-        public static readonly StyledProperty<object> ContentProperty = ContentControl.ContentProperty.AddOwner<VideoView>();
-        public static readonly StyledProperty<IBrush> BackgroundProperty = Panel.BackgroundProperty.AddOwner<VideoView>();
+        public static readonly StyledProperty<object> ContentProperty = ContentControl.ContentProperty.AddOwner<DanamukuVideoView>();
+        public static readonly StyledProperty<IBrush> BackgroundProperty = Panel.BackgroundProperty.AddOwner<DanamukuVideoView>();
         private bool _isAttached;
         public IPlatformHandle Hndl;
         internal IDisposable attacher;
-        internal EventHandler Callback;
         private Window _floatingContent;
+        internal EventHandler Callback;
         private IDisposable _disposables;
         private IDisposable _isEffectivelyVisible;
         public bool IsDispose { get; private set; }
-        public VideoView()
+        public DanamukuVideoView()
         {
             IsDispose = true;
             attacher = platformHandles.WithLatestFrom(mediaPlayers).Subscribe(x =>
@@ -43,8 +45,8 @@ namespace Avalonia.Extensions.Media
                 playerAndHandle.Execute(a => a.m.SetHandle(a.n));
             });
             Background = new SolidColorBrush(Colors.Transparent);
-            ContentProperty.Changed.AddClassHandler<VideoView>((s, _) => s.InitializeNativeOverlay());
-            IsVisibleProperty.Changed.AddClassHandler<VideoView>((s, _) => s.ShowNativeOverlay(s.IsVisible));
+            ContentProperty.Changed.AddClassHandler<DanamukuVideoView>((s, _) => s.InitializeNativeOverlay());
+            IsVisibleProperty.Changed.AddClassHandler<DanamukuVideoView>((s, _) => s.ShowNativeOverlay(s.IsVisible));
         }
         public MediaPlayer MediaPlayer
         {
@@ -72,17 +74,14 @@ namespace Avalonia.Extensions.Media
                 {
                     _floatingContent = new Window
                     {
-                        Opacity = 0,
                         ZIndex = 100,
                         CanResize = false,
                         ShowInTaskbar = false,
-                        Background = Brushes.Transparent,
                         SystemDecorations = SystemDecorations.None,
                         SizeToContent = SizeToContent.WidthAndHeight,
+                        Background = new SolidColorBrush(Colors.Transparent),
                         TransparencyLevelHint = WindowTransparencyLevel.Transparent
                     };
-                    _floatingContent.PointerEnter += Controls_PointerEnter;
-                    _floatingContent.PointerLeave += Controls_PointerLeave;
                     _disposables = new CompositeDisposable
                     {
                         _floatingContent.Bind(ContentControl.ContentProperty, this.GetObservable(ContentProperty)),
@@ -98,8 +97,6 @@ namespace Avalonia.Extensions.Media
                 Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(this, ex.Message);
             }
         }
-        public void Controls_PointerLeave(object sender, PointerEventArgs e) => _floatingContent.Opacity = 0;
-        public void Controls_PointerEnter(object sender, PointerEventArgs e) => _floatingContent.Opacity = .8;
         protected override IPlatformHandle CreateNativeControlCore(IPlatformHandle parent)
         {
             var handle = base.CreateNativeControlCore(parent);
@@ -241,6 +238,34 @@ namespace Avalonia.Extensions.Media
             _disposables = null;
             _floatingContent?.Close();
             _floatingContent = null;
+        }
+        public bool LoadDanmaku(Uri uri)
+        {
+            try
+            {
+                if (Content is IDanmakuView view)
+                    view.Load(uri);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(this, ex.Message);
+                return false;
+            }
+        }
+        public bool LoadDanmaku(string xml, Encoding encoding)
+        {
+            try
+            {
+                if (Content is IDanmakuView view)
+                    view.Load(xml, encoding);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(this, ex.Message);
+                return false;
+            }
         }
     }
 }

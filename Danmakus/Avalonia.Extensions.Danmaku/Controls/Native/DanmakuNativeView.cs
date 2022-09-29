@@ -1,6 +1,7 @@
 ﻿using Avalonia.Controls;
 using Avalonia.Extensions.Controls;
 using Avalonia.Logging;
+using Avalonia.Media;
 using Avalonia.Threading;
 using System;
 using System.Collections.Generic;
@@ -30,6 +31,7 @@ namespace Avalonia.Extensions.Danmaku
         {
             random = new Random(36);
             httpClient = Core.Instance.GetClient();
+            Background = new SolidColorBrush(Colors.Transparent);
             timer = new DispatcherTimer(TimeSpan.FromMilliseconds(80), DispatcherPriority.Background, OnTimerCallback);
             clearTimer = new DispatcherTimer(TimeSpan.FromMilliseconds(200), DispatcherPriority.Background, OnClearTimerCallback);
         }
@@ -143,7 +145,7 @@ namespace Avalonia.Extensions.Danmaku
                             {
                                 Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(this, ex.Message);
                             }
-                        }, DispatcherPriority.ApplicationIdle);
+                        }, DispatcherPriority.MaxValue);
                         break;
                     }
                 case "avares":
@@ -158,7 +160,7 @@ namespace Avalonia.Extensions.Danmaku
                             {
                                 Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(this, ex.Message);
                             }
-                        }, DispatcherPriority.ApplicationIdle);
+                        }, DispatcherPriority.MaxValue);
                         break;
                     }
                 case "http":
@@ -177,7 +179,7 @@ namespace Avalonia.Extensions.Danmaku
                             {
                                 Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(this, ex.Message);
                             }
-                        }, DispatcherPriority.ApplicationIdle);
+                        }, DispatcherPriority.MaxValue);
                         break;
                     }
             }

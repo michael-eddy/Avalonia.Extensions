@@ -7,7 +7,6 @@ using Avalonia.Media;
 using Avalonia.Threading;
 using LibVLCSharp.Shared;
 using System;
-using System.Text;
 
 namespace Avalonia.Extensions.Media
 {
@@ -62,7 +61,7 @@ namespace Avalonia.Extensions.Media
             get => GetValue(LogEnableProperty);
             set => SetValue(LogEnableProperty, value);
         }
-        public virtual Panel InitLatout()
+        public virtual IControl InitLatout()
         {
             var panel = new Grid { HorizontalAlignment = Layout.HorizontalAlignment.Center };
             panel.RowDefinitions.Add(new RowDefinition(GridLength.Auto));
@@ -270,8 +269,6 @@ namespace Avalonia.Extensions.Media
                 return false;
             }
         }
-        public bool LoadDanmaku(Uri uri) => videoView.LoadDanmaku(uri);
-        public bool LoadDanmaku(string xml, Encoding encoding) => videoView.LoadDanmaku(xml, encoding);
         private void SetPlayerInfo(object sender, EventArgs e)
         {
             try
