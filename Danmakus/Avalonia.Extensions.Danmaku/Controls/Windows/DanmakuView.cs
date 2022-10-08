@@ -94,7 +94,7 @@ namespace Avalonia.Extensions.Danmaku
                             wtf = LibLoader.WTF_CreateInstance();
                             LibLoader.WTF_InitializeWithHwnd(wtf, parent.Handle);
                             Init();
-                            _platformHandle = new PlatformHandle(wtf, "HWND");
+                            _platformHandle = new PlatformHandle(wtf, parent.HandleDescriptor);
                             break;
                         }
                     default:
