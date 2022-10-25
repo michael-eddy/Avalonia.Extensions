@@ -1,5 +1,12 @@
-﻿namespace Avalonia.Extensions
+﻿namespace Avalonia.Extensions.Media
 {
+    public enum MediaState
+    {
+        None,
+        Read,
+        Play,
+        Pause,
+    }
     public enum PlayStatus : int
     {
         Playing = 0,

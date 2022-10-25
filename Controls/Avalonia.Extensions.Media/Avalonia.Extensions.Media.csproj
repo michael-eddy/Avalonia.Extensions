@@ -13,9 +13,10 @@
   </PropertyGroup>
   <ItemGroup>
 	  <None Include="..\..\.editorconfig" Link=".editorconfig" />
+	  <PackageReference Include="FFmpeg.AutoGen" Version="5.1.1" />
     <PackageReference Include="ManagedBass" Version="3.1.1" />
     <PackageReference Include="LibVLCSharp.Avalonia" Version="3.6.7" />
-    <PackageReference Include="CSharpFunctionalExtensions" Version="2.34.3" />
+    <PackageReference Include="CSharpFunctionalExtensions" Version="2.35.1" />
     <!--<PackageReference Include="Dove.Avalonia.Controls.Extensions.Danmaku" Version="1.0.7" />-->
   </ItemGroup>
   <ItemGroup>
