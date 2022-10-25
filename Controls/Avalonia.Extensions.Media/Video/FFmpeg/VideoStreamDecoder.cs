@@ -1,12 +1,15 @@
-﻿using FFmpeg.AutoGen;
+﻿using Avalonia.Logging;
+using FFmpeg.AutoGen;
+using PCLUntils.Objects;
 using System;
 using System.Diagnostics;
+using System.IO;
 using System.Runtime.InteropServices;
 using static Avalonia.Extensions.Media.IMedia;
 
 namespace Avalonia.Extensions.Media
 {
-    public unsafe class DecodecVideo : IMedia
+    public unsafe class VideoStreamDecoder : IMedia
     {
         AVFormatContext* format;
         AVCodecContext* codecContext;
@@ -19,8 +22,8 @@ namespace Avalonia.Extensions.Media
         IntPtr FrameBufferPtr;
         byte_ptrArray4 TargetData;
         int_array4 TargetLinesize;
-        object SyncLock = new object();
-        Stopwatch clock = new Stopwatch();
+        readonly Stopwatch clock = new Stopwatch();
+        readonly object SyncLock = new object();
         TimeSpan lastTime;
         bool isNextFrame = true;
         public event MediaHandler MediaCompleted;
@@ -36,23 +39,53 @@ namespace Avalonia.Extensions.Media
         public int FrameHeight { get; protected set; }
         public bool IsPlaying { get; protected set; }
         public MediaState State { get; protected set; }
-        public TimeSpan Position { get => clock.Elapsed + OffsetClock; }
+        public TimeSpan Position => clock.Elapsed + OffsetClock;
         public TimeSpan frameDuration { get; private set; }
         #endregion
+        public VideoStreamDecoder()
+        {
+            Init(null);
+        }
+        public void Init(string ffmpegBinaryPath)
+        {
+            if (ffmpegBinaryPath.IsEmpty())
+                ffmpegBinaryPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "libffmpeg", Environment.Is64BitProcess ? "x64" : "x86");
+            if (Directory.Exists(ffmpegBinaryPath))
+            {
+                Logger.TryGet(LogEventLevel.Information, LogArea.Control)?.Log(this, $"FFmpeg binaries found in: {ffmpegBinaryPath}");
+                ffmpeg.RootPath = ffmpegBinaryPath;
+            }
+            else
+                throw new FileNotFoundException($"cannot found FFmpeg binaries from path:\"{ffmpegBinaryPath}\"");
+            ffmpeg.avdevice_register_all();
+            ffmpeg.avformat_network_init();
+            ffmpeg.av_log_set_level(ffmpeg.AV_LOG_VERBOSE);
+            av_log_set_callback_callback logCallback = (p0, level, format, vl) =>
+            {
+                if (level > ffmpeg.av_log_get_level()) return;
+                var lineSize = 1024;
+                var lineBuffer = stackalloc byte[lineSize];
+                var printPrefix = 1;
+                ffmpeg.av_log_format_line(p0, level, format, vl, lineBuffer, lineSize, &printPrefix);
+                var line = Marshal.PtrToStringAnsi((IntPtr)lineBuffer);
+                Console.Write(line);
+            };
+            ffmpeg.av_log_set_callback(logCallback);
+        }
         public void InitDecodecVideo(string path)
         {
             int error = 0;
             format = ffmpeg.avformat_alloc_context();
             if (format == null)
             {
-                Debug.WriteLine("创建媒体格式（容器）失败");
+                Logger.TryGet(LogEventLevel.Information, LogArea.Control)?.Log(this, "Failed to create media format (container)");
                 return;
             }
             var tempFormat = format;
             error = ffmpeg.avformat_open_input(&tempFormat, path, null, null);
             if (error < 0)
             {
-                Debug.WriteLine("打开视频失败");
+                Logger.TryGet(LogEventLevel.Information, LogArea.Control)?.Log(this, "Failed to open video");
                 return;
             }
             ffmpeg.avformat_find_stream_info(format, null);
@@ -60,7 +93,7 @@ namespace Avalonia.Extensions.Media
             videoStreamIndex = ffmpeg.av_find_best_stream(format, AVMediaType.AVMEDIA_TYPE_VIDEO, -1, -1, &codec, 0);
             if (videoStreamIndex < 0)
             {
-                Debug.WriteLine("没有找到视频流");
+                Logger.TryGet(LogEventLevel.Information, LogArea.Control)?.Log(this, "No video stream found");
                 return;
             }
             videoStream = format->streams[videoStreamIndex];
@@ -68,13 +101,13 @@ namespace Avalonia.Extensions.Media
             error = ffmpeg.avcodec_parameters_to_context(codecContext, videoStream->codecpar);
             if (error < 0)
             {
-                Debug.WriteLine("设置解码器参数失败");
+                Logger.TryGet(LogEventLevel.Information, LogArea.Control)?.Log(this, "Failed to set decoder parameters");
                 return;
             }
             error = ffmpeg.avcodec_open2(codecContext, codec, null);
             if (error < 0)
             {
-                Debug.WriteLine("打开解码器失败");
+                Logger.TryGet(LogEventLevel.Information, LogArea.Control)?.Log(this, "Failed to open decoder");
                 return;
             }
             Duration = TimeSpan.FromMilliseconds(format->duration / 1000);
@@ -86,7 +119,7 @@ namespace Avalonia.Extensions.Media
             FrameHeight = videoStream->codecpar->height;
             frameDuration = TimeSpan.FromMilliseconds(1000 / FrameRate);
             var result = InitConvert(FrameWidth, FrameHeight, codecContext->pix_fmt, FrameWidth, FrameHeight, AVPixelFormat.AV_PIX_FMT_BGR0);
-                        if (result)
+            if (result)
             {
                 packet = ffmpeg.av_packet_alloc();
                 frame = ffmpeg.av_frame_alloc();
@@ -97,7 +130,7 @@ namespace Avalonia.Extensions.Media
             convert = ffmpeg.sws_getContext(sourceWidth, sourceHeight, sourceFormat, targetWidth, targetHeight, targetFormat, ffmpeg.SWS_FAST_BILINEAR, null, null, null);
             if (convert == null)
             {
-                Debug.WriteLine("创建转换器失败");
+                Logger.TryGet(LogEventLevel.Information, LogArea.Control)?.Log(this, "Failed to create converter");
                 return false;
             }
             var bufferSize = ffmpeg.av_image_get_buffer_size(targetFormat, targetWidth, targetHeight, 1);

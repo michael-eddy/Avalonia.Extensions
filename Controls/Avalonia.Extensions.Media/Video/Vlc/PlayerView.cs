@@ -10,9 +10,9 @@ using System;
 
 namespace Avalonia.Extensions.Media
 {
-    public class PlayerView : UserControl, IPlayerView, IVideoView
+    public class PlayerView : UserControl, IPlayerView, IVlcView
     {
-        private LibVLC? libVLC;
+        private LibVLC libVLC;
         private SeekSlider slider;
         private Button playButton;
         private Button rewindButton;
@@ -104,8 +104,8 @@ namespace Avalonia.Extensions.Media
             {
                 var oldValue = (double)e.OldValue;
                 var position = (double)e.NewValue;
-                if ((lastOldValue == 0 && lastNewValue == 0) ||
-                    (lastOldValue != 0 && lastNewValue != 0 && lastOldValue != position && lastNewValue != oldValue))
+                if (lastOldValue == 0 && lastNewValue == 0 ||
+                    lastOldValue != 0 && lastNewValue != 0 && lastOldValue != position && lastNewValue != oldValue)
                 {
                     if (e.NewValue != e.OldValue && Math.Abs(position - oldValue) >= SeekPosition)
                     {

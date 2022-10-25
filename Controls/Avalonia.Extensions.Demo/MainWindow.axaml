@@ -187,8 +187,8 @@
 			<TabItem Header="PlayerView">
 				<PlayerView x:Name="playerView" />
 			</TabItem>
-			<TabItem Header="DanmakuPlayerView">
-				<DanmakuPlayerView x:Name="playerView2" />
+			<TabItem Header="FFmpegView">
+				<FFmpegView x:Name="playerView2" />
 			</TabItem>
 			<TabItem Header="AudioControl">
 				<StackPanel Orientation="Vertical">

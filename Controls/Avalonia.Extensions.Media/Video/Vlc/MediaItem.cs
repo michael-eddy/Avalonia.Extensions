@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Avalonia.Extensions
+namespace Avalonia.Extensions.Media
 {
     public class MediaItem : LibVLCSharp.Shared.Media
     {

@@ -33,7 +33,7 @@ namespace Avalonia.Extensions.Danmaku
 		{
 			try
 			{
-				switch (PlantformUntils.Platform)
+				switch (PlantformUntils.System)
 				{
 					case Platforms.Windows:
 						{
@@ -140,7 +140,7 @@ namespace Avalonia.Extensions.Danmaku
 		{
 			try
 			{
-				switch (PlantformUntils.Platform)
+				switch (PlantformUntils.System)
 				{
 					case Platforms.Windows:
 						if (wtf != IntPtr.Zero)
@@ -157,7 +157,7 @@ namespace Avalonia.Extensions.Danmaku
 		{
 			try
 			{
-				switch (PlantformUntils.Platform)
+				switch (PlantformUntils.System)
 				{
 					case Platforms.Windows:
 						if (wtf != IntPtr.Zero)
@@ -174,7 +174,7 @@ namespace Avalonia.Extensions.Danmaku
 		{
 			try
 			{
-				switch (PlantformUntils.Platform)
+				switch (PlantformUntils.System)
 				{
 					case Platforms.Windows:
 						if (wtf != IntPtr.Zero)
@@ -191,7 +191,7 @@ namespace Avalonia.Extensions.Danmaku
 		{
 			try
 			{
-				switch (PlantformUntils.Platform)
+				switch (PlantformUntils.System)
 				{
 					case Platforms.Windows:
 						if (wtf != IntPtr.Zero)
@@ -209,7 +209,7 @@ namespace Avalonia.Extensions.Danmaku
 		{
 			try
 			{
-				switch (PlantformUntils.Platform)
+				switch (PlantformUntils.System)
 				{
 					case Platforms.Windows:
 						if (wtf != IntPtr.Zero)

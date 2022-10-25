@@ -3,7 +3,7 @@ using System;
 
 namespace Avalonia.Extensions.Media
 {
-    public interface IVideoView
+    public interface IVlcView
     {
         bool Play(MediaItem media);
         bool Play(MediaList medias);
