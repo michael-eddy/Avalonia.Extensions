@@ -9,7 +9,7 @@ using static Avalonia.Extensions.Media.IMedia;
 
 namespace Avalonia.Extensions.Media
 {
-    public unsafe class VideoStreamDecoder : IMedia
+    public sealed unsafe class VideoStreamDecoder : IMedia
     {
         AVFormatContext* format;
         AVCodecContext* codecContext;
@@ -30,15 +30,15 @@ namespace Avalonia.Extensions.Media
         public event MediaHandler MediaPlay;
         public event MediaHandler MediaPause;
         #region
-        public TimeSpan Duration { get; protected set; }
-        public string CodecName { get; protected set; }
-        public string CodecId { get; protected set; }
-        public int Bitrate { get; protected set; }
-        public double FrameRate { get; protected set; }
-        public int FrameWidth { get; protected set; }
-        public int FrameHeight { get; protected set; }
-        public bool IsPlaying { get; protected set; }
-        public MediaState State { get; protected set; }
+        public TimeSpan Duration { get; private set; }
+        public string CodecName { get; private set; }
+        public string CodecId { get; private set; }
+        public int Bitrate { get; private set; }
+        public double FrameRate { get; private set; }
+        public int FrameWidth { get; private set; }
+        public int FrameHeight { get; private set; }
+        public bool IsPlaying { get; private set; }
+        public MediaState State { get; private set; }
         public TimeSpan Position => clock.Elapsed + OffsetClock;
         public TimeSpan frameDuration { get; private set; }
         #endregion
@@ -282,6 +282,7 @@ namespace Avalonia.Extensions.Media
             clock.Start();
             IsPlaying = true;
             State = MediaState.Play;
+            MediaPlay?.Invoke(Duration);
         }
         public void Pause()
         {
@@ -291,6 +292,7 @@ namespace Avalonia.Extensions.Media
             clock.Stop();
             clock.Reset();
             State = MediaState.Pause;
+            MediaPause?.Invoke(Duration);
         }
         public void Stop()
         {

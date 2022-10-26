@@ -113,6 +113,7 @@ namespace Avalonia.Extensions.Media
                             if (video.TryReadNextFrame(out var frame))
                             {
                                 var convertedFrame = video.FrameConvert(&frame);
+                                bitmap?.Dispose();
                                 bitmap = new Bitmap(PixelFormat.Bgra8888, AlphaFormat.Premul, (IntPtr)convertedFrame.data[0], new PixelSize(video.FrameWidth, video.FrameHeight), new Vector(96, 96), convertedFrame.linesize[0]);
                                 Dispatcher.UIThread.InvokeAsync(() =>
                                 {
