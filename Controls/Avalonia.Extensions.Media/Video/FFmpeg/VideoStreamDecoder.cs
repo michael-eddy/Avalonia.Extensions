@@ -140,16 +140,20 @@ namespace Avalonia.Extensions.Media
             ffmpeg.av_image_fill_arrays(ref TargetData, ref TargetLinesize, (byte*)FrameBufferPtr, targetFormat, targetWidth, targetHeight, 1);
             return true;
         }
-        public byte[] FrameConvertBytes(AVFrame* sourceFrame)
+        public AVFrame FrameConvert(AVFrame* sourceFrame)
         {
             ffmpeg.sws_scale(convert, sourceFrame->data, sourceFrame->linesize, 0, sourceFrame->height, TargetData, TargetLinesize);
             var data = new byte_ptrArray8();
             data.UpdateFrom(TargetData);
             var linesize = new int_array8();
             linesize.UpdateFrom(TargetLinesize);
-            byte[] bytes = new byte[FrameWidth * FrameHeight * 4];
-            Marshal.Copy((IntPtr)data[0], bytes, 0, bytes.Length);
-            return bytes;
+            return new AVFrame
+            {
+                data = data,
+                linesize = linesize,
+                width = FrameWidth,
+                height = FrameHeight
+            };
         }
         public bool TryReadNextFrame(out AVFrame outFrame)
         {

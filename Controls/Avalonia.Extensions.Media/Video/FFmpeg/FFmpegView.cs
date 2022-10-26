@@ -3,19 +3,20 @@ using Avalonia.Controls.Metadata;
 using Avalonia.Controls.Primitives;
 using Avalonia.Logging;
 using Avalonia.Media.Imaging;
+using Avalonia.Platform;
 using Avalonia.Threading;
 using System;
-using System.IO;
 using System.Threading.Tasks;
 
 namespace Avalonia.Extensions.Media
 {
+    [PseudoClasses(":empty")]
     [TemplatePart("PART_ImageView", typeof(Image))]
     public unsafe class FFmpegView : TemplatedControl, IVideoView
     {
+        private Image image;
         private Task PlayTask;
         private Bitmap bitmap;
-        private Image image;
         private readonly VideoStreamDecoder video;
         private readonly DispatcherTimer timer;
         public FFmpegView()
@@ -28,6 +29,7 @@ namespace Avalonia.Extensions.Media
         }
         protected override void OnApplyTemplate(TemplateAppliedEventArgs e)
         {
+            base.OnApplyTemplate(e);
             image = e.NameScope.Get<Image>("PART_ImageView");
         }
         private void VideoMediaCompleted(TimeSpan duration)
@@ -110,14 +112,14 @@ namespace Avalonia.Extensions.Media
                         {
                             if (video.TryReadNextFrame(out var frame))
                             {
-                                var bytes = video.FrameConvertBytes(&frame);
-                                using (var stream = new MemoryStream(bytes))
+                                var convertedFrame = video.FrameConvert(&frame);
+                                bitmap = new Bitmap(PixelFormat.Bgra8888, AlphaFormat.Premul, (IntPtr)convertedFrame.data[0], new PixelSize(video.FrameWidth, video.FrameHeight), new Vector(96, 96), convertedFrame.linesize[0]);
+                                Dispatcher.UIThread.InvokeAsync(() =>
                                 {
-                                    bitmap = Bitmap.DecodeToWidth(stream, video.FrameWidth);
                                     if (image != null)
                                         image.Source = bitmap;
-                                }
-                                image?.InvalidateMeasure();
+                                    image?.InvalidateMeasure();
+                                });
                             }
                         }
                     }

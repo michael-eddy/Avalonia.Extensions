@@ -1,5 +1,6 @@
 ﻿using Avalonia.Controls;
 using Avalonia.Logging;
+using Avalonia.Markup.Xaml.Styling;
 using ManagedBass;
 using System;
 
@@ -42,6 +43,7 @@ namespace Avalonia.Extensions.Media
             {
                 try
                 {
+                    InitXamlStyle(builder);
                     LibVLCSharp.Shared.Core.Initialize(libvlcDirectoryPath);
                     IsVideoInit = true;
                 }
@@ -53,6 +55,19 @@ namespace Avalonia.Extensions.Media
                 }
             });
             return builder;
+        }
+        private static void InitXamlStyle(object builder)
+        {
+            try
+            {
+                StyleInclude styleInclude = new StyleInclude(new Uri("avares://Avalonia.Extensions.Media/Styles"));
+                styleInclude.Source = new Uri($"avares://Avalonia.Extensions.Media/Styles/Xaml/FFmpegView.xaml");
+                Application.Current.Styles.Add(styleInclude);
+            }
+            catch (Exception ex)
+            {
+                Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(builder, ex.Message);
+            }
         }
     }
 }
