@@ -12,7 +12,7 @@ namespace Avalonia.Extensions.Media
 {
     [PseudoClasses(":empty")]
     [TemplatePart("PART_ImageView", typeof(Image))]
-    public unsafe class FFmpegView : TemplatedControl, IVideoView
+    public unsafe class FFmpegView : TemplatedControl, IPlayerView
     {
         private Image image;
         private Task PlayTask;

@@ -1,22 +1,18 @@
-﻿using Avalonia.Controls.Primitives;
+﻿using Avalonia.Controls;
 using Avalonia.Logging;
-using ManagedBass;
 using System;
 using System.Threading.Tasks;
 
 namespace Avalonia.Extensions.Media
 {
-    public unsafe class AudioElement : TemplatedControl, IVideoView
+    //https://github.com/haku1gh/UltraStar.Core/blob/865ecaacc054dde96a0b64cc32bc2928c3480ab8/src/UltraStar.Core/Audio/BassAudioPlayback.cs
+    public unsafe class AudioElement : Control, IPlayerView
     {
         private readonly Task playTask;
-        private readonly DecodecAudio audio;
-        ~AudioElement()
-        {
-            Bass.Free();
-        }
+        private readonly AudioStreamDecoder audio;
         public AudioElement()
         {
-            audio = new DecodecAudio();
+            audio = new AudioStreamDecoder();
             playTask = new Task(() =>
             {
                 while (true)
@@ -28,11 +24,9 @@ namespace Avalonia.Extensions.Media
                             if (audio.TryReadNextFrame(out var frame))
                             {
                                 var bytes = audio.FrameConvertBytes(&frame);
-                                if (bytes == null) continue;
-                                var handle = Bass.CreateStream(bytes, 0, 0, BassFlags.Mono | BassFlags.Default);
-                                Bass.ChannelPlay(handle, false);
-                                if (handle != 0)
-                                    Bass.StreamFree(handle);
+                                if (bytes == null) return;
+
+
                             }
                         }
                     }
@@ -64,7 +58,7 @@ namespace Avalonia.Extensions.Media
                     DisplayVideoInfo();
                 }
                 audio.Play();
-                playTask.Wait();
+                playTask.Start();
                 return true;
             }
             catch { }
@@ -99,18 +93,10 @@ namespace Avalonia.Extensions.Media
         public TimeSpan Duration => duration;
         private double sampleRate;
         public double SampleRate => sampleRate;
-        private double frameHeight;
-        public double FrameHeight => frameHeight;
-        private double frameWidth;
-        public double FrameWidth => frameWidth;
         private long audioBitrate;
         public long AudioBitrate => audioBitrate;
         private long audioBitsPerSample;
         public long AudioBitsPerSample => audioBitsPerSample;
-        private int audioChannels;
-        public int AudioChannels => audioChannels;
-        private ulong audioChannelsLayout;
-        public ulong AudioChannelsLayout => audioChannelsLayout;
         private double totalSeconds;
         public double TotalSeconds => totalSeconds;
         private TimeSpan position;
@@ -121,10 +107,8 @@ namespace Avalonia.Extensions.Media
             duration = audio.Duration;
             codec = audio.CodecName;
             audioBitrate = audio.Bitrate;
-            audioChannels = audio.Channels;
             sampleRate = audio.SampleRate;
             audioBitsPerSample = audio.BitsPerSample;
-            audioChannelsLayout = audio.ChannelLyaout;
             totalSeconds = audio.Duration.TotalSeconds;
         }
         #endregion
