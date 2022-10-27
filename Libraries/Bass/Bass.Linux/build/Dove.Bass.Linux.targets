@@ -11,10 +11,10 @@
         <BassLinuxARM64Enabled Condition="'$(BassLinuxARM64Enabled)' == '' AND ('$(Platform)' == 'arm64' OR '$(Platform)' == 'AnyCPU')">true</BassLinuxARM64Enabled>
     </PropertyGroup>
     <ItemGroup>
-        <BassLinuxX64IncludeFiles Condition="'@(BassLinuxX64IncludeFiles)'==''" Include="bass.%2A" />
-        <BassLinuxX86IncludeFiles Condition="'@(BassLinuxX86IncludeFiles)'==''" Include="bass.%2A" />
-        <BassLinuxARMIncludeFiles Condition="'@(BassLinuxARMIncludeFiles)'==''" Include="bass.%2A" />
-        <BassLinuxARM64IncludeFiles Condition="'@(BassLinuxARM64IncludeFiles)'==''" Include="bass.%2A" />
+        <BassLinuxX64IncludeFiles Condition="'@(BassLinuxX64IncludeFiles)'==''" Include="libbass.%2A" />
+        <BassLinuxX86IncludeFiles Condition="'@(BassLinuxX86IncludeFiles)'==''" Include="libbass.%2A" />
+        <BassLinuxARMIncludeFiles Condition="'@(BassLinuxARMIncludeFiles)'==''" Include="libbass.%2A" />
+        <BassLinuxARM64IncludeFiles Condition="'@(BassLinuxARM64IncludeFiles)'==''" Include="libbass.%2A" />
     </ItemGroup>
     
     <Target Name="CollectBassFilesToCopyLinux" BeforeTargets="BeforeBuild">
