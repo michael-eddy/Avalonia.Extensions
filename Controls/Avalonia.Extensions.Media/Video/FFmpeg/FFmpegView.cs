@@ -5,6 +5,7 @@ using Avalonia.Logging;
 using Avalonia.Media.Imaging;
 using Avalonia.Platform;
 using Avalonia.Threading;
+using ManagedBass;
 using System;
 using System.Threading.Tasks;
 
@@ -14,14 +15,19 @@ namespace Avalonia.Extensions.Media
     [TemplatePart("PART_ImageView", typeof(Image))]
     public unsafe class FFmpegView : TemplatedControl, IPlayerView
     {
+        private Errors error;
         private Image image;
-        private Task PlayTask;
+        private Task playTask;
         private Bitmap bitmap;
-        private readonly VideoStreamDecoder video;
+        private int decodeStream;
         private readonly DispatcherTimer timer;
+        private readonly VideoStreamDecoder video;
+        private readonly AudioStreamDecoder audio;
+        public Errors LastError => error;
         public FFmpegView()
         {
             video = new VideoStreamDecoder();
+            audio = new AudioStreamDecoder();
             video.MediaCompleted += VideoMediaCompleted;
             timer = new DispatcherTimer();
             timer.Interval = TimeSpan.FromMilliseconds(300);
@@ -55,16 +61,23 @@ namespace Avalonia.Extensions.Media
                 return false;
             }
         }
-        public bool Play(string path)
+        public bool Play(string uri)
         {
             try
             {
                 if (video.State == MediaState.None)
                 {
-                    video.InitDecodecVideo(path);
+                    video.InitDecodecVideo(uri);
+                    audio.InitDecodecAudio(uri);
+                    if (decodeStream != 0)
+                        Bass.StreamFree(decodeStream);
+                    decodeStream = Bass.CreateStream(audio.SampleRate, audio.Channels, BassFlags.Mono, StreamProcedureType.Push);
+                    if (!Bass.ChannelPlay(decodeStream, true))
+                        error = Bass.LastError;
                     DisplayVideoInfo();
                 }
                 video.Play();
+                audio.Play();
                 timer.Start();
                 return true;
             }
@@ -78,6 +91,7 @@ namespace Avalonia.Extensions.Media
         {
             try
             {
+                audio.Pause();
                 video.Pause();
                 return true;
             }
@@ -91,6 +105,7 @@ namespace Avalonia.Extensions.Media
         {
             try
             {
+                audio.Stop();
                 video.Stop();
                 return true;
             }
@@ -102,7 +117,7 @@ namespace Avalonia.Extensions.Media
         }
         void Init()
         {
-            PlayTask = new Task(() =>
+            playTask = new Task(() =>
             {
                 while (true)
                 {
@@ -128,9 +143,26 @@ namespace Avalonia.Extensions.Media
                     {
                         Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(this, ex.Message);
                     }
+                    try
+                    {
+                        if (audio.IsPlaying)
+                        {
+                            if (audio.TryReadNextFrame(out var frame))
+                            {
+                                var bytes = audio.FrameConvertBytes(&frame);
+                                if (bytes == null) return;
+                                if (Bass.StreamPutData(decodeStream, bytes, bytes.Length) == -1)
+                                    error = Bass.LastError;
+                            }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(this, ex.Message);
+                    }
                 }
             });
-            PlayTask.Start();
+            playTask.Start();
         }
         #region 视频信息
         private string codec;
@@ -145,6 +177,12 @@ namespace Avalonia.Extensions.Media
         public double FrameWidth => frameWidth;
         private int videoBitrate;
         public int VideoBitrate => videoBitrate;
+        private double sampleRate;
+        public double SampleRate => sampleRate;
+        private long audioBitrate;
+        public long AudioBitrate => audioBitrate;
+        private long audioBitsPerSample;
+        public long AudioBitsPerSample => audioBitsPerSample;
         void DisplayVideoInfo()
         {
             duration = video.Duration;
@@ -153,6 +191,9 @@ namespace Avalonia.Extensions.Media
             frameWidth = video.FrameWidth;
             frameHeight = video.FrameHeight;
             videoFps = video.FrameRate;
+            audioBitrate = audio.Bitrate;
+            sampleRate = audio.SampleRate;
+            audioBitsPerSample = audio.BitsPerSample;
         }
         #endregion
     }

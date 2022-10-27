@@ -69,7 +69,7 @@ namespace Avalonia.Controls.Demo
             var audio = this.FindControl<AudioControl>("audio");
             //audio.Play("http://downsc.chinaz.net/Files/DownLoad/sound1/201906/11582.mp3");
             var audioElement = this.FindControl<AudioElement>("audioElement");
-            audioElement.Play("http://downsc.chinaz.net/Files/DownLoad/sound1/201906/11582.mp3");
+            //audioElement.Play("http://downsc.chinaz.net/Files/DownLoad/sound1/201906/11582.mp3");
             //var webView = this.FindControl<WebView>("webView");
             //webView.Navigate("bing.com");
         }

@@ -58,7 +58,7 @@ namespace Avalonia.Extensions.Media
                 if (audio.State == MediaState.None)
                 {
                     audio.InitDecodecAudio(uri);
-                    DisplayVideoInfo();
+                    DisplayAudioInfo();
                     if (decodeStream != 0)
                         Bass.StreamFree(decodeStream);
                     decodeStream = Bass.CreateStream(audio.SampleRate, audio.Channels, BassFlags.Mono, StreamProcedureType.Push);
@@ -109,7 +109,7 @@ namespace Avalonia.Extensions.Media
         public double TotalSeconds => totalSeconds;
         private TimeSpan position;
         public TimeSpan Position => position;
-        void DisplayVideoInfo()
+        void DisplayAudioInfo()
         {
             position = audio.Position;
             duration = audio.Duration;
