@@ -87,14 +87,14 @@ namespace Avalonia.Extensions.Danmaku
             _platformHandle = base.CreateNativeControlCore(parent);
             try
             {
-                switch (PlantformUntils.Platform)
+                switch (PlantformUntils.System)
                 {
                     case Platforms.Windows:
                         {
                             wtf = LibLoader.WTF_CreateInstance();
                             LibLoader.WTF_InitializeWithHwnd(wtf, parent.Handle);
                             Init();
-                            _platformHandle = new PlatformHandle(wtf, "HWND");
+                            _platformHandle = new PlatformHandle(wtf, parent.HandleDescriptor);
                             break;
                         }
                     default:
@@ -119,7 +119,7 @@ namespace Avalonia.Extensions.Danmaku
         }
         private void ReInit()
         {
-            switch (PlantformUntils.Platform)
+            switch (PlantformUntils.System)
             {
                 case Platforms.Windows:
                     Dispose();
@@ -131,7 +131,7 @@ namespace Avalonia.Extensions.Danmaku
         {
             try
             {
-                switch (PlantformUntils.Platform)
+                switch (PlantformUntils.System)
                 {
                     case Platforms.Windows:
                         Dispose();

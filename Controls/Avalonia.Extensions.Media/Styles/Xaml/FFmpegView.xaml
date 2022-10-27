@@ -1,0 +1,12 @@
+﻿<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+	<Style Selector="FFmpegView">
+		<Setter Property="Template">
+			<ControlTemplate>
+				<Border Background="{TemplateBinding Background}">
+					<Image x:Name="PART_ImageView" Stretch="{TemplateBinding Stretch}" />
+				</Border>
+			</ControlTemplate>
+		</Setter>
+	</Style>
+</Styles>

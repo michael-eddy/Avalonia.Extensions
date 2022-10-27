@@ -1,13 +1,9 @@
-﻿using LibVLCSharp.Shared;
-using System;
+﻿using Avalonia.Controls;
 
 namespace Avalonia.Extensions.Media
 {
-    public interface IVideoView
+    public interface IVideoView : IPlayerView
     {
-        bool Play(MediaItem media);
-        bool Play(MediaList medias);
-        bool Play(Uri uri, params string[] options);
-        bool Play(string mrl, FromType type, params string[] options);
+        IControl InitLatout();
     }
 }

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <BassLinuxX64TargetDir Condition=" '$(BassLinuxX64TargetDir)' == '' ">libBass\linux-x64</BassLinuxX64TargetDir>
+        <BassLinuxX86TargetDir Condition=" '$(BassLinuxX86TargetDir)' == '' ">libBass\linux-x86</BassLinuxX86TargetDir>
+        <BassLinuxARMTargetDir Condition=" '$(BassLinuxARMTargetDir)' == '' ">libBass\linux-arm</BassLinuxARMTargetDir>
+        <BassLinuxARM64TargetDir Condition=" '$(BassLinuxARM64TargetDir)' == '' ">libBass\linux-arm64</BassLinuxARM64TargetDir>
+        <BassLinuxX64Enabled Condition="'$(BassLinuxX64Enabled)' == '' AND ('$(Platform)' == 'x64' OR '$(Platform)' == 'AnyCPU')">true</BassLinuxX64Enabled>
+        <BassLinuxX86Enabled Condition="'$(BassLinuxX86Enabled)' == '' AND ('$(Platform)' == 'x86' OR '$(Platform)' == 'AnyCPU')">true</BassLinuxX86Enabled>
+        <BassLinuxARMEnabled Condition="'$(BassLinuxARMEnabled)' == '' AND ('$(Platform)' == 'arm' OR '$(Platform)' == 'AnyCPU')">true</BassLinuxARMEnabled>
+        <BassLinuxARM64Enabled Condition="'$(BassLinuxARM64Enabled)' == '' AND ('$(Platform)' == 'arm64' OR '$(Platform)' == 'AnyCPU')">true</BassLinuxARM64Enabled>
+    </PropertyGroup>
+    <ItemGroup>
+        <BassLinuxX64IncludeFiles Condition="'@(BassLinuxX64IncludeFiles)'==''" Include="libbass.%2A" />
+        <BassLinuxX86IncludeFiles Condition="'@(BassLinuxX86IncludeFiles)'==''" Include="libbass.%2A" />
+        <BassLinuxARMIncludeFiles Condition="'@(BassLinuxARMIncludeFiles)'==''" Include="libbass.%2A" />
+        <BassLinuxARM64IncludeFiles Condition="'@(BassLinuxARM64IncludeFiles)'==''" Include="libbass.%2A" />
+    </ItemGroup>
+    
+    <Target Name="CollectBassFilesToCopyLinux" BeforeTargets="BeforeBuild">
+        <!-- x64 -->
+        <ItemGroup Condition="'$(BassLinuxX64Enabled)' == 'true'">
+            <BassLinuxX64IncludeFilesFullPath Include="$([MSBuild]::Unescape($(MSBuildThisFileDirectory)..\build\linux-x64\%(BassLinuxX64IncludeFiles.Identity)))" />
+            <BassLinuxX64ExcludeFilesFullPath Include="$([MSBuild]::Unescape($(MSBuildThisFileDirectory)..\build\linux-x64\%(BassLinuxX64ExcludeFiles.Identity)))" Condition="'%(BassLinuxX64ExcludeFiles.Identity)'!=''" />
+            <Content Include="@(BassLinuxX64IncludeFilesFullPath)" Exclude="@(BassLinuxX64ExcludeFilesFullPath)">
+                <Link>$(BassLinuxX64TargetDir)\$([MSBuild]::MakeRelative($(MSBuildThisFileDirectory)..\build\linux-x64\, %(FullPath)))</Link>
+                <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            </Content>
+        </ItemGroup>
+        <!-- x86 -->
+        <ItemGroup Condition="'$(BassLinuxX86Enabled)' == 'true'">
+            <BassLinuxX86IncludeFilesFullPath Include="$([MSBuild]::Unescape($(MSBuildThisFileDirectory)..\build\linux-x86\%(BassLinuxX86IncludeFiles.Identity)))" />
+            <BassLinuxX86ExcludeFilesFullPath Include="$([MSBuild]::Unescape($(MSBuildThisFileDirectory)..\build\linux-x86\%(BassLinuxX86ExcludeFiles.Identity)))" Condition="'%(BassLinuxX86ExcludeFiles.Identity)'!=''" />
+            <Content Include="@(BassLinuxX86IncludeFilesFullPath)" Exclude="@(BassLinuxX86ExcludeFilesFullPath)">
+                <Link>$(BassLinuxX86TargetDir)\$([MSBuild]::MakeRelative($(MSBuildThisFileDirectory)..\build\linux-x86\, %(FullPath)))</Link>
+                <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            </Content>
+        </ItemGroup>
+        <!-- arm -->
+        <ItemGroup Condition="'$(BassLinuxARMEnabled)' == 'true'">
+            <BassLinuxARMIncludeFilesFullPath Include="$([MSBuild]::Unescape($(MSBuildThisFileDirectory)..\build\linux-arm\%(BassLinuxARMIncludeFiles.Identity)))" />
+            <BassLinuxARMExcludeFilesFullPath Include="$([MSBuild]::Unescape($(MSBuildThisFileDirectory)..\build\linux-arm\%(BassLinuxARMExcludeFiles.Identity)))" Condition="'%(BassLinuxARMExcludeFiles.Identity)'!=''" />
+            <Content Include="@(BassLinuxARMIncludeFilesFullPath)" Exclude="@(BassLinuxARMExcludeFilesFullPath)">
+                <Link>$(BassLinuxARMTargetDir)\$([MSBuild]::MakeRelative($(MSBuildThisFileDirectory)..\build\linux-arm\, %(FullPath)))</Link>
+                <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            </Content>
+        </ItemGroup>
+        <!-- arm64 -->
+        <ItemGroup Condition="'$(BassLinuxARM64Enabled)' == 'true'">
+            <BassLinuxARM64IncludeFilesFullPath Include="$([MSBuild]::Unescape($(MSBuildThisFileDirectory)..\build\linux-arm64\%(BassLinuxARM64IncludeFiles.Identity)))" />
+            <BassLinuxARM64ExcludeFilesFullPath Include="$([MSBuild]::Unescape($(MSBuildThisFileDirectory)..\build\linux-arm64\%(BassLinuxARM64ExcludeFiles.Identity)))" Condition="'%(BassLinuxARM64ExcludeFiles.Identity)'!=''" />
+            <Content Include="@(BassLinuxARM64IncludeFilesFullPath)" Exclude="@(BassLinuxARM64ExcludeFilesFullPath)">
+                <Link>$(BassLinuxARM64TargetDir)\$([MSBuild]::MakeRelative($(MSBuildThisFileDirectory)..\build\linux-arm64\, %(FullPath)))</Link>
+                <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            </Content>
+        </ItemGroup>
+    </Target>
+</Project>
