@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <BassWindowsX64TargetDir Condition=" '$(BassWindowsX64TargetDir)' == '' ">libBass\win-x64</BassWindowsX64TargetDir>
+        <BassWindowsX86TargetDir Condition=" '$(BassWindowsX86TargetDir)' == '' ">libBass\win-x86</BassWindowsX86TargetDir>
+        <BassWindowsARM64TargetDir Condition=" '$(BassWindowsARM64TargetDir)' == '' ">libBass\win-arm64</BassWindowsARM64TargetDir>
+        <BassWindowsX64Enabled Condition="'$(BassWindowsX64Enabled)' == '' AND ('$(Platform)' == 'x64' OR '$(Platform)' == 'AnyCPU')">true</BassWindowsX64Enabled>
+        <BassWindowsX86Enabled Condition="'$(BassWindowsX86Enabled)' == '' AND ('$(Platform)' == 'x86' OR '$(Platform)' == 'AnyCPU')">true</BassWindowsX86Enabled>
+        <BassWindowsARM64Enabled Condition="'$(BassWindowsARM64Enabled)' == '' AND ('$(Platform)' == 'arm64' OR '$(Platform)' == 'AnyCPU')">true</BassWindowsARM64Enabled>
+    </PropertyGroup>
+    <ItemGroup>
+        <BassWindowsX64IncludeFiles Condition="'@(BassWindowsX64IncludeFiles)'==''" Include="bass.%2A" />
+        <BassWindowsX86IncludeFiles Condition="'@(BassWindowsX86IncludeFiles)'==''" Include="bass.%2A" />
+        <BassWindowsARM64IncludeFiles Condition="'@(BassWindowsARM64IncludeFiles)'==''" Include="bass.%2A" />
+    </ItemGroup>
+    
+    <Target Name="CollectBassFilesToCopyWindows" BeforeTargets="BeforeBuild">
+        <!-- x64 -->
+        <ItemGroup Condition="'$(BassWindowsX64Enabled)' == 'true'">
+            <BassWindowsX64IncludeFilesFullPath Include="$([MSBuild]::Unescape($(MSBuildThisFileDirectory)..\build\win-x64\%(BassWindowsX64IncludeFiles.Identity)))" />
+            <BassWindowsX64ExcludeFilesFullPath Include="$([MSBuild]::Unescape($(MSBuildThisFileDirectory)..\build\win-x64\%(BassWindowsX64ExcludeFiles.Identity)))" Condition="'%(BassWindowsX64ExcludeFiles.Identity)'!=''" />
+            <Content Include="@(BassWindowsX64IncludeFilesFullPath)" Exclude="@(BassWindowsX64ExcludeFilesFullPath)">
+                <Link>$(BassWindowsX64TargetDir)\$([MSBuild]::MakeRelative($(MSBuildThisFileDirectory)..\build\win-x64\, %(FullPath)))</Link>
+                <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            </Content>
+        </ItemGroup>
+        <!-- x86 -->
+        <ItemGroup Condition="'$(BassWindowsX86Enabled)' == 'true'">
+            <BassWindowsX86IncludeFilesFullPath Include="$([MSBuild]::Unescape($(MSBuildThisFileDirectory)..\build\win-x86\%(BassWindowsX86IncludeFiles.Identity)))" />
+            <BassWindowsX86ExcludeFilesFullPath Include="$([MSBuild]::Unescape($(MSBuildThisFileDirectory)..\build\win-x86\%(BassWindowsX86ExcludeFiles.Identity)))" Condition="'%(BassWindowsX86ExcludeFiles.Identity)'!=''" />
+            <Content Include="@(BassWindowsX86IncludeFilesFullPath)" Exclude="@(BassWindowsX86ExcludeFilesFullPath)">
+                <Link>$(BassWindowsX86TargetDir)\$([MSBuild]::MakeRelative($(MSBuildThisFileDirectory)..\build\win-x86\, %(FullPath)))</Link>
+                <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            </Content>
+        </ItemGroup>
+        <!-- arm64 -->
+        <ItemGroup Condition="'$(BassWindowsARM64Enabled)' == 'true'">
+            <BassWindowsARM64IncludeFilesFullPath Include="$([MSBuild]::Unescape($(MSBuildThisFileDirectory)..\build\win-arm64\%(BassWindowsARM64IncludeFiles.Identity)))" />
+            <BassWindowsARM64ExcludeFilesFullPath Include="$([MSBuild]::Unescape($(MSBuildThisFileDirectory)..\build\win-arm64\%(BassWindowsARM64ExcludeFiles.Identity)))" Condition="'%(BassWindowsARM64ExcludeFiles.Identity)'!=''" />
+            <Content Include="@(BassWindowsARM64IncludeFilesFullPath)" Exclude="@(BassWindowsARM64ExcludeFilesFullPath)">
+                <Link>$(BassWindowsARM64TargetDir)\$([MSBuild]::MakeRelative($(MSBuildThisFileDirectory)..\build\win-arm64\, %(FullPath)))</Link>
+                <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            </Content>
+        </ItemGroup>
+    </Target>
+</Project>
