@@ -3,7 +3,6 @@ using Avalonia.Data;
 using Avalonia.Extensions.Controls;
 using Avalonia.Extensions.Event;
 using Avalonia.Extensions.Media;
-using Avalonia.Extensions.Media.Audio.Bass;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;

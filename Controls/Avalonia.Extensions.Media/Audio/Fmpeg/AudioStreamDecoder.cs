@@ -29,7 +29,8 @@ namespace Avalonia.Extensions.Media
         public string CodecName { get; private set; }
         public string CodecId { get; private set; }
         public long Bitrate { get; private set; }
-        public long SampleRate { get; private set; }
+        public int Channels { get; private set; }
+        public int SampleRate { get; private set; }
         public long BitsPerSample { get; private set; }
         public AVSampleFormat SampleFormat { get; private set; }
         public void InitDecodecAudio(string path)
@@ -62,12 +63,13 @@ namespace Avalonia.Extensions.Media
             CodecName = ffmpeg.avcodec_get_name(codec->id);
             Bitrate = codecContext->bit_rate;
             var channelLayout = codecContext->ch_layout;
+            Channels = (&channelLayout)->nb_channels;
             SampleRate = codecContext->sample_rate;
             SampleFormat = codecContext->sample_fmt;
             BitsPerSample = ffmpeg.av_samples_get_buffer_size(null, 2, codecContext->frame_size, AVSampleFormat.AV_SAMPLE_FMT_S16, 1);
             audioBuffer = Marshal.AllocHGlobal((int)BitsPerSample);
             bufferPtr = (byte*)audioBuffer;
-            InitConvert(channelLayout, AVSampleFormat.AV_SAMPLE_FMT_S16, (int)SampleRate, channelLayout, SampleFormat, (int)SampleRate);
+            InitConvert(channelLayout, AVSampleFormat.AV_SAMPLE_FMT_S16, SampleRate, channelLayout, SampleFormat, SampleRate);
             packet = ffmpeg.av_packet_alloc();
             frame = ffmpeg.av_frame_alloc();
             State = MediaState.Read;

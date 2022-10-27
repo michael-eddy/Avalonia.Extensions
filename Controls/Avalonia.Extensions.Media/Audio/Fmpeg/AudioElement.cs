@@ -1,15 +1,18 @@
 ﻿using Avalonia.Controls;
 using Avalonia.Logging;
+using ManagedBass;
 using System;
 using System.Threading.Tasks;
 
 namespace Avalonia.Extensions.Media
 {
-    //https://github.com/haku1gh/UltraStar.Core/blob/865ecaacc054dde96a0b64cc32bc2928c3480ab8/src/UltraStar.Core/Audio/BassAudioPlayback.cs
     public unsafe class AudioElement : Control, IPlayerView
     {
+        private Errors error;
+        private int decodeStream;
         private readonly Task playTask;
         private readonly AudioStreamDecoder audio;
+        public Errors LastError => error;
         public AudioElement()
         {
             audio = new AudioStreamDecoder();
@@ -25,8 +28,8 @@ namespace Avalonia.Extensions.Media
                             {
                                 var bytes = audio.FrameConvertBytes(&frame);
                                 if (bytes == null) return;
-
-
+                                if (Bass.StreamPutData(decodeStream, bytes, bytes.Length) == -1)
+                                    error = Bass.LastError;
                             }
                         }
                     }
@@ -56,6 +59,11 @@ namespace Avalonia.Extensions.Media
                 {
                     audio.InitDecodecAudio(uri);
                     DisplayVideoInfo();
+                    if (decodeStream != 0)
+                        Bass.StreamFree(decodeStream);
+                    decodeStream = Bass.CreateStream(audio.SampleRate, audio.Channels, BassFlags.Mono, StreamProcedureType.Push);
+                    if (!Bass.ChannelPlay(decodeStream, true))
+                        error = Bass.LastError;
                 }
                 audio.Play();
                 playTask.Start();
