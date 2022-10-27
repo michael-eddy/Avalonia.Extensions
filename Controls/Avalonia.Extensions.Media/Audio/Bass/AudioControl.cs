@@ -22,57 +22,63 @@ namespace Avalonia.Extensions.Media
         {
             Bass.Free();
         }
-        static AudioControl()
-        {
-            if (!AppBuilderDesktopExtensions.IsAudioInit)
-                throw new ApplicationException("you should call UseAudioControl in Program.Main init the control");
-        }
         public AudioControl()
         {
-            Bass.NetPlaylist = 1;
-            Bass.NetPreBuffer = 0;
+            if (AppBuilderDesktopExtensions.IsAudioInit)
+                Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(this, "BASS : dosnot initialize device");
+            else
+            {
+                Bass.NetPlaylist = 1;
+                Bass.NetPreBuffer = 0;
+            }
             _timer = new Timer(80);
             _timer.Elapsed += Timer_Elapsed;
         }
-        public void Play(string url)
+        public bool Play(string url)
         {
             try
             {
-                TitleAndArtist = IcyMeta = null;
-                Bass.NetAgent = UserAgent;
-                Bass.NetProxy = string.IsNullOrEmpty(Proxy) ? null : Proxy;
-                task?.Dispose();
-                task = Task.Factory.StartNew(() =>
+                if (AppBuilderDesktopExtensions.IsAudioInit)
+                    Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(this, "BASS : dosnot initialize device");
+                else
                 {
-                    int r;
-                    lock (Lock)
-                        r = ++_req;
-                    _timer.Stop();
-                    Bass.StreamFree(_chan);
-                    Status = PlayStatus.Buffering;
-                    var c = Bass.CreateStream(url, 0, BassFlags.StreamDownloadBlocks | BassFlags.StreamStatus | BassFlags.AutoFree, StatusProc, new IntPtr(r));
-                    lock (Lock)
+                    TitleAndArtist = IcyMeta = null;
+                    Bass.NetAgent = UserAgent;
+                    Bass.NetProxy = string.IsNullOrEmpty(Proxy) ? null : Proxy;
+                    task?.Dispose();
+                    task = Task.Factory.StartNew(() =>
                     {
-                        if (r != _req)
+                        int r;
+                        lock (Lock)
+                            r = ++_req;
+                        _timer.Stop();
+                        Bass.StreamFree(_chan);
+                        Status = PlayStatus.Buffering;
+                        var c = Bass.CreateStream(url, 0, BassFlags.StreamDownloadBlocks | BassFlags.StreamStatus | BassFlags.AutoFree, StatusProc, new IntPtr(r));
+                        lock (Lock)
                         {
-                            if (c != 0)
-                                Bass.StreamFree(c);
-                            return;
+                            if (r != _req)
+                            {
+                                if (c != 0)
+                                    Bass.StreamFree(c);
+                                return;
+                            }
+                            _chan = c;
                         }
-                        _chan = c;
-                    }
-                    if (_chan == 0)
-                        Status = PlayStatus.Error;
-                    else
-                        _timer.Start();
-                });
+                        if (_chan == 0)
+                            Status = PlayStatus.Error;
+                        else
+                            _timer.Start();
+                    });
+                    return true;
+                }
             }
             catch (Exception ex)
             {
                 Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(this, ex.Message);
                 task?.Dispose();
-                throw;
             }
+            return false;
         }
         /// <summary>
         /// Defines the <see cref="Proxy"/> property.

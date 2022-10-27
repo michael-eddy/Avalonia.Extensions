@@ -29,6 +29,28 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Avalonia.Controls.WebView",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Avalonia.Extensions.WebView", "WebViews\Avalonia.Extensions.WebView\Avalonia.Extensions.WebView.csproj", "{B15231C5-8CE6-4B45-A8A2-BD8C3582353D}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libraries", "Libraries", "{A6315C95-852B-4EF9-AFB9-2BAE738D4B84}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Bass", "Bass", "{D70046E1-3D59-4B84-A534-C974E8361A41}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Windows", "Windows", "{50FEAC17-86A9-4F93-94FE-988D4F65CDB7}"
+	ProjectSection(SolutionItems) = preProject
+		Libraries\Bass\Bass.Windows\Dove.Bass.Windows.nuspec = Libraries\Bass\Bass.Windows\Dove.Bass.Windows.nuspec
+		Libraries\Bass\Bass.Windows\build\Dove.Bass.Windows.targets = Libraries\Bass\Bass.Windows\build\Dove.Bass.Windows.targets
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Linux", "Linux", "{E2439AA7-226B-41BB-8F86-523705CB0618}"
+	ProjectSection(SolutionItems) = preProject
+		Libraries\Bass\Bass.Linux\Dove.Bass.Linux.nuspec = Libraries\Bass\Bass.Linux\Dove.Bass.Linux.nuspec
+		Libraries\Bass\Bass.Linux\build\Dove.Bass.Linux.targets = Libraries\Bass\Bass.Linux\build\Dove.Bass.Linux.targets
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "OSX", "OSX", "{FBC2902A-27F2-4CF4-BFD5-66DF7E93737E}"
+	ProjectSection(SolutionItems) = preProject
+		Libraries\Bass\Bass.OSX\Dove.Bass.OSX.nuspec = Libraries\Bass\Bass.OSX\Dove.Bass.OSX.nuspec
+		Libraries\Bass\Bass.OSX\build\Dove.Bass.OSX.targets = Libraries\Bass\Bass.OSX\build\Dove.Bass.OSX.targets
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -75,6 +97,11 @@ Global
 		{FA54EE3C-07E6-4B18-8031-8B95842FDA8B} = {736AFC18-0DD8-4577-8066-A26322E85F8D}
 		{514055BC-2CAF-41F5-9558-0E3FF77BBCFF} = {60373426-CE2D-4E22-A406-FFA8F8FE137F}
 		{B15231C5-8CE6-4B45-A8A2-BD8C3582353D} = {528356C1-0DA1-4E0A-A93D-4D05159A819F}
+		{A6315C95-852B-4EF9-AFB9-2BAE738D4B84} = {28A7A1E6-B47C-4241-8227-645D8D769F23}
+		{D70046E1-3D59-4B84-A534-C974E8361A41} = {A6315C95-852B-4EF9-AFB9-2BAE738D4B84}
+		{50FEAC17-86A9-4F93-94FE-988D4F65CDB7} = {D70046E1-3D59-4B84-A534-C974E8361A41}
+		{E2439AA7-226B-41BB-8F86-523705CB0618} = {D70046E1-3D59-4B84-A534-C974E8361A41}
+		{FBC2902A-27F2-4CF4-BFD5-66DF7E93737E} = {D70046E1-3D59-4B84-A534-C974E8361A41}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {82A8C38D-510B-4067-BAB9-FA581B3F79C7}

@@ -1,30 +1,34 @@
 ﻿using Avalonia.Controls;
 using Avalonia.Controls.Metadata;
 using Avalonia.Controls.Primitives;
-using Avalonia.Extensions.Controls;
 using Avalonia.Logging;
+using Avalonia.LogicalTree;
 using Avalonia.Media;
 using Avalonia.Media.Imaging;
 using Avalonia.Platform;
 using Avalonia.Threading;
 using ManagedBass;
+using PCLUntils.Objects;
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Avalonia.Extensions.Media
 {
     [PseudoClasses(":empty")]
-    [TemplatePart("PART_SurfaceView", typeof(SurfaceView))]
+    [TemplatePart("PART_ImageView", typeof(Image))]
     public unsafe class FFmpegView : TemplatedControl, IPlayerView
     {
+        private Image image;
         private Errors error;
         private Task playTask;
         private Bitmap bitmap;
         private int decodeStream;
-        private SurfaceView surface;
+        private bool _isAttached = false;
         private readonly DispatcherTimer timer;
         private readonly VideoStreamDecoder video;
         private readonly AudioStreamDecoder audio;
+        private CancellationTokenSource cancellationToken;
         public Errors LastError => error;
         public static readonly StyledProperty<Stretch> StretchProperty =
             AvaloniaProperty.Register<FFmpegView, Stretch>(nameof(Stretch), Stretch.Uniform);
@@ -35,6 +39,22 @@ namespace Avalonia.Extensions.Media
         {
             get => GetValue(StretchProperty);
             set => SetValue(StretchProperty, value);
+        }
+        protected override void OnDetachedFromLogicalTree(LogicalTreeAttachmentEventArgs e)
+        {
+            base.OnDetachedFromLogicalTree(e);
+            timer.Stop();
+            cancellationToken.Cancel();
+        }
+        protected override void OnAttachedToVisualTree(VisualTreeAttachmentEventArgs e)
+        {
+            _isAttached = true;
+            base.OnAttachedToVisualTree(e);
+        }
+        protected override void OnDetachedFromVisualTree(VisualTreeAttachmentEventArgs e)
+        {
+            _isAttached = false;
+            base.OnDetachedFromVisualTree(e);
         }
         public FFmpegView()
         {
@@ -48,7 +68,7 @@ namespace Avalonia.Extensions.Media
         protected override void OnApplyTemplate(TemplateAppliedEventArgs e)
         {
             base.OnApplyTemplate(e);
-            surface = e.NameScope.Get<SurfaceView>("PART_SurfaceView");
+            image = e.NameScope.Get<Image>("PART_ImageView");
         }
         private void VideoMediaCompleted(TimeSpan duration)
         {
@@ -129,21 +149,24 @@ namespace Avalonia.Extensions.Media
         }
         void Init()
         {
+            cancellationToken = new CancellationTokenSource();
             playTask = new Task(() =>
             {
                 while (true)
                 {
                     try
                     {
-                        if (video.IsPlaying)
+                        if (video.IsPlaying && _isAttached)
                         {
                             if (video.TryReadNextFrame(out var frame))
                             {
                                 var convertedFrame = video.FrameConvert(&frame);
+                                bitmap?.Dispose();
                                 bitmap = new Bitmap(PixelFormat.Bgra8888, AlphaFormat.Premul, (IntPtr)convertedFrame.data[0], new PixelSize(video.FrameWidth, video.FrameHeight), new Vector(96, 96), convertedFrame.linesize[0]);
                                 Dispatcher.UIThread.InvokeAsync(() =>
                                 {
-                                    surface?.Enqueue(bitmap);
+                                    if (image.IsNotEmpty())
+                                        image.Source = bitmap;
                                 });
                             }
                         }
@@ -170,7 +193,7 @@ namespace Avalonia.Extensions.Media
                         Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(this, ex.Message);
                     }
                 }
-            });
+            }, cancellationToken.Token);
             playTask.Start();
         }
         #region 视频信息

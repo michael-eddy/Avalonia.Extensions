@@ -4,7 +4,7 @@
 		<Setter Property="Template">
 			<ControlTemplate>
 				<Border Background="{TemplateBinding Background}">
-					<SurfaceView x:Name="PART_SurfaceView" Stretch="{TemplateBinding Stretch}" />
+					<Image x:Name="PART_ImageView" Stretch="{TemplateBinding Stretch}" />
 				</Border>
 			</ControlTemplate>
 		</Setter>

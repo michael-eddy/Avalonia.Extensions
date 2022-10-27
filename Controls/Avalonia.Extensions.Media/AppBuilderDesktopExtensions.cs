@@ -2,7 +2,11 @@
 using Avalonia.Logging;
 using Avalonia.Markup.Xaml.Styling;
 using ManagedBass;
+using PCLUntils;
+using PCLUntils.Objects;
+using PCLUntils.Plantform;
 using System;
+using System.IO;
 
 namespace Avalonia.Extensions.Media
 {
@@ -17,12 +21,10 @@ namespace Avalonia.Extensions.Media
             {
                 try
                 {
-                    if (!Bass.Init())
+                    if (InitDll(builder) && !Bass.Init())
                     {
                         IsAudioInit = false;
-                        string msg = "cannot initialize device";
-                        Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(builder, msg);
-                        throw new InvalidOperationException(msg);
+                        Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(builder, "BASS : cannot initialize device");
                     }
                     else
                         IsAudioInit = true;
@@ -68,6 +70,63 @@ namespace Avalonia.Extensions.Media
             {
                 Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(builder, ex.Message);
             }
+        }
+        private static bool InitDll(object builder)
+        {
+            bool canInit = true;
+            try
+            {
+                string sourceFileName = string.Empty, dllPath = string.Empty;
+                switch (PlantformUntils.System)
+                {
+                    case Platforms.Linux:
+                        {
+                            dllPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "libbass.so");
+                            if (!File.Exists(dllPath))
+                            {
+                                var platform = $"linux-{PlantformUntils.ArchitectureString}";
+                                sourceFileName = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "libBass", platform, "libbass.so");
+                            }
+                            break;
+                        }
+                    case Platforms.MacOS:
+                        {
+                            dllPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "libbass.dylib");
+                            if (!File.Exists(dllPath))
+                                sourceFileName = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "libBass", "osx", "libbass.dylib");
+                            break;
+                        }
+                    case Platforms.Windows:
+                        {
+                            dllPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "bass.dll");
+                            if (!File.Exists(dllPath))
+                            {
+                                var platform = $"win-{PlantformUntils.ArchitectureString}";
+                                if (platform.Equals("win-arm", StringComparison.CurrentCultureIgnoreCase))
+                                {
+                                    canInit = false;
+                                    Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(builder, "Bass cannot run in win-arm platform.Stop init.");
+                                }
+                                else
+                                    sourceFileName = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "libBass", platform, "bass.dll");
+                            }
+                            break;
+                        }
+                }
+                if (sourceFileName.IsNotEmpty() && canInit)
+                {
+                    if (File.Exists(sourceFileName))
+                        File.Copy(sourceFileName, dllPath, true);
+                    else
+                        canInit = false;
+                }
+            }
+            catch (Exception ex)
+            {
+                canInit = false;
+                Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(builder, ex.Message);
+            }
+            return canInit;
         }
     }
 }

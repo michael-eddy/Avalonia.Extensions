@@ -7,3 +7,4 @@ OutDebug
 *.csproj.user
 *.pubxml
 *.pubxml.user
+*.nupkg

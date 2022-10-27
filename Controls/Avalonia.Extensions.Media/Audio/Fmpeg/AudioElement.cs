@@ -18,7 +18,7 @@ namespace Avalonia.Extensions.Media
             audio = new AudioStreamDecoder();
             playTask = new Task(() =>
             {
-                while (true)
+                while (AppBuilderDesktopExtensions.IsAudioInit)
                 {
                     try
                     {
@@ -55,6 +55,11 @@ namespace Avalonia.Extensions.Media
         {
             try
             {
+                if (AppBuilderDesktopExtensions.IsAudioInit)
+                {
+                    Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(this, "BASS : dosnot initialize device");
+                    return false;
+                }
                 if (audio.State == MediaState.None)
                 {
                     audio.InitDecodecAudio(uri);
