@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package >
+  <metadata>
+    <id>Dove.FFmpeg.Linux</id>
+    <title>Dove.FFmpeg.Linux</title>
+    <version>1.0.0</version>
+    <authors>michael_eddy</authors>
+    <owners>michael_eddy</owners>
+    <license type="expression">MIT</license>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>FFmpeg libraries for Linux</description>
+    <tags>FFmpeg, Video, Avalonia</tags>
+    <projectUrl>https://github.com/michael-eddy/Avalonia.Extensions</projectUrl>
+  </metadata>
+  <files>
+    <file src="build\Dove.FFmpeg.Linux.targets" target="build\Dove.FFmpeg.Linux.targets"/>
+    <file src="build\linux-x64\**" target="build\linux-x64"/>
+    <file src="build\linux-x86\**" target="build\linux-x86"/>
+    <file src="build\linux-arm\**" target="build\linux-arm"/>
+    <file src="build\linux-arm64\**" target="build\linux-arm64"/>
+  </files>
+</package>

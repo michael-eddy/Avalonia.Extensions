@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <FFmpegWindowsX86TargetDir Condition=" '$(FFmpegWindowsX86TargetDir)' == '' ">libffmpeg\win-x86</FFmpegWindowsX86TargetDir>
+        <FFmpegWindowsARM64TargetDir Condition=" '$(FFmpegWindowsARM64TargetDir)' == '' ">libffmpeg\win-arm64</FFmpegWindowsARM64TargetDir>
+        <FFmpegWindowsX86Enabled Condition="'$(FFmpegWindowsX86Enabled)' == '' AND ('$(Platform)' == 'x64' OR '$(Platform)' == 'x86' OR '$(Platform)' == 'AnyCPU')">true</FFmpegWindowsX86Enabled>
+        <FFmpegWindowsARM64Enabled Condition="'$(FFmpegWindowsARM64Enabled)' == '' AND ('$(Platform)' == 'arm64' OR '$(Platform)' == 'AnyCPU')">true</FFmpegWindowsARM64Enabled>
+    </PropertyGroup>
+    <ItemGroup>
+        <FFmpegWindowsX86IncludeFiles Condition="'@(FFmpegWindowsX86IncludeFiles)'==''" 
+            Include="ffmpeg.%2A;avcodec-59.%2A;avdevice-59.%2A;avfilter-8.%2A;avformat-59.%2A;avutil-57.%2A;ffplay.%2A;ffprobe.%2A;postproc-56.%2A;swresample-4.%2A;swscale-6.%2A" />
+        <FFmpegWindowsARM64IncludeFiles Condition="'@(FFmpegWindowsARM64IncludeFiles)'==''" 
+            Include="ffmpeg.%2A;avcodec-59.%2A;avdevice-59.%2A;avfilter-8.%2A;avformat-59.%2A;avutil-57.%2A;ffplay.%2A;ffprobe.%2A;postproc-56.%2A;swresample-4.%2A;swscale-6.%2A" />
+    </ItemGroup>
+    <Target Name="CollectFFmpegFilesToCopyWindows" BeforeTargets="BeforeBuild">
+        <!-- x86 -->
+        <ItemGroup Condition="'$(FFmpegWindowsX86Enabled)' == 'true'">
+            <FFmpegWindowsX86IncludeFilesFullPath Include="$([MSBuild]::Unescape($(MSBuildThisFileDirectory)..\build\win-x86\%(FFmpegWindowsX86IncludeFiles.Identity)))" />
+            <FFmpegWindowsX86ExcludeFilesFullPath Include="$([MSBuild]::Unescape($(MSBuildThisFileDirectory)..\build\win-x86\%(FFmpegWindowsX86ExcludeFiles.Identity)))" Condition="'%(FFmpegWindowsX86ExcludeFiles.Identity)'!=''" />
+            <Content Include="@(FFmpegWindowsX86IncludeFilesFullPath)" Exclude="@(FFmpegWindowsX86ExcludeFilesFullPath)">
+                <Link>$(FFmpegWindowsX86TargetDir)\$([MSBuild]::MakeRelative($(MSBuildThisFileDirectory)..\build\win-x86\, %(FullPath)))</Link>
+                <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            </Content>
+        </ItemGroup>
+        <!-- arm64 -->
+        <ItemGroup Condition="'$(FFmpegWindowsARM64Enabled)' == 'true'">
+            <FFmpegWindowsARM64IncludeFilesFullPath Include="$([MSBuild]::Unescape($(MSBuildThisFileDirectory)..\build\win-arm64\%(FFmpegWindowsARM64IncludeFiles.Identity)))" />
+            <FFmpegWindowsARM64ExcludeFilesFullPath Include="$([MSBuild]::Unescape($(MSBuildThisFileDirectory)..\build\win-arm64\%(FFmpegWindowsARM64ExcludeFiles.Identity)))" Condition="'%(FFmpegWindowsARM64ExcludeFiles.Identity)'!=''" />
+            <Content Include="@(FFmpegWindowsARM64IncludeFilesFullPath)" Exclude="@(FFmpegWindowsARM64ExcludeFilesFullPath)">
+                <Link>$(FFmpegWindowsARM64TargetDir)\$([MSBuild]::MakeRelative($(MSBuildThisFileDirectory)..\build\win-arm64\, %(FullPath)))</Link>
+                <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            </Content>
+        </ItemGroup>
+    </Target>
+</Project>
