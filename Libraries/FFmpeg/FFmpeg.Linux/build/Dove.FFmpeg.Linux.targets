@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <FFmpegLinuxX64TargetDir Condition=" '$(FFmpegLinuxX64TargetDir)' == '' ">libffmpeg\linux-x64</FFmpegLinuxX64TargetDir>
+        <FFmpegLinuxX86TargetDir Condition=" '$(FFmpegLinuxX86TargetDir)' == '' ">libffmpeg\linux-x86</FFmpegLinuxX86TargetDir>
+        <FFmpegLinuxARMTargetDir Condition=" '$(FFmpegLinuxARMTargetDir)' == '' ">libffmpeg\linux-arm</FFmpegLinuxARMTargetDir>
+        <FFmpegLinuxARM64TargetDir Condition=" '$(FFmpegLinuxARM64TargetDir)' == '' ">libffmpeg\linux-arm64</FFmpegLinuxARM64TargetDir>
+        <FFmpegLinuxX64Enabled Condition="'$(FFmpegLinuxX64Enabled)' == '' AND ('$(Platform)' == 'x64' OR '$(Platform)' == 'AnyCPU')">true</FFmpegLinuxX64Enabled>
+        <FFmpegLinuxX86Enabled Condition="'$(FFmpegLinuxX86Enabled)' == '' AND ('$(Platform)' == 'x86' OR '$(Platform)' == 'AnyCPU')">true</FFmpegLinuxX86Enabled>
+        <FFmpegLinuxARMEnabled Condition="'$(FFmpegLinuxARMEnabled)' == '' AND ('$(Platform)' == 'arm' OR '$(Platform)' == 'AnyCPU')">true</FFmpegLinuxARMEnabled>
+        <FFmpegLinuxARM64Enabled Condition="'$(FFmpegLinuxARM64Enabled)' == '' AND ('$(Platform)' == 'arm64' OR '$(Platform)' == 'AnyCPU')">true</FFmpegLinuxARM64Enabled>
+    </PropertyGroup>
+    <ItemGroup>
+        <FFmpegLinuxX64IncludeFiles Condition="'@(FFmpegLinuxX64IncludeFiles)'==''" Include="ffmpeg;ffprobe;qt-faststart" />
+        <FFmpegLinuxX86IncludeFiles Condition="'@(FFmpegLinuxX86IncludeFiles)'==''" Include="ffmpeg;ffprobe;qt-faststart" />
+        <FFmpegLinuxARMIncludeFiles Condition="'@(FFmpegLinuxARMIncludeFiles)'==''" Include="ffmpeg;ffprobe;qt-faststart" />
+        <FFmpegLinuxARM64IncludeFiles Condition="'@(FFmpegLinuxARM64IncludeFiles)'==''" Include="ffmpeg;ffprobe;qt-faststart" />
+    </ItemGroup>
+    
+    <Target Name="CollectFFmpegFilesToCopyLinux" BeforeTargets="BeforeBuild">
+        <!-- x64 -->
+        <ItemGroup Condition="'$(FFmpegLinuxX64Enabled)' == 'true'">
+            <FFmpegLinuxX64IncludeFilesFullPath Include="$([MSBuild]::Unescape($(MSBuildThisFileDirectory)..\build\linux-x64\%(FFmpegLinuxX64IncludeFiles.Identity)))" />
+            <FFmpegLinuxX64ExcludeFilesFullPath Include="$([MSBuild]::Unescape($(MSBuildThisFileDirectory)..\build\linux-x64\%(FFmpegLinuxX64ExcludeFiles.Identity)))" Condition="'%(FFmpegLinuxX64ExcludeFiles.Identity)'!=''" />
+            <Content Include="@(FFmpegLinuxX64IncludeFilesFullPath)" Exclude="@(FFmpegLinuxX64ExcludeFilesFullPath)">
+                <Link>$(FFmpegLinuxX64TargetDir)\$([MSBuild]::MakeRelative($(MSBuildThisFileDirectory)..\build\linux-x64\, %(FullPath)))</Link>
+                <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            </Content>
+        </ItemGroup>
+        <!-- x86 -->
+        <ItemGroup Condition="'$(FFmpegLinuxX86Enabled)' == 'true'">
+            <FFmpegLinuxX86IncludeFilesFullPath Include="$([MSBuild]::Unescape($(MSBuildThisFileDirectory)..\build\linux-x86\%(FFmpegLinuxX86IncludeFiles.Identity)))" />
+            <FFmpegLinuxX86ExcludeFilesFullPath Include="$([MSBuild]::Unescape($(MSBuildThisFileDirectory)..\build\linux-x86\%(FFmpegLinuxX86ExcludeFiles.Identity)))" Condition="'%(FFmpegLinuxX86ExcludeFiles.Identity)'!=''" />
+            <Content Include="@(FFmpegLinuxX86IncludeFilesFullPath)" Exclude="@(FFmpegLinuxX86ExcludeFilesFullPath)">
+                <Link>$(FFmpegLinuxX86TargetDir)\$([MSBuild]::MakeRelative($(MSBuildThisFileDirectory)..\build\linux-x86\, %(FullPath)))</Link>
+                <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            </Content>
+        </ItemGroup>
+        <!-- arm -->
+        <ItemGroup Condition="'$(FFmpegLinuxARMEnabled)' == 'true'">
+            <FFmpegLinuxARMIncludeFilesFullPath Include="$([MSBuild]::Unescape($(MSBuildThisFileDirectory)..\build\linux-arm\%(FFmpegLinuxARMIncludeFiles.Identity)))" />
+            <FFmpegLinuxARMExcludeFilesFullPath Include="$([MSBuild]::Unescape($(MSBuildThisFileDirectory)..\build\linux-arm\%(FFmpegLinuxARMExcludeFiles.Identity)))" Condition="'%(FFmpegLinuxARMExcludeFiles.Identity)'!=''" />
+            <Content Include="@(FFmpegLinuxARMIncludeFilesFullPath)" Exclude="@(FFmpegLinuxARMExcludeFilesFullPath)">
+                <Link>$(FFmpegLinuxARMTargetDir)\$([MSBuild]::MakeRelative($(MSBuildThisFileDirectory)..\build\linux-arm\, %(FullPath)))</Link>
+                <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            </Content>
+        </ItemGroup>
+        <!-- arm64 -->
+        <ItemGroup Condition="'$(FFmpegLinuxARM64Enabled)' == 'true'">
+            <FFmpegLinuxARM64IncludeFilesFullPath Include="$([MSBuild]::Unescape($(MSBuildThisFileDirectory)..\build\linux-arm64\%(FFmpegLinuxARM64IncludeFiles.Identity)))" />
+            <FFmpegLinuxARM64ExcludeFilesFullPath Include="$([MSBuild]::Unescape($(MSBuildThisFileDirectory)..\build\linux-arm64\%(FFmpegLinuxARM64ExcludeFiles.Identity)))" Condition="'%(FFmpegLinuxARM64ExcludeFiles.Identity)'!=''" />
+            <Content Include="@(FFmpegLinuxARM64IncludeFilesFullPath)" Exclude="@(FFmpegLinuxARM64ExcludeFilesFullPath)">
+                <Link>$(FFmpegLinuxARM64TargetDir)\$([MSBuild]::MakeRelative($(MSBuildThisFileDirectory)..\build\linux-arm64\, %(FullPath)))</Link>
+                <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            </Content>
+        </ItemGroup>
+    </Target>
+</Project>

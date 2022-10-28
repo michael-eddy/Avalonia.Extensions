@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <FFmpegOSXX64TargetDir Condition=" '$(FFmpegOSXX64TargetDir)' == '' ">libffmpeg\osx-x64</FFmpegOSXX64TargetDir>
+        <FFmpegOSXARM64TargetDir Condition=" '$(FFmpegOSXARM64TargetDir)' == '' ">libffmpeg\osx-arm64</FFmpegOSXARM64TargetDir>
+        <FFmpegOSXX64Enabled Condition="'$(FFmpegOSXX64Enabled)' == '' AND ('$(Platform)' == 'x64' OR '$(Platform)' == 'AnyCPU')">true</FFmpegOSXX64Enabled>
+        <FFmpegOSXARM64Enabled Condition="'$(FFmpegOSXARM64Enabled)' == '' AND ('$(Platform)' == 'arm64' OR '$(Platform)' == 'AnyCPU')">true</FFmpegOSXARM64Enabled>
+    </PropertyGroup>
+    <ItemGroup>
+        <FFmpegOSXX64IncludeFiles Condition="'@(FFmpegOSXX64IncludeFiles)'==''" 
+            Include="ffmpeg;ffprobe;libavcodec.59.18.100.%2A;libavcodec.59.%2A;libavcodec.%2A;libavdevice.59.4.100.%2A;libavdevice.59.%2A;libavdevice.%2A;libavfilter.8.24.100.%2A;libavfilter.8.%2A;libavfilter.%2A;libavformat.59.16.100.%2A;libavformat.59.%2A;libavformat.%2A;libavutil.57.17.100.%2A;libavutil.57.%2A;libavutil.%2A;libswresample.4.3.100.%2A;libswresample.4.%2A;libswresample.%2A;libswscale.6.4.100.%2A;libswscale.6.%2A;libswscale.%2A" />
+        <FFmpegOSXARM64IncludeFiles Condition="'@(FFmpegOSXARM64IncludeFiles)'==''" 
+            Include="ffmpeg;ffprobe;libavcodec.59.18.100.%2A;libavcodec.59.%2A;libavcodec.%2A;libavdevice.59.4.100.%2A;libavdevice.59.%2A;libavdevice.%2A;libavfilter.8.24.100.%2A;libavfilter.8.%2A;libavfilter.%2A;libavformat.59.16.100.%2A;libavformat.59.%2A;libavformat.%2A;libavutil.57.17.100.%2A;libavutil.57.%2A;libavutil.%2A;libswresample.4.3.100.%2A;libswresample.4.%2A;libswresample.%2A;libswscale.6.4.100.%2A;libswscale.6.%2A;libswscale.%2A" />
+    </ItemGroup>
+    <Target Name="CollectFFmpegFilesToCopyOSX" BeforeTargets="BeforeBuild">
+        <!-- x64 -->
+        <ItemGroup Condition="'$(FFmpegOSXX64Enabled)' == 'true'">
+            <FFmpegOSXX64IncludeFilesFullPath Include="$([MSBuild]::Unescape($(MSBuildThisFileDirectory)..\build\osx-x64\%(FFmpegOSXX64IncludeFiles.Identity)))" />
+            <FFmpegOSXX64ExcludeFilesFullPath Include="$([MSBuild]::Unescape($(MSBuildThisFileDirectory)..\build\osx-x64\%(FFmpegOSXX64ExcludeFiles.Identity)))" Condition="'%(FFmpegOSXX64ExcludeFiles.Identity)'!=''" />
+            <Content Include="@(FFmpegOSXX64IncludeFilesFullPath)" Exclude="@(FFmpegOSXX64ExcludeFilesFullPath)">
+                <Link>$(FFmpegOSXX64TargetDir)\$([MSBuild]::MakeRelative($(MSBuildThisFileDirectory)..\build\osx-x64\, %(FullPath)))</Link>
+                <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            </Content>
+        </ItemGroup>
+        <!-- arm64 -->
+        <ItemGroup Condition="'$(FFmpegOSXARM64Enabled)' == 'true'">
+            <FFmpegOSXARM64IncludeFilesFullPath Include="$([MSBuild]::Unescape($(MSBuildThisFileDirectory)..\build\osx-arm64\%(FFmpegOSXARM64IncludeFiles.Identity)))" />
+            <FFmpegOSXARM64ExcludeFilesFullPath Include="$([MSBuild]::Unescape($(MSBuildThisFileDirectory)..\build\osx-arm64\%(FFmpegOSXARM64ExcludeFiles.Identity)))" Condition="'%(FFmpegOSXARM64ExcludeFiles.Identity)'!=''" />
+            <Content Include="@(FFmpegOSXARM64IncludeFilesFullPath)" Exclude="@(FFmpegOSXARM64ExcludeFilesFullPath)">
+                <Link>$(FFmpegOSXARM64TargetDir)\$([MSBuild]::MakeRelative($(MSBuildThisFileDirectory)..\build\osx-arm64\, %(FullPath)))</Link>
+                <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            </Content>
+        </ItemGroup>
+    </Target>
+</Project>
