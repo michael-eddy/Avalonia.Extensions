@@ -30,10 +30,13 @@
 
 # GUIDES
   [About media extension](#media)
+
   [About control extension](#controls)
+
   [About danmaku control extension](#danmaku)
+
   [About chinese support extension](#language)
-#
+  
 
 ## DEMO screenshot
 ![图片alt](/ss.png "截图")
