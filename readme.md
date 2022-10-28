@@ -28,6 +28,16 @@
 </assembly>
 ```
 
+# GUIDES
+  [About media extension](#media)
+
+  [About control extension](#controls)
+
+  [About danmaku control extension](#danmaku)
+
+  [About chinese support extension](#language)
+
+
 ## DEMO screenshot
 ![图片alt](/ss.png "截图")
 ---
@@ -223,6 +233,18 @@ public static AppBuilder BuildAvaloniaApp()
 
 # WARNING
 <strong>Need to reference [Dove.Avalonia.Extensions.Media](https://www.nuget.org/packages/Dove.Avalonia.Extensions.Media/) package</strong>
+
+<strong>++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</strong>
+
+<strong>NOW the Version >= 1.2.0,it's able to use ffmpeg playing video!!!!</strong>
+
+<strong>Ah ! You can reference the ffmpeg libraries packages from [Windows](https://www.nuget.org/packages/Dove.FFmpeg.Windows) or [Linux](https://www.nuget.org/packages/Dove.FFmpeg.Linux) or [MacOS](https://www.nuget.org/packages/Dove.FFmpeg.OSX)</strong>
+
+<strong>OH ! You can reference the bass libraries packages from [Windows](https://www.nuget.org/packages/Dove.Bass.Windows) or [Linux](https://www.nuget.org/packages/Dove.Bass.Linux) or [MacOS](https://www.nuget.org/packages/Dove.Bass.OSX)</strong>
+
+<strong>and the [ManagedBass](https://github.com/ManagedBass/ManagedBass) require the libraries is in your program root folder,the [Dove.Avalonia.Extensions.Media] has handle copy to the require path.but if you still get an init failed messsage,plz copy by yourself!!</strong>
+
+<strong>++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</strong>
 
 <strong>if you need `VideoView` or `PlayerView`,you should install libVLC in your project before init!!! [Windows](https://www.nuget.org/packages/VideoLAN.LibVLC.Windows/) or [MAC](https://www.nuget.org/packages/VideoLAN.LibVLC.Mac/)</strong>
 
