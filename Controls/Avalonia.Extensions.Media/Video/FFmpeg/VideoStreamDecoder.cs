@@ -318,20 +318,24 @@ namespace Avalonia.Extensions.Media
                     ffmpeg.av_frame_unref(frame);
                     ffmpeg.av_packet_unref(packet);
                     int error = 0;
-                    while (packet->pts < timestamp)
+                    receiveFrame();
+                    void receiveFrame()
                     {
-                        do
+                        while (packet->pts < timestamp)
                         {
                             do
                             {
-                                ffmpeg.av_packet_unref(packet);
-                                error = ffmpeg.av_read_frame(format, packet);
-                                if (error == ffmpeg.AVERROR_EOF)
-                                    return;
-                            } while (packet->stream_index != videoStreamIndex);
-                            ffmpeg.avcodec_send_packet(codecContext, packet);
-                            error = ffmpeg.avcodec_receive_frame(codecContext, frame);
-                        } while (error == ffmpeg.AVERROR(ffmpeg.EAGAIN));
+                                do
+                                {
+                                    ffmpeg.av_packet_unref(packet);
+                                    error = ffmpeg.av_read_frame(format, packet);
+                                    if (error == ffmpeg.AVERROR_EOF)
+                                        return;
+                                } while (packet->stream_index != videoStreamIndex);
+                                ffmpeg.avcodec_send_packet(codecContext, packet);
+                                error = ffmpeg.avcodec_receive_frame(codecContext, frame);
+                            } while (error == ffmpeg.AVERROR(ffmpeg.EAGAIN));
+                        }
                     }
                     OffsetClock = TimeSpan.FromSeconds(seekTime);
                     clock.Restart();
