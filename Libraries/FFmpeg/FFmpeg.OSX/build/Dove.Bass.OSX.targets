@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <ItemGroup Condition="$(TargetFramework.StartsWith('net'))">
+        <Content Include="$(MSBuildThisFileDirectory)osx\libbass.dylib">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
+    </ItemGroup>
+    <PropertyGroup>
+        <CreateAppBundleDependsOn>$(CreateAppBundleDependsOn);CopyLibbassDylib</CreateAppBundleDependsOn>
+    </PropertyGroup>
+	<Target Name="CopyLibbassDylib" 
+        Inputs="$(MSBuildThisFileDirectory)osx\libbass.dylib"
+        Outputs="$(AppBundleDir)/Contents/MonoBundle/libbass.dylib">
+            <Message Text="Copying libbass.dylib to appbundle..." />
+            <Copy SourceFiles="$(MSBuildThisFileDirectory)osx\libbass.dylib" DestinationFiles="$(AppBundleDir)/Contents/MonoBundle/libbass.dylib" />
+    </Target>
+</Project>

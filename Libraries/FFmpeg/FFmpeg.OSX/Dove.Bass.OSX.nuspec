@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package >
+  <metadata>
+    <id>Dove.Bass.OSX</id>
+    <title>Dove.Bass.OSX</title>
+    <version>1.0.0</version>
+    <authors>michael_eddy</authors>
+    <owners>michael_eddy</owners>
+    <license type="expression">MIT</license>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>BASS libraries for MacOS, support Intel Chip and	Apple Silicon!!!</description>
+    <tags>Bass, Wasapi, Asio, Record, Audio, Music</tags>
+    <projectUrl>https://github.com/michael-eddy/Avalonia.Extensions</projectUrl>
+  </metadata>
+  <files>
+    <file src="build\Dove.Bass.OSX.targets" target="build\Dove.Bass.OSX.targets"/>
+    <file src="build\osx\**" target="build\osx\"/>
+  </files>
+</package>

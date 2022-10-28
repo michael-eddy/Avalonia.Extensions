@@ -25,6 +25,7 @@ namespace Avalonia.Extensions.Media
         private Bitmap bitmap;
         private int decodeStream;
         private bool _isAttached = false;
+        private readonly bool isInit = false;
         private readonly DispatcherTimer timer;
         private readonly VideoStreamDecoder video;
         private readonly AudioStreamDecoder audio;
@@ -33,7 +34,7 @@ namespace Avalonia.Extensions.Media
         public static readonly StyledProperty<Stretch> StretchProperty =
             AvaloniaProperty.Register<FFmpegView, Stretch>(nameof(Stretch), Stretch.Uniform);
         /// <summary>
-        /// Gets or sets a value controlling how the image will be stretched.
+        /// Gets or sets a value controlling how the video will be stretched.
         /// </summary>
         public Stretch Stretch
         {
@@ -56,6 +57,15 @@ namespace Avalonia.Extensions.Media
             _isAttached = false;
             base.OnDetachedFromVisualTree(e);
         }
+        static FFmpegView()
+        {
+            StretchProperty.Changed.AddClassHandler<FFmpegView>(OnStretchChange);
+        }
+        private static void OnStretchChange(FFmpegView sender, AvaloniaPropertyChangedEventArgs e)
+        {
+            if (e.NewValue is Stretch stretch)
+                sender.image.Stretch = stretch;
+        }
         public FFmpegView()
         {
             video = new VideoStreamDecoder();
@@ -63,7 +73,7 @@ namespace Avalonia.Extensions.Media
             video.MediaCompleted += VideoMediaCompleted;
             timer = new DispatcherTimer();
             timer.Interval = TimeSpan.FromMilliseconds(300);
-            Init();
+            isInit = Init();
         }
         protected override void OnApplyTemplate(TemplateAppliedEventArgs e)
         {
@@ -81,20 +91,28 @@ namespace Avalonia.Extensions.Media
         public double? Position => video?.Position.TotalSeconds;
         public bool Play()
         {
+            bool state = false;
             try
             {
-                video.Play();
+                state = video.Play();
+                if (!Bass.ChannelPlay(decodeStream, true))
+                    error = Bass.LastError;
                 timer.Start();
-                return true;
             }
             catch (Exception ex)
             {
                 Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(this, ex.Message);
-                return false;
             }
+            return state;
         }
         public bool Play(string uri)
         {
+            if (!isInit)
+            {
+                Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(this, "FFmpeg : dosnot initialize device");
+                return false;
+            }
+            bool state = false;
             try
             {
                 if (video.State == MediaState.None)
@@ -108,24 +126,28 @@ namespace Avalonia.Extensions.Media
                         error = Bass.LastError;
                     DisplayVideoInfo();
                 }
-                video.Play();
+                state = video.Play();
                 audio.Play();
                 timer.Start();
-                return true;
             }
             catch (Exception ex)
             {
                 Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(this, ex.Message);
-                return false;
             }
+            return state;
+        }
+        public bool SeekTo(int seekTime)
+        {
+            audio.SeekProgress(seekTime);
+            return video.SeekProgress(seekTime);
         }
         public bool Pause()
         {
             try
             {
+                Bass.ChannelPause(decodeStream);
                 audio.Pause();
-                video.Pause();
-                return true;
+                return video.Pause();
             }
             catch (Exception ex)
             {
@@ -137,6 +159,7 @@ namespace Avalonia.Extensions.Media
         {
             try
             {
+                Bass.ChannelStop(decodeStream);
                 audio.Stop();
                 video.Stop();
                 return true;
@@ -147,54 +170,63 @@ namespace Avalonia.Extensions.Media
                 return false;
             }
         }
-        void Init()
+        bool Init()
         {
-            cancellationToken = new CancellationTokenSource();
-            playTask = new Task(() =>
+            try
             {
-                while (true)
+                cancellationToken = new CancellationTokenSource();
+                playTask = new Task(() =>
                 {
-                    try
+                    while (true)
                     {
-                        if (video.IsPlaying && _isAttached)
+                        try
                         {
-                            if (video.TryReadNextFrame(out var frame))
+                            if (video.IsPlaying && _isAttached)
                             {
-                                var convertedFrame = video.FrameConvert(&frame);
-                                bitmap?.Dispose();
-                                bitmap = new Bitmap(PixelFormat.Bgra8888, AlphaFormat.Premul, (IntPtr)convertedFrame.data[0], new PixelSize(video.FrameWidth, video.FrameHeight), new Vector(96, 96), convertedFrame.linesize[0]);
-                                Dispatcher.UIThread.InvokeAsync(() =>
+                                if (video.TryReadNextFrame(out var frame))
                                 {
-                                    if (image.IsNotEmpty())
-                                        image.Source = bitmap;
-                                });
+                                    var convertedFrame = video.FrameConvert(&frame);
+                                    bitmap?.Dispose();
+                                    bitmap = new Bitmap(PixelFormat.Bgra8888, AlphaFormat.Premul, (IntPtr)convertedFrame.data[0], new PixelSize(video.FrameWidth, video.FrameHeight), new Vector(96, 96), convertedFrame.linesize[0]);
+                                    Dispatcher.UIThread.InvokeAsync(() =>
+                                    {
+                                        if (image.IsNotEmpty())
+                                            image.Source = bitmap;
+                                    });
+                                }
                             }
                         }
-                    }
-                    catch (Exception ex)
-                    {
-                        Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(this, ex.Message);
-                    }
-                    try
-                    {
-                        if (audio.IsPlaying)
+                        catch (Exception ex)
                         {
-                            if (audio.TryReadNextFrame(out var frame))
+                            Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(this, ex.Message);
+                        }
+                        try
+                        {
+                            if (audio.IsPlaying)
                             {
-                                var bytes = audio.FrameConvertBytes(&frame);
-                                if (bytes == null) return;
-                                if (Bass.StreamPutData(decodeStream, bytes, bytes.Length) == -1)
-                                    error = Bass.LastError;
+                                if (audio.TryReadNextFrame(out var frame))
+                                {
+                                    var bytes = audio.FrameConvertBytes(&frame);
+                                    if (bytes == null) return;
+                                    if (Bass.StreamPutData(decodeStream, bytes, bytes.Length) == -1)
+                                        error = Bass.LastError;
+                                }
                             }
                         }
+                        catch (Exception ex)
+                        {
+                            Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(this, ex.Message);
+                        }
                     }
-                    catch (Exception ex)
-                    {
-                        Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(this, ex.Message);
-                    }
-                }
-            }, cancellationToken.Token);
-            playTask.Start();
+                }, cancellationToken.Token);
+                playTask.Start();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(this, "FFmpeg Failed Init: " + ex.Message);
+                return false;
+            }
         }
         #region 视频信息
         private string codec;
@@ -217,15 +249,19 @@ namespace Avalonia.Extensions.Media
         public long AudioBitsPerSample => audioBitsPerSample;
         void DisplayVideoInfo()
         {
-            duration = video.Duration;
-            codec = video.CodecName;
-            videoBitrate = video.Bitrate;
-            frameWidth = video.FrameWidth;
-            frameHeight = video.FrameHeight;
-            videoFps = video.FrameRate;
-            audioBitrate = audio.Bitrate;
-            sampleRate = audio.SampleRate;
-            audioBitsPerSample = audio.BitsPerSample;
+            try
+            {
+                duration = video.Duration;
+                codec = video.CodecName;
+                videoBitrate = video.Bitrate;
+                frameWidth = video.FrameWidth;
+                frameHeight = video.FrameHeight;
+                videoFps = video.FrameRate;
+                audioBitrate = audio.Bitrate;
+                sampleRate = audio.SampleRate;
+                audioBitsPerSample = audio.BitsPerSample;
+            }
+            catch { }
         }
         #endregion
     }

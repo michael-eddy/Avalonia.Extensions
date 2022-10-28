@@ -1,5 +1,6 @@
 using Avalonia.Extensions.Controls;
 using Avalonia.Extensions.Media;
+using Avalonia.Extensions.WebView;
 using Avalonia.Threading;
 using ReactiveUI;
 using System;

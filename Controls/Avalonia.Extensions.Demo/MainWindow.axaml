@@ -192,16 +192,13 @@
 			</TabItem>
 			<TabItem Header="AudioControl">
 				<StackPanel Orientation="Vertical">
-					<AudioElement x:Name="audioElement" />
 					<AudioControl x:Name="audio" />
 					<Button Command="{Binding OnAudioClick}">Open Music Player Window</Button>
 				</StackPanel>
 			</TabItem>
-			<!--
-			<TabItem Header="WebView">
+			<!--<TabItem Header="WebView">
 				<WebView Name="webView" />
-			</TabItem>
-			-->
+			</TabItem>-->
 		</TabControl>
 	</Panel>
 </AeroWindow>
