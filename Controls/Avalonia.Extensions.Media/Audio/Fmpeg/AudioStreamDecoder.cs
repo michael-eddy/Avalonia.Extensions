@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 
 namespace Avalonia.Extensions.Media
 {
-    public sealed unsafe class AudioStreamDecoder : IMedia
+    internal sealed unsafe class AudioStreamDecoder : IMedia
     {
         AVFormatContext* format;
         AVCodecContext* codecContext;

@@ -67,9 +67,7 @@ namespace Avalonia.Controls.Demo
             var playerView2 = this.FindControl<FFmpegView>("playerView2");
             playerView2.Play("http://vfx.mtime.cn/Video/2019/03/18/mp4/190318231014076505.mp4");
             var audio = this.FindControl<AudioControl>("audio");
-            //audio.Play("http://downsc.chinaz.net/Files/DownLoad/sound1/201906/11582.mp3");
-            var audioElement = this.FindControl<AudioElement>("audioElement");
-            //audioElement.Play("http://downsc.chinaz.net/Files/DownLoad/sound1/201906/11582.mp3");
+            audio.Play("http://downsc.chinaz.net/Files/DownLoad/sound1/201906/11582.mp3");
             //var webView = this.FindControl<WebView>("webView");
             //webView.Navigate("bing.com");
         }
