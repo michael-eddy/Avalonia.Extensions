@@ -1,17 +1,15 @@
-﻿using Avalonia.Logging;
-using Avalonia.Win32;
-using PCLUntils.Assemblly;
+﻿using Avalonia.Input;
+using Avalonia.Logging;
 using System;
-using System.Reflection;
 using System.Runtime.InteropServices;
-using System.Xml.Linq;
+using System.Threading.Tasks;
 using static Avalonia.Extensions.Base.Win32API;
 
 namespace Avalonia.Extensions.Controls
 {
     internal class NotifyIconWin : INotifyIcon
     {
-        private readonly NotifyIcon Owner;
+        private static NotifyIcon Owner;
         private NotifyIconState state = NotifyIconState.None;
         public NotifyIconWin(NotifyIcon owner)
         {
@@ -19,30 +17,65 @@ namespace Avalonia.Extensions.Controls
         }
         private static IntPtr WndProc(IntPtr hWnd, uint msg, IntPtr wParam, IntPtr lParam)
         {
+            switch (msg)
+            {
+                case WM_NOTIFYICON:
+                    GetCursorPos(out POINT pos);
+                    var p = new Point(pos.X, pos.Y);
+                    switch (lParam.ToInt64())
+                    {
+                        case WM_LBUTTONDBLCLK:
+                            Owner.MouseClick(MouseButton.Left, p);
+                            break;
+                        case WM_RBUTTONDOWN:
+                            Owner.MouseClick(MouseButton.Right, p);
+                            break;
+                    }
+                    break;
+                case WM_SYSCOMMAND:
+                    switch (wParam.ToInt64())
+                    {
+                        case SC_MINIMIZE:
+                            Owner.MinHandle();
+                            break;
+                        case SC_CLOSE:
+                            Owner?.Hide();
+                            break;
+                    }
+                    break;
+            }
             return DefWindowProc(hWnd, msg, wParam, lParam);
         }
+        private IntPtr hwnd;
         private readonly WndProc delegWndProc = WndProc;
-        public void License(IntPtr ptr)
-        {
-            if (messageWin == IntPtr.Zero)
-            {
-                var proc = Marshal.GetFunctionPointerForDelegate(delegWndProc);
-                CreateNoneWindow($"DoveMessageWindow{Guid.NewGuid()}", ptr, proc);
-            }
-        }
-        public NotifyIconData notifyIcon;
-        public bool Add(IntPtr ptr)
+        public void License()
         {
             try
             {
-                License(ptr);
+                if (messageWin == IntPtr.Zero)
+                {
+                    var proc = Marshal.GetFunctionPointerForDelegate(delegWndProc);
+                    hwnd = CreateNoneWindow($"DoveMessageWindow{Guid.NewGuid()}", proc);
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(this, ex.Message);
+            }
+        }
+        public NotifyIconData notifyIcon;
+        public bool Add()
+        {
+            License();
+            try
+            {
                 notifyIcon = new NotifyIconData();
                 notifyIcon.cbSize = Marshal.SizeOf(notifyIcon);
-                notifyIcon.hWnd = ptr;
+                notifyIcon.hWnd = hwnd;
                 notifyIcon.uFlags = NIF_MESSAGE | NIF_ICON | NIF_TIP;
-                notifyIcon.uCallbackMessage = WM_NOTIFY_TRAY;
-                notifyIcon.hIcon = Owner.IconHwnd ?? IntPtr.Zero;
-                notifyIcon.uTimeoutAndVersion = NOTIFYICON_VERSION;
+                notifyIcon.uCallbackMessage = WM_NOTIFYICON;
+                notifyIcon.hIcon = hIcon;
+                notifyIcon.uTimeoutOrVersion = NOTIFYICON_VERSION;
                 notifyIcon.dwInfoFlags = NIIF_INFO;
                 notifyIcon.szTip = Owner.IconTip;
                 notifyIcon.szInfoTitle = Owner.IconTitle;
@@ -59,13 +92,28 @@ namespace Avalonia.Extensions.Controls
             }
             return false;
         }
+        private IntPtr hIcon = IntPtr.Zero;
+        public async Task<bool> GetHIcon(Uri uri)
+        {
+            try
+            {
+                var bytes = await Owner.GetBytes(uri);
+                hIcon = new System.Drawing.Icon(bytes).Handle;
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(this, "GetHIcon Failed:" + ex.Message);
+                return false;
+            }
+        }
         public bool Update()
         {
             try
             {
                 if (state != NotifyIconState.None)
                 {
-                    notifyIcon.hIcon = Owner.IconHwnd ?? IntPtr.Zero;
+                    notifyIcon.hIcon = hIcon;
                     notifyIcon.szTip = Owner.IconTip;
                     notifyIcon.szInfoTitle = Owner.IconTitle;
                     notifyIcon.szInfo = Owner.IconMessage;

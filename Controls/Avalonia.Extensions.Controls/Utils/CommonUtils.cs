@@ -1,12 +1,20 @@
 ﻿using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml.MarkupExtensions;
 using System;
+using System.Reflection;
 using System.Text;
 
 namespace Avalonia.Extensions.Controls
 {
     public static class CommonUtils
     {
+        public static object GetProperty(this object obj, string propertyName)
+        {
+            Type type = obj.GetType();
+            BindingFlags bindingAttr = BindingFlags.Instance | BindingFlags.NonPublic;
+            var field = type.GetProperty(propertyName, bindingAttr);
+            return field?.GetValue(obj);
+        }
         public static byte[] GetBytes(this Encoding encoding, string str, int length)
         {
             byte[] bytesResult = new byte[length]; try

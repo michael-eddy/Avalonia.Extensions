@@ -151,7 +151,7 @@ namespace Avalonia.Controls.Demo
                 case 0:
                     {
                         var notifyIcon = this.FindControl<NotifyIcon>("notifyIcon");
-                        notifyIcon.Add(this);
+                        notifyIcon.Add();
                         break;
                     }
                 case 1:

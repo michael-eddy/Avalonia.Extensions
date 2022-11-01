@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <Version>1.7.4</Version>
+        <Version>1.8.14</Version>
         <Nullable>enable</Nullable>
         <Platforms>AnyCPU</Platforms>
         <OutputType>WinExe</OutputType>
@@ -18,6 +18,7 @@
 		<PackageReference Include="VideoLAN.LibVLC.Windows" Version="3.0.17.4" />
 	</ItemGroup>
 	<ItemGroup>
+		<AvaloniaResource Include="Assets\**" />
 		<None Include="..\..\.editorconfig" Link=".editorconfig" />
         <ProjectReference Include="..\Avalonia.Extensions.Media\Avalonia.Extensions.Media.csproj" />
         <ProjectReference Include="..\Avalonia.Extensions.Chinese\Avalonia.Extensions.Chinese.csproj" />

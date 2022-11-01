@@ -3,6 +3,7 @@ using Avalonia.Extensions.Media;
 using Avalonia.Logging;
 using Avalonia.Threading;
 using System;
+using System.IO;
 using System.Net.Http;
 
 namespace Avalonia.Extensions.Threading
@@ -26,7 +27,7 @@ namespace Avalonia.Extensions.Threading
                     case "http":
                     case "https":
                         {
-                            Dispatcher.UIThread.InvokeAsync(async() =>
+                            Dispatcher.UIThread.InvokeAsync(async () =>
                             {
                                 var url = uri.AbsoluteUri;
                                 try
@@ -49,6 +50,28 @@ namespace Avalonia.Extensions.Threading
                                 {
                                     Owner.ResultSet(false, ex.Message);
                                     Logger.TryGet(LogEventLevel.Warning, LogArea.Control)?.Log(Owner, ex.Message);
+                                }
+                            }, DispatcherPriority.ApplicationIdle);
+                            break;
+                        }
+                    case "file":
+                        {
+                            Dispatcher.UIThread.InvokeAsync(() =>
+                            {
+                                try
+                                {
+                                    FileInfo fileInfo = new FileInfo(uri.AbsolutePath);
+                                    if (fileInfo.Exists)
+                                    {
+                                        var stream = fileInfo.OpenRead();
+                                        Owner.SetBitmapSource(stream);
+                                    }
+                                    else
+                                        Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(Owner, $"file 【{fileInfo.FullName}】 not found");
+                                }
+                                catch (Exception ex)
+                                {
+                                    Owner.ResultSet(false, ex.Message);
                                 }
                             }, DispatcherPriority.ApplicationIdle);
                             break;
