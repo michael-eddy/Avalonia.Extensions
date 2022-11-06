@@ -72,6 +72,10 @@
 						<RowDefinition Height="*"/>
 					</Grid.RowDefinitions>
 					<StackPanel Orientation="Vertical" Grid.Row="1">
+						<NotifyIcon x:Name="notifyIcon" IconTip="dove avalonia extensions tips" IconTitle="dove avalonia extensions title"
+									 IconMessage="dove avalonia extensions message"
+									Icon="avares://Avalonia.Extensions.Demo/Assets/black.ico" />
+						<Button Click="OnNotifyClick" CommandParameter="0">Show NotifyIcon</Button>
 						<Button Click="OnNotifyClick" CommandParameter="1">TopLeft / Horizontal</Button>
 						<Button Click="OnNotifyClick" CommandParameter="2">TopRight / Horizontal</Button>
 						<Button Click="OnNotifyClick" CommandParameter="3">BottomLeft / Horizontal</Button>

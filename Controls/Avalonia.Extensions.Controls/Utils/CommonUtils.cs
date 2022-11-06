@@ -1,11 +1,30 @@
 ﻿using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml.MarkupExtensions;
 using System;
+using System.Reflection;
+using System.Text;
 
 namespace Avalonia.Extensions.Controls
 {
     public static class CommonUtils
     {
+        public static object GetProperty(this object obj, string propertyName)
+        {
+            Type type = obj.GetType();
+            BindingFlags bindingAttr = BindingFlags.Instance | BindingFlags.NonPublic;
+            var field = type.GetProperty(propertyName, bindingAttr);
+            return field?.GetValue(obj);
+        }
+        public static byte[] GetBytes(this Encoding encoding, string str, int length)
+        {
+            byte[] bytesResult = new byte[length]; try
+            {
+                var tempBytes = encoding.GetBytes(str);
+                Array.Copy(tempBytes, bytesResult, tempBytes.Length);
+            }
+            catch { }
+            return bytesResult;
+        }
         public static void Shutdown(this Application application, int exitCode = 0)
         {
             if (application.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime lifetime)
