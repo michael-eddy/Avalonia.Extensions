@@ -3,6 +3,7 @@ using Avalonia.Extensions.Media;
 using Avalonia.Extensions.Styles;
 using Avalonia.Extensions.Threading;
 using Avalonia.Interactivity;
+using Avalonia.Logging;
 using Avalonia.Media;
 using Avalonia.Media.Imaging;
 using Avalonia.Metadata;
@@ -22,11 +23,6 @@ namespace Avalonia.Extensions.Controls
         public static readonly StyledProperty<Uri> SourceProperty =
             AvaloniaProperty.Register<CircleImage, Uri>(nameof(Source));
         /// <summary>
-        /// Defines the <see cref="ImageSource"/> property.
-        /// </summary>
-        public static readonly StyledProperty<Bitmap?> ImageSourceProperty =
-            AvaloniaProperty.Register<CircleImage, Bitmap?>(nameof(ImageSource));
-        /// <summary>
         /// Defines the <see cref="InterpolationMode"/> property.
         /// </summary>
         public static readonly StyledProperty<BitmapInterpolationMode> InterpolationModeProperty =
@@ -45,15 +41,23 @@ namespace Avalonia.Extensions.Controls
         {
             Task = new BitmapThread(this);
             SourceProperty.Changed.AddClassHandler<CircleImage>(OnSourceChange);
-            ImageSourceProperty.Changed.AddClassHandler<CircleImage>(OnImageSourceProperty);
         }
-        private void OnImageSourceProperty(object sender, AvaloniaPropertyChangedEventArgs e)
+        public void SetImageSource(Bitmap bitmap)
         {
-            if (!e.IsSameValue() && e.NewValue is Bitmap bitmap)
+            try
             {
-                Fill = new ImageBrush { Source = bitmap };
-                DrawAgain();
-                SetSize(bitmap.Size);
+                Bitmap?.Dispose();
+                if (bitmap != null)
+                {
+                    Bitmap = bitmap;
+                    Fill = new ImageBrush { Source = Bitmap };
+                    DrawAgain();
+                    SetSize(bitmap.Size);
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(this, ex.Message);
             }
         }
         public Bitmap Bitmap { get; set; }
@@ -84,15 +88,6 @@ namespace Avalonia.Extensions.Controls
         {
             get => GetValue(SourceProperty);
             set => SetValue(SourceProperty, value);
-        }
-        /// <summary>
-        /// Gets or sets the source of the image.
-        /// </summary>
-        [Content]
-        public Bitmap? ImageSource
-        {
-            get => GetValue(ImageSourceProperty);
-            set => SetValue(ImageSourceProperty, value);
         }
         /// <summary>
         /// get or set image quality
