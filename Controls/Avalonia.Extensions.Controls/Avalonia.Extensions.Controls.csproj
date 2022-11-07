@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <Version>1.8.15</Version>
+        <Version>1.8.16</Version>
         <Authors>michael_eddy</Authors>
         <LangVersion>latest</LangVersion>
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
@@ -12,10 +12,12 @@
         <PackageProjectUrl>https://github.com/michael-eddy/Avalonia.Extensions</PackageProjectUrl>
     </PropertyGroup>
     <ItemGroup>
+        <None Remove="Assets\14075148.png" />
         <None Remove="Styles\Xaml\readme.txt" />
         <AvaloniaResource Include="Styles\*\*.xml" />
 		<AvaloniaResource Include="Styles\*\*.xaml" />
         <None Include="..\..\.editorconfig" Link=".editorconfig" />
+        <AvaloniaResource Include="Assets\14075148.png" />
         <AvaloniaResource Include="Assets\Fonts\SegMDL2.ttf" />
     </ItemGroup>
     <ItemGroup>

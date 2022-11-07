@@ -134,6 +134,7 @@
 			<TabItem Header="CircleImage">
 				<StackPanel Orientation="Vertical">
 					<CircleImage Width="64" Source="https://avatars.githubusercontent.com/u/22364738" />
+					<CircleImage Width="64" Source="https://avatars.githubusercontent.com/u/14075148" />
 				</StackPanel>
 			</TabItem>
 			<TabItem Header="ProgressRing">

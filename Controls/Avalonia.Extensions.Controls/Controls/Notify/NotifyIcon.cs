@@ -3,7 +3,6 @@ using Avalonia.Extensions.Event;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Logging;
-using Avalonia.Threading;
 using PCLUntils;
 using PCLUntils.Plantform;
 using System;

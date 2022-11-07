@@ -40,7 +40,6 @@ namespace Avalonia.Extensions.Controls
         public CircleImage() : base()
         {
             Task = new BitmapThread(this);
-            SourceProperty.Changed.AddClassHandler<CircleImage>(OnSourceChange);
         }
         public void SetImageSource(Bitmap bitmap)
         {
@@ -61,11 +60,6 @@ namespace Avalonia.Extensions.Controls
             }
         }
         public Bitmap Bitmap { get; set; }
-        private void OnSourceChange(object sender, AvaloniaPropertyChangedEventArgs e)
-        {
-            if (!e.IsSameValue() && e.NewValue is Uri uri)
-                Task.Run(uri);
-        }
         internal void SetSize(Size size)
         {
             if (double.IsNaN(Width) && double.IsNaN(Height))
@@ -87,7 +81,11 @@ namespace Avalonia.Extensions.Controls
         public Uri Source
         {
             get => GetValue(SourceProperty);
-            set => SetValue(SourceProperty, value);
+            set
+            {
+                SetValue(SourceProperty, value);
+                Task.Run(value);
+            }
         }
         /// <summary>
         /// get or set image quality
