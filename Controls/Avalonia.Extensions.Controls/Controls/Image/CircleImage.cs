@@ -15,13 +15,14 @@ namespace Avalonia.Extensions.Controls
 {
     public sealed class CircleImage : Ellipse, IStyling, IBitmapSource
     {
+        private Uri _source;
         Type IStyleable.StyleKey => typeof(CircleImage);
         private BitmapThread Task { get; }
         /// <summary>
         /// Defines the <see cref="Source"/> property.
         /// </summary>
-        public static readonly StyledProperty<Uri> SourceProperty =
-            AvaloniaProperty.Register<CircleImage, Uri>(nameof(Source));
+        public static readonly DirectProperty<CircleImage, Uri?> SourceProperty =
+          AvaloniaProperty.RegisterDirect<CircleImage, Uri?>(nameof(Source), o => o.Source, (o, v) => o.Source = v);
         /// <summary>
         /// Defines the <see cref="InterpolationMode"/> property.
         /// </summary>
@@ -78,12 +79,12 @@ namespace Avalonia.Extensions.Controls
         /// Gets or sets the image that will be displayed.
         /// </summary>
         [Content]
-        public Uri Source
+        public Uri? Source
         {
-            get => GetValue(SourceProperty);
+            get => _source;
             set
             {
-                SetValue(SourceProperty, value);
+                SetAndRaise(SourceProperty, ref _source, value);
                 Task.Run(value);
             }
         }
