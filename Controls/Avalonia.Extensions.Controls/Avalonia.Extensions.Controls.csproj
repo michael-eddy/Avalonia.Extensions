@@ -12,12 +12,10 @@
         <PackageProjectUrl>https://github.com/michael-eddy/Avalonia.Extensions</PackageProjectUrl>
     </PropertyGroup>
     <ItemGroup>
-        <None Remove="Assets\14075148.png" />
         <None Remove="Styles\Xaml\readme.txt" />
         <AvaloniaResource Include="Styles\*\*.xml" />
 		<AvaloniaResource Include="Styles\*\*.xaml" />
         <None Include="..\..\.editorconfig" Link=".editorconfig" />
-        <AvaloniaResource Include="Assets\14075148.png" />
         <AvaloniaResource Include="Assets\Fonts\SegMDL2.ttf" />
     </ItemGroup>
     <ItemGroup>
