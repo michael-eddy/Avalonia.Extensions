@@ -27,6 +27,7 @@ namespace Avalonia.Controls.Demo
             Width = 800;
             Height = 600;
             DataContext = new MainViewModel();
+            var paginationView = this.FindControl<PaginationView>("paginationView");
             var imgList = this.FindControl<ListBox>("imgList");
             var listView = this.FindControl<ListView>("listView");
             listView.ScrollTop += ListView_ScrollTop;

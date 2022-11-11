@@ -20,8 +20,7 @@ namespace Avalonia.Extensions.Controls
         {
             get
             {
-                if (instance == null)
-                    instance = new Core();
+                instance ??= new Core();
                 return instance;
             }
         }

@@ -171,6 +171,15 @@ public static AppBuilder BuildAvaloniaApp()
 - [x] SymbolIcon
   > the same control in uwp(but the `Glyph` Only valid in XAML)
 
+- [x] NotifyIcon
+  > the notify control,now just for windows only
+
+- [x] PaginationView
+  > the pager control for `ItemControl`(but the `Glyph` Only valid in XAML)
+
+- [x] SurfaceView
+  > the print control just like image,set the bitmap to `Sources` will flash it
+
 > # EXTEND
 
 - [x] ActualWidth

@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <Version>1.8.16</Version>
+        <Version>1.8.18</Version>
         <Authors>michael_eddy</Authors>
         <LangVersion>latest</LangVersion>
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
@@ -12,13 +12,16 @@
         <PackageProjectUrl>https://github.com/michael-eddy/Avalonia.Extensions</PackageProjectUrl>
     </PropertyGroup>
     <ItemGroup>
-        <None Remove="Assets\14075148.png" />
         <None Remove="Styles\Xaml\readme.txt" />
         <AvaloniaResource Include="Styles\*\*.xml" />
 		<AvaloniaResource Include="Styles\*\*.xaml" />
         <None Include="..\..\.editorconfig" Link=".editorconfig" />
-        <AvaloniaResource Include="Assets\14075148.png" />
         <AvaloniaResource Include="Assets\Fonts\SegMDL2.ttf" />
+    </ItemGroup>
+    <ItemGroup>
+      <AvaloniaXaml Include="Styles\Xaml\PaginationView.xaml">
+        <Generator>MSBuild:Compile</Generator>
+      </AvaloniaXaml>
     </ItemGroup>
     <ItemGroup>
         <PackageReference Include="PCLUntils" Version="1.0.7" />
@@ -26,6 +29,7 @@
         <PackageReference Include="SkiaSharp" Version="2.88.3" />
         <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
 		<PackageReference Include="Avalonia.Win32" Version="0.10.18" />
+		<PackageReference Include="Avalonia.ReactiveUI" Version="0.10.18" />
         <PackageReference Include="Avalonia.Markup.Xaml.Loader" Version="0.10.18" />
     </ItemGroup>
 </Project>
