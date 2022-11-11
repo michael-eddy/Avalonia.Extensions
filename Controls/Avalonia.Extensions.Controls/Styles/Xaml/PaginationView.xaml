@@ -1,5 +1,115 @@
-<Styles xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+﻿<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+	<Style Selector="ListBoxItem.lbi">
+		<Setter Property="Background" Value="{Binding PageSelectorBackground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=PaginationView}}"/>
+		<Setter Property="Padding" Value="0,0,0,0"/>
+		<Setter Property="BorderThickness" Value="0"/>
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="ListBoxItem">
+					<Border x:Name="Bd" Margin="1" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}">
+						<ContentPresenter HorizontalAlignment="Stretch" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+					</Border>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+	<Style Selector="ListBoxItem:pointerover /template/ Border#Bd">
+		<Setter Property="BorderBrush" Value="Transparent" />
+		<Setter Property="Background" Value="Transparent" />
+	</Style>
+	<Style Selector="ListBoxItem:selected /template/ Border#Bd">
+		<Setter Property="Background" Value="{Binding SelectedPageBackground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=PaginationView}}" />
+	</Style>
 	<Style Selector="PaginationView">
-
+		<Setter Property="Template">
+				<ControlTemplate>
+					<Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}">
+						<Grid Margin="0,8,0,8">
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="auto"/>
+								<ColumnDefinition Width="*"/>
+							</Grid.ColumnDefinitions>
+							<StackPanel Orientation="Horizontal" Height="32" Grid.Column="0">
+								<ComboBox x:Name="PART_ComboBox"
+                                          IsVisible="{TemplateBinding IsShowPageDataCountSelector}"
+                                          Width="65" Height="25"
+                                          Background="Transparent"
+                                          Padding="5,0,0,0"
+                                          SelectedIndex="0"
+                                          HorizontalContentAlignment="Center"
+                                          VerticalContentAlignment="Center"
+									  Items="{TemplateBinding PageDataCountCollection}">
+								</ComboBox>
+								<Button x:Name="PART_ButtonFirstPage"
+                                        Content="首页"
+                                        Width="46"
+                                        Padding="0"
+                                        Margin="10,0,0,0"
+                                        BorderThickness="1"/>
+								<Button x:Name="PART_ButtonPrePage"
+                                        Content="《"
+                                        Width="30"
+                                        Padding="0"
+                                        Margin="10,0,0,0"
+                                        BorderThickness="1"/>
+								<ListBox x:Name="PART_ListBoxPages"
+                                     HorizontalAlignment="Left"
+									 Items="{TemplateBinding ShowingPageNumberCollection}"
+                                     SelectedIndex="0" Classes="lbi"						
+                                     ScrollViewer.VerticalScrollBarVisibility="Hidden">
+									<ListBox.ItemTemplate>
+										<DataTemplate>
+											<Grid>
+												<Label Content="{Binding}" Width="24"
+                                                       HorizontalAlignment="Center"
+                                                       VerticalAlignment="Center"
+                                                       HorizontalContentAlignment="Center"
+                                                       VerticalContentAlignment="Center"/>
+											</Grid>
+										</DataTemplate>
+									</ListBox.ItemTemplate>
+									<ListBox.ItemsPanel>
+										<ItemsPanelTemplate>
+											<VirtualizingStackPanel Orientation="Horizontal" />
+										</ItemsPanelTemplate>
+									</ListBox.ItemsPanel>
+								</ListBox>
+								<Button x:Name="PART_ButtonNextPage"
+                                        Content="》"
+                                        Width="30"
+                                        Padding="0"
+                                        Margin="0,0,0,0"
+                                        BorderThickness="1"/>
+								<Button x:Name="PART_ButtonLastPage"
+                                        Content="尾页"
+                                        Width="46"
+                                        Padding="0"
+                                        Margin="10,0,0,0"
+                                        BorderThickness="1"/>
+							</StackPanel>
+							<StackPanel x:Name="PART_PageInfo" Grid.Column="1"
+                                    Orientation="Horizontal"
+                                    HorizontalAlignment="Right"
+                                    VerticalAlignment="Center"
+                                    Margin="0,0,0,0"
+									IsVisible="{TemplateBinding IsShowPageInfo}">
+								<TextBlock>
+									<TextBlock.Text>
+										<MultiBinding StringFormat="{}{0}-{1}条，共{2}页，共{3}条记录">
+											<Binding Path="ShowingPageDataStartNumber" RelativeSource="{RelativeSource TemplatedParent}"/>
+											<Binding Path="ShowingPageDataEndNumber" RelativeSource="{RelativeSource TemplatedParent }"/>
+											<Binding Path="TotalPageCount" RelativeSource="{RelativeSource TemplatedParent}"/>
+											<Binding Path="TotalDataCount" RelativeSource="{RelativeSource TemplatedParent}"/>
+										</MultiBinding>
+									</TextBlock.Text>
+								</TextBlock>
+							</StackPanel>
+						</Grid>
+					</Border>
+				</ControlTemplate>
+		</Setter>
 	</Style>
 </Styles>
