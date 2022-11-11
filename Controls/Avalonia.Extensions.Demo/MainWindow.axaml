@@ -190,6 +190,7 @@
 				<Canvas>
 					<Text Foreground="White" Content="now i'am the content in canvas" />
 					<Text Canvas.Left="20" Canvas.Top="20" Foreground="White" Content="现在我就在Canvas里面显示" />
+					<Draw Canvas.Left="40" Canvas.Top="40" Source="https://avatars.githubusercontent.com/u/22364738" />
 				</Canvas>
 			</TabItem>
 			<TabItem Header="Icons">

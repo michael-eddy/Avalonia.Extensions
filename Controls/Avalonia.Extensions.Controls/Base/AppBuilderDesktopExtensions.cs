@@ -30,7 +30,7 @@ namespace Avalonia.Extensions.Controls
                 }
                 catch (Exception ex)
                 {
-                    Logger.TryGet(LogEventLevel.Warning, LogArea.Control)?.Log(builder, ex.Message);
+                    Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(builder, ex.Message);
                 }
                 InitXamlStyle(builder);
                 if (Application.Current.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)

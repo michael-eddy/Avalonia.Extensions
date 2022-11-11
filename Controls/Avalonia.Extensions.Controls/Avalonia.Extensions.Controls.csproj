@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <Version>1.8.18</Version>
+        <Version>1.9.0</Version>
         <Authors>michael_eddy</Authors>
         <LangVersion>latest</LangVersion>
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
@@ -17,11 +17,6 @@
 		<AvaloniaResource Include="Styles\*\*.xaml" />
         <None Include="..\..\.editorconfig" Link=".editorconfig" />
         <AvaloniaResource Include="Assets\Fonts\SegMDL2.ttf" />
-    </ItemGroup>
-    <ItemGroup>
-      <AvaloniaXaml Include="Styles\Xaml\PaginationView.xaml">
-        <Generator>MSBuild:Compile</Generator>
-      </AvaloniaXaml>
     </ItemGroup>
     <ItemGroup>
         <PackageReference Include="PCLUntils" Version="1.0.7" />

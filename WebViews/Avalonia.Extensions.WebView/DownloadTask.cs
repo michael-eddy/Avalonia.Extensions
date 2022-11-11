@@ -59,7 +59,7 @@ namespace Avalonia.Extensions.WebView
                         }
                         catch (Exception ex)
                         {
-                            Logger.TryGet(LogEventLevel.Information, LogArea.Control)?.Log(this, $"ERROR! INIT CEF FAILED!{ex}");
+                            Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(this, $"ERROR! INIT CEF FAILED!{ex}");
                         }
                         finally
                         {
@@ -67,7 +67,7 @@ namespace Avalonia.Extensions.WebView
                         }
                     }
                     else
-                        Logger.TryGet(LogEventLevel.Information, LogArea.Control)?.Log(this, $"ERROR! Download File CANNOT FOUND!");
+                        Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(this, $"ERROR! Download File CANNOT FOUND!");
                 }
             }
         }

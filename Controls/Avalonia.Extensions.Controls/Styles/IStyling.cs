@@ -36,7 +36,7 @@ namespace Avalonia.Extensions.Styles
             }
             catch (Exception ex)
             {
-                Logger.TryGet(LogEventLevel.Warning, LogArea.Control)?.Log(this, ex.Message);
+                Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(this, ex.Message);
             }
         }
         void AddResource()
@@ -57,7 +57,7 @@ namespace Avalonia.Extensions.Styles
             }
             catch (Exception ex)
             {
-                Logger.TryGet(LogEventLevel.Warning, LogArea.Control)?.Log(this, ex.Message);
+                Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(this, ex.Message);
             }
         }
     }

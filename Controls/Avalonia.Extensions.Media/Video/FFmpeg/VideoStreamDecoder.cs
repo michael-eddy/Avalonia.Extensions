@@ -98,7 +98,7 @@ namespace Avalonia.Extensions.Media
             }
             catch (Exception ex)
             {
-                Logger.TryGet(LogEventLevel.Information, LogArea.Control)?.Log(this, $"init ffmpeg failed: {ex.Message}");
+                Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(this, $"init ffmpeg failed: {ex.Message}");
                 return false;
             }
         }
