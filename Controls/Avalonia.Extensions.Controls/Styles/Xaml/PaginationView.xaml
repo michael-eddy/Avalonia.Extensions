@@ -1,6 +1,6 @@
 ﻿<Styles xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-	<Style Selector="ListBoxItem.lbi">
+		<Style Selector="ListBoxItem.lbi">
 		<Setter Property="Background" Value="{Binding PageSelectorBackground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=PaginationView}}"/>
 		<Setter Property="Padding" Value="0,0,0,0"/>
 		<Setter Property="BorderThickness" Value="0"/>
@@ -22,6 +22,9 @@
 		<Setter Property="Background" Value="{Binding SelectedPageBackground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=PaginationView}}" />
 	</Style>
 	<Style Selector="PaginationView">
+		<Style.Resources>
+			<x:String x:Key="PageInfoContent">{}{0}-{1}条,共{2}页,共{3}条记录</x:String>
+		</Style.Resources>
 		<Setter Property="Template">
 				<ControlTemplate>
 					<Border Background="{TemplateBinding Background}"
@@ -44,7 +47,7 @@
 									  Items="{TemplateBinding PageDataCountCollection}">
 								</ComboBox>
 								<Button x:Name="PART_ButtonFirstPage"
-                                        Content="首页"
+                                        Content="{TemplateBinding FisrtPageContent}"
                                         Width="46"
                                         Padding="0"
                                         Margin="10,0,0,0"
@@ -84,7 +87,7 @@
                                         Margin="0,0,0,0"
                                         BorderThickness="1"/>
 								<Button x:Name="PART_ButtonLastPage"
-                                        Content="尾页"
+                                        Content="{TemplateBinding LastPageContent}"
                                         Width="46"
                                         Padding="0"
                                         Margin="10,0,0,0"
@@ -98,7 +101,7 @@
 									IsVisible="{TemplateBinding IsShowPageInfo}">
 								<TextBlock>
 									<TextBlock.Text>
-										<MultiBinding StringFormat="{}{0}-{1}条，共{2}页，共{3}条记录">
+										<MultiBinding Converter="{x:Static PageInfoConverter.Instance}">
 											<Binding Path="ShowingPageDataStartNumber" RelativeSource="{RelativeSource TemplatedParent}"/>
 											<Binding Path="ShowingPageDataEndNumber" RelativeSource="{RelativeSource TemplatedParent }"/>
 											<Binding Path="TotalPageCount" RelativeSource="{RelativeSource TemplatedParent}"/>

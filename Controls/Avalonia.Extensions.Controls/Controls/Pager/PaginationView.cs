@@ -31,6 +31,29 @@ namespace Avalonia.Extensions.Controls
                 pagination._lstShowingPage.SelectedItem = e.NewValue;
             pagination.SetBtnEnable();
         }
+        /// <summary>
+        /// Defines the <see cref="FisrtPageContent"/> property.
+        /// </summary>
+        public static readonly StyledProperty<string> FisrtPageContentProperty =
+          AvaloniaProperty.Register<PaginationView, string>(nameof(FisrtPageContent), Core.Instance.IsEnglish ? "First" : "首页");
+        public string FisrtPageContent
+        {
+            get => GetValue(FisrtPageContentProperty);
+            set => SetValue(FisrtPageContentProperty, value);
+        }
+        /// <summary>
+        /// Defines the <see cref="LastPageContent"/> property.
+        /// </summary>
+        public static readonly StyledProperty<string> LastPageContentProperty =
+          AvaloniaProperty.Register<PaginationView, string>(nameof(LastPageContent), Core.Instance.IsEnglish ? "Last" : "尾页");
+        public string LastPageContent
+        {
+            get => GetValue(LastPageContentProperty);
+            set => SetValue(LastPageContentProperty, value);
+        }
+        /// <summary>
+        /// Defines the <see cref="IsShowPageDataCountSelector"/> property.
+        /// </summary>
         public static readonly StyledProperty<bool> IsShowPageDataCountSelectorProperty =
           AvaloniaProperty.Register<PaginationView, bool>(nameof(IsShowPageDataCountSelector), true);
         public bool IsShowPageDataCountSelector
@@ -38,6 +61,9 @@ namespace Avalonia.Extensions.Controls
             get => GetValue(IsShowPageDataCountSelectorProperty);
             set => SetValue(IsShowPageDataCountSelectorProperty, value);
         }
+        /// <summary>
+        /// Defines the <see cref="IsShowPageInfo"/> property.
+        /// </summary>
         public static readonly StyledProperty<bool> IsShowPageInfoProperty =
           AvaloniaProperty.Register<PaginationView, bool>(nameof(IsShowPageInfo), true);
         public bool IsShowPageInfo
@@ -45,6 +71,9 @@ namespace Avalonia.Extensions.Controls
             get => GetValue(IsShowPageInfoProperty);
             set => SetValue(IsShowPageInfoProperty, value);
         }
+        /// <summary>
+        /// Defines the <see cref="ShowingPageNumberCollection"/> property.
+        /// </summary>
         public static readonly StyledProperty<ObservableCollection<int>> ShowingPageNumberCollectionProperty =
           AvaloniaProperty.Register<PaginationView, ObservableCollection<int>>(nameof(ShowingPageNumberCollection), new ObservableCollection<int>());
         public ObservableCollection<int> ShowingPageNumberCollection
@@ -52,6 +81,9 @@ namespace Avalonia.Extensions.Controls
             get => GetValue(ShowingPageNumberCollectionProperty);
             set => SetValue(ShowingPageNumberCollectionProperty, value);
         }
+        /// <summary>
+        /// Defines the <see cref="PageDataCountCollection"/> property.
+        /// </summary>
         public static readonly StyledProperty<ObservableCollection<int>> PageDataCountCollectionProperty =
           AvaloniaProperty.Register<PaginationView, ObservableCollection<int>>(nameof(PageDataCountCollection), new ObservableCollection<int> { 20, 30, 50 });
         public ObservableCollection<int> PageDataCountCollection
@@ -59,6 +91,9 @@ namespace Avalonia.Extensions.Controls
             get => GetValue(PageDataCountCollectionProperty);
             set => SetValue(PageDataCountCollectionProperty, value);
         }
+        /// <summary>
+        /// Defines the <see cref="PageDataCount"/> property.
+        /// </summary>
         public static readonly StyledProperty<int> PageDataCountProperty =
           AvaloniaProperty.Register<PaginationView, int>(nameof(PageDataCount), 20);
         public int PageDataCount
@@ -66,6 +101,9 @@ namespace Avalonia.Extensions.Controls
             get => GetValue(PageDataCountProperty);
             set => SetValue(PageDataCountProperty, value);
         }
+        /// <summary>
+        /// Defines the <see cref="CurrentPageNumber"/> property.
+        /// </summary>
         public static readonly StyledProperty<int> CurrentPageNumberProperty =
           AvaloniaProperty.Register<PaginationView, int>(nameof(CurrentPageNumber), 1);
         public int CurrentPageNumber
@@ -73,6 +111,9 @@ namespace Avalonia.Extensions.Controls
             get => GetValue(CurrentPageNumberProperty);
             set => SetValue(CurrentPageNumberProperty, value);
         }
+        /// <summary>
+        /// Defines the <see cref="TotalDataCount"/> property.
+        /// </summary>
         public static readonly StyledProperty<int> TotalDataCountProperty =
           AvaloniaProperty.Register<PaginationView, int>(nameof(TotalDataCount), 0);
         public int TotalDataCount
@@ -80,6 +121,9 @@ namespace Avalonia.Extensions.Controls
             get => GetValue(TotalDataCountProperty);
             set => SetValue(TotalDataCountProperty, value);
         }
+        /// <summary>
+        /// Defines the <see cref="CurrentPageDataCount"/> property.
+        /// </summary>
         public static readonly StyledProperty<int> CurrentPageDataCountProperty =
           AvaloniaProperty.Register<PaginationView, int>(nameof(CurrentPageDataCount), 0);
         public int CurrentPageDataCount
@@ -87,6 +131,9 @@ namespace Avalonia.Extensions.Controls
             get => GetValue(CurrentPageDataCountProperty);
             set => SetValue(CurrentPageDataCountProperty, value);
         }
+        /// <summary>
+        /// Defines the <see cref="TotalPageCount"/> property.
+        /// </summary>
         public static readonly StyledProperty<int> TotalPageCountProperty =
           AvaloniaProperty.Register<PaginationView, int>(nameof(TotalPageCount), 1);
         public int TotalPageCount
@@ -94,6 +141,9 @@ namespace Avalonia.Extensions.Controls
             get => GetValue(TotalPageCountProperty);
             set => SetValue(TotalPageCountProperty, value);
         }
+        /// <summary>
+        /// Defines the <see cref="ShowingPageDataStartNumber"/> property.
+        /// </summary>
         public static readonly StyledProperty<int> ShowingPageDataStartNumberProperty =
           AvaloniaProperty.Register<PaginationView, int>(nameof(ShowingPageDataStartNumber), 0);
         public int ShowingPageDataStartNumber
@@ -101,6 +151,9 @@ namespace Avalonia.Extensions.Controls
             get => GetValue(ShowingPageDataStartNumberProperty);
             set => SetValue(ShowingPageDataStartNumberProperty, value);
         }
+        /// <summary>
+        /// Defines the <see cref="ShowingPageDataEndNumber"/> property.
+        /// </summary>
         public static readonly StyledProperty<int> ShowingPageDataEndNumberProperty =
           AvaloniaProperty.Register<PaginationView, int>(nameof(ShowingPageDataEndNumber), 0);
         public int ShowingPageDataEndNumber
@@ -108,6 +161,9 @@ namespace Avalonia.Extensions.Controls
             get => GetValue(ShowingPageDataEndNumberProperty);
             set => SetValue(ShowingPageDataEndNumberProperty, value);
         }
+        /// <summary>
+        /// Defines the <see cref="MaxShownPageCount"/> property.
+        /// </summary>
         public static readonly StyledProperty<int> MaxShownPageCountProperty =
           AvaloniaProperty.Register<PaginationView, int>(nameof(MaxShownPageCount), 7);
         public int MaxShownPageCount
@@ -115,6 +171,9 @@ namespace Avalonia.Extensions.Controls
             get => GetValue(ShowingPageDataEndNumberProperty);
             set => SetValue(ShowingPageDataEndNumberProperty, value);
         }
+        /// <summary>
+        /// Defines the <see cref="SelectedPageBackground"/> property.
+        /// </summary>
         public static readonly StyledProperty<SolidColorBrush> SelectedPageBackgroundProperty =
           AvaloniaProperty.Register<PaginationView, SolidColorBrush>(nameof(SelectedPageBackground), new SolidColorBrush(Colors.Red));
         public SolidColorBrush SelectedPageBackground
@@ -122,6 +181,9 @@ namespace Avalonia.Extensions.Controls
             get => GetValue(SelectedPageBackgroundProperty);
             set => SetValue(SelectedPageBackgroundProperty, value);
         }
+        /// <summary>
+        /// Defines the <see cref="PageSelectorBackground"/> property.
+        /// </summary>
         public static readonly StyledProperty<SolidColorBrush> PageSelectorBackgroundProperty =
           AvaloniaProperty.Register<PaginationView, SolidColorBrush>(nameof(PageSelectorBackground), new SolidColorBrush(Colors.Transparent));
         public SolidColorBrush PageSelectorBackground
@@ -245,7 +307,7 @@ namespace Avalonia.Extensions.Controls
         {
             if (_lstShowingPage == null || ShowingPageNumberCollection == null || ShowingPageNumberCollection.Count == 0)
                 return;
-            if (ShowingPageNumberCollection.Last<int>() != TotalPageCount)
+            if (ShowingPageNumberCollection.Last() != TotalPageCount)
             {
                 try
                 {
