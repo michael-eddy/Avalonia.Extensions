@@ -1,7 +1,7 @@
 # Controls Extensions for Avalonia
 
 # WARNING
-<strong>IN [Avalonia 0.10.14](https://www.nuget.org/packages/Avalonia/),the NativeControlHost NEED app.manifest for Windows.IF NOT,THAT'S MAKE THE `PlayerView` CANNOT WORKS NORMALLY!</strong>
+_IN [Avalonia 0.10.14](https://www.nuget.org/packages/Avalonia/),the NativeControlHost NEED app.manifest for Windows.IF NOT,THAT'S MAKE THE `PlayerView` CANNOT WORKS NORMALLY!_
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
 <assembly manifestVersion="1.0" xmlns="urn:schemas-microsoft-com:asm.v1">
@@ -228,7 +228,7 @@ public static AppBuilder BuildAvaloniaApp()
 > # DANMAKU
 
 # WARNING
-<strong>Need to reference [Dove.Avalonia.Controls.Extensions.Danmaku](https://www.nuget.org/packages/Dove.Avalonia.Controls.Extensions.Danmaku/) package</strong>
+_Need to reference [Dove.Avalonia.Controls.Extensions.Danmaku](https://www.nuget.org/packages/Dove.Avalonia.Controls.Extensions.Danmaku/) package_
 
 > # CONTROLS
 
@@ -241,23 +241,25 @@ public static AppBuilder BuildAvaloniaApp()
 > # MEDIA
 
 # WARNING
-<strong>Need to reference [Dove.Avalonia.Extensions.Media](https://www.nuget.org/packages/Dove.Avalonia.Extensions.Media/) package</strong>
+_Need to reference [Dove.Avalonia.Extensions.Media](https://www.nuget.org/packages/Dove.Avalonia.Extensions.Media/) package_
 
-<strong>++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</strong>
+_++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++_
 
-<strong>NOW the Version >= 1.2.0,it's able to use ffmpeg playing video!!!!</strong>
+_NOW the Version >= 1.2.0,it's able to use ffmpeg playing video!!!!_
 
-<strong>Ah ! You can reference the ffmpeg libraries packages from [Windows](https://www.nuget.org/packages/Dove.FFmpeg.Windows) or [Linux](https://www.nuget.org/packages/Dove.FFmpeg.Linux) or [MacOS](https://www.nuget.org/packages/Dove.FFmpeg.OSX)</strong>
+_Ah ! You can reference the ffmpeg libraries packages from [Windows](https://www.nuget.org/packages/Dove.FFmpeg.Windows) or [Linux](https://www.nuget.org/packages/Dove.FFmpeg.Linux) or [MacOS](https://www.nuget.org/packages/Dove.FFmpeg.OSX)_
 
-<strong>OH ! You can reference the bass libraries packages from [Windows](https://www.nuget.org/packages/Dove.Bass.Windows) or [Linux](https://www.nuget.org/packages/Dove.Bass.Linux) or [MacOS](https://www.nuget.org/packages/Dove.Bass.OSX)</strong>
+_OH ! You can reference the bass libraries packages from [Windows](https://www.nuget.org/packages/Dove.Bass.Windows) or [Linux](https://www.nuget.org/packages/Dove.Bass.Linux) or [MacOS](https://www.nuget.org/packages/Dove.Bass.OSX)_
 
-<strong>and the [ManagedBass](https://github.com/ManagedBass/ManagedBass) require the libraries is in your program root folder,the [Dove.Avalonia.Extensions.Media] has handle copy to the require path.but if you still get an init failed messsage,plz copy by yourself!!</strong>
+_and the [ManagedBass](https://github.com/ManagedBass/ManagedBass) require the libraries is in your program root folder,the [Dove.Avalonia.Extensions.Media] has handle copy to the require path.but if you still get an init failed messsage,plz copy by yourself!!_
 
-<strong>++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</strong>
+_++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++_
 
-<strong>if you need `VideoView` or `PlayerView`,you should install libVLC in your project before init!!! [Windows](https://www.nuget.org/packages/VideoLAN.LibVLC.Windows/) or [MAC](https://www.nuget.org/packages/VideoLAN.LibVLC.Mac/)</strong>
+_if you need `VideoView` or `PlayerView`,you should install libVLC in your project before init!!! _
 
-<strong>if you need `AudioControl`,should download bass Libraries(.dll/.so/.dylib/.a) are separate for x86, x64, ARM by yourself. you can find out from [here](https://github.com/ManagedBass/ManagedBass)</strong>
+_if you need `FFmpegView`,you should install libFfmpeg in your project before init!!! _
+
+_if you need `AudioControl`,should install libbass in your project before init!!!_
 
 To enable extension the `UseAudioControl` AND `UseVideoView` method call should be present in your Program.cs file,the 1st one is for `AudioControl`,
 the 2nd one is for `VideoView` or `PlayerView`,you can also call it according to your NEEDS:
@@ -268,11 +270,15 @@ public static AppBuilder BuildAvaloniaApp()
         .UsePlatformDetect()
         .UseVideoView()
         .UseAudioControl()
+        .UseFFmpeg()
         .LogToTrace();
 ```
 
 - [x] VideoView Support
   > the `VideoView` in `LibVLCSharp`,modified to support use in `UserControl`
+  
+- [x] FFmpegView Support
+  > the video view by using ffmpeg
 
 - [x] PlayerView Support
   > the custom control for `VideoView`,it's just like in uwp/wpf
@@ -283,7 +289,7 @@ public static AppBuilder BuildAvaloniaApp()
 > # LANGUAGE
 
 - [x] Chinese Input Support
-<strong>Need to reference [Dove.Avalonia.Controls.Extensions.ChineseInputSupport](https://www.nuget.org/packages/Dove.Avalonia.Controls.Extensions.ChineseInputSupoort/) package</strong>
+_Need to reference [Dove.Avalonia.Controls.Extensions.ChineseInputSupport](https://www.nuget.org/packages/Dove.Avalonia.Controls.Extensions.ChineseInputSupoort/) package_
 
 To enable extension the `UseChineseInputSupport` method call should be present in your Program.cs file,you defined which controls(default is TextBox and TextPresenter):
 ```csharp
