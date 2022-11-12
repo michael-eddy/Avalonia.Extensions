@@ -255,9 +255,9 @@ _and the [ManagedBass](https://github.com/ManagedBass/ManagedBass) require the l
 
 _++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++_
 
-_if you need `VideoView` or `PlayerView`,you should install libVLC in your project before init!!! _
+_if you need `VideoView` or `PlayerView`,you should install libVLC in your project before init!!!_
 
-_if you need `FFmpegView`,you should install libFfmpeg in your project before init!!! _
+_if you need `FFmpegView`,you should install libFfmpeg in your project before init!!!_
 
 _if you need `AudioControl`,should install libbass in your project before init!!!_
 
