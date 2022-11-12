@@ -141,7 +141,6 @@ namespace Avalonia.Extensions.Media
             catch (Exception ex)
             {
                 Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(this, ex.Message);
-                throw;
             }
         }
         private void StatusProc(IntPtr buffer, int length, IntPtr user)

@@ -1,4 +1,6 @@
-﻿using Avalonia.Media;
+﻿using Avalonia.Logging;
+using Avalonia.Media;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -87,21 +89,29 @@ namespace Avalonia.Extensions.Media
         }
         public bool Prev(out string url)
         {
-            MusicPlayItem item;
-            if (Index > -1)
+            try
             {
-                item = PlayUrls.FirstOrDefault(x => x.Index == Index);
-                item.Color = new SolidColorBrush(Colors.WhiteSmoke);
-            }
-            if (Index - 1 > -1)
-            {
-                Index--;
-                item = PlayUrls.FirstOrDefault(x => x.Index == Index);
-                if (item != null && !string.IsNullOrEmpty(item.Url))
+                MusicPlayItem item;
+                if (Index > -1)
                 {
-                    url = item.Url;
-                    item.Color = new SolidColorBrush(Colors.DarkCyan);
-                    return true;
+                    item = PlayUrls.FirstOrDefault(x => x.Index == Index);
+                    item.Color = new SolidColorBrush(Colors.WhiteSmoke);
+                }
+                if (Index - 1 > -1)
+                {
+                    Index--;
+                    item = PlayUrls.FirstOrDefault(x => x.Index == Index);
+                    if (item != null && !string.IsNullOrEmpty(item.Url))
+                    {
+                        url = item.Url;
+                        item.Color = new SolidColorBrush(Colors.DarkCyan);
+                        return true;
+                    }
+                    else
+                    {
+                        url = string.Empty;
+                        return false;
+                    }
                 }
                 else
                 {
@@ -109,8 +119,9 @@ namespace Avalonia.Extensions.Media
                     return false;
                 }
             }
-            else
+            catch (Exception ex)
             {
+                Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(this, ex.Message);
                 url = string.Empty;
                 return false;
             }

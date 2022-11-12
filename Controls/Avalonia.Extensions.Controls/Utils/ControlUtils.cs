@@ -33,7 +33,7 @@ namespace Avalonia.Extensions.Controls
             }
             catch (Exception ex)
             {
-                Logger.TryGet(LogEventLevel.Warning, LogArea.Control)?.Log(element, ex.Message);
+                Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(element, ex.Message);
             }
         }
         internal static void UpdateStyles(this StyledElement element, Styling.Styles styles)

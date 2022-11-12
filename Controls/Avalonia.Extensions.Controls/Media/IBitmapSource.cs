@@ -58,7 +58,7 @@ namespace Avalonia.Extensions.Media
             catch (Exception ex)
             {
                 ResultSet(false, ex.Message);
-                Logger.TryGet(LogEventLevel.Warning, LogArea.Control)?.Log(this, ex.Message);
+                Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(this, ex.Message);
             }
             finally
             {
@@ -91,7 +91,7 @@ namespace Avalonia.Extensions.Media
             }
             catch (Exception ex)
             {
-                Logger.TryGet(LogEventLevel.Warning, LogArea.Control)?.Log(this, ex.Message);
+                Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(this, ex.Message);
             }
         }
     }

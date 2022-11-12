@@ -39,7 +39,7 @@ namespace Avalonia.Extensions.Controls
             }
             catch (Exception ex)
             {
-                Logger.TryGet(LogEventLevel.Warning, LogArea.Control)?.Log(this, ex.Message);
+                Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(this, ex.Message);
                 throw ex;
             }
         }
@@ -83,7 +83,7 @@ namespace Avalonia.Extensions.Controls
             }
             catch (Exception ex)
             {
-                Logger.TryGet(LogEventLevel.Warning, LogArea.Control)?.Log(this, ex.Message);
+                Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(this, ex.Message);
                 throw ex;
             }
         }

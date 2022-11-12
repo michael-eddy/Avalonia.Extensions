@@ -37,7 +37,7 @@ namespace Avalonia.Extensions.Threading
             else
             {
                 string errorMessage = "when Position is Top***,the Scroll Way(ScollOrientation) cannot be Vertical!";
-                Logger.TryGet(LogEventLevel.Warning, LogArea.Control)?.Log(this, errorMessage);
+                Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(this, errorMessage);
                 throw new NotSupportedException(errorMessage);
             }
         }
@@ -84,7 +84,7 @@ namespace Avalonia.Extensions.Threading
                 }
                 catch (Exception ex)
                 {
-                    Logger.TryGet(LogEventLevel.Warning, LogArea.Control)?.Log(this, "AnimationThread RunJob ERROR : " + ex.Message);
+                    Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(this, "AnimationThread RunJob ERROR : " + ex.Message);
                 }
             }
         }

@@ -1,5 +1,6 @@
 ﻿using Avalonia.Controls.Shapes;
 using Avalonia.Extensions.Styles;
+using Avalonia.Logging;
 using Avalonia.Media;
 using Avalonia.Media.TextFormatting;
 using Avalonia.Metadata;
@@ -108,7 +109,10 @@ namespace Avalonia.Extensions.Controls
                         return new Size(width, height);
                     }
                 }
-                catch { }
+                catch (Exception ex)
+                {
+                    Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(this, ex.Message);
+                }
                 return new Size();
             }
         }

@@ -1,12 +1,14 @@
 ﻿using Avalonia.Controls;
 using Avalonia.Logging;
 using Avalonia.Markup.Xaml.Styling;
+using FFmpeg.AutoGen;
 using ManagedBass;
 using PCLUntils;
 using PCLUntils.Objects;
 using PCLUntils.Plantform;
 using System;
 using System.IO;
+using System.Runtime.InteropServices;
 
 namespace Avalonia.Extensions.Media
 {
@@ -14,6 +16,7 @@ namespace Avalonia.Extensions.Media
     {
         internal static bool IsAudioInit { get; private set; } = false;
         internal static bool IsVideoInit { get; private set; } = false;
+        internal static bool IsFFmpegInit { get; private set; } = false;
         public static TAppBuilder UseAudioControl<TAppBuilder>(this TAppBuilder builder)
            where TAppBuilder : AppBuilderBase<TAppBuilder>, new()
         {
@@ -33,7 +36,64 @@ namespace Avalonia.Extensions.Media
                 {
                     IsAudioInit = false;
                     Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(builder, ex.Message);
-                    throw;
+                }
+            });
+            return builder;
+        }
+        public static unsafe TAppBuilder UseFFmpeg<TAppBuilder>(this TAppBuilder builder, string? libffmpegDirectoryPath = null)
+           where TAppBuilder : AppBuilderBase<TAppBuilder>, new()
+        {
+            builder.AfterSetup((_) =>
+            {
+                try
+                {
+                    if (libffmpegDirectoryPath.IsEmpty())
+                    {
+                        var platform = string.Empty;
+                        switch (PlantformUntils.System)
+                        {
+                            case Platforms.Linux:
+                                platform = $"linux-{PlantformUntils.ArchitectureString}";
+                                break;
+                            case Platforms.MacOS:
+                                platform = $"osx-{PlantformUntils.ArchitectureString}";
+                                break;
+                            case Platforms.Windows:
+                                platform = $"win-{PlantformUntils.ArchitectureString}";
+                                break;
+                        }
+                        libffmpegDirectoryPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "libffmpeg", platform);
+                    }
+                    if (Directory.Exists(libffmpegDirectoryPath))
+                    {
+                        Logger.TryGet(LogEventLevel.Information, LogArea.Control)?.Log(builder, $"FFmpeg binaries found in: {libffmpegDirectoryPath}");
+                        ffmpeg.RootPath = libffmpegDirectoryPath;
+                        ffmpeg.avdevice_register_all();
+                        ffmpeg.avformat_network_init();
+                        ffmpeg.av_log_set_level(ffmpeg.AV_LOG_VERBOSE);
+                        av_log_set_callback_callback logCallback = (p0, level, format, vl) =>
+                        {
+                            if (level > ffmpeg.av_log_get_level()) return;
+                            var lineSize = 1024;
+                            var lineBuffer = stackalloc byte[lineSize];
+                            var printPrefix = 1;
+                            ffmpeg.av_log_format_line(p0, level, format, vl, lineBuffer, lineSize, &printPrefix);
+                            var line = Marshal.PtrToStringAnsi((IntPtr)lineBuffer);
+                            Console.Write(line);
+                        };
+                        ffmpeg.av_log_set_callback(logCallback);
+                        IsFFmpegInit = true;
+                    }
+                    else
+                    {
+                        IsFFmpegInit = false;
+                        Logger.TryGet(LogEventLevel.Information, LogArea.Control)?.Log(builder, $"cannot found FFmpeg binaries from path:\"{libffmpegDirectoryPath}\"");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    IsFFmpegInit = false;
+                    Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(builder, ex.Message);
                 }
             });
             return builder;
@@ -53,7 +113,6 @@ namespace Avalonia.Extensions.Media
                 {
                     IsVideoInit = false;
                     Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(builder, ex.Message);
-                    throw;
                 }
             });
             return builder;
