@@ -44,8 +44,15 @@ namespace Avalonia.Extensions.Media
         protected override void OnDetachedFromLogicalTree(LogicalTreeAttachmentEventArgs e)
         {
             base.OnDetachedFromLogicalTree(e);
-            timer.Stop();
-            cancellationToken.Cancel();
+            try
+            {
+                timer.Stop();
+                cancellationToken.Cancel();
+            }
+            catch (Exception ex)
+            {
+                Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(this, ex.Message);
+            }
         }
         protected override void OnAttachedToVisualTree(VisualTreeAttachmentEventArgs e)
         {
@@ -63,8 +70,12 @@ namespace Avalonia.Extensions.Media
         }
         private static void OnStretchChange(FFmpegView sender, AvaloniaPropertyChangedEventArgs e)
         {
-            if (e.NewValue is Stretch stretch)
-                sender.image.Stretch = stretch;
+            try
+            {
+                if (e.NewValue is Stretch stretch)
+                    sender.image.Stretch = stretch;
+            }
+            catch { }
         }
         public FFmpegView()
         {
@@ -138,8 +149,16 @@ namespace Avalonia.Extensions.Media
         }
         public bool SeekTo(int seekTime)
         {
-            audio.SeekProgress(seekTime);
-            return video.SeekProgress(seekTime);
+            try
+            {
+                audio.SeekProgress(seekTime);
+                return video.SeekProgress(seekTime);
+            }
+            catch (Exception ex)
+            {
+                Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(this, ex.Message);
+                return false;
+            }
         }
         public bool Pause()
         {

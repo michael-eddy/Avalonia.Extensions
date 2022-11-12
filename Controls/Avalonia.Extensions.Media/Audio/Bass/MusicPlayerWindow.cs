@@ -4,7 +4,6 @@ using Avalonia.Controls.Templates;
 using Avalonia.Data;
 using Avalonia.Extensions.Controls;
 using Avalonia.Extensions.Event;
-using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Logging;
 using Avalonia.Media;
@@ -52,52 +51,59 @@ namespace Avalonia.Extensions.Media
         public IControl InitLatout()
         {
             Grid root = new Grid();
-            root.RowDefinitions.Add(new RowDefinition(0, GridUnitType.Pixel));
-            root.RowDefinitions.Add(new RowDefinition(GridLength.Auto));
-            root.Children.Add(videoView);
-            var panel = new StackPanel
+            try
             {
-                Orientation = Layout.Orientation.Horizontal,
-                HorizontalAlignment = Layout.HorizontalAlignment.Center,
-                VerticalAlignment = Layout.VerticalAlignment.Stretch
-            };
-            prevBtn = new Button { Content = new PathIcon { Data = Geometry.Parse(SvgDic.PREVIOUS) } };
-            panel.Children.Add(prevBtn);
-            prevBtn.Click += PrevBtn_Click;
-            playBtn = new Button { Content = new PathIcon { Data = Geometry.Parse(SvgDic.PLAY) } };
-            playBtn.Click += PlayBtn_Click;
-            panel.Children.Add(playBtn);
-            nextBtn = new Button { Content = new PathIcon { Data = Geometry.Parse(SvgDic.NEXT) } };
-            panel.Children.Add(nextBtn);
-            nextBtn.Click += NextBtn_Click;
-            menuBtn = new Button { Content = new PathIcon { Data = Geometry.Parse(SvgDic.MENU) } };
-            panel.Children.Add(menuBtn);
-            menuBtn.Click += MenuBtn_Click;
-            root.Children.Add(panel);
-            panel.SetGridDef(1, 0);
-            popup = new Popup
-            {
-                Width = 240,
-                Height = 100,
-                IsOpen = false,
-                PlacementTarget = menuBtn,
-                IsLightDismissEnabled = true,
-                WindowManagerAddShadowHint = false,
-                PlacementMode = PlacementMode.Pointer
-            };
-            playListView = new ListView();
-            playListView.ItemTemplate = new FuncDataTemplate<MusicPlayItem>((x, _) =>
-            {
-                return new TextBlock
+                root.RowDefinitions.Add(new RowDefinition(0, GridUnitType.Pixel));
+                root.RowDefinitions.Add(new RowDefinition(GridLength.Auto));
+                root.Children.Add(videoView);
+                var panel = new StackPanel
                 {
-                    MaxWidth = 240,
-                    [!TextBlock.TextProperty] = new Binding("Name"),
-                    [!TextBlock.ForegroundProperty] = new Binding("Color")
+                    Orientation = Layout.Orientation.Horizontal,
+                    HorizontalAlignment = Layout.HorizontalAlignment.Center,
+                    VerticalAlignment = Layout.VerticalAlignment.Stretch
                 };
-            }, true);
-            playListView.ItemClick += PlayListView_ItemClick;
-            popup.Child = playListView;
-            root.Children.Add(popup);
+                prevBtn = new Button { Content = new PathIcon { Data = Geometry.Parse(SvgDic.PREVIOUS) } };
+                panel.Children.Add(prevBtn);
+                prevBtn.Click += PrevBtn_Click;
+                playBtn = new Button { Content = new PathIcon { Data = Geometry.Parse(SvgDic.PLAY) } };
+                playBtn.Click += PlayBtn_Click;
+                panel.Children.Add(playBtn);
+                nextBtn = new Button { Content = new PathIcon { Data = Geometry.Parse(SvgDic.NEXT) } };
+                panel.Children.Add(nextBtn);
+                nextBtn.Click += NextBtn_Click;
+                menuBtn = new Button { Content = new PathIcon { Data = Geometry.Parse(SvgDic.MENU) } };
+                panel.Children.Add(menuBtn);
+                menuBtn.Click += MenuBtn_Click;
+                root.Children.Add(panel);
+                panel.SetGridDef(1, 0);
+                popup = new Popup
+                {
+                    Width = 240,
+                    Height = 100,
+                    IsOpen = false,
+                    PlacementTarget = menuBtn,
+                    IsLightDismissEnabled = true,
+                    WindowManagerAddShadowHint = false,
+                    PlacementMode = PlacementMode.Pointer
+                };
+                playListView = new ListView();
+                playListView.ItemTemplate = new FuncDataTemplate<MusicPlayItem>((x, _) =>
+                {
+                    return new TextBlock
+                    {
+                        MaxWidth = 240,
+                        [!TextBlock.TextProperty] = new Binding("Name"),
+                        [!TextBlock.ForegroundProperty] = new Binding("Color")
+                    };
+                }, true);
+                playListView.ItemClick += PlayListView_ItemClick;
+                popup.Child = playListView;
+                root.Children.Add(popup);
+            }
+            catch(Exception ex)
+            {
+                Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(this, ex.Message);
+            }
             return root;
         }
         private void LibVlc_Log(object sender, LogEventArgs e)
@@ -116,37 +122,58 @@ namespace Avalonia.Extensions.Media
         private void NextBtn_Click(object sender, RoutedEventArgs e) => Play();
         private void PlayBtn_Click(object sender, RoutedEventArgs e)
         {
-            if (mediaPlayer.IsPlaying)
-                Pause();
-            else
+            try
             {
-                mediaPlayer.Play();
-                playBtn.Content = new PathIcon { Data = Geometry.Parse(SvgDic.PAUSE) };
+                if (mediaPlayer.IsPlaying)
+                    Pause();
+                else
+                {
+                    mediaPlayer.Play();
+                    playBtn.Content = new PathIcon { Data = Geometry.Parse(SvgDic.PAUSE) };
+                }
+            }
+            catch(Exception ex)
+            {
+                Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(this, ex.Message);
             }
         }
         private void PrevBtn_Click(object sender, RoutedEventArgs e)
         {
-            if (processer.Prev(out string url))
+            try
             {
-                if (!this.Play(url, headers))
-                    Play();
-                else
-                    PopupToast.Show("播放失败！");
+                if (processer.Prev(out string url))
+                {
+                    if (!this.Play(url, headers))
+                        Play();
+                    else
+                        PopupToast.Show("播放失败！");
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(this, ex.Message);
             }
         }
         private void PlayListView_ItemClick(object sender, ViewRoutedEventArgs e)
         {
-            if (e.ClickMouse == MouseButton.Left && e.ClickItem is ListViewItem item && item.Content is MusicPlayItem playItem)
+            try
             {
-                var idx = processer.PlayUrls.IndexOf(playItem);
-                if (processer.Switch(idx, out string url))
+                if (e.IsLeftClick && e.GetItemContent(out MusicPlayItem playItem))
                 {
-                    if (!this.Play(url, headers))
+                    var idx = processer.PlayUrls.IndexOf(playItem);
+                    if (processer.Switch(idx, out string url))
                     {
-                        PopupToast.Show("播放失败！");
-                        Play();
+                        if (!this.Play(url, headers))
+                        {
+                            PopupToast.Show("播放失败！");
+                            Play();
+                        }
                     }
                 }
+            }
+            catch (Exception ex)
+            {
+                Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(this, ex.Message);
             }
         }
         public bool Pause()

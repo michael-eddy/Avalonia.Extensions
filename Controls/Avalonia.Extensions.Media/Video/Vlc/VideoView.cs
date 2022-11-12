@@ -237,10 +237,14 @@ namespace Avalonia.Extensions.Media
         protected override void OnDetachedFromLogicalTree(LogicalTreeAttachmentEventArgs e)
         {
             base.OnDetachedFromLogicalTree(e);
-            _disposables?.Dispose();
-            _disposables = null;
-            _floatingContent?.Close();
-            _floatingContent = null;
+            try
+            {
+                _disposables?.Dispose();
+                _disposables = null;
+                _floatingContent?.Close();
+                _floatingContent = null;
+            }
+            catch { }
         }
     }
 }

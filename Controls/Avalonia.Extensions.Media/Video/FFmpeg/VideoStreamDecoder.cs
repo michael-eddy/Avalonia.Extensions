@@ -1,11 +1,7 @@
 ﻿using Avalonia.Logging;
 using FFmpeg.AutoGen;
-using PCLUntils;
-using PCLUntils.Objects;
-using PCLUntils.Plantform;
 using System;
 using System.Diagnostics;
-using System.IO;
 using System.Runtime.InteropServices;
 using static Avalonia.Extensions.Media.IMedia;
 
@@ -28,7 +24,6 @@ namespace Avalonia.Extensions.Media
         readonly object SyncLock = new object();
         TimeSpan lastTime;
         bool isNextFrame = true;
-        private readonly bool isInit = false;
         public event MediaHandler MediaCompleted;
         public event MediaHandler MediaPlay;
         public event MediaHandler MediaPause;
@@ -45,63 +40,6 @@ namespace Avalonia.Extensions.Media
         public TimeSpan Position => clock.Elapsed + OffsetClock;
         public TimeSpan frameDuration { get; private set; }
         #endregion
-        public VideoStreamDecoder()
-        {
-            isInit = Init(null);
-        }
-        public bool Init(string ffmpegBinaryPath)
-        {
-            try
-            {
-                if (ffmpegBinaryPath.IsEmpty())
-                {
-                    var platform = string.Empty;
-                    switch (PlantformUntils.System)
-                    {
-                        case Platforms.Linux:
-                            platform = $"linux-{PlantformUntils.ArchitectureString}";
-                            break;
-                        case Platforms.MacOS:
-                            platform = $"osx-{PlantformUntils.ArchitectureString}";
-                            break;
-                        case Platforms.Windows:
-                            platform = $"win-{PlantformUntils.ArchitectureString}";
-                            break;
-                    }
-                    ffmpegBinaryPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "libffmpeg", platform);
-                }
-                if (Directory.Exists(ffmpegBinaryPath))
-                {
-                    Logger.TryGet(LogEventLevel.Information, LogArea.Control)?.Log(this, $"FFmpeg binaries found in: {ffmpegBinaryPath}");
-                    ffmpeg.RootPath = ffmpegBinaryPath;
-                }
-                else
-                {
-                    Logger.TryGet(LogEventLevel.Information, LogArea.Control)?.Log(this, $"cannot found FFmpeg binaries from path:\"{ffmpegBinaryPath}\"");
-                    return false;
-                }
-                ffmpeg.avdevice_register_all();
-                ffmpeg.avformat_network_init();
-                ffmpeg.av_log_set_level(ffmpeg.AV_LOG_VERBOSE);
-                av_log_set_callback_callback logCallback = (p0, level, format, vl) =>
-                {
-                    if (level > ffmpeg.av_log_get_level()) return;
-                    var lineSize = 1024;
-                    var lineBuffer = stackalloc byte[lineSize];
-                    var printPrefix = 1;
-                    ffmpeg.av_log_format_line(p0, level, format, vl, lineBuffer, lineSize, &printPrefix);
-                    var line = Marshal.PtrToStringAnsi((IntPtr)lineBuffer);
-                    Console.Write(line);
-                };
-                ffmpeg.av_log_set_callback(logCallback);
-                return true;
-            }
-            catch (Exception ex)
-            {
-                Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(this, $"init ffmpeg failed: {ex.Message}");
-                return false;
-            }
-        }
         public void InitDecodecVideo(string uri)
         {
             try
@@ -354,7 +292,7 @@ namespace Avalonia.Extensions.Media
         {
             try
             {
-                if (!isInit)
+                if (!AppBuilderDesktopExtensions.IsFFmpegInit)
                 {
                     Logger.TryGet(LogEventLevel.Information, LogArea.Control)?.Log(this, "FFmpeg : dosnot initialize device");
                     return false;
@@ -397,7 +335,8 @@ namespace Avalonia.Extensions.Media
         }
         public void Stop()
         {
-            if (State == MediaState.None) return;
+            if (State == MediaState.None)
+                return;
             StopPlay();
         }
     }

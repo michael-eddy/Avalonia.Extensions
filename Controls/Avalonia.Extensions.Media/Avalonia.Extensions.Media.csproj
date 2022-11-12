@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-	<Version>1.2.1</Version>
+	<Version>1.2.3</Version>
 	<Platforms>AnyCPU</Platforms>
 	<Authors>michael_eddy</Authors>
 	<LangVersion>latest</LangVersion>
@@ -20,9 +20,9 @@
 	<PackageReference Include="FFmpeg.AutoGen" Version="5.1.1" />
     <PackageReference Include="LibVLCSharp.Avalonia" Version="3.6.7" />
     <PackageReference Include="CSharpFunctionalExtensions" Version="2.36.1" />
-	<!--<PackageReference Include="Dove.Avalonia.Controls.Extensions" Version="1.8.13" />-->
+	<!--<PackageReference Include="Dove.Avalonia.Controls.Extensions" Version="1.9.0" />-->
+	<ProjectReference Include="..\Avalonia.Extensions.Controls\Avalonia.Extensions.Controls.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Avalonia.Extensions.Controls\Avalonia.Extensions.Controls.csproj" />
   </ItemGroup>
 </Project>

@@ -11,8 +11,12 @@ namespace Avalonia.Extensions.Media
         public MediaItem(LibVLC libVLC, string mrl, FromType type = FromType.FromPath, params string[] options) : base(libVLC, mrl, type, options) { }
         public void SetHeader(Dictionary<string, string> headers)
         {
-            foreach (var header in headers)
-                AddOption($":{header.Key}={header.Value}");
+            try
+            {
+                foreach (var header in headers)
+                    AddOption($":{header.Key}={header.Value}");
+            }
+            catch { }
         }
     }
 }

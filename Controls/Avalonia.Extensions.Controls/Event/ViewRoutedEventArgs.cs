@@ -12,16 +12,16 @@ namespace Avalonia.Extensions.Event
         public bool IsRightClick => ClickMouse == MouseButton.Right;
         public bool GetItemContent<T>(out T content)
         {
-            if (ClickItem is ListViewItem item)
+            if (ClickItem is ListViewItem item && item.Content is T obj)
             {
-                if (item.Content is T obj)
-                {
-                    content = obj;
-                    return true;
-                }
+                content = obj;
+                return true;
             }
-            content = default;
-            return false;
+            else
+            {
+                content = default;
+                return false;
+            }
         }
         public ViewRoutedEventArgs(RoutedEvent args, MouseButton mouseButton) : base(args)
         {

@@ -11,7 +11,7 @@ namespace Avalonia.Extensions.Media
 {
     internal static class ImageSource
     {
-        public static HttpClient HttpClient => Core.Instance.GetClient();
+        static HttpClient HttpClient => Core.Instance.GetClient();
         public static Bitmap ToBitmap(this Draw control, Uri uri)
         {
             Bitmap bitmap = null;
@@ -183,11 +183,13 @@ namespace Avalonia.Extensions.Media
         private static Bitmap CreateBitmap(Draw control, Stream stream)
         {
             Bitmap bitmap;
-            int w = control.Width.ToInt32(true);
-            if (double.IsNaN(control.Width) || w == 0)
+            int w = control.Width.ToInt32(true), h = control.Height.ToInt32(true);
+            if ((double.IsNaN(control.Width) || w == 0) && (double.IsNaN(control.Height) || h == 0))
                 bitmap = new Bitmap(stream);
-            else
+            else if (!double.IsNaN(control.Width) && w != 0)
                 bitmap = Bitmap.DecodeToWidth(stream, w, control.InterpolationMode);
+            else
+                bitmap = Bitmap.DecodeToHeight(stream, h, control.InterpolationMode);
             return bitmap;
         }
     }
