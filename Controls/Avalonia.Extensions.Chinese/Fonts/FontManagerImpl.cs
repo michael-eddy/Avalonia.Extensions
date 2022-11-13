@@ -15,7 +15,7 @@ namespace Avalonia.Extensions.Controls
         private readonly string _defaultFamilyName;
         private readonly Typeface[] _customTypefaces;
         private readonly Typeface _defaultTypeface = new Typeface(FONT_LOCATION);
-        internal const string FONT_LOCATION = "resm:Avalonia.Extensions.Chinese?assembly=Avalonia.Extensions.Chinese#WenQuanYi Micro Hei";
+        internal const string FONT_LOCATION = "resm:Avalonia.Extensions.Chinese.Assets?assembly=Avalonia.Extensions.Chinese#WenQuanYi Micro Hei";
         /// <summary>
         /// ISO 639, 15924, and 3166-1 c
         /// </summary>
@@ -59,7 +59,7 @@ namespace Avalonia.Extensions.Controls
                     SKTypefaceCollectionCache.GetOrAddTypefaceCollection(_defaultTypeface.FontFamily).Get(_defaultTypeface),
                     _ => SKTypeface.FromFamilyName(typeface.FontFamily.Name, (SKFontStyleWeight)typeface.Weight, SKFontStyleWidth.Normal, (SKFontStyleSlant)typeface.Style)
                 };
-                skTypeface ??= SKTypeface.FromFamilyName(_defaultTypeface.FontFamily.Name);
+                skTypeface ??= SKTypeface.Default;
                 Logger.TryGet(LogEventLevel.Debug, LogArea.Visual)?.Log(this, "CreateGlyphTypeface Info:" + skTypeface.FamilyName);
                 var isFakeBold = (int)typeface.Weight >= 600 && !skTypeface.IsBold;
                 var isFakeItalic = typeface.Style == FontStyle.Italic && !skTypeface.IsItalic;
