@@ -14,7 +14,8 @@ namespace Avalonia.Extensions.Controls
     {
         private readonly string _defaultFamilyName;
         private readonly Typeface[] _customTypefaces;
-        private readonly Typeface _defaultTypeface = new Typeface("avares://Avalonia.Extensions.Chinese/Assets/Fonts#WenQuanYi Micro Hei");
+        private readonly Typeface _defaultTypeface = new Typeface(FONT_LOCATION);
+        internal const string FONT_LOCATION = "resm:Avalonia.Extensions.Chinese?assembly=Avalonia.Extensions.Chinese#WenQuanYi Micro Hei";
         /// <summary>
         /// ISO 639, 15924, and 3166-1 c
         /// </summary>
@@ -34,17 +35,16 @@ namespace Avalonia.Extensions.Controls
                 {
                     if (customTypeface.GlyphTypeface.GetGlyph((uint)codepoint) == 0)
                         continue;
-                    typeface = new Typeface(customTypeface.FontFamily.Name, fontStyle, fontWeight);
+                    typeface = new Typeface(customTypeface.FontFamily, fontStyle, fontWeight);
                     return true;
                 }
-                string fontFamilyName = fontFamily?.FamilyNames?.HasFallbacks == true ? fontFamily.Name : string.Empty;
-                var fallback = SKFontManager.Default.MatchCharacter(fontFamilyName, (SKFontStyleWeight)fontWeight, SKFontStyleWidth.Normal, (SKFontStyleSlant)fontStyle, _bcp47, codepoint);
+                var fallback = SKFontManager.Default.MatchCharacter(fontFamily?.Name, (SKFontStyleWeight)fontWeight, SKFontStyleWidth.Normal, (SKFontStyleSlant)fontStyle, _bcp47, codepoint);
                 typeface = new Typeface(fallback?.FamilyName ?? _defaultFamilyName, fontStyle, fontWeight);
                 return true;
             }
             catch (Exception ex)
             {
-                Logger.TryGet(LogEventLevel.Error, LogArea.Visual)?.Log(this, ex.Message);
+                Logger.TryGet(LogEventLevel.Error, LogArea.Visual)?.Log(this, "TryMatchCharacter Error:" + ex.Message);
                 typeface = default;
                 return false;
             }
@@ -53,19 +53,21 @@ namespace Avalonia.Extensions.Controls
         {
             try
             {
-                string familyName = (typeface.FontFamily?.Name ?? FontFamily.DefaultFontFamilyName) switch
+                var skTypeface = (typeface.FontFamily?.Name ?? FontFamily.DefaultFontFamilyName) switch
                 {
-                    "WenQuanYi Micro Hei" or FontFamily.DefaultFontFamilyName => _defaultTypeface.FontFamily.Name,
-                    _ => typeface.FontFamily.Name,
+                    "WenQuanYi Micro Hei" or FontFamily.DefaultFontFamilyName =>
+                    SKTypefaceCollectionCache.GetOrAddTypefaceCollection(_defaultTypeface.FontFamily).Get(_defaultTypeface),
+                    _ => SKTypeface.FromFamilyName(typeface.FontFamily.Name, (SKFontStyleWeight)typeface.Weight, SKFontStyleWidth.Normal, (SKFontStyleSlant)typeface.Style)
                 };
-                var skTypeface = SKTypeface.FromFamilyName(familyName, (SKFontStyleWeight)typeface.Weight, SKFontStyleWidth.Normal, (SKFontStyleSlant)typeface.Style);
+                skTypeface ??= SKTypeface.FromFamilyName(_defaultTypeface.FontFamily.Name);
+                Logger.TryGet(LogEventLevel.Debug, LogArea.Visual)?.Log(this, "CreateGlyphTypeface Info:" + skTypeface.FamilyName);
                 var isFakeBold = (int)typeface.Weight >= 600 && !skTypeface.IsBold;
                 var isFakeItalic = typeface.Style == FontStyle.Italic && !skTypeface.IsItalic;
                 return new GlyphTypefaceImpl(skTypeface, isFakeBold, isFakeItalic);
             }
             catch (Exception ex)
             {
-                Logger.TryGet(LogEventLevel.Error, LogArea.Visual)?.Log(this, ex.Message);
+                Logger.TryGet(LogEventLevel.Error, LogArea.Visual)?.Log(this, "CreateGlyphTypeface Error:" + ex.Message);
                 return default;
             }
         }

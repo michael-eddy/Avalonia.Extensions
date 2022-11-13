@@ -1,0 +1,5 @@
+﻿[Desktop Entry]
+Name=Dove.Avalonia
+Type=Application
+Exec=LC_ALL=C /usr/share/Avalonia.Bilibili/Avalonia.Bilibili
+Icon=/usr/share/icons/notification_icon.ico

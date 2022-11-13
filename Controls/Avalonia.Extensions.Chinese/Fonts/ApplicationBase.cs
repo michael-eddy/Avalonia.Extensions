@@ -9,18 +9,19 @@ namespace Avalonia.Extensions.Controls
     {
         public override void RegisterServices()
         {
-            if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            base.RegisterServices();
+            //if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
+                Logger.TryGet(LogEventLevel.Information, LogArea.Control)?.Log(this, "RegisterServices");
                 try
                 {
                     AvaloniaLocator.CurrentMutable.Bind<IFontManagerImpl>().ToConstant(new FontManagerImpl());
                 }
                 catch (Exception ex)
                 {
-                    Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(this, ex.Message);
+                    Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(this, "RegisterServices:" + ex.Message);
                 }
             }
-            base.RegisterServices();
         }
     }
 }

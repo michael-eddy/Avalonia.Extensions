@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Threading.Tasks;
 
 namespace Avalonia.Extensions.Controls
 {
@@ -9,6 +8,6 @@ namespace Avalonia.Extensions.Controls
         bool Update();
         bool Hide();
         bool Show();
-        Task<bool> GetHIcon(Uri uri);
+        bool GetHIcon(Uri uri);
     }
 }

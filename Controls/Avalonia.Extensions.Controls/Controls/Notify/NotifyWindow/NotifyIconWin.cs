@@ -93,11 +93,11 @@ namespace Avalonia.Extensions.Controls
             return false;
         }
         private IntPtr hIcon = IntPtr.Zero;
-        public async Task<bool> GetHIcon(Uri uri)
+        public bool GetHIcon(Uri uri)
         {
             try
             {
-                var bytes = await Owner.GetBytes(uri);
+                var bytes = Owner.GetBytes(uri).Result;
                 hIcon = new System.Drawing.Icon(bytes).Handle;
                 return true;
             }
