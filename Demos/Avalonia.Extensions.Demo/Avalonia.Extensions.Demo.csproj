@@ -9,29 +9,22 @@
     </PropertyGroup>
     <ItemGroup>
         <PackageReference Include="Avalonia" Version="0.10.18" />
-        <PackageReference Include="Avalonia.Desktop" Version="0.10.18" />
         <PackageReference Include="Dove.Bass.OSX" Version="1.0.0" />
         <PackageReference Include="Dove.Bass.Linux" Version="1.0.0" />
+        <PackageReference Include="Dove.FFmpeg.OSX" Version="1.0.0" />
+        <PackageReference Include="Dove.FFmpeg.Linux" Version="1.0.0" />
         <PackageReference Include="Dove.Bass.Windows" Version="1.0.0" />
+        <PackageReference Include="Avalonia.Desktop" Version="0.10.18" />
         <PackageReference Include="Avalonia.ReactiveUI" Version="0.10.18" />
         <PackageReference Include="Avalonia.Diagnostics" Version="0.10.18" />
-        <PackageReference Include="Dove.FFmpeg.Linux" Version="1.0.0" />
-        <PackageReference Include="Dove.FFmpeg.OSX" Version="1.0.0" />
         <PackageReference Include="Dove.FFmpeg.Windows" Version="1.0.0" />
-        <PackageReference Include="Packaging.Targets" Version="0.1.220">
-          <PrivateAssets>all</PrivateAssets>
-          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-        </PackageReference>
 		<PackageReference Include="VideoLAN.LibVLC.Windows" Version="3.0.17.4" />
 	</ItemGroup>
 	<ItemGroup>
 		<AvaloniaResource Include="Assets\**" />
-		<Content Include="black.ico" CopyToPublishDirectory="PreserveNewest">
-			<LinuxPath>/usr/share/icons/black.ico</LinuxPath>
-		</Content>
 		<None Include="..\..\.editorconfig" Link=".editorconfig" />
-        <ProjectReference Include="..\Avalonia.Extensions.Media\Avalonia.Extensions.Media.csproj" />
-        <ProjectReference Include="..\Avalonia.Extensions.Chinese\Avalonia.Extensions.Chinese.csproj" />
+		<ProjectReference Include="..\..\Controls\Avalonia.Extensions.Chinese\Avalonia.Extensions.Chinese.csproj" />
+		<ProjectReference Include="..\..\Controls\Avalonia.Extensions.Media\Avalonia.Extensions.Media.csproj" />
 		<ProjectReference Include="..\..\WebViews\Avalonia.Extensions.WebView\Avalonia.Extensions.WebView.csproj" />
     </ItemGroup>
 </Project>

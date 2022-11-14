@@ -1,0 +1,5 @@
+﻿[Desktop Entry]
+Name=Dove.Avalonia
+Type=Application
+Exec=/usr/share/Avalonia.Extensions.Chinese.Demo/Avalonia.Extensions.Chinese.Demo
+Icon=/usr/share/icons/black.ico

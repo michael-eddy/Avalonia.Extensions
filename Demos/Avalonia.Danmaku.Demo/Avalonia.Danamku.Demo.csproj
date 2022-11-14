@@ -17,6 +17,6 @@
 		<None Include="..\..\.editorconfig" Link=".editorconfig" />
     </ItemGroup>
 	<ItemGroup>
-	  <ProjectReference Include="..\Avalonia.Extensions.Danmaku\Avalonia.Extensions.Danmaku.csproj" />
+	  <ProjectReference Include="..\..\Danmakus\Avalonia.Extensions.Danmaku\Avalonia.Extensions.Danmaku.csproj" />
 	</ItemGroup>
 </Project>
