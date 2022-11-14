@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+	<Version>1.2.3</Version>
+	<OutputType>WinExe</OutputType>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <TargetFramework>net6.0</TargetFramework>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Avalonia" Version="0.10.18" />
+	<PackageReference Include="Avalonia.Desktop" Version="0.10.18" />
+	<PackageReference Include="Avalonia.Diagnostics" Version="0.10.18" />
+	<ProjectReference Include="..\Avalonia.Extensions.Chinese\Avalonia.Extensions.Chinese.csproj" />
+	<ProjectReference Include="..\Avalonia.Extensions.Controls\Avalonia.Extensions.Controls.csproj" />
+  </ItemGroup>
+</Project>

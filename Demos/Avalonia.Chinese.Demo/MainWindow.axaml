@@ -1,0 +1,15 @@
+<AeroWindow xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+		xmlns:ext="using:Avalonia.Extensions.Controls"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="250"
+        x:Class="Avalonia.Extensions.Chinese.Demo.MainWindow"
+        Title="Avalonia.Controls.Demo" CanResize="False">
+	<StackPanel Orientation="Vertical">
+		<TextBox Text="山川异域 不共戴天" />
+		<TextPresenter Text="山川异域 不共戴天" />
+		<EditTextView Text="山川异域 不共戴天" />
+		<TextView Text="山川异域 不共戴天" />
+	</StackPanel>
+</AeroWindow>
