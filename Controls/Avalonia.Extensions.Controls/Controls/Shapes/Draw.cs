@@ -73,7 +73,8 @@ namespace Avalonia.Extensions.Controls
             {
                 bitmap?.Dispose();
                 bitmap = this.ToBitmap(Source);
-                measureSize = bitmap.Size;
+                if (bitmap != null)
+                    measureSize = bitmap.Size;
             }
             return new RectangleGeometry(new Rect(measureSize.Value).Deflate(StrokeThickness / 2));
         }

@@ -6,6 +6,7 @@ using Avalonia.Media;
 using Avalonia.Styling;
 using System;
 using System.Linq;
+using System.Text;
 
 namespace Avalonia.Extensions.Controls
 {
@@ -18,7 +19,7 @@ namespace Avalonia.Extensions.Controls
         public static TAppBuilder UseChineseInputSupport<TAppBuilder>(this TAppBuilder builder, params Type[] supportContols)
             where TAppBuilder : AppBuilderBase<TAppBuilder>, new()
         {
-            builder.With(new FontManagerOptions { DefaultFamilyName = FontManagerImpl.FONT_LOCATION });
+            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
             builder.AfterSetup((_) =>
             {
                 try

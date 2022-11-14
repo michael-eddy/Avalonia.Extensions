@@ -14,8 +14,9 @@ namespace Avalonia.Extensions.Controls
     {
         private readonly string _defaultFamilyName;
         private readonly Typeface[] _customTypefaces;
-        private readonly Typeface _defaultTypeface = new Typeface(FONT_LOCATION);
-        internal const string FONT_LOCATION = "resm:Avalonia.Extensions.Chinese.Assets?assembly=Avalonia.Extensions.Chinese#WenQuanYi Micro Hei";
+        internal readonly Typeface _defaultTypeface = new Typeface(FONT_LOCATION);
+        //internal const string FONT_LOCATION = "resm:Avalonia.Extensions.Chinese.Assets.Fonts.msyh#Microsoft YaHei UI";
+        internal const string FONT_LOCATION = "resm:Avalonia.Extensions.Chinese.Assets.Fonts.wqyzenhei#文泉驿正黑";
         /// <summary>
         /// ISO 639, 15924, and 3166-1 c
         /// </summary>
@@ -53,10 +54,10 @@ namespace Avalonia.Extensions.Controls
         {
             try
             {
+                var name = _defaultTypeface.FontFamily?.Name;
                 var skTypeface = (typeface.FontFamily?.Name ?? FontFamily.DefaultFontFamilyName) switch
                 {
-                    "WenQuanYi Micro Hei" or FontFamily.DefaultFontFamilyName =>
-                    SKTypefaceCollectionCache.GetOrAddTypefaceCollection(_defaultTypeface.FontFamily).Get(_defaultTypeface),
+                    "WenQuanYi Micro Hei" or FontFamily.DefaultFontFamilyName => SKTypeface.FromFamilyName(_defaultTypeface.FontFamily?.Name),
                     _ => SKTypeface.FromFamilyName(typeface.FontFamily.Name, (SKFontStyleWeight)typeface.Weight, SKFontStyleWidth.Normal, (SKFontStyleSlant)typeface.Style)
                 };
                 skTypeface ??= SKTypeface.Default;

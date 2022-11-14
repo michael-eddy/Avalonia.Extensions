@@ -9,13 +9,14 @@
         <PackageProjectUrl>https://github.com/michael-eddy/Avalonia.Extensions</PackageProjectUrl>
     </PropertyGroup>
     <ItemGroup>
-		<EmbeddedResource Include="Assets\*.ttf" />
+		<EmbeddedResource Include="Assets\Fonts\*.*" />
         <None Include="..\..\.editorconfig" Link=".editorconfig" />
     </ItemGroup>
     <ItemGroup>
         <PackageReference Include="Avalonia" Version="0.10.18" />
         <PackageReference Include="CHSPinYinConv" Version="1.0.0" />
 		<PackageReference Include="Avalonia.Skia" Version="0.10.18" />
+		<PackageReference Include="System.Text.Encoding.CodePages" Version="7.0.0" />
     </ItemGroup>
     <ItemGroup>
       <ProjectReference Include="..\Avalonia.Extensions.Controls\Avalonia.Extensions.Controls.csproj" />
