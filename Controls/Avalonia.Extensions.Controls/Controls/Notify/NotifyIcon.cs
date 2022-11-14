@@ -26,12 +26,12 @@ namespace Avalonia.Extensions.Controls
         public NotifyIcon()
         {
             httpClient = Core.Instance.GetClient();
-            switch (PlantformUntils.System)
+            notifyIcon = PlantformUntils.System switch
             {
-                case Platforms.Windows:
-                    notifyIcon = new NotifyIconWin(this);
-                    break;
-            }
+                Platforms.Windows => new NotifyIconWin(this),
+                Platforms.Linux => new NotifyIconLinux(this),
+                _ => new NotifyIconUnix(this),
+            };
         }
         public bool Add() => notifyIcon.Add();
         public bool Update() => notifyIcon.Update();
@@ -176,11 +176,11 @@ namespace Avalonia.Extensions.Controls
             if (e.NewValue != e.OldValue)
                 sender.notifyIcon.Update();
         }
-        private static async void OnIconUpdate(NotifyIcon sender, AvaloniaPropertyChangedEventArgs e)
+        private static void OnIconUpdate(NotifyIcon sender, AvaloniaPropertyChangedEventArgs e)
         {
             if (e.NewValue != e.OldValue && e.NewValue is Uri uri)
             {
-                await sender.notifyIcon.GetHIcon(uri);
+                sender.notifyIcon.GetHIcon(uri);
                 sender.notifyIcon.Update();
             }
         }

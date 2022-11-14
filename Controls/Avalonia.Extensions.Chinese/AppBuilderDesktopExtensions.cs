@@ -32,15 +32,14 @@ namespace Avalonia.Extensions.Controls
                         {
                             var style = new Style();
                             style.Selector = default(Selector).OfType(supportContol);
-                            style.Setters.Add(new Setter(TemplatedControl.FontFamilyProperty,
-                                new FontFamily("avares://Avalonia.Extensions.Chinese/Assets/Fonts#WenQuanYi Micro Hei")));
+                            style.Setters.Add(new Setter(TemplatedControl.FontFamilyProperty, new FontFamily(FontManagerImpl.FONT_LOCATION)));
                             Application.Current.Styles.Add(style);
                         }
                     }
                 }
                 catch (Exception ex)
                 {
-                    Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(builder, ex.Message);
+                    Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(builder, "UseChineseInputSupport Error:" + ex.Message);
                 }
             });
             return builder;

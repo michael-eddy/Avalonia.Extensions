@@ -1,0 +1,27 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+	<Version>1.2.3</Version>
+	<OutputType>WinExe</OutputType>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <TargetFramework>net6.0</TargetFramework>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Remove="black.ico" />
+    <None Remove="linux-comile.bat" />
+    <None Remove="Dove.Avalonia.desktop" />
+  </ItemGroup>
+  <ItemGroup>
+	  <PackageReference Include="Packaging.Targets" Version="0.1.220">
+		  <PrivateAssets>all</PrivateAssets>
+		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+	  </PackageReference>
+    <PackageReference Include="Avalonia" Version="0.10.18" />
+	<PackageReference Include="Avalonia.Desktop" Version="0.10.18" />
+	<PackageReference Include="Avalonia.Diagnostics" Version="0.10.18" />
+  </ItemGroup>
+  <ItemGroup>
+	  <None Include="..\..\.editorconfig" Link=".editorconfig" />
+    <ProjectReference Include="..\..\Controls\Avalonia.Extensions.Chinese\Avalonia.Extensions.Chinese.csproj" />
+    <ProjectReference Include="..\..\Controls\Avalonia.Extensions.Controls\Avalonia.Extensions.Controls.csproj" />
+  </ItemGroup>
+</Project>
