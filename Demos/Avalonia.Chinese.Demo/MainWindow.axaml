@@ -6,10 +6,11 @@
         mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="250"
         x:Class="Avalonia.Extensions.Chinese.Demo.MainWindow"
         Title="Avalonia.Controls.Demo" CanResize="False">
+		<TextPresenter Text="山川异域 不共戴天" />
+		<!--
 	<StackPanel Orientation="Vertical">
 		<TextBox Text="山川异域 不共戴天" />
-		<TextPresenter Text="山川异域 不共戴天" />
 		<EditTextView Text="山川异域 不共戴天" />
 		<TextView Text="山川异域 不共戴天" />
-	</StackPanel>
+	</StackPanel>-->
 </AeroWindow>
