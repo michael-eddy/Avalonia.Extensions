@@ -15,7 +15,6 @@ namespace Avalonia.Extensions.Controls
         private readonly string _defaultFamilyName;
         private readonly Typeface[] _customTypefaces;
         internal readonly Typeface _defaultTypeface = new Typeface(FONT_LOCATION);
-        //internal const string FONT_LOCATION = "resm:Avalonia.Extensions.Chinese.Assets.Fonts.msyh#Microsoft YaHei UI";
         internal const string FONT_LOCATION = "resm:Avalonia.Extensions.Chinese.Assets.Fonts.wqyzenhei#文泉驿正黑";
         /// <summary>
         /// ISO 639, 15924, and 3166-1 c
