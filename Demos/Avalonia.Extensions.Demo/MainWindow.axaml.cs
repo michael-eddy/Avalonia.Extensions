@@ -22,6 +22,7 @@ namespace Avalonia.Controls.Demo
             Locate = true;
             this.AttachDevTools();
         }
+        protected override bool MoveDragEnable => true;
         private void InitializeComponent()
         {
             Width = 800;
