@@ -3,6 +3,8 @@ using Avalonia.Controls.Primitives;
 using Avalonia.Extensions.Styles;
 using Avalonia.Input;
 using Avalonia.Styling;
+using PCLUntils;
+using PCLUntils.Plantform;
 using System;
 
 namespace Avalonia.Extensions.Controls
@@ -54,10 +56,13 @@ namespace Avalonia.Extensions.Controls
         protected override void OnPointerPressed(PointerPressedEventArgs e)
         {
             base.OnPointerPressed(e);
-            var point = e.GetCurrentPoint(this);
-            if (MoveDragEnable && point.Properties.IsLeftButtonPressed &&
-                (point.Position.Y > 30 || (0 > point.Position.X && point.Position.X < moveWidth)))
-                BeginMoveDrag(e);
+            if (PlantformUntils.System == Platforms.Windows)
+            {
+                var point = e.GetCurrentPoint(this);
+                if (MoveDragEnable && point.Properties.IsLeftButtonPressed &&
+                    (point.Position.Y > 30 || (0 > point.Position.X && point.Position.X < moveWidth)))
+                    BeginMoveDrag(e);
+            }
         }
     }
 }
