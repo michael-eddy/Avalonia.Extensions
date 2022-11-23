@@ -68,7 +68,7 @@
   > the button style LIKE HyperlinkButton in UWP
 
 - [x] AeroWindow
-  > the window LIKE "Windows Aero" OR "Aero Grass"
+  > the window LIKE "Windows Aero" OR "Aero Grass",modify `MoveDragEnable` value as `true` use move window position 
 
 - [x] ImageContentButton
   > the button show Image and Text

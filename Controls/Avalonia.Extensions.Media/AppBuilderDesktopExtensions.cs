@@ -59,7 +59,7 @@ namespace Avalonia.Extensions.Media
                                 platform = $"osx-{PlantformUntils.ArchitectureString}";
                                 break;
                             case Platforms.Windows:
-                                platform = $"win-{PlantformUntils.ArchitectureString}";
+                                platform = PlantformUntils.IsArmArchitecture ? "win-arm64" : "win-x86";
                                 break;
                         }
                         libffmpegDirectoryPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "libffmpeg", platform);
