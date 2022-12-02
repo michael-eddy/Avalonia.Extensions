@@ -49,7 +49,8 @@ _Need to reference [Dove.Avalonia.Extensions.Media](https://www.nuget.org/packag
 
 _++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++_
 
-_NOW the Version >= 1.2.0,it's able to use ffmpeg playing video!!!!_
+~~_NOW the Version >= 1.2.0,it's able to use ffmpeg playing video!!!!_~~
+Please use [FFmpegView.Avalonia](https://www.nuget.org/packages/FFmpegView.Avalonia) replace since Version >= 1.2.5
 
 _Ah ! You can reference the ffmpeg libraries packages from [Windows](https://www.nuget.org/packages/Dove.FFmpeg.Windows) or [Linux](https://www.nuget.org/packages/Dove.FFmpeg.Linux) or [MacOS](https://www.nuget.org/packages/Dove.FFmpeg.OSX)_
 
