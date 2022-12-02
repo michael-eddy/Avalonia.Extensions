@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <Version>1.8.14</Version>
+        <Version>1.9.2</Version>
         <Nullable>enable</Nullable>
         <Platforms>AnyCPU</Platforms>
         <OutputType>WinExe</OutputType>
@@ -9,11 +9,9 @@
     </PropertyGroup>
     <ItemGroup>
         <PackageReference Include="Avalonia" Version="0.10.18" />
-        <PackageReference Include="Dove.Bass.Windows" Version="1.0.0" />
         <PackageReference Include="Avalonia.Desktop" Version="0.10.18" />
         <PackageReference Include="Avalonia.ReactiveUI" Version="0.10.18" />
         <PackageReference Include="Avalonia.Diagnostics" Version="0.10.18" />
-        <PackageReference Include="Dove.FFmpeg.Windows" Version="1.0.0" />
 		<PackageReference Include="VideoLAN.LibVLC.Windows" Version="3.0.17.4" />
 	</ItemGroup>
 	<ItemGroup>
