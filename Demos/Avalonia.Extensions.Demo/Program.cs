@@ -18,8 +18,8 @@ namespace Avalonia.Controls.Demo
                     .UseDoveExtensions()
                     .UseChineseInputSupport()
                     //.UseWebView(true)
-                    .UseVideoView().UseAudioControl()
-                    .UseFFmpeg()
+                    .UseVideoView()
+                    .UseAudioControl()
             .StartWithClassicDesktopLifetime(args);
         }
     }
