@@ -1,0 +1,101 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+	  <Version>1.9.3</Version>
+	  <Authors>michael_eddy</Authors>
+	  <LangVersion>latest</LangVersion>
+	  <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+	  <Product>Avalonia.Extensions.Controls</Product>
+	  <RootNamespace>Avalonia.Extensions</RootNamespace>
+	  <TargetFramework>netstandard2.1</TargetFramework>
+	  <EnforceCodeStyleInBuild>false</EnforceCodeStyleInBuild>
+	  <PackageLicenseExpression>MIT</PackageLicenseExpression>
+	  <AssemblyName>Avalonia.Extensions.Controls</AssemblyName>
+	  <PackageProjectUrl>https://github.com/michael-eddy/Avalonia.Extensions</PackageProjectUrl>
+  </PropertyGroup>
+	<ItemGroup>
+		<None Remove="Styles\Xaml\readme.txt" />
+		<AvaloniaResource Include="Styles\*\*.xml" />
+		<AvaloniaResource Include="Styles\*\*.xaml" />
+		<EmbeddedResource Include="Assets\Fonts\*.ttf" />
+		<None Include="..\..\.editorconfig" Link=".editorconfig" />
+		<Compile Include="..\Avalonia.Extensions.Controls\Base\Core.cs" Link="Base\Core.cs" />
+		<Compile Include="..\Avalonia.Extensions.Controls\Base\Enums.cs" Link="Base\Enums.cs" />
+		<Compile Include="..\Avalonia.Extensions.Controls\Base\Runtimes.cs" Link="Base\Runtimes.cs" />
+		<Compile Include="..\Avalonia.Extensions.Controls\Base\Win32API.cs" Link="Base\Win32API.cs" />
+		<Compile Include="..\Avalonia.Extensions.Controls\Base\AppBuilderDesktopExtensions.cs" Link="Base\AppBuilderDesktopExtensions.cs" />
+		<Compile Include="..\Avalonia.Extensions.Controls\Event\ClickEventArgs.cs" Link="Event\ClickEventArgs.cs" />
+		<Compile Include="..\Avalonia.Extensions.Controls\Event\ItemClickEventArgs.cs" Link="Event\ItemClickEventArgs.cs" />
+		<Compile Include="..\Avalonia.Extensions.Controls\Event\SizeRoutedEventArgs.cs" Link="Event\SizeRoutedEventArgs.cs" />
+		<Compile Include="..\Avalonia.Extensions.Controls\Event\ViewRoutedEventArgs.cs" Link="Event\ViewRoutedEventArgs.cs" />
+		<Compile Include="..\Avalonia.Extensions.Controls\Event\ValueChangeEventArgs.cs" Link="Event\ValueChangeEventArgs.cs" />
+		<Compile Include="..\Avalonia.Extensions.Controls\Media\ImageSource.cs" Link="Media\ImageSource.cs" />
+		<Compile Include="..\Avalonia.Extensions.Controls\Media\IBitmapSource.cs" Link="Media\IBitmapSource.cs" />
+		<Compile Include="..\Avalonia.Extensions.Controls\Media\Text\Run.cs" Link="Media\Text\Run.cs" />
+		<Compile Include="..\Avalonia.Extensions.Controls\Media\Text\IRun.cs" Link="Media\Text\IRun.cs" />
+		<Compile Include="..\Avalonia.Extensions.Controls\Media\Text\Runs.cs" Link="Media\Text\Runs.cs" />
+		<Compile Include="..\Avalonia.Extensions.Controls\Media\Text\LineBreak.cs" Link="Media\Text\LineBreak.cs" />
+		<Compile Include="..\Avalonia.Extensions.Controls\Model\BindingModel.cs" Link="Model\BindingModel.cs" />
+		<Compile Include="..\Avalonia.Extensions.Controls\Model\GroupViewItem.cs" Link="Model\GroupViewItem.cs" />
+		<Compile Include="..\Avalonia.Extensions.Controls\Styles\IStyling.cs" Link="Styles\IStyling.cs" />
+		<Compile Include="..\Avalonia.Extensions.Controls\Utils\ControlUtils.cs" Link="Utils\ControlUtils.cs" />
+		<Compile Include="..\Avalonia.Extensions.Controls\Utils\CommonUtils.cs" Link="Utils\CommonUtils.cs" />
+		<Compile Include="..\Avalonia.Extensions.Controls\Threading\BitmapThread.cs" Link="Threading\BitmapThread.cs" />
+		<Compile Include="..\Avalonia.Extensions.Controls\Threading\AnimationThread.cs" Link="Threading\AnimationThread.cs" />
+		<Compile Include="..\Avalonia.Extensions.Controls\Controls\Animation\SurfaceView.cs" Link="Controls\Animation\SurfaceView.cs" />
+		<Compile Include="..\Avalonia.Extensions.Controls\Controls\Animation\ProgressRing.cs" Link="Controls\Animation\ProgressRing.cs" />
+		<Compile Include="..\Avalonia.Extensions.Controls\Controls\Base\ListViewBase.cs" Link="Controls\Base\ListViewBase.cs" />
+		<Compile Include="..\Avalonia.Extensions.Controls\Controls\Base\ClickableView.cs" Link="Controls\Base\ClickableView.cs" />
+		<Compile Include="..\Avalonia.Extensions.Controls\Controls\Button\HyperlinkButton.cs" Link="Controls\Button\HyperlinkButton.cs" />
+		<Compile Include="..\Avalonia.Extensions.Controls\Controls\Button\ImageContentButton.cs" Link="Controls\Button\ImageContentButton.cs" />
+		<Compile Include="..\Avalonia.Extensions.Controls\Controls\Expandable\ExpandableView.cs" Link="Controls\Expandable\ExpandableView.cs" />
+		<Compile Include="..\Avalonia.Extensions.Controls\Controls\GridView\GridView.cs" Link="Controls\GridView\GridView.cs" />
+		<Compile Include="..\Avalonia.Extensions.Controls\Controls\GridView\GridViewItem.cs" Link="Controls\GridView\GridViewItem.cs" />
+		<Compile Include="..\Avalonia.Extensions.Controls\Controls\Group\CheckBoxList.cs" Link="Controls\Group\CheckBoxList.cs" />
+		<Compile Include="..\Avalonia.Extensions.Controls\Controls\Group\RadioButtonList.cs" Link="Controls\Group\RadioButtonList.cs" />
+		<Compile Include="..\Avalonia.Extensions.Controls\Controls\Icons\PathIcon.cs" Link="Controls\Icons\PathIcon.cs" />
+		<Compile Include="..\Avalonia.Extensions.Controls\Controls\Icons\ImageIcon.cs" Link="Controls\Icons\ImageIcon.cs" />
+		<Compile Include="..\Avalonia.Extensions.Controls\Controls\Icons\SymbolIcon.cs" Link="Controls\Icons\SymbolIcon.cs" />
+		<Compile Include="..\Avalonia.Extensions.Controls\Controls\Icons\IconElement.cs" Link="Controls\Icons\IconElement.cs" />
+		<Compile Include="..\Avalonia.Extensions.Controls\Controls\Icons\IconSourceElement.cs" Link="Controls\Icons\IconSourceElement.cs" />
+		<Compile Include="..\Avalonia.Extensions.Controls\Controls\Image\ImageBox.cs" Link="Controls\Image\ImageBox.cs" />
+		<Compile Include="..\Avalonia.Extensions.Controls\Controls\Image\CircleImage.cs" Link="Controls\Image\CircleImage.cs" />
+		<Compile Include="..\Avalonia.Extensions.Controls\Controls\ListView\ListView.cs" Link="Controls\ListView\ListView.cs" />
+		<Compile Include="..\Avalonia.Extensions.Controls\Controls\ListView\ListViewItem.cs" Link="Controls\ListView\ListViewItem.cs" />
+		<Compile Include="..\Avalonia.Extensions.Controls\Controls\ListView\ItemsGenerator.cs" Link="Controls\ListView\ItemsGenerator.cs" />
+		<Compile Include="..\Avalonia.Extensions.Controls\Controls\Notify\NotifyIcon.cs" Link="Controls\Notify\NotifyIcon.cs" />
+		<Compile Include="..\Avalonia.Extensions.Controls\Controls\Notify\MessageBox.cs" Link="Controls\Notify\MessageBox.cs" />
+		<Compile Include="..\Avalonia.Extensions.Controls\Controls\Notify\NotifyOptions.cs" Link="Controls\Notify\NotifyOptions.cs" />
+		<Compile Include="..\Avalonia.Extensions.Controls\Controls\Notify\NotifyWindow.cs" Link="Controls\Notify\NotifyWindow.cs" />
+		<Compile Include="..\Avalonia.Extensions.Controls\Controls\Notify\NotifyWindow\INotifyIcon.cs" Link="Controls\Notify\NotifyWindow\INotifyIcon.cs" />
+		<Compile Include="..\Avalonia.Extensions.Controls\Controls\Notify\NotifyWindow\NotifyIconWin.cs" Link="Controls\Notify\NotifyWindow\NotifyIconWin.cs" />
+		<Compile Include="..\Avalonia.Extensions.Controls\Controls\Notify\NotifyWindow\NotifyIconUnix.cs" Link="Controls\Notify\NotifyWindow\NotifyIconUnix.cs" />
+		<Compile Include="..\Avalonia.Extensions.Controls\Controls\Notify\NotifyWindow\NotifyIconState.cs" Link="Controls\Notify\NotifyWindow\NotifyIconState.cs" />
+		<Compile Include="..\Avalonia.Extensions.Controls\Controls\Notify\NotifyWindow\NotifyIconLinux.cs" Link="Controls\Notify\NotifyWindow\NotifyIconLinux.cs" />
+		<Compile Include="..\Avalonia.Extensions.Controls\Controls\Pager\PaginationView.cs" Link="Controls\Pager\PaginationView.cs" />
+		<Compile Include="..\Avalonia.Extensions.Controls\Controls\Pager\PageInfoConverter.cs" Link="Controls\Pager\PageInfoConverter.cs" />
+		<Compile Include="..\Avalonia.Extensions.Controls\Controls\Popup\PopupToast.cs" Link="Controls\Popup\PopupToast.cs" />
+		<Compile Include="..\Avalonia.Extensions.Controls\Controls\Popup\PopupMenu.cs" Link="Controls\Popup\PopupMenu.cs" />
+		<Compile Include="..\Avalonia.Extensions.Controls\Controls\Popup\PopupOptions.cs" Link="Controls\Popup\PopupOptions.cs" />
+		<Compile Include="..\Avalonia.Extensions.Controls\Controls\Repeater\VerticalItemsRepeater.cs" Link="Controls\Repeater\VerticalItemsRepeater.cs" />
+		<Compile Include="..\Avalonia.Extensions.Controls\Controls\Repeater\ItemsRepeaterContent.cs" Link="Controls\Repeater\ItemsRepeaterContent.cs" />
+		<Compile Include="..\Avalonia.Extensions.Controls\Controls\Repeater\HorizontalItemsRepeater.cs" Link="Controls\Repeater\HorizontalItemsRepeater.cs" />
+		<Compile Include="..\Avalonia.Extensions.Controls\Controls\Scroll\ScrollView.cs" Link="Controls\Scroll\ScrollView.cs" />
+		<Compile Include="..\Avalonia.Extensions.Controls\Controls\Scroll\SeekSlider.cs" Link="Controls\Scroll\SeekSlider.cs" />
+		<Compile Include="..\Avalonia.Extensions.Controls\Controls\Shapes\Text.cs" Link="Controls\Shapes\Text.cs" />
+		<Compile Include="..\Avalonia.Extensions.Controls\Controls\Shapes\Draw.cs" Link="Controls\Shapes\Draw.cs" />
+		<Compile Include="..\Avalonia.Extensions.Controls\Controls\Text\TipLabel.cs" Link="Controls\Text\TipLabel.cs" />
+		<Compile Include="..\Avalonia.Extensions.Controls\Controls\Text\TextView.cs" Link="Controls\Text\TextView.cs" />
+		<Compile Include="..\Avalonia.Extensions.Controls\Controls\Text\TextLabel.cs" Link="Controls\Text\TextLabel.cs" />
+		<Compile Include="..\Avalonia.Extensions.Controls\Controls\Text\EditTextView.cs" Link="Controls\Text\EditTextView.cs" />
+		<Compile Include="..\Avalonia.Extensions.Controls\Controls\Window\WindowBase.cs" Link="Controls\Window\WindowBase.cs" />
+		<Compile Include="..\Avalonia.Extensions.Controls\Controls\Window\AeroWindow.cs" Link="Controls\Window\AeroWindow.cs" />
+	</ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="PCLUntils" Version="1.0.8" />
+		<PackageReference Include="Avalonia" Version="0.10.18" />
+		<PackageReference Include="SkiaSharp" Version="2.80.3" />
+		<PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
+		<PackageReference Include="Avalonia.Win32" Version="0.10.18" />
+		<PackageReference Include="Avalonia.Markup.Xaml.Loader" Version="0.10.18" />
+	</ItemGroup>
+</Project>
