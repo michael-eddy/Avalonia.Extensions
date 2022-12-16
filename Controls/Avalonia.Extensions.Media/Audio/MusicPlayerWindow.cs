@@ -100,7 +100,7 @@ namespace Avalonia.Extensions.Media
                 popup.Child = playListView;
                 root.Children.Add(popup);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(this, ex.Message);
             }
@@ -132,7 +132,7 @@ namespace Avalonia.Extensions.Media
                     playBtn.Content = new PathIcon { Data = Geometry.Parse(SvgDic.PAUSE) };
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(this, ex.Message);
             }

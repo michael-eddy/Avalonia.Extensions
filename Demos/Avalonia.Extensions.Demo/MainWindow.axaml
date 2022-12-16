@@ -202,9 +202,6 @@
 			<TabItem Header="PlayerView">
 				<PlayerView x:Name="playerView" />
 			</TabItem>
-			<TabItem Header="FFmpegView">
-				<FFmpegView x:Name="playerView2" />
-			</TabItem>
 			<TabItem Header="AudioControl">
 				<StackPanel Orientation="Vertical">
 					<AudioControl x:Name="audio" />

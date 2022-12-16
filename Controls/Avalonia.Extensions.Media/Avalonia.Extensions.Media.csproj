@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-	<Version>1.2.4</Version>
+	<Version>1.2.5</Version>
 	<Platforms>AnyCPU</Platforms>
 	<Authors>michael_eddy</Authors>
 	<LangVersion>latest</LangVersion>
@@ -12,17 +12,13 @@
 	<PackageProjectUrl>https://github.com/michael-eddy/Avalonia.Extensions</PackageProjectUrl>
   </PropertyGroup>
   <ItemGroup>
-	  <AvaloniaResource Include="Styles\*\*.xaml" />
 	  <None Include="..\..\.editorconfig" Link=".editorconfig" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="ManagedBass" Version="3.1.1" />
-	<PackageReference Include="FFmpeg.AutoGen" Version="5.1.1" />
     <PackageReference Include="LibVLCSharp.Avalonia" Version="3.6.7" />
     <PackageReference Include="CSharpFunctionalExtensions" Version="2.37.0" />
-	<PackageReference Include="Dove.Avalonia.Controls.Extensions" Version="1.9.2" />
-	<!--<ProjectReference Include="..\Avalonia.Extensions.Controls\Avalonia.Extensions.Controls.csproj" />-->
-  </ItemGroup>
-  <ItemGroup>
+	<!--<PackageReference Include="Dove.Avalonia.Controls.Extensions" Version="1.9.2" />-->
+	<ProjectReference Include="..\Avalonia.Extensions.Controls\Avalonia.Extensions.Controls.csproj" />
   </ItemGroup>
 </Project>
