@@ -27,8 +27,8 @@ namespace Avalonia.Extensions.Controls
                     values[2] is int totalPageCount && values[3] is int totalDataCount)
                 {
                     if (string.IsNullOrEmpty(format))
-                        format = Core.Instance.IsEnglish ? "{0}-{1},{2} pages,{3} records" : "{0}-{1}条,共{2}页,共{3}条记录";
-                    return string.Format(format, showingPageDataStartNumber, showingPageDataEndNumber, totalPageCount, totalDataCount);
+                        format = Core.Instance.IsEnglish ? "{0}-{1},{2} pages,{3} records" : "{0}-{1}条,共{2}页";
+                    return string.Format(format, showingPageDataStartNumber, showingPageDataEndNumber, totalPageCount);
                 }
             }
             catch (Exception ex)

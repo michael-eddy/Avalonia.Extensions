@@ -22,7 +22,7 @@
 		</DockPanel>
 		<TabControl>
 			<TabItem Header="PaginationView">
-				<PaginationView x:Name="paginationView"								
+				<PaginationView x:Name="paginationView"
 							   TotalDataCount="255" Margin="20"
 							   IsShowPageInfo="True"
 							   MaxShownPageCount="8"

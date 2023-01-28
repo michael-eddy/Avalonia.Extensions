@@ -23,7 +23,7 @@
 	</Style>
 	<Style Selector="PaginationView">
 		<Style.Resources>
-			<x:String x:Key="PageInfoContent">{}{0}-{1}条,共{2}页,共{3}条记录</x:String>
+			<x:String x:Key="PageInfoContent">{}{0}-{1}条,共{2}页</x:String>
 		</Style.Resources>
 		<Setter Property="Template">
 				<ControlTemplate>
@@ -99,7 +99,8 @@
                                     VerticalAlignment="Center"
                                     Margin="0,0,0,0"
 									IsVisible="{TemplateBinding IsShowPageInfo}">
-								<TextBlock>
+								<TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"
+									HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
 									<TextBlock.Text>
 										<MultiBinding Converter="{x:Static PageInfoConverter.Instance}">
 											<Binding Path="ShowingPageDataStartNumber" RelativeSource="{RelativeSource TemplatedParent}"/>

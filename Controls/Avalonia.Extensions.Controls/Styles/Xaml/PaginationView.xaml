@@ -23,14 +23,17 @@
 	</Style>
 	<Style Selector="PaginationView">
 		<Style.Resources>
-			<x:String x:Key="PageInfoContent">{}{0}-{1}条,共{2}页,共{3}条记录</x:String>
+			<x:String x:Key="PageInfoContent">{}{0}-{1}条,共{2}页</x:String>
 		</Style.Resources>
 		<Setter Property="Template">
 				<ControlTemplate>
-					<Border Background="{TemplateBinding Background}"
+					<Border 
+						    x:Name="PART_Pagination"
+							HorizontalAlignment="Left"
+							Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}">
-						<Grid Margin="0,8,0,8">
+						<Grid Margin="0,8,0,8" VerticalAlignment="Center">
 							<Grid.ColumnDefinitions>
 								<ColumnDefinition Width="auto"/>
 								<ColumnDefinition Width="*"/>
@@ -38,40 +41,45 @@
 							<StackPanel Orientation="Horizontal" Height="32" Grid.Column="0">
 								<ComboBox x:Name="PART_ComboBox"
                                           IsVisible="{TemplateBinding IsShowPageDataCountSelector}"
-                                          Width="65" Height="25"
+                                          Width="65" Height="30"
                                           Background="Transparent"
                                           Padding="5,0,0,0"
                                           SelectedIndex="0"
+										  VerticalAlignment="Center"
                                           HorizontalContentAlignment="Center"
                                           VerticalContentAlignment="Center"
-									  Items="{TemplateBinding PageDataCountCollection}">
-								</ComboBox>
+									  Items="{TemplateBinding PageDataCountCollection}" />
 								<Button x:Name="PART_ButtonFirstPage"
                                         Content="{TemplateBinding FisrtPageContent}"
+                                        IsVisible="{TemplateBinding IsShowPageButtonSelector}"
                                         Width="46"
+										Height="30"
                                         Padding="0"
                                         Margin="10,0,0,0"
-                                        BorderThickness="1"/>
+                                        BorderThickness="1"
+										VerticalContentAlignment="Center" 
+										HorizontalContentAlignment="Center" />
 								<Button x:Name="PART_ButtonPrePage"
                                         Content="《"
-                                        Width="30"
+										Width="30"
+										Height="30"
                                         Padding="0"
                                         Margin="10,0,0,0"
-                                        BorderThickness="1"/>
+										BorderThickness="1"
+										VerticalContentAlignment="Center"
+										HorizontalContentAlignment="Center" />
 								<ListBox x:Name="PART_ListBoxPages"
                                      HorizontalAlignment="Left"
 									 Items="{TemplateBinding ShowingPageNumberCollection}"
-                                     SelectedIndex="0" Classes="lbi"						
+                                     SelectedIndex="0" Classes="lbi"
                                      ScrollViewer.VerticalScrollBarVisibility="Hidden">
 									<ListBox.ItemTemplate>
 										<DataTemplate>
-											<Grid>
 												<Label Content="{Binding}" Width="24"
                                                        HorizontalAlignment="Center"
                                                        VerticalAlignment="Center"
                                                        HorizontalContentAlignment="Center"
                                                        VerticalContentAlignment="Center"/>
-											</Grid>
 										</DataTemplate>
 									</ListBox.ItemTemplate>
 									<ListBox.ItemsPanel>
@@ -82,16 +90,23 @@
 								</ListBox>
 								<Button x:Name="PART_ButtonNextPage"
                                         Content="》"
-                                        Width="30"
+										Width="30"
+										Height="30"
                                         Padding="0"
                                         Margin="0,0,0,0"
-                                        BorderThickness="1"/>
+										BorderThickness="1"
+										VerticalContentAlignment="Center"
+										HorizontalContentAlignment="Center" />
 								<Button x:Name="PART_ButtonLastPage"
                                         Content="{TemplateBinding LastPageContent}"
-                                        Width="46"
+										Width="46"
+										Height="30"
                                         Padding="0"
                                         Margin="10,0,0,0"
-                                        BorderThickness="1"/>
+										BorderThickness="1"
+										IsVisible="{TemplateBinding IsShowPageButtonSelector}"
+										VerticalContentAlignment="Center"
+										HorizontalContentAlignment="Center" />
 							</StackPanel>
 							<StackPanel x:Name="PART_PageInfo" Grid.Column="1"
                                     Orientation="Horizontal"

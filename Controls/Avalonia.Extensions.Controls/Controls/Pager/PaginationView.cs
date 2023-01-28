@@ -2,6 +2,9 @@
 using Avalonia.Controls.Primitives;
 using Avalonia.Interactivity;
 using Avalonia.Media;
+using Avalonia.VisualTree;
+using Avalonia.Win32;
+using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 
@@ -9,6 +12,7 @@ namespace Avalonia.Extensions.Controls
 {
     public class PaginationView : TemplatedControl
     {
+        private Border _border;
         private Button _btnPrePage;
         private Button _btnLastPage;
         private Button _btnFirstPage;
@@ -19,8 +23,19 @@ namespace Avalonia.Extensions.Controls
         private static readonly object _lock = new object();
         static PaginationView()
         {
+            BoundsProperty.Changed.AddClassHandler<PaginationView>(OnBoundsChanged);
             PageDataCountProperty.Changed.AddClassHandler<PaginationView>(OnPageDataCountPropertyChanged);
             CurrentPageNumberProperty.Changed.AddClassHandler<PaginationView>(OnCurrentPageNumberChanged);
+        }
+        private static void OnBoundsChanged(PaginationView pagination, AvaloniaPropertyChangedEventArgs e)
+        {
+            if (pagination != null && !e.IsSameValue() && pagination.GetVisualRoot() is Window window && e.NewValue is Rect rect)
+            {
+                var visable = (window.Width * 0.8) > pagination._border.Bounds.Width;
+                pagination.SetValue(IsShowPageInfoProperty, visable);
+                pagination.SetValue(IsShowPageButtonSelectorProperty, visable);
+                pagination.SetValue(IsShowPageDataCountSelectorProperty, visable);
+            }
         }
         private static void OnPageDataCountPropertyChanged(PaginationView pagination, AvaloniaPropertyChangedEventArgs e)
             => pagination?.InitData();
@@ -50,6 +65,16 @@ namespace Avalonia.Extensions.Controls
         {
             get => GetValue(LastPageContentProperty);
             set => SetValue(LastPageContentProperty, value);
+        }
+        /// <summary>
+        /// Defines the <see cref="IsShowPageButtonSelector"/> property.
+        /// </summary>
+        public static readonly StyledProperty<bool> IsShowPageButtonSelectorProperty =
+          AvaloniaProperty.Register<PaginationView, bool>(nameof(IsShowPageButtonSelector), true);
+        public bool IsShowPageButtonSelector
+        {
+            get => GetValue(IsShowPageButtonSelectorProperty);
+            set => SetValue(IsShowPageButtonSelectorProperty, value);
         }
         /// <summary>
         /// Defines the <see cref="IsShowPageDataCountSelector"/> property.
@@ -200,6 +225,7 @@ namespace Avalonia.Extensions.Controls
         }
         private void InitControls(TemplateAppliedEventArgs e)
         {
+            _border = e.NameScope.Get<Border>("PART_Pagination");
             _cbbPageDataCount = e.NameScope.Get<ComboBox>("PART_ComboBox");
             if (_cbbPageDataCount != null)
                 _cbbPageDataCount.SelectionChanged += _cbbPageDataCount_SelectionChanged;
@@ -230,6 +256,7 @@ namespace Avalonia.Extensions.Controls
                         TotalPageCount = TotalDataCount / PageDataCount + 1;
                     else
                         TotalPageCount = TotalDataCount / PageDataCount;
+                    MaxShownPageCount = TotalPageCount;
                     if (ShowingPageNumberCollection != null)
                     {
                         lock (_lock)
