@@ -36,6 +36,7 @@
 		<Compile Include="..\Avalonia.Extensions.Controls\Media\Text\LineBreak.cs" Link="Media\Text\LineBreak.cs" />
 		<Compile Include="..\Avalonia.Extensions.Controls\Model\BindingModel.cs" Link="Model\BindingModel.cs" />
 		<Compile Include="..\Avalonia.Extensions.Controls\Model\GroupViewItem.cs" Link="Model\GroupViewItem.cs" />
+		<Compile Include="..\Avalonia.Extensions.Controls\Model\NativeMonitorInfo.cs" Link="Model\NativeMonitorInfo.cs" />
 		<Compile Include="..\Avalonia.Extensions.Controls\Styles\IStyling.cs" Link="Styles\IStyling.cs" />
 		<Compile Include="..\Avalonia.Extensions.Controls\Utils\ControlUtils.cs" Link="Utils\ControlUtils.cs" />
 		<Compile Include="..\Avalonia.Extensions.Controls\Utils\CommonUtils.cs" Link="Utils\CommonUtils.cs" />
