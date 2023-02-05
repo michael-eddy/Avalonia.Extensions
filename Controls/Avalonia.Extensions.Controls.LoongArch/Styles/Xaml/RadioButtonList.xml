@@ -1,0 +1,3 @@
+﻿<DataTemplate xmlns="https://github.com/avaloniaui">
+    <RadioButton GroupName="{Binding Id}" Content="{Binding Content}" IsChecked="{Binding Check}" />
+</DataTemplate>

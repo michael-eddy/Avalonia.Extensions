@@ -1,5 +1,10 @@
 ﻿namespace Avalonia.Extensions.Controls
 {
+    public enum ScreenType
+    {
+        Monitor = 0,
+        WorkArea = 1
+    }
     internal enum CharClass
     {
         CharClassUnknown,

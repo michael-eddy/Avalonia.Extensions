@@ -1,21 +1,73 @@
 ﻿using Avalonia.Controls;
+using Avalonia.Extensions.Model;
 using Avalonia.Extensions.Styles;
 using Avalonia.Logging;
 using Avalonia.Markup.Xaml;
 using Avalonia.Media;
 using Avalonia.Platform;
 using Avalonia.Styling;
+using Avalonia.VisualTree;
+using Avalonia.Win32;
+using PCLUntils;
 using PCLUntils.IEnumerables;
+using PCLUntils.Plantform;
 using SkiaSharp;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Avalonia.Extensions.Controls
 {
     public static class ControlUtils
     {
-        public static bool IsSameValue(this AvaloniaPropertyChangedEventArgs args) => args.OldValue == args.NewValue;
+        public static bool IsSameValue(this AvaloniaPropertyChangedEventArgs args) => args?.OldValue == args?.NewValue;
+        public static IntPtr GetHwnd(this Window window)
+        {
+            IntPtr hwnd = IntPtr.Zero;
+            try
+            {
+                hwnd = ((WindowImpl)((TopLevel)window.GetVisualRoot())?.PlatformImpl)?.Handle?.Handle ?? IntPtr.Zero;
+            }
+            catch { }
+            return hwnd;
+        }
+        public static Size GetScreenSize(this Window window, ScreenType type)
+        {
+            Size rect = default;
+            try
+            {
+                switch (PlantformUntils.System)
+                {
+                    case Platforms.Windows:
+                        {
+                            var monitor = Base.Win32API.MonitorFromWindow(window.GetHwnd(), Base.Win32API.MONITOR_DEFAULT_TONEAREST);
+                            if (monitor != IntPtr.Zero)
+                            {
+                                var monitorInfo = new NativeMonitorInfo();
+                                Base.Win32API.GetMonitorInfo(monitor, monitorInfo);
+                                if (type == ScreenType.WorkArea)
+                                    rect = new Size(monitorInfo.Work.Right - monitorInfo.Work.Left, monitorInfo.Work.Bottom - monitorInfo.Work.Top);
+                                else
+                                    rect = new Size(monitorInfo.Monitor.Right - monitorInfo.Monitor.Left, monitorInfo.Monitor.Bottom - monitorInfo.Monitor.Top);
+                            }
+                            break;
+                        }
+                    default:
+                        {
+                            PixelRect pixelRect = default;
+                            if (type == ScreenType.WorkArea)
+                                pixelRect = window.Screens.Primary.WorkingArea;
+                            else
+                                pixelRect = window.Screens.Primary.Bounds;
+                            rect = new Size(pixelRect.Width, pixelRect.Height);
+                            break;
+                        }
+                }
+            }
+            catch { }
+            return rect;
+        }
         public static void ApplyTheme(this StyledElement element, Uri sourceUri)
         {
             if (!Core.Instance.InnerClasses.Contains(sourceUri))
@@ -44,7 +96,7 @@ namespace Avalonia.Extensions.Controls
                 {
                     if (styles.ElementAt(idx) is Style style && style.Setters != null && style.Setters.Count > 0)
                     {
-                        foreach (Setter setter in style.Setters)
+                        foreach (var setter in style.Setters.Cast<Setter>())
                         {
                             try
                             {

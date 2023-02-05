@@ -1,0 +1,10 @@
+﻿<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <StyleInclude Source="avares://Avalonia.Extensions.Controls/Styles/Xaml/PathIcon.xaml"/>
+    <StyleInclude Source="avares://Avalonia.Extensions.Controls/Styles/Xaml/ImageIcon.xaml"/>
+    <StyleInclude Source="avares://Avalonia.Extensions.Controls/Styles/Xaml/SymbolIcon.xaml"/>
+    <StyleInclude Source="avares://Avalonia.Extensions.Controls/Styles/Xaml/ProgressRing.xaml"/>
+    <StyleInclude Source="avares://Avalonia.Extensions.Controls/Styles/Xaml/EditTextView.xaml"/>
+	<StyleInclude Source="avares://Avalonia.Extensions.Controls/Styles/Xaml/PaginationView.xaml"/>
+    <StyleInclude Source="avares://Avalonia.Extensions.Controls/Styles/Xaml/IconSourceElement.xaml"/>
+</Styles>

@@ -12,7 +12,8 @@
         <PackageReference Include="Avalonia.Desktop" Version="0.10.18" />
         <PackageReference Include="Avalonia.ReactiveUI" Version="0.10.18" />
         <PackageReference Include="Avalonia.Diagnostics" Version="0.10.18" />
-		<PackageReference Include="VideoLAN.LibVLC.Windows" Version="3.0.17.4" />
+        <PackageReference Include="Dove.FFmpeg.Windows" Version="1.0.0" />
+		<PackageReference Include="VideoLAN.LibVLC.Windows" Version="3.0.18" />
 	</ItemGroup>
 	<ItemGroup>
 		<AvaloniaResource Include="Assets\**" />
