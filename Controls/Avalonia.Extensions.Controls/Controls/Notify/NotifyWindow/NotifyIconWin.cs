@@ -2,7 +2,6 @@
 using Avalonia.Logging;
 using System;
 using System.Runtime.InteropServices;
-using System.Threading.Tasks;
 using static Avalonia.Extensions.Base.Win32API;
 
 namespace Avalonia.Extensions.Controls

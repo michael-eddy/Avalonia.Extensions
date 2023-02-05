@@ -81,13 +81,13 @@ namespace Avalonia.Extensions.Base
         [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Unicode, EntryPoint = "RegisterClassExW")]
         public static extern ushort RegisterClassEx(ref WNDCLASSEX lpwcx);
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
-        private static extern IntPtr CreateWindowEx(int dwExStyle, int lpClassName, string lpWindowName, int dwStyle, int x, int y,
+        public static extern IntPtr CreateWindowEx(int dwExStyle, int lpClassName, string lpWindowName, int dwStyle, int x, int y,
            int nWidth, int nHeight, IntPtr hWndParent, IntPtr hMenu, IntPtr hInstance, IntPtr lpParam);
         [DllImport("user32.dll")]
         public static extern bool GetCursorPos(out POINT lpPoint);
         [DllImport("kernel32.dll")]
         public static extern uint GetLastError();
-        internal static IntPtr CreateNoneWindow(string lpClassName, IntPtr delegWndProc)
+        public static IntPtr CreateNoneWindow(string lpClassName, IntPtr delegWndProc)
         {
             if (messageWin == IntPtr.Zero)
             {
