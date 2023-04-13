@@ -93,10 +93,10 @@
 	</ItemGroup>
 	<ItemGroup>
 		<PackageReference Include="PCLUntils" Version="1.0.8" />
-		<PackageReference Include="Avalonia" Version="0.10.18" />
+		<PackageReference Include="Avalonia" Version="0.10.19" />
 		<PackageReference Include="SkiaSharp" Version="2.80.3" />
 		<PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
-		<PackageReference Include="Avalonia.Win32" Version="0.10.18" />
-		<PackageReference Include="Avalonia.Markup.Xaml.Loader" Version="0.10.18" />
+		<PackageReference Include="Avalonia.Win32" Version="0.10.19" />
+		<PackageReference Include="Avalonia.Markup.Xaml.Loader" Version="0.10.19" />
 	</ItemGroup>
 </Project>
