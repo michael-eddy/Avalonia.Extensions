@@ -1,3 +1,0 @@
-﻿<ItemsPanelTemplate xmlns='https://github.com/avaloniaui'>
-	<UniformGrid Columns='{0}' />
-</ItemsPanelTemplate>
