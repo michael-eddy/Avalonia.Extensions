@@ -13,7 +13,7 @@
   </PropertyGroup>
   <ItemGroup>
 	  <None Include="..\..\.editorconfig" Link=".editorconfig" />
-	  <PackageReference Include="Downloader" Version="3.0.4" />
+	  <PackageReference Include="Downloader" Version="3.0.6" />
 	  <PackageReference Include="SharpCompress" Version="0.33.0" />
 	  <PackageReference Include="CefNet.Avalonia" Version="105.3.22248.142" />
 	  <!--<PackageReference Include="Dove.Avalonia.Controls.Extensions" Version="1.9.6" />-->
