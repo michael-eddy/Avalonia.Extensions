@@ -24,7 +24,7 @@ namespace Avalonia.Extensions.Controls
                 Core.Instance.Init();
                 try
                 {
-                    AvaloniaLocator.CurrentMutable.GetService<IAssetLoader>().SetDefaultAssembly(typeof(Core).Assembly);
+                    AssetLoader.SetDefaultAssembly(typeof(Core).Assembly);
                 }
                 catch (Exception ex)
                 {

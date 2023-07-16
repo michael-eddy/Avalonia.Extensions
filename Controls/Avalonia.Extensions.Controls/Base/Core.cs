@@ -56,7 +56,6 @@ namespace Avalonia.Extensions.Controls
         {
             try
             {
-                AssetLoader = AvaloniaLocator.Current.GetService<IAssetLoader>();
                 var assets = AssetLoader.GetAssets(new Uri("avares://Avalonia.Extensions.Controls/Styles/Xaml"),
                       new Uri("avares://Avalonia.Extensions.Controls"));
                 var enumerator = assets.GetEnumerator();
@@ -70,7 +69,6 @@ namespace Avalonia.Extensions.Controls
         }
         internal List<Uri> InnerClasses { get; private set; }
         internal bool IsEnglish => !CultureInfo.CurrentCulture.Name.Contains("zh", StringComparison.CurrentCultureIgnoreCase);
-        public IAssetLoader AssetLoader { get; private set; }
         private HttpClient HttpClient { get; set; }
         public HttpClient GetClient()
         {

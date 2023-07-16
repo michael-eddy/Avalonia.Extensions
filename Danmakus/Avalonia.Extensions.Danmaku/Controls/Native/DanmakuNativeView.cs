@@ -2,6 +2,7 @@
 using Avalonia.Extensions.Controls;
 using Avalonia.Logging;
 using Avalonia.Media;
+using Avalonia.Platform;
 using Avalonia.Threading;
 using System;
 using System.Collections.Generic;
@@ -154,7 +155,7 @@ namespace Avalonia.Extensions.Danmaku
                         {
                             try
                             {
-                                ReadStream(Core.Instance.AssetLoader.Open(uri));
+                                ReadStream(AssetLoader.Open(uri));
                             }
                             catch (Exception ex)
                             {

@@ -1,5 +1,4 @@
-﻿using Avalonia.Controls;
-using Avalonia.Logging;
+﻿using Avalonia.Logging;
 using CefNet;
 using CefNet.Input;
 using System;
@@ -16,8 +15,7 @@ namespace Avalonia.Extensions.WebView
         /// <param name="builder"></param>
         /// <param name="eventHandler">Occurs when a new message is received from a different process. Do not keep a reference to or attempt to access the message outside of an event handler.</param>
         /// <returns></returns>
-        public static TAppBuilder UseWebView<TAppBuilder>(this TAppBuilder builder, bool autoDownload = false, EventHandler<CefProcessMessageReceivedEventArgs> eventHandler = null)
-           where TAppBuilder : AppBuilderBase<TAppBuilder>, new()
+        public static AppBuilder UseWebView(this AppBuilder builder, bool autoDownload = false, EventHandler<CefProcessMessageReceivedEventArgs> eventHandler = null)
         {
             try
             {
@@ -38,8 +36,7 @@ namespace Avalonia.Extensions.WebView
             }
             return builder;
         }
-        public static TAppBuilder UseWebView<TAppBuilder>(this TAppBuilder builder, string cefPath, CefSettings cefSettings, EventHandler<CefProcessMessageReceivedEventArgs> eventHandler = null)
-                       where TAppBuilder : AppBuilderBase<TAppBuilder>, new()
+        public static AppBuilder UseWebView(this AppBuilder builder, string cefPath, CefSettings cefSettings, EventHandler<CefProcessMessageReceivedEventArgs> eventHandler = null)
         {
             try
             {

@@ -50,7 +50,7 @@ namespace Avalonia.Extensions.Danmaku
                 Setters = { new Setter(MarginProperty, new Thickness(marginLeft, marginTop, 0, 0)) }
             };
             animation.Children.Add(endKf);
-            animationRun = animation.RunAsync(this, null);
+            animationRun = animation.RunAsync(this);
             await animationRun;
         }
         public bool IsCompleted => animationRun.IsCompleted;

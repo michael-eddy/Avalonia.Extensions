@@ -24,8 +24,7 @@ namespace Avalonia.Extensions.Controls
                 return;
             try
             {
-                var assets = AvaloniaLocator.Current.GetService<IAssetLoader>();
-                using var stream = assets.Open(sourceUri);
+                using var stream = AssetLoader.Open(sourceUri);
                 var bytes = new byte[stream.Length];
                 stream.Read(bytes);
                 var xaml = Encoding.UTF8.GetString(bytes);

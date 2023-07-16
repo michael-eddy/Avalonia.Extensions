@@ -11,7 +11,7 @@ namespace Avalonia.Extensions.Controls
             Logger.TryGet(LogEventLevel.Information, LogArea.Control)?.Log(this, "RegisterServices");
             try
             {
-                AvaloniaLocator.CurrentMutable.Bind<IFontManagerImpl>().ToConstant(new FontManagerImpl());
+                //AvaloniaLocator.CurrentMutable.Bind<IFontManagerImpl>().ToConstant(new FontManagerImpl());
             }
             catch (Exception ex)
             {
