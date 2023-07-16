@@ -20,8 +20,8 @@
 	<ItemGroup>
 		<AvaloniaResource Include="Assets\**" />
 		<None Include="..\..\.editorconfig" Link=".editorconfig" />
-		<!--<ProjectReference Include="..\..\Controls\Avalonia.Extensions.Chinese\Avalonia.Extensions.Chinese.csproj" />-->
 		<ProjectReference Include="..\..\Controls\Avalonia.Extensions.Media\Avalonia.Extensions.Media.csproj" />
+		<ProjectReference Include="..\..\Controls\Avalonia.Extensions.Chinese\Avalonia.Extensions.Chinese.csproj" />
 		<ProjectReference Include="..\..\WebViews\Avalonia.Extensions.WebView\Avalonia.Extensions.WebView.csproj" />
     </ItemGroup>
 </Project>

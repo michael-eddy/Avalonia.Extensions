@@ -1,10 +1,9 @@
 using Avalonia.Controls.ApplicationLifetimes;
-using Avalonia.Extensions.Controls;
 using Avalonia.Markup.Xaml;
 
 namespace Avalonia.Extensions.Chinese.Demo
 {
-    public class App : ApplicationBase
+    public class App : Application
     {
         public override void Initialize()
         {
