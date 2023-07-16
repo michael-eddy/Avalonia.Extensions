@@ -25,7 +25,6 @@
 		<PackageReference Include="System.Reactive" Version="5.0.0" />
 		<PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
 		<PackageReference Include="Avalonia.Win32" Version="11.0.0" />
-		<PackageReference Include="Avalonia.Desktop" Version="11.0.0" />
 		<PackageReference Include="Avalonia.Markup.Xaml.Loader" Version="11.0.0" />
 		<PackageReference Include="Avalonia.Controls.ItemsRepeater" Version="11.0.0" />
     </ItemGroup>

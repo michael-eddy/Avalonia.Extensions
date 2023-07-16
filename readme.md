@@ -1,6 +1,8 @@
 # Controls Extensions for Avalonia
 
 # WARNING
+**<span style="color:red;">_Avalonia 11 or above,you should use v2.0.0 or above!!!_</span>**
+
 _IN [Avalonia 0.10.14](https://www.nuget.org/packages/Avalonia/),the NativeControlHost NEED app.manifest for Windows.IF NOT,THAT'S MAKE THE `PlayerView` CANNOT WORKS NORMALLY!_
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -156,10 +158,10 @@ public static AppBuilder BuildAvaloniaApp()
 - [x] TipLabel
   > the `TextBlock` with border control
 
-- [x] TextView
+- [x] TextView  (below v2.0.0)
   > the control like `TextPresenter`,but it's draw by the textLayout,so supoort custom font in your project
 
-- [x] EditTextView
+- [x] EditTextView  (below v2.0.0)
   > the control like `TexBox`,but it's draw by the textLayout,so supoort custom font in your project
 
 - [x] PathIcon
@@ -182,10 +184,10 @@ public static AppBuilder BuildAvaloniaApp()
 
 > # EXTEND
 
-- [x] GetHwnd
+- [x] GetHwnd (below v2.0.0)
   > get control or window hwnd object
 
-- [x] GetScreenSize
+- [x] GetScreenSize (below v2.0.0)
   > get screen size object(workarea or monitor)
 
 - [x] ActualWidth
@@ -298,7 +300,7 @@ public static AppBuilder BuildAvaloniaApp()
 - [x] Chinese Input Support
 _Need to reference [Dove.Avalonia.Controls.Extensions.ChineseInputSupport](https://www.nuget.org/packages/Dove.Avalonia.Controls.Extensions.ChineseInputSupoort/) package_
 
-To enable extension the `UseChineseInputSupport` method call should be present in your Program.cs file,you defined which controls(default is TextBox and TextPresenter):
+To enable extension the `UseChineseInputSupport` method call should be present in your Program.cs file:
 ```csharp
 public static AppBuilder BuildAvaloniaApp()
     => AppBuilder.Configure<App>()
@@ -306,4 +308,3 @@ public static AppBuilder BuildAvaloniaApp()
         .UseChineseInputSupport()
         .LogToTrace();
 ```
-If you need to use a global font in the App, you need to inherit `ApplicationBase` in the `App.xaml.cs` class

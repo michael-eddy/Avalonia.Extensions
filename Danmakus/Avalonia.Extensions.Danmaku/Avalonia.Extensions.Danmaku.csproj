@@ -9,7 +9,7 @@
 	  <PackageProjectUrl>https://github.com/michael-eddy/Avalonia.Extensions</PackageProjectUrl>
   </PropertyGroup>
 	<ItemGroup>
-		<!--<PackageReference Include="Dove.Avalonia.Controls.Extensions" Version="1.9.6" />-->
+		<!--<PackageReference Include="Dove.Avalonia.Controls.Extensions" Version="2.0.0" />-->
 		<ProjectReference Include="..\..\Controls\Avalonia.Extensions.Controls\Avalonia.Extensions.Controls.csproj" />
 	</ItemGroup>
 	<ItemGroup>
