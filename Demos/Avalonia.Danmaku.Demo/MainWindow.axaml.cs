@@ -6,7 +6,7 @@ using System;
 
 namespace Avalonia.Danmaku.Demo
 {
-    public class MainWindow : AeroWindow
+    public partial class MainWindow : AeroWindow
     {
         public MainWindow()
         {

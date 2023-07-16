@@ -1,6 +1,5 @@
 using Avalonia.Extensions.Controls;
-using Avalonia.Extensions.Media;
-using Avalonia.Threading;
+using Avalonia.ReactiveUI;
 using ReactiveUI;
 
 namespace Avalonia.Danmaku.Demo
