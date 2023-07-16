@@ -1,17 +1,9 @@
-﻿using Avalonia.Collections;
-using System.Collections.Generic;
+﻿using Avalonia.Controls;
 
 namespace Avalonia.Extensions.Media
 {
-    public sealed class Runs : AvaloniaList<AvaloniaObject>
+    public abstract class Runs : Control
     {
-        public Runs()
-        {
-            ResetBehavior = ResetBehavior.Remove;
-        }
-        public Runs(IEnumerable<AvaloniaObject> items) : base(items)
-        {
-            ResetBehavior = ResetBehavior.Remove;
-        }
+        public abstract TextRuns Children { get; set; }
     }
 }

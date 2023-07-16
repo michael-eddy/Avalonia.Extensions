@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <Version>1.9.2</Version>
+		<Version>2.0.0</Version>
         <Nullable>enable</Nullable>
         <Platforms>AnyCPU</Platforms>
         <OutputType>WinExe</OutputType>
@@ -8,18 +8,20 @@
         <ApplicationManifest>app.manifest</ApplicationManifest>
     </PropertyGroup>
     <ItemGroup>
-        <PackageReference Include="Avalonia" Version="0.10.19" />
-        <PackageReference Include="Avalonia.Desktop" Version="0.10.19" />
-        <PackageReference Include="Avalonia.ReactiveUI" Version="0.10.19" />
-        <PackageReference Include="Avalonia.Diagnostics" Version="0.10.19" />
+        <PackageReference Include="Avalonia" Version="11.0.0" />
+        <PackageReference Include="Avalonia.Desktop" Version="11.0.0" />
+        <PackageReference Include="Avalonia.ReactiveUI" Version="11.0.0" />
+        <PackageReference Include="Avalonia.Diagnostics" Version="11.0.0" />
         <PackageReference Include="Dove.FFmpeg.Windows" Version="1.0.0" />
+		<PackageReference Include="Avalonia.Themes.Fluent" Version="11.0.0" />
+		<PackageReference Include="Avalonia.Themes.Simple" Version="11.0.0" />
 		<PackageReference Include="VideoLAN.LibVLC.Windows" Version="3.0.18" />
 	</ItemGroup>
 	<ItemGroup>
 		<AvaloniaResource Include="Assets\**" />
 		<None Include="..\..\.editorconfig" Link=".editorconfig" />
-		<ProjectReference Include="..\..\Controls\Avalonia.Extensions.Chinese\Avalonia.Extensions.Chinese.csproj" />
 		<ProjectReference Include="..\..\Controls\Avalonia.Extensions.Media\Avalonia.Extensions.Media.csproj" />
+		<ProjectReference Include="..\..\Controls\Avalonia.Extensions.Chinese\Avalonia.Extensions.Chinese.csproj" />
 		<ProjectReference Include="..\..\WebViews\Avalonia.Extensions.WebView\Avalonia.Extensions.WebView.csproj" />
     </ItemGroup>
 </Project>

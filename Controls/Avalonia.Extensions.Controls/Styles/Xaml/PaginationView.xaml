@@ -48,7 +48,7 @@
 										  VerticalAlignment="Center"
                                           HorizontalContentAlignment="Center"
                                           VerticalContentAlignment="Center"
-									  Items="{TemplateBinding PageDataCountCollection}" />
+									  ItemsSource="{TemplateBinding PageDataCountCollection}" />
 								<Button x:Name="PART_ButtonFirstPage"
                                         Content="{TemplateBinding FisrtPageContent}"
                                         IsVisible="{TemplateBinding IsShowPageButtonSelector}"
@@ -70,7 +70,7 @@
 										HorizontalContentAlignment="Center" />
 								<ListBox x:Name="PART_ListBoxPages"
                                      HorizontalAlignment="Left"
-									 Items="{TemplateBinding ShowingPageNumberCollection}"
+								 ItemsSource="{TemplateBinding ShowingPageNumberCollection}"
                                      SelectedIndex="0" Classes="lbi"
                                      ScrollViewer.VerticalScrollBarVisibility="Hidden">
 									<ListBox.ItemTemplate>

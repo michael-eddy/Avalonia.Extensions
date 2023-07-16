@@ -1,16 +1,16 @@
 ﻿using Avalonia.Logging;
-using PCLUntils.Plantform;
+using Avalonia.Platform;
+using Avalonia.Threading;
 using PCLUntils;
+using PCLUntils.Plantform;
 using System;
 using System.IO;
-using System.Text;
-using Avalonia.Threading;
 using System.Net.Http;
-using Avalonia.Extensions.Controls;
+using System.Text;
 
 namespace Avalonia.Extensions.Danmaku
 {
-	public partial class DanmakuView
+    public partial class DanmakuView
 	{
 		private byte[] xml;
 		private void Load()
@@ -75,7 +75,7 @@ namespace Avalonia.Extensions.Danmaku
 							}
 							break;
 						case "avares":
-							ReadStream(Core.Instance.AssetLoader.Open(uri));
+							ReadStream(AssetLoader.Open(uri));
 							break;
 						case "http":
 						case "https":

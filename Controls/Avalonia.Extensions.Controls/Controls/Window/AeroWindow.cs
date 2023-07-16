@@ -23,7 +23,7 @@ namespace Avalonia.Extensions.Controls
         {
             ExtendClientAreaToDecorationsHint = true;
             ExtendClientAreaTitleBarHeightHint = -1;
-            TransparencyLevelHint = WindowTransparencyLevel.AcrylicBlur;
+            TransparencyLevelHint = new[] { WindowTransparencyLevel.AcrylicBlur };
             this.GetObservable(WindowStateProperty)
                 .Subscribe(x =>
                 {
@@ -36,7 +36,7 @@ namespace Avalonia.Extensions.Controls
                     if (!x)
                     {
                         SystemDecorations = SystemDecorations.Full;
-                        TransparencyLevelHint = WindowTransparencyLevel.Blur;
+                        TransparencyLevelHint = new[] { WindowTransparencyLevel.Blur };
                     }
                 });
         }

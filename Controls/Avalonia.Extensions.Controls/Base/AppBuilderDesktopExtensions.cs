@@ -1,25 +1,22 @@
-﻿using Avalonia.Controls;
-using Avalonia.Controls.ApplicationLifetimes;
+﻿using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Controls.Primitives;
 using Avalonia.Logging;
 using Avalonia.Markup.Xaml.Styling;
 using Avalonia.Media;
 using Avalonia.Platform;
 using Avalonia.Styling;
-using Avalonia.Themes.Fluent;
 using Avalonia.Threading;
 using PCLUntils.IEnumerables;
 using System;
 using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Avalonia.Extensions.Controls
 {
     public static class AppBuilderDesktopExtensions
     {
-        public static TAppBuilder UseDoveExtensions<TAppBuilder>(this TAppBuilder builder) where TAppBuilder : AppBuilderBase<TAppBuilder>, new()
+        public static AppBuilder UseDoveExtensions(this AppBuilder builder)
         {
             builder.AfterSetup((_) =>
             {
@@ -27,11 +24,11 @@ namespace Avalonia.Extensions.Controls
                 Core.Instance.Init();
                 try
                 {
-                    AvaloniaLocator.CurrentMutable.GetService<IAssetLoader>().SetDefaultAssembly(typeof(Core).Assembly);
+                    AssetLoader.SetDefaultAssembly(typeof(Core).Assembly);
                 }
                 catch (Exception ex)
                 {
-                    Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(builder, ex.Message);
+                    Logger.TryGet(LogEventLevel.Warning, LogArea.Control)?.Log(builder, ex.Message);
                 }
                 InitXamlStyle(builder);
                 if (Application.Current.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
@@ -60,7 +57,7 @@ namespace Avalonia.Extensions.Controls
         {
             try
             {
-                var themeDict = Core.Instance.GetThemeType() == FluentThemeMode.Dark ? "Base/BaseDark" : "Base/BaseLight";
+                var themeDict = Core.Instance.GetThemeType() == ThemeMode.Dark ? "Base/BaseDark" : "Base/BaseLight";
                 var xamls = new[] { themeDict, "Xaml/ExtControls" };
                 foreach (var xaml in xamls)
                 {

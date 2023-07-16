@@ -1,6 +1,7 @@
 ﻿using Avalonia.Extensions.Controls;
 using Avalonia.Logging;
 using Avalonia.Media.Imaging;
+using Avalonia.Platform;
 using Avalonia.Threading;
 using PCLUntils.Objects;
 using System;
@@ -68,7 +69,7 @@ namespace Avalonia.Extensions.Media
                             {
                                 try
                                 {
-                                    var stream = Core.Instance.AssetLoader.Open(uri);
+                                    var stream = AssetLoader.Open(uri);
                                     bitmap = new Bitmap(stream);
                                 }
                                 catch (Exception ex)
@@ -157,7 +158,7 @@ namespace Avalonia.Extensions.Media
                             {
                                 try
                                 {
-                                    var stream = Core.Instance.AssetLoader.Open(uri);
+                                    var stream = AssetLoader.Open(uri);
                                     owner.SetBitmapSource(stream);
                                 }
                                 catch (Exception ex)

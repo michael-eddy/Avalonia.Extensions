@@ -3,6 +3,7 @@ using Avalonia.Extensions.Event;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Logging;
+using Avalonia.Platform;
 using PCLUntils;
 using PCLUntils.Plantform;
 using System;
@@ -131,7 +132,7 @@ namespace Avalonia.Extensions.Controls
                     {
                         try
                         {
-                            stream = Core.Instance.AssetLoader.Open(uri);
+                            stream = AssetLoader.Open(uri);
                         }
                         catch (Exception ex)
                         {

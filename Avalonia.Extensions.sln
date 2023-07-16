@@ -55,8 +55,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Avalonia.Extensions.Demo", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Avalonia.Danamku.Demo", "Demos\Avalonia.Danmaku.Demo\Avalonia.Danamku.Demo.csproj", "{AC812A9E-C3E9-433D-A145-0F6F9CEE8333}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Avalonia.Extensions.Controls.LoongArch", "Controls\Avalonia.Extensions.Controls.LoongArch\Avalonia.Extensions.Controls.LoongArch.csproj", "{63FCA232-354B-407C-A4EC-E25C5BB32B7C}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -95,10 +93,6 @@ Global
 		{AC812A9E-C3E9-433D-A145-0F6F9CEE8333}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AC812A9E-C3E9-433D-A145-0F6F9CEE8333}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AC812A9E-C3E9-433D-A145-0F6F9CEE8333}.Release|Any CPU.Build.0 = Release|Any CPU
-		{63FCA232-354B-407C-A4EC-E25C5BB32B7C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{63FCA232-354B-407C-A4EC-E25C5BB32B7C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{63FCA232-354B-407C-A4EC-E25C5BB32B7C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{63FCA232-354B-407C-A4EC-E25C5BB32B7C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -117,7 +111,6 @@ Global
 		{69B9A984-3731-45FA-8FE6-7779F3631F19} = {9FDD4644-013C-49B6-A0DB-835657CBE235}
 		{5D45B88C-C2BB-4CBC-B7C4-1806DBB4D7D0} = {9FDD4644-013C-49B6-A0DB-835657CBE235}
 		{AC812A9E-C3E9-433D-A145-0F6F9CEE8333} = {9FDD4644-013C-49B6-A0DB-835657CBE235}
-		{63FCA232-354B-407C-A4EC-E25C5BB32B7C} = {736AFC18-0DD8-4577-8066-A26322E85F8D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {82A8C38D-510B-4067-BAB9-FA581B3F79C7}

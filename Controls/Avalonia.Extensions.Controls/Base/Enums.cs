@@ -1,5 +1,10 @@
 ﻿namespace Avalonia.Extensions.Controls
 {
+    public enum ThemeMode
+    {
+        Light,
+        Dark
+    }
     public enum ScreenType
     {
         Monitor = 0,

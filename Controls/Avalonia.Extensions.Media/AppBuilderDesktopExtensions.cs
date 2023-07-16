@@ -1,5 +1,5 @@
-﻿using Avalonia.Controls;
-using Avalonia.Logging;
+﻿using Avalonia.Logging;
+using Avalonia.Markup.Xaml.Styling;
 using ManagedBass;
 using PCLUntils;
 using PCLUntils.Objects;
@@ -13,8 +13,7 @@ namespace Avalonia.Extensions.Media
     {
         internal static bool IsAudioInit { get; private set; } = false;
         internal static bool IsVideoInit { get; private set; } = false;
-        public static TAppBuilder UseAudioControl<TAppBuilder>(this TAppBuilder builder)
-           where TAppBuilder : AppBuilderBase<TAppBuilder>, new()
+        public static AppBuilder UseAudioControl(this AppBuilder builder)
         {
             builder.AfterSetup((_) =>
             {
@@ -32,17 +31,18 @@ namespace Avalonia.Extensions.Media
                 {
                     IsAudioInit = false;
                     Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(builder, ex.Message);
+                    throw;
                 }
             });
             return builder;
         }
-        public static TAppBuilder UseVideoView<TAppBuilder>(this TAppBuilder builder, string? libvlcDirectoryPath = null)
-           where TAppBuilder : AppBuilderBase<TAppBuilder>, new()
+        public static AppBuilder UseVideoView(this AppBuilder builder, string? libvlcDirectoryPath = null)
         {
             builder.AfterSetup((_) =>
             {
                 try
                 {
+                    InitXamlStyle(builder);
                     LibVLCSharp.Shared.Core.Initialize(libvlcDirectoryPath);
                     IsVideoInit = true;
                 }
@@ -50,9 +50,23 @@ namespace Avalonia.Extensions.Media
                 {
                     IsVideoInit = false;
                     Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(builder, ex.Message);
+                    throw;
                 }
             });
             return builder;
+        }
+        private static void InitXamlStyle(object builder)
+        {
+            try
+            {
+                StyleInclude styleInclude = new StyleInclude(new Uri("avares://Avalonia.Extensions.Media/Styles"));
+                styleInclude.Source = new Uri($"avares://Avalonia.Extensions.Media/Styles/Xaml/FFmpegView.xaml");
+                Application.Current.Styles.Add(styleInclude);
+            }
+            catch (Exception ex)
+            {
+                Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(builder, ex.Message);
+            }
         }
         private static bool InitDll(object builder)
         {

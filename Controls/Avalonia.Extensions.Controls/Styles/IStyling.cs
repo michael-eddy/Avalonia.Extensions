@@ -2,6 +2,7 @@
 using Avalonia.Extensions.Controls;
 using Avalonia.Logging;
 using Avalonia.Markup.Xaml;
+using Avalonia.Platform;
 using Avalonia.Styling;
 using System;
 using System.Text;
@@ -21,7 +22,7 @@ namespace Avalonia.Extensions.Styles
                     var sourceUri = new Uri($"avares://Avalonia.Extensions.Controls/Styles/Xaml/{typeName}.xml");
                     if (!control.Resources.ContainsKey(typeName) && Core.Instance.InnerClasses.Contains(sourceUri))
                     {
-                        using var stream = Core.Instance.AssetLoader.Open(sourceUri);
+                        using var stream = AssetLoader.Open(sourceUri);
                         var bytes = new byte[stream.Length];
                         stream.Read(bytes, 0, bytes.Length);
                         if (parms != null && parms.Length > 0)

@@ -351,7 +351,7 @@ namespace Avalonia.Extensions.Controls
                     _isIgnoreListBoxSelectionChanged = false;
                 }
             }
-            if (_lstShowingPage.Items is ObservableCollection<int> array)
+            if (_lstShowingPage.ItemsSource is ObservableCollection<int> array)
                 _lstShowingPage.SelectedIndex = array.Count - 1;
         }
         private void _btnNextPage_Click(object sender, RoutedEventArgs e)

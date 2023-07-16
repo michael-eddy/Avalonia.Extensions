@@ -17,19 +17,19 @@ namespace Avalonia.Extensions.Controls
         public CheckBoxList()
         {
             _items = new AvaloniaList<GroupViewItem>();
-            ItemsProperty.Changed.AddClassHandler<CheckBoxList>(OnItemsChange);
+            ItemsSourceProperty.Changed.AddClassHandler<CheckBoxList>(OnItemsChange);
             OrientationProperty.Changed.AddClassHandler<CheckBoxList>(OrOrientationChange);
         }
         private void OnItemsChange(object sender, AvaloniaPropertyChangedEventArgs e)
         {
             if (repeater != null)
-                repeater.Items = _items;
+                repeater.ItemsSource = _items;
         }
         private void OrOrientationChange(object sender, AvaloniaPropertyChangedEventArgs e) => DrawLayout();
         protected override void OnInitialized()
         {
             base.OnInitialized();
-            repeater = new ItemsRepeater { Items = _items };
+            repeater = new ItemsRepeater { ItemsSource = _items };
             repeater.ItemTemplate = new FuncDataTemplate<GroupViewItem>((x, _) =>
             {
                 var control = new CheckBox
@@ -82,13 +82,13 @@ namespace Avalonia.Extensions.Controls
         }
         public static readonly StyledProperty<Orientation> OrientationProperty =
             AvaloniaProperty.Register<CheckBoxList, Orientation>(nameof(Orientation), Orientation.Horizontal);
-        public IEnumerable<GroupViewItem> Items
+        public IEnumerable<GroupViewItem> ItemsSource
         {
             get => _items;
-            set => SetAndRaise(ItemsProperty, ref _items, value);
+            set => SetAndRaise(ItemsSourceProperty, ref _items, value);
         }
-        public static readonly DirectProperty<CheckBoxList, IEnumerable<GroupViewItem>> ItemsProperty =
-            AvaloniaProperty.RegisterDirect<CheckBoxList, IEnumerable<GroupViewItem>>(nameof(Items), o => o.Items, (o, v) => o.Items = v);
+        public static readonly DirectProperty<CheckBoxList, IEnumerable<GroupViewItem>> ItemsSourceProperty =
+            AvaloniaProperty.RegisterDirect<CheckBoxList, IEnumerable<GroupViewItem>>(nameof(ItemsSource), o => o.ItemsSource, (o, v) => o.ItemsSource = v);
         private void DrawLayout()
         {
             if (repeater != null)

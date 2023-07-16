@@ -19,19 +19,19 @@ namespace Avalonia.Extensions.Controls
         {
             GroupId = Guid.NewGuid().ToString("N");
             _items = new AvaloniaList<GroupViewItem>();
-            ItemsProperty.Changed.AddClassHandler<RadioButtonList>(OnItemsChange);
+            ItemsSourceProperty.Changed.AddClassHandler<RadioButtonList>(OnItemsChange);
             OrientationProperty.Changed.AddClassHandler<RadioButtonList>(OrientationChange);
         }
         private void OnItemsChange(object sender, AvaloniaPropertyChangedEventArgs e)
         {
             if (repeater != null)
-                repeater.Items = _items;
+                repeater.ItemsSource = _items;
         }
         private void OrientationChange(object sender, AvaloniaPropertyChangedEventArgs e) => DrawLayout();
         protected override void OnInitialized()
         {
             base.OnInitialized();
-            repeater = new ItemsRepeater { Items = _items };
+            repeater = new ItemsRepeater { ItemsSource = _items };
             repeater.ItemTemplate = new FuncDataTemplate<GroupViewItem>((x, _) =>
             {
                 var control = new RadioButton
@@ -84,7 +84,7 @@ namespace Avalonia.Extensions.Controls
         }
         public static readonly StyledProperty<Orientation> OrientationProperty =
             AvaloniaProperty.Register<RadioButtonList, Orientation>(nameof(Orientation), Orientation.Horizontal);
-        public IEnumerable<GroupViewItem> Items
+        public IEnumerable<GroupViewItem> ItemsSource
         {
             get => _items;
             set
@@ -94,11 +94,11 @@ namespace Avalonia.Extensions.Controls
                     foreach (var item in value)
                         item.Id = GroupId;
                 }
-                SetAndRaise(ItemsProperty, ref _items, value);
+                SetAndRaise(ItemsSourceProperty, ref _items, value);
             }
         }
-        public static readonly DirectProperty<RadioButtonList, IEnumerable<GroupViewItem>> ItemsProperty =
-            AvaloniaProperty.RegisterDirect<RadioButtonList, IEnumerable<GroupViewItem>>(nameof(Items), o => o.Items, (o, v) => o.Items = v);
+        public static readonly DirectProperty<RadioButtonList, IEnumerable<GroupViewItem>> ItemsSourceProperty =
+            AvaloniaProperty.RegisterDirect<RadioButtonList, IEnumerable<GroupViewItem>>(nameof(ItemsSource), o => o.ItemsSource, (o, v) => o.ItemsSource = v);
         private void DrawLayout()
         {
             if (repeater != null)

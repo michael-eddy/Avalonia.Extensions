@@ -7,11 +7,10 @@ using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 
 namespace Avalonia.Controls.Demo
 {
-    public class MainWindow : AeroWindow
+    public partial class MainWindow : AeroWindow
     {
         private Button BtnStart { get; set; }
         private ObservableCollection<object> Collection { get; set; }
@@ -39,8 +38,6 @@ namespace Avalonia.Controls.Demo
             splitListView.ItemClick += SplitListView_ItemRightClick;
             BtnStart = this.FindControl<Button>("btnStart");
             BtnStart.Click += BtnStart_Click;
-            var etvBtn = this.FindControl<Button>("etvBtn");
-            etvBtn.Click += EtvBtn_Click;
             var btnShow = this.FindControl<Button>("btnShow");
             btnShow.Click += BtnShow_Click;
             var btnShow2 = this.FindControl<Button>("btnShow2");
@@ -60,7 +57,7 @@ namespace Avalonia.Controls.Demo
                 new { Url = "http://s1.hdslb.com/bfs/static/passport/static/img/rl_top.35edfde.png" },
                 new { Url = "https://i0.hdslb.com/bfs/live/c8e6d780a3182c37a96e79f4ed26fcb576f2520a.png" }
             };
-            imgList.Items = Collection;
+            imgList.ItemsSource = Collection;
             var scrollView = this.FindControl<ScrollView>("scrollView");
             scrollView.ScrollEnd += ScrollView_ScrollEnd;
             scrollView.ScrollTop += ScrollView_ScrollTop;
@@ -70,11 +67,6 @@ namespace Avalonia.Controls.Demo
             audio.Play("http://downsc.chinaz.net/Files/DownLoad/sound1/201906/11582.mp3");
             //var webView = this.FindControl<WebView>("webView");
             //webView.Navigate("bing.com");
-        }
-        private void EtvBtn_Click(object? sender, RoutedEventArgs e)
-        {
-            var etv = this.FindControl<EditTextView>("etv");
-            Debug.WriteLine(etv.Text);
         }
         private void ListView_ScrollTop(object? sender, RoutedEventArgs e)
         {

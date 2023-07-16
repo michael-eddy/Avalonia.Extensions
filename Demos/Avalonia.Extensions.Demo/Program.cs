@@ -1,6 +1,6 @@
 using Avalonia.Extensions.Controls;
 using Avalonia.Extensions.Media;
-using Avalonia.Threading;
+using Avalonia.ReactiveUI;
 using ReactiveUI;
 using System;
 
@@ -16,7 +16,7 @@ namespace Avalonia.Controls.Demo
                     .LogToTrace()
                     .UsePlatformDetect()
                     .UseDoveExtensions()
-                    .UseChineseInputSupport()
+                    //.UseChineseInputSupport()
                     //.UseWebView(true)
                     .UseVideoView()
                     .UseAudioControl()

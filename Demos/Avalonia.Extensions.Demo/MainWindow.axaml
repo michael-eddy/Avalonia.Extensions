@@ -26,14 +26,12 @@
 							   TotalDataCount="255" Margin="20"
 							   IsShowPageInfo="True"
 							   MaxShownPageCount="8"
-							   IsShowPageDataCountSelector="True"
-							   SelectedPageBackground="Chartreuse"
-							   PageSelectorBackground="Cyan" />
+							   IsShowPageDataCountSelector="True" />
 			</TabItem>
 			<TabItem Header="HorizontalItemsRepeater">
 				<StackPanel Orientation="Vertical">
 					<TextBlock Text="{Binding Message}" Foreground="Red"/>
-					<HorizontalItemsRepeater Items="{Binding Items}" Command="{Binding OnButtonClick}" Spacing="20">
+					<HorizontalItemsRepeater ItemsSource="{Binding Items}" Command="{Binding OnButtonClick}" Spacing="20">
 						<HorizontalItemsRepeater.ItemTemplate>
 							<DataTemplate>
 									<CheckBox Content="{Binding Content}" IsChecked="{Binding Check}" />
@@ -49,7 +47,7 @@
 						<RowDefinition Height="*" />
 					</Grid.RowDefinitions>
 					<TextBlock Grid.Row="0" Text="{Binding Message}" Foreground="Red"/>
-					<ListView Name="listView" Grid.Row="1" Items="{Binding Items}" Command="{Binding OnItemClick}">
+					<ListView Name="listView" Grid.Row="1" ItemsSource="{Binding Items}" Command="{Binding OnItemClick}">
 						<ListView.ItemTemplate>
 							<DataTemplate>
 								<TextBlock Text="{Binding Content}" />
@@ -65,7 +63,7 @@
 						<RowDefinition Height="*" />
 					</Grid.RowDefinitions>
 					<TextBlock Grid.Row="0" Text="{Binding Message}" Foreground="Red"/>
-				  <GridView Name="splitListView" Grid.Row="1" ColumnNum="2" Items="{Binding Items}" Command="{Binding OnItemClick}">
+				  <GridView Name="splitListView" Grid.Row="1" ColumnNum="2" ItemsSource="{Binding Items}" Command="{Binding OnItemClick}">
 					<GridView.ItemTemplate>
 					  <DataTemplate>
 						<TextBlock Text="{Binding Content}" />
@@ -155,11 +153,11 @@
 			<TabItem Header="Label">
 				<StackPanel Orientation="Vertical">
 					<TextLabel Foreground="White" FontSize="18">
-						<Run Content="111" />
+						<TextRun Content="111" />
 						<LineBreak />
-						<Run>222</Run>
+						<TextRun>222</TextRun>
 						<LineBreak />
-						<Run Content="333" />
+						<TextRun Content="333" />
 					</TextLabel>
 					<TipLabel Content="123456" Padding="8" Background="Red" Foreground="White" />
 					<TipLabel Foreground="Red" Content="123456" Padding="8" Background="White" BorderBrush="Red" BorderThickness="1" />
@@ -175,16 +173,13 @@
 				<StackPanel Orientation="Vertical">
 					<TextBox Text="山川异域 不共戴天" />
 					<TextPresenter Text="山川异域 不共戴天" />
-					<EditTextView Name="etv" Text="山川异域 不共戴天" />
-					<TextView Name="tv" Text="山川异域 不共戴天" />
-					<Button Content="Show Content" Name="etvBtn" />
 				</StackPanel>
 			</TabItem>
 			<TabItem Header="CheckBoxList">
-				<CheckBoxList Items="{Binding Items}" />
+				<CheckBoxList ItemsSource="{Binding Items}" />
 			</TabItem>
 			<TabItem Header="RadioButtonList">
-				<RadioButtonList Items="{Binding Items}" />
+				<RadioButtonList ItemsSource="{Binding Items}" />
 			</TabItem>
 			<TabItem Header="Canvas Shape">
 				<Canvas>

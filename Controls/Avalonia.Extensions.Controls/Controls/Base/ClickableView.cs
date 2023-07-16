@@ -252,20 +252,20 @@ namespace Avalonia.Extensions.Controls
         {
             IsPressed = false;
         }
-        protected override void OnPropertyChanged<T>(AvaloniaPropertyChangedEventArgs<T> change)
+        protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs change)
         {
             base.OnPropertyChanged(change);
-            if (change.Property == IsPressedProperty)
-                UpdatePseudoClasses(change.NewValue.GetValueOrDefault<bool>());
+            if (change.Property == IsPressedProperty && change.NewValue is bool value)
+                UpdatePseudoClasses(value);
         }
         private void UpdatePseudoClasses(bool isPressed)
         {
             PseudoClasses.Set(":pressed", isPressed);
         }
-        protected override void UpdateDataValidation<T>(AvaloniaProperty<T> property, BindingValue<T> value)
+        protected override void UpdateDataValidation(AvaloniaProperty property, BindingValueType state, Exception error)
         {
-            base.UpdateDataValidation(property, value);
-            if (property == CommandProperty && value.Type == BindingValueType.BindingError && _commandCanExecute)
+            base.UpdateDataValidation(property, state, error);
+            if (property == CommandProperty && state == BindingValueType.BindingError && _commandCanExecute)
             {
                 _commandCanExecute = false;
                 UpdateIsEffectivelyEnabled();

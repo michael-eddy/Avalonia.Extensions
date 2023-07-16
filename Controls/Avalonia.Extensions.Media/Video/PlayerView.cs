@@ -61,7 +61,7 @@ namespace Avalonia.Extensions.Media
             get => GetValue(LogEnableProperty);
             set => SetValue(LogEnableProperty, value);
         }
-        public virtual IControl InitLatout()
+        public virtual Control InitLatout()
         {
             var root = new Panel
             {

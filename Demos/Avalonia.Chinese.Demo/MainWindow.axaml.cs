@@ -3,7 +3,7 @@ using Avalonia.Markup.Xaml;
 
 namespace Avalonia.Extensions.Chinese.Demo
 {
-    public class MainWindow : AeroWindow
+    public partial class MainWindow : AeroWindow
     {
         public MainWindow()
         {

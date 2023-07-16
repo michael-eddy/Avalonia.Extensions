@@ -45,7 +45,7 @@ namespace Avalonia.Extensions.Controls
             Height = 80;
             Width = 400;
             CanResize = false;
-            DefaultFontFamily = new FontFamily(FontManager.Current.DefaultFontFamilyName);
+            DefaultFontFamily = new FontFamily(FontManager.Current.DefaultFontFamily.Name);
             CreateControls();
         }
         public override void Show()

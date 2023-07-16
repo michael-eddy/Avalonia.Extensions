@@ -2,13 +2,13 @@
 
 namespace Avalonia.Extensions.Media
 {
-    public sealed class Run : AvaloniaObject
+    public sealed class TextRun : AvaloniaObject
     {
         /// <summary>
         /// Defines the <see cref="Content"/> property.
         /// </summary>
         public static readonly StyledProperty<string> ContentProperty =
-            AvaloniaProperty.Register<Run, string>(nameof(Content));
+            AvaloniaProperty.Register<TextRun, string>(nameof(Content));
         /// <summary>
         /// Gets or sets the content to display.
         /// </summary>

@@ -1,5 +1,4 @@
-﻿using Avalonia.Controls.Shapes;
-using Avalonia.Extensions.Styles;
+﻿using Avalonia.Extensions.Styles;
 using Avalonia.Logging;
 using Avalonia.Media;
 using Avalonia.Media.TextFormatting;
@@ -64,13 +63,13 @@ namespace Avalonia.Extensions.Controls
             AffectsRender<Text>(ContentProperty);
             AffectsRender<Text>(ForegroundProperty);
             SetValue(StrokeThicknessProperty, 2);
-            DefaultFontFamily = new FontFamily(FontManager.Current.DefaultFontFamilyName);
+            DefaultFontFamily = new FontFamily(FontManager.Current.DefaultFontFamily.Name);
             DefaultTypeface = SKTypeface.FromFamilyName(DefaultFontFamily.Name);
         }
         protected void InvalidateTextLayout() => _textLayout = null;
         internal virtual TextLayout CreateTextLayout(Size constraint, string? text)
         {
-            if (constraint == Size.Empty)
+            if (constraint == default)
                 return null;
             return new TextLayout(text ?? string.Empty, new Typeface(DefaultFontFamily), FontSize, Foreground);
         }
@@ -79,8 +78,8 @@ namespace Avalonia.Extensions.Controls
             context.FillRectangle(Brushes.Transparent, new Rect(Bounds.Size));
             if (TextLayout == null)
                 return;
-            using (context.PushPostTransform(Matrix.CreateTranslation(0, 0)))
-                TextLayout.Draw(context);
+            using (context.PushTransform(Matrix.CreateTranslation(0, 0)))
+                TextLayout.Draw(context, new Point(0, 0));
         }
         protected override Size MeasureOverride(Size availableSize)
         {
@@ -93,7 +92,10 @@ namespace Avalonia.Extensions.Controls
                 _constraint = availableSize;
                 InvalidateTextLayout();
             }
-            return (TextLayout?.Size ?? Size.Empty).Inflate(padding);
+            var bounds = new Size();
+            if (TextLayout != null)
+                bounds = new Size(TextLayout.Width, TextLayout.Height);
+            return bounds.Inflate(padding);
         }
         protected override Geometry CreateDefiningGeometry() => new RectangleGeometry(new Rect(MeasureStringSize).Deflate(StrokeThickness / 2));
         private Size MeasureStringSize

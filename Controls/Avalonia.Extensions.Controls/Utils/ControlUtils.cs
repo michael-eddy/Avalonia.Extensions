@@ -1,19 +1,15 @@
 ﻿using Avalonia.Controls;
-using Avalonia.Extensions.Model;
 using Avalonia.Extensions.Styles;
 using Avalonia.Logging;
 using Avalonia.Markup.Xaml;
 using Avalonia.Media;
 using Avalonia.Platform;
 using Avalonia.Styling;
-using Avalonia.VisualTree;
-using Avalonia.Win32;
-using PCLUntils;
 using PCLUntils.IEnumerables;
-using PCLUntils.Plantform;
 using SkiaSharp;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Text;
 
@@ -22,60 +18,13 @@ namespace Avalonia.Extensions.Controls
     public static class ControlUtils
     {
         public static bool IsSameValue(this AvaloniaPropertyChangedEventArgs args) => args?.OldValue == args?.NewValue;
-        public static IntPtr GetHwnd(this Window window)
-        {
-            IntPtr hwnd = IntPtr.Zero;
-            try
-            {
-                hwnd = ((WindowImpl)((TopLevel)window.GetVisualRoot())?.PlatformImpl)?.Handle?.Handle ?? IntPtr.Zero;
-            }
-            catch { }
-            return hwnd;
-        }
-        public static Size GetScreenSize(this Window window, ScreenType type)
-        {
-            Size rect = default;
-            try
-            {
-                switch (PlantformUntils.System)
-                {
-                    case Platforms.Windows:
-                        {
-                            var monitor = Base.Win32API.MonitorFromWindow(window.GetHwnd(), Base.Win32API.MONITOR_DEFAULT_TONEAREST);
-                            if (monitor != IntPtr.Zero)
-                            {
-                                var monitorInfo = new NativeMonitorInfo();
-                                Base.Win32API.GetMonitorInfo(monitor, monitorInfo);
-                                if (type == ScreenType.WorkArea)
-                                    rect = new Size(monitorInfo.Work.Right - monitorInfo.Work.Left, monitorInfo.Work.Bottom - monitorInfo.Work.Top);
-                                else
-                                    rect = new Size(monitorInfo.Monitor.Right - monitorInfo.Monitor.Left, monitorInfo.Monitor.Bottom - monitorInfo.Monitor.Top);
-                            }
-                            break;
-                        }
-                    default:
-                        {
-                            PixelRect pixelRect = default;
-                            if (type == ScreenType.WorkArea)
-                                pixelRect = window.Screens.Primary.WorkingArea;
-                            else
-                                pixelRect = window.Screens.Primary.Bounds;
-                            rect = new Size(pixelRect.Width, pixelRect.Height);
-                            break;
-                        }
-                }
-            }
-            catch { }
-            return rect;
-        }
         public static void ApplyTheme(this StyledElement element, Uri sourceUri)
         {
             if (!Core.Instance.InnerClasses.Contains(sourceUri))
                 return;
             try
             {
-                var assets = AvaloniaLocator.Current.GetService<IAssetLoader>();
-                using var stream = assets.Open(sourceUri);
+                using var stream = AssetLoader.Open(sourceUri);
                 var bytes = new byte[stream.Length];
                 stream.Read(bytes);
                 var xaml = Encoding.UTF8.GetString(bytes);
@@ -144,13 +93,13 @@ namespace Avalonia.Extensions.Controls
         public static void AddStyles(this IStyling styling, AvaloniaProperty avaloniaProperty) => styling.AddStyles(avaloniaProperty);
         public static void AddStyles(this IStyling styling, AvaloniaProperty avaloniaProperty, params object[] parms) => styling.AddStyles(avaloniaProperty, parms);
         public static void AddResource(this IStyling styling) => styling.AddResource();
-        public static Window GetWindow(this IControl control, out bool hasBase)
+        public static Window GetWindow(this Control control, out bool hasBase)
         {
             hasBase = false;
             Window window = null;
             try
             {
-                IControl parent = control.Parent;
+                var parent = control.Parent;
                 while (window == null)
                 {
                     if (parent.Parent is Window win)
