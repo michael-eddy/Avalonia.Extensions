@@ -48,7 +48,7 @@ namespace Avalonia.Extensions.Media
             videoView.MediaPlayer = mediaPlayer;
             Content = InitLatout();
         }
-        public IControl InitLatout()
+        public Control InitLatout()
         {
             Grid root = new Grid();
             try
@@ -83,8 +83,8 @@ namespace Avalonia.Extensions.Media
                     IsOpen = false,
                     PlacementTarget = menuBtn,
                     IsLightDismissEnabled = true,
-                    WindowManagerAddShadowHint = false,
-                    PlacementMode = PlacementMode.Pointer
+                    Placement = PlacementMode.Pointer,
+                    WindowManagerAddShadowHint = false
                 };
                 playListView = new ListView();
                 playListView.ItemTemplate = new FuncDataTemplate<MusicPlayItem>((x, _) =>

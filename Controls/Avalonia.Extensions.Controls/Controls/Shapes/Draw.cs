@@ -1,11 +1,9 @@
-﻿using Avalonia.Controls.Shapes;
-using Avalonia.Extensions.Media;
+﻿using Avalonia.Extensions.Media;
 using Avalonia.Extensions.Styles;
 using Avalonia.Media;
 using Avalonia.Media.Imaging;
 using Avalonia.Metadata;
 using Avalonia.Styling;
-using Avalonia.Visuals.Media.Imaging;
 using System;
 
 namespace Avalonia.Extensions.Controls
@@ -87,11 +85,9 @@ namespace Avalonia.Extensions.Controls
                 Size sourceSize = source.Size;
                 Vector scale = Stretch.CalculateScaling(Bounds.Size, sourceSize, StretchDirection);
                 Size scaledSize = sourceSize * scale;
-                Rect destRect = viewPort
-                    .CenterRect(new Rect(scaledSize)).Intersect(viewPort);
+                Rect destRect = viewPort.CenterRect(new Rect(scaledSize)).Intersect(viewPort);
                 Rect sourceRect = new Rect(sourceSize).CenterRect(new Rect(destRect.Size / scale));
-                var interpolationMode = RenderOptions.GetBitmapInterpolationMode(this);
-                context.DrawImage(source, sourceRect, destRect, interpolationMode);
+                context.DrawImage(source, sourceRect, destRect);
             }
         }
     }

@@ -1,5 +1,5 @@
 ﻿using Avalonia.Controls.ApplicationLifetimes;
-using Avalonia.Markup.Xaml.MarkupExtensions;
+using Avalonia.Markup.Xaml.Styling;
 using System;
 using System.Reflection;
 using System.Text;
@@ -48,7 +48,7 @@ namespace Avalonia.Extensions.Controls
         {
             try
             {
-                return new ResourceInclude { Source = uri };
+                return new ResourceInclude(uri) { Source = uri };
             }
             catch { }
             return default;

@@ -66,7 +66,7 @@ namespace Avalonia.Extensions.Media
         {
             try
             {
-                if (!((IVisual)this).IsAttachedToVisualTree)
+                if (!this.IsAttachedToVisualTree())
                     return;
                 if (_floatingContent == null && Content != null)
                 {
@@ -79,10 +79,10 @@ namespace Avalonia.Extensions.Media
                         Background = Brushes.Transparent,
                         SystemDecorations = SystemDecorations.None,
                         SizeToContent = SizeToContent.WidthAndHeight,
-                        TransparencyLevelHint = WindowTransparencyLevel.Transparent
+                        TransparencyLevelHint =new[] { WindowTransparencyLevel.Transparent }
                     };
-                    _floatingContent.PointerEnter += Controls_PointerEnter;
-                    _floatingContent.PointerLeave += Controls_PointerLeave;
+                    _floatingContent.PointerEntered += Controls_PointerEnter;
+                    _floatingContent.PointerExited += Controls_PointerLeave;
                     _disposables = new CompositeDisposable
                     {
                         _floatingContent.Bind(ContentControl.ContentProperty, this.GetObservable(ContentProperty)),
@@ -212,7 +212,7 @@ namespace Avalonia.Extensions.Media
             {
                 _isAttached = true;
                 InitializeNativeOverlay();
-                _isEffectivelyVisible = this.GetVisualAncestors().OfType<IControl>().Select(v => v.GetObservable(IsVisibleProperty))
+                _isEffectivelyVisible = this.GetVisualAncestors().OfType<Control>().Select(v => v.GetObservable(IsVisibleProperty))
                         .CombineLatest(v => !v.Any(o => !o)).DistinctUntilChanged().Subscribe(v => IsVisible = v);
             }
             catch (Exception ex)

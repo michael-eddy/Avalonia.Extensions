@@ -7,10 +7,10 @@
 		<ApplicationManifest>app.manifest</ApplicationManifest>
     </PropertyGroup>
     <ItemGroup>
-        <PackageReference Include="Avalonia" Version="0.10.21" />
-        <PackageReference Include="Avalonia.Desktop" Version="0.10.21" />
-        <PackageReference Include="Avalonia.ReactiveUI" Version="0.10.21" />
-        <PackageReference Include="Avalonia.Diagnostics" Version="0.10.21" />
+        <PackageReference Include="Avalonia" Version="11.0.0" />
+        <PackageReference Include="Avalonia.Desktop" Version="11.0.0" />
+        <PackageReference Include="Avalonia.ReactiveUI" Version="11.0.0" />
+        <PackageReference Include="Avalonia.Diagnostics" Version="11.0.0" />
 	</ItemGroup>
 	<ItemGroup>
 		<None Remove="200887808.xml" />

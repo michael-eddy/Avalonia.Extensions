@@ -7,7 +7,7 @@ using System;
 
 namespace Avalonia.Extensions.Controls
 {
-    public partial class ExpandableView : StackPanel, ITemplatedControl, IStyling
+    public partial class ExpandableView : StackPanel, IStyling
     {
         Type IStyleable.StyleKey => typeof(ExpandableView);
         public ExpandableView() : base()

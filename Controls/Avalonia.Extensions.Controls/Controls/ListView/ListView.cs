@@ -1,5 +1,4 @@
 ﻿using Avalonia.Controls;
-using Avalonia.Controls.Generators;
 using Avalonia.Extensions.Event;
 using Avalonia.Extensions.Styles;
 using Avalonia.Input;
@@ -7,6 +6,7 @@ using Avalonia.Interactivity;
 using Avalonia.Logging;
 using Avalonia.Styling;
 using Avalonia.Threading;
+using Avalonia.VisualTree;
 using PCLUntils.IEnumerables;
 using System;
 using System.Linq;
@@ -140,7 +140,7 @@ namespace Avalonia.Extensions.Controls
         {
             try
             {
-                if (scrollViewer.Content is IControl child && child.VisualChildren.FirstOrDefault() is VirtualizingStackPanel virtualizing)
+                if (scrollViewer.Content is Control child && child.GetVisualChildren().FirstOrDefault() is VirtualizingStackPanel virtualizing)
                 {
                     var isFirstItem = Items.IsFirst((virtualizing.Children.FirstOrDefault() as ListBoxItem)?.Content);
                     var isLastItem = Items.IsLast((virtualizing.Children.LastOrDefault() as ListBoxItem)?.Content);
@@ -217,8 +217,6 @@ namespace Avalonia.Extensions.Controls
             Defaultstyle = newView?.DefaultStyleKey;
         }
         public ListViewBase PreviousView { get; private set; }
-        protected override IItemContainerGenerator CreateItemContainerGenerator() =>
-            new ItemsGenerator(this, ContentControl.ContentProperty, ContentControl.ContentTemplateProperty);
         /// <summary>
         /// handle clild item click event,
         /// trigger the <seealso cref="Command"/> and <seealso cref="ItemClickEvent"/>

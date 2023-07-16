@@ -155,10 +155,10 @@ namespace Avalonia.Extensions.Controls
         {
             IsPressed = false;
         }
-        protected override void UpdateDataValidation<T>(AvaloniaProperty<T> property, BindingValue<T> value)
+        protected override void UpdateDataValidation(AvaloniaProperty property, BindingValueType state, Exception error)
         {
-            base.UpdateDataValidation(property, value);
-            if (value.Type == BindingValueType.BindingError)
+            base.UpdateDataValidation(property, state, error);
+            if (state == BindingValueType.BindingError)
                 UpdateIsEffectivelyEnabled();
         }
         /// <summary>

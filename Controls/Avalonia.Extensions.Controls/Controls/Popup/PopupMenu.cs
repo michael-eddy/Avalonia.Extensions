@@ -7,6 +7,7 @@ using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Metadata;
 using Avalonia.Threading;
+using Avalonia.VisualTree;
 using PCLUntils.Objects;
 using System;
 using System.Collections;
@@ -59,7 +60,6 @@ namespace Avalonia.Extensions.Controls
             ListBox = new ListView();
             ListBox.SizeChange += ListBox_SizeChange;
             SystemDecorations = SystemDecorations.None;
-            ListBox.VirtualizationMode = ItemVirtualizationMode.None;
             ItemsProperty.Changed.AddClassHandler<PopupMenu>(OnItemsChange);
             ItemTemplateProperty.Changed.AddClassHandler<PopupMenu>(OnItemTemplateChanged);
         }
@@ -73,11 +73,11 @@ namespace Avalonia.Extensions.Controls
         {
             if (e.NewValue is IList<string> arrayString)
             {
-                ListBox.Items = arrayString.Select(x => new BindingModel(x)).ToList();
+                ListBox.ItemsSource = arrayString.Select(x => new BindingModel(x)).ToList();
                 ItemTemplate = new FuncDataTemplate<BindingModel>((x, _) => new TextBlock { [!TextBlock.TextProperty] = new Binding("Content") });
             }
             else if (e.NewValue is IList array)
-                ListBox.Items = array;
+                ListBox.ItemsSource = array;
         }
         protected override void OnInitialized()
         {
@@ -102,15 +102,15 @@ namespace Avalonia.Extensions.Controls
                 }
             }
         }
-        protected override void OnPointerEnter(PointerEventArgs e)
+        protected override void OnPointerEntered(PointerEventArgs e)
         {
             _isFocus = true;
-            base.OnPointerEnter(e);
+            base.OnPointerEntered(e);
         }
-        protected override void OnPointerLeave(PointerEventArgs e)
+        protected override void OnPointerExited(PointerEventArgs e)
         {
             _isFocus = false;
-            base.OnPointerLeave(e);
+            base.OnPointerExited(e);
         }
         protected override void OnLostFocus(RoutedEventArgs e)
         {
@@ -123,15 +123,15 @@ namespace Avalonia.Extensions.Controls
                 {
                     _isFocus = false;
                     await Task.Delay(200);
-                    FocusManager.Instance.Focus(this);
+                    Focus();
                 }
             });
         }
-        public void Show(IControl control)
+        public void Show(Control control)
         {
             Dispatcher.UIThread.InvokeAsync(() =>
             {
-                if ((control.TransformedBounds as dynamic).Clip is Rect rect)
+                if ((control.GetTransformedBounds() as dynamic).Clip is Rect rect)
                 {
                     var window = control.GetWindow(out bool hasBase);
                     if (!hasBase)

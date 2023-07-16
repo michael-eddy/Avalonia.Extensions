@@ -51,8 +51,7 @@ namespace Avalonia.Extensions.Controls
                 var scaledSize = sourceSize * scale;
                 var destRect = viewPort.CenterRect(new Rect(scaledSize)).Intersect(viewPort);
                 var sourceRect = new Rect(sourceSize).CenterRect(new Rect(destRect.Size / scale));
-                var interpolationMode = RenderOptions.GetBitmapInterpolationMode(this);
-                context.DrawImage(temp, sourceRect, destRect, interpolationMode);
+                context.DrawImage(temp, sourceRect, destRect);
             }
         }
     }

@@ -23,13 +23,13 @@ namespace Avalonia.Extensions.Controls
         private void OnItemsChange(object sender, AvaloniaPropertyChangedEventArgs e)
         {
             if (repeater != null)
-                repeater.Items = _items;
+                repeater.ItemsSource = _items;
         }
         private void OrOrientationChange(object sender, AvaloniaPropertyChangedEventArgs e) => DrawLayout();
         protected override void OnInitialized()
         {
             base.OnInitialized();
-            repeater = new ItemsRepeater { Items = _items };
+            repeater = new ItemsRepeater { ItemsSource = _items };
             repeater.ItemTemplate = new FuncDataTemplate<GroupViewItem>((x, _) =>
             {
                 var control = new CheckBox

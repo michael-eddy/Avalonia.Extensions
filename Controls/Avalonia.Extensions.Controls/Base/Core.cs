@@ -4,7 +4,6 @@ using Avalonia.Markup.Xaml.Styling;
 using Avalonia.Media;
 using Avalonia.Platform;
 using Avalonia.Styling;
-using Avalonia.Themes.Fluent;
 using PCLUntils.Assemblly;
 using System;
 using System.Collections.Generic;
@@ -29,9 +28,9 @@ namespace Avalonia.Extensions.Controls
             InnerClasses = new List<Uri>();
             Transparent = new SolidColorBrush(Colors.Transparent);
         }
-        public FluentThemeMode GetThemeType()
+        public ThemeMode GetThemeType()
         {
-            FluentThemeMode mode = FluentThemeMode.Light;
+            ThemeMode mode = ThemeMode.Light;
             try
             {
                 var styles = Application.Current.Styles[0]?.Children.GetPrivateField<AvaloniaList<IStyle>>("_styles");
@@ -41,7 +40,7 @@ namespace Avalonia.Extensions.Controls
                     {
                         if (include.Source.ToString().Contains("basedark", StringComparison.CurrentCultureIgnoreCase))
                         {
-                            mode = FluentThemeMode.Dark;
+                            mode = ThemeMode.Dark;
                             break;
                         }
                     }

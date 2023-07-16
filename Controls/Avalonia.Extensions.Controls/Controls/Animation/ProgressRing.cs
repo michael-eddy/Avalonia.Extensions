@@ -23,8 +23,12 @@ namespace Avalonia.Extensions.Controls
             get => GetValue(IsActiveProperty);
             set => SetValue(IsActiveProperty, value);
         }
-        public static readonly StyledProperty<bool> IsActiveProperty = AvaloniaProperty.Register<ProgressRing, bool>(nameof(IsActive), true, notifying: OnIsActiveChanged);
-        private static void OnIsActiveChanged(IAvaloniaObject obj, bool arg2) => ((ProgressRing)obj)?.UpdateVisualStates();
+        public static readonly StyledProperty<bool> IsActiveProperty = AvaloniaProperty.Register<ProgressRing, bool>(nameof(IsActive), true, coerce: OnIsActiveChanged);
+        private static bool OnIsActiveChanged(AvaloniaObject obj, bool arg2)
+        {
+            ((ProgressRing)obj)?.UpdateVisualStates();
+            return arg2;
+        }
         public static readonly DirectProperty<ProgressRing, double> MaxSideLengthProperty =
             AvaloniaProperty.RegisterDirect<ProgressRing, double>(nameof(MaxSideLength), o => o.MaxSideLength);
         public double MaxSideLength

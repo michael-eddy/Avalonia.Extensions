@@ -4,6 +4,6 @@ namespace Avalonia.Extensions.Media
 {
     public interface IVideoView : IPlayerView
     {
-        IControl InitLatout();
+        Control InitLatout();
     }
 }

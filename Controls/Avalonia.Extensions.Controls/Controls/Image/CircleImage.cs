@@ -8,7 +8,6 @@ using Avalonia.Media;
 using Avalonia.Media.Imaging;
 using Avalonia.Metadata;
 using Avalonia.Styling;
-using Avalonia.Visuals.Media.Imaging;
 using System;
 
 namespace Avalonia.Extensions.Controls
