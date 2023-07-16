@@ -10,7 +10,7 @@ using System.Linq;
 
 namespace Avalonia.Extensions.Controls
 {
-    public sealed class FontManagerImpl : IFontManagerImpl
+    internal sealed class FontManagerImpl : IFontManagerImpl
     {
         private readonly string _defaultFamilyName;
         private readonly Typeface[] _customTypefaces;

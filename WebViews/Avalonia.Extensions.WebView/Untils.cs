@@ -9,7 +9,7 @@ namespace Avalonia.Extensions
     {
         public static TabControl FindTabControl(this Control tab)
         {
-            IControl control = tab;
+            StyledElement control = tab;
             while (control != null)
             {
                 if (control is TabControl tabControl)

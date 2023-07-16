@@ -1,5 +1,4 @@
 using Avalonia.Controls.ApplicationLifetimes;
-using Avalonia.Extensions.Controls;
 using Avalonia.Markup.Xaml;
 using Avalonia.Media;
 using ReactiveUI;
@@ -8,7 +7,7 @@ using System.Reactive;
 
 namespace Avalonia.Controls.Demo
 {
-    public class App : ApplicationBase
+    public class App : Application
     {
         public override void Initialize()
         {
@@ -19,9 +18,7 @@ namespace Avalonia.Controls.Demo
         {
             if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
                 desktop.MainWindow = new MainWindow();
-            Console.WriteLine(FontManager.Current.DefaultFontFamilyName);
-            Console.WriteLine(FontManager.Current.PlatformImpl.GetDefaultFontFamilyName());
-            Console.WriteLine(string.Join(';', FontManager.Current.PlatformImpl.GetInstalledFontFamilyNames()));
+            Console.WriteLine(FontManager.Current.DefaultFontFamily.Name);
             base.OnFrameworkInitializationCompleted();
         }
         private void ExceptionHandler(Exception exception)
