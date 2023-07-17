@@ -21,7 +21,7 @@
   > 继承于Ellipse，显示园形图片。等同于UWP的PersonPicture
 
 - [x] ExpandableView
-  > A view that shows items in a vertically scrolling two-level list
+  > 垂直滚动的两层显示/隐藏控件
   > PrimaryView
   > > 标头，选择后可显示或者隐藏SecondView
   > SecondView
@@ -40,32 +40,32 @@
   > 消息窗口
 
 - [x] NotifyWindow
-  > Notify message window，the transition animation can be displayed according to the preset and automatically closed after a certain period of time
+  > 信息通知窗口，过渡动画可根据配置显示，一定时间后自动关闭
 
 - [x] PopupMenu
-  > inherit from Window，close after selecting item and trigger the event
+  > 继承于Window，选择项之后并触发事件
 
 - [x] HorizontalItemsRepeater
-  > inherit from ItemsRepeater，Horizontal layout with Clickable Item
+  > 继承于ItemsRepeater，水平方向布局附带点击事件
 
 - [x] VerticalItemsRepeater
-  > inherit from ItemsRepeater，Vertical layout with Clickable Item
+  > 继承于ItemsRepeater，垂直方向布局附带点击事件
 
 - [x] ItemsRepeaterContent
-  > Item for ItemsRepeater with Clickable Event
+  > ItemsRepeater的子项附带点击事件
 
 - [x] ScrollView
-  > inherit from ScrollViewer，extend sliding to the bottom， sliding to the top event
+  > 继承于ScrollViewer，扩展滚动到结尾/顶部事件
 
 - [x] SeekSlider
   > 继承于`Slider`，附带值变更事件
 
 - [x] PopupToast
-  > inherit from Window，show message dialog and automatically shut down after a certain period of time
-  > > diff with `PopupDialog`， it's popuping in workarea who popuping in control/panel
+  > 继承于Window，显示消息对话框并在一段时间后自动关闭
+  > > 不同于`PopupDialog`， 它在工作区中内控件/面板中显示
 
 - [x] TextLabel
-  > Run标签进行绑定字符，类同WPF/UWP的`TextBlock`，with `LineBreak` can wrap the text
+  > Run标签进行绑定字符，类同WPF/UWP的`TextBlock`，`LineBreak` 可以进行手动换行
 
 - [x] HyperlinkButton
   > 按钮风格类同于UWP的HyperlinkButton
@@ -88,10 +88,10 @@
 - [x] TipLabel
   > 拥有边框的`TextBlock`
 
-- [x] TextView  (below v2.0.0)
+- [x] TextView  (v2.0.0以前)
   > 同等与`TextPresenter`，但由TextLayout进行渲染，所支持你项目中的自定义字体
 
-- [x] EditTextView  (below v2.0.0)
+- [x] EditTextView  (v2.0.0以前)
   > 同等与`TexBox`，但由TextLayout进行渲染，所支持你项目中的自定义字体
 
 - [x] PathIcon

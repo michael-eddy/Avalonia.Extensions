@@ -58,21 +58,6 @@ public static AppBuilder BuildAvaloniaApp()
 
 ---
 
-## ABOUT FOLDER
-
-> Base
-> > Basic, public library
-
-> Controls
-> > Control extension implementation
-
-> Utils
-> > Extension Method Library
-
----
-
-## TODO LIST
-
 > # CONTROLS
 
 - [x] ProgressRing
