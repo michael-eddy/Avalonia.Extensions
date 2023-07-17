@@ -1,11 +1,14 @@
 # Controls Extensions for Avalonia
 
+# WARNING
+**<span style="color:red;">_Avalonia 11 or above,you should use v2.0.0 or above!!!_</span>**
+
 > # LANGUAGE
 
 - [x] Chinese Input Support
 _Need to reference [Dove.Avalonia.Controls.Extensions.ChineseInputSupport](https://www.nuget.org/packages/Dove.Avalonia.Controls.Extensions.ChineseInputSupoort/) package_
 
-To enable extension the `UseChineseInputSupport` method call should be present in your Program.cs file,you defined which controls(default is TextBox and TextPresenter):
+To enable extension the `UseChineseInputSupport` method call should be present in your Program.cs file:
 ```csharp
 public static AppBuilder BuildAvaloniaApp()
     => AppBuilder.Configure<App>()
@@ -13,4 +16,3 @@ public static AppBuilder BuildAvaloniaApp()
         .UseChineseInputSupport()
         .LogToTrace();
 ```
-If you need to use a global font in the App, you need to inherit `ApplicationBase` in the `App.xaml.cs` class

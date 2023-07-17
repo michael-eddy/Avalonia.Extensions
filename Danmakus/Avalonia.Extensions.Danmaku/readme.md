@@ -1,7 +1,9 @@
 # Controls Extensions for Avalonia
 
-## INPORTANT
+# WARNING
+**<span style="color:red;">_Avalonia 11 or above,you should use v2.0.0 or above!!!_</span>**
 
+## INPORTANT
 To enable extension the `UseDoveExtensions` method call should be present in your Program.cs file:
 
 ```csharp

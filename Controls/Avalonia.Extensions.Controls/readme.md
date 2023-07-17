@@ -1,5 +1,8 @@
 # Controls Extensions for Avalonia
 
+# WARNING
+**<span style="color:red;">_Avalonia 11 or above,you should use v2.0.0 or above!!!_</span>**
+
 > # CONTROLS
 
 - [x] ProgressRing
@@ -85,10 +88,10 @@
 - [x] TipLabel
   > the `TextBlock` with border control
 
-- [x] TextView
+- [x] TextView  (below v2.0.0)
   > the control like `TextPresenter`,but it's draw by the textLayout,so supoort custom font in your project
 
-- [x] EditTextView
+- [x] EditTextView  (below v2.0.0)
   > the control like `TexBox`,but it's draw by the textLayout,so supoort custom font in your project
 
 - [x] PathIcon

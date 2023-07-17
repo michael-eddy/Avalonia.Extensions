@@ -1,6 +1,8 @@
 # Controls Extensions for Avalonia
 
 # WARNING
+**<span style="color:red;">_Avalonia 11 or above,you should use v2.0.0 or above!!!_</span>**
+
 _IN [Avalonia 0.10.14](https://www.nuget.org/packages/Avalonia/),the NativeControlHost NEED app.manifest for Windows.IF NOT,THAT'S MAKE THE `PlayerView` CANNOT WORKS NORMALLY!_
 ```xml
 <?xml version="1.0" encoding="utf-8"?>

@@ -184,10 +184,10 @@ public static AppBuilder BuildAvaloniaApp()
 
 > # EXTEND
 
-- [x] GetHwnd (below v2.0.0)
+- [x] GetHwnd (except v2.0.0)
   > get control or window hwnd object
 
-- [x] GetScreenSize (below v2.0.0)
+- [x] GetScreenSize (except v2.0.0)
   > get screen size object(workarea or monitor)
 
 - [x] ActualWidth
