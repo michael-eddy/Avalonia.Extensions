@@ -1,4 +1,4 @@
-﻿# Avalonia媒体控件扩展库
+# Avalonia媒体控件扩展库
 
 # 注意
 **<span style="color:red;">_Avalonia 11或以上版本需要安装v2.0.0或以上版本！！！_</span>**

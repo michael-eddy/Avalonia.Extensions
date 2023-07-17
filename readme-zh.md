@@ -39,7 +39,7 @@ _在[Avalonia 0.10.14](https://www.nuget.org/packages/Avalonia/)或以上版本�
 
   [关于中文扩展](#language)
 
-## DEMO screenshot
+## 演示截图
 ![图片alt](/ss.png "截图")
 ---
 
@@ -281,7 +281,7 @@ public static AppBuilder BuildAvaloniaApp()
 > # 语言
 
 - [x] 中文输入/显示支持
-_需要引用包[Dove.Avalonia.Controls.Extensions.ChineseInputSupport](https://www.nuget.org/packages/Dove.Avalonia.Controls.Extensions.ChineseInputSupoort/) _
+_需要引用包[Dove.Avalonia.Controls.Extensions.ChineseInputSupport](https://www.nuget.org/packages/Dove.Avalonia.Controls.Extensions.ChineseInputSupoort/)_
 
 启用扩展需要调用`UseChineseInputSupport`方法在Program.cs文件中:
 ```csharp

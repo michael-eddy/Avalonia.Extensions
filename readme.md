@@ -1,5 +1,8 @@
 # Controls Extensions for Avalonia
 
+# 中文描述
+[点击这里](/readme-zh.md)
+
 # WARNING
 **<span style="color:red;">_Avalonia 11 or above,you should use v2.0.0 or above!!!_</span>**
 
