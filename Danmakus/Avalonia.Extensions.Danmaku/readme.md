@@ -1,7 +1,12 @@
 # Controls Extensions for Avalonia
 
-## INPORTANT
+# 中文描述
+[点击这里](/readme-zh.md)
 
+# WARNING
+**<span style="color:red;">_Avalonia 11 or above,you should use v2.0.0 or above!!!_</span>**
+
+## INPORTANT
 To enable extension the `UseDoveExtensions` method call should be present in your Program.cs file:
 
 ```csharp

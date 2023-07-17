@@ -1,5 +1,8 @@
 # Controls Extensions for Avalonia
 
+# 中文描述
+[点击这里](/readme-zh.md)
+
 # WARNING
 **<span style="color:red;">_Avalonia 11 or above,you should use v2.0.0 or above!!!_</span>**
 
@@ -57,21 +60,6 @@ public static AppBuilder BuildAvaloniaApp()
 ```
 
 ---
-
-## ABOUT FOLDER
-
-> Base
-> > Basic, public library
-
-> Controls
-> > Control extension implementation
-
-> Utils
-> > Extension Method Library
-
----
-
-## TODO LIST
 
 > # CONTROLS
 
@@ -184,10 +172,10 @@ public static AppBuilder BuildAvaloniaApp()
 
 > # EXTEND
 
-- [x] GetHwnd (below v2.0.0)
+- [x] GetHwnd (except v2.0.0)
   > get control or window hwnd object
 
-- [x] GetScreenSize (below v2.0.0)
+- [x] GetScreenSize (except v2.0.0)
   > get screen size object(workarea or monitor)
 
 - [x] ActualWidth
