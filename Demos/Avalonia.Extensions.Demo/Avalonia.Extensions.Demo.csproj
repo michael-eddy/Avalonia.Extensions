@@ -8,13 +8,13 @@
         <ApplicationManifest>app.manifest</ApplicationManifest>
     </PropertyGroup>
     <ItemGroup>
-        <PackageReference Include="Avalonia" Version="11.0.2" />
-        <PackageReference Include="Avalonia.Desktop" Version="11.0.2" />
-        <PackageReference Include="Avalonia.ReactiveUI" Version="11.0.2" />
-        <PackageReference Include="Avalonia.Diagnostics" Version="11.0.2" />
+        <PackageReference Include="Avalonia" Version="11.0.4" />
+        <PackageReference Include="Avalonia.Desktop" Version="11.0.4" />
+        <PackageReference Include="Avalonia.ReactiveUI" Version="11.0.4" />
+        <PackageReference Include="Avalonia.Diagnostics" Version="11.0.4" />
         <PackageReference Include="Dove.FFmpeg.Windows" Version="1.1.0" />
-		<PackageReference Include="Avalonia.Themes.Fluent" Version="11.0.2" />
-		<PackageReference Include="Avalonia.Themes.Simple" Version="11.0.2" />
+		<PackageReference Include="Avalonia.Themes.Fluent" Version="11.0.4" />
+		<PackageReference Include="Avalonia.Themes.Simple" Version="11.0.4" />
 		<PackageReference Include="VideoLAN.LibVLC.Windows" Version="3.0.18" />
 	</ItemGroup>
 	<ItemGroup>

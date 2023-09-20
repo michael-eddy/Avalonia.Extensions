@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <Version>2.0.1</Version>
+        <Version>2.0.2</Version>
         <Authors>michael_eddy</Authors>
         <LangVersion>latest</LangVersion>
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
@@ -19,13 +19,13 @@
         <None Include="..\..\.editorconfig" Link=".editorconfig" />
     </ItemGroup>
     <ItemGroup>
-        <PackageReference Include="PCLUntils" Version="1.0.8" />
-        <PackageReference Include="Avalonia" Version="11.0.2" />
-        <PackageReference Include="SkiaSharp" Version="2.88.3" />
+        <PackageReference Include="PCLUntils" Version="1.0.9" />
+        <PackageReference Include="Avalonia" Version="11.0.4" />
+        <PackageReference Include="SkiaSharp" Version="2.88.5" />
 		<PackageReference Include="System.Reactive" Version="6.0.0" />
 		<PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
-		<PackageReference Include="Avalonia.Win32" Version="11.0.2" />
-		<PackageReference Include="Avalonia.Markup.Xaml.Loader" Version="11.0.2" />
-		<PackageReference Include="Avalonia.Controls.ItemsRepeater" Version="11.0.2" />
+		<PackageReference Include="Avalonia.Win32" Version="11.0.4" />
+		<PackageReference Include="Avalonia.Markup.Xaml.Loader" Version="11.0.4" />
+		<PackageReference Include="Avalonia.Controls.ItemsRepeater" Version="11.0.4" />
     </ItemGroup>
 </Project>
