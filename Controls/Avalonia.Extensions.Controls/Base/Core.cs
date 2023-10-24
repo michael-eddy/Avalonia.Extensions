@@ -94,7 +94,7 @@ namespace Avalonia.Extensions.Controls
             try
             {
                 InnerClasses.Clear();
-                HttpClient.Dispose();
+                HttpClient?.Dispose();
                 InnerClasses = null;
             }
             catch { }
