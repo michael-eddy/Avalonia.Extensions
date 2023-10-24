@@ -92,6 +92,10 @@ namespace Avalonia.Extensions.Controls
             ChildVerticalContentAlignmentProperty.Changed.AddClassHandler<GridView>(OnChildVerticalContentAlignmentChange);
             ChildHorizontalContentAlignmentProperty.Changed.AddClassHandler<GridView>(OnChildHorizontalContentAlignmentChange);
         }
+        protected override Control CreateContainerForItemOverride(object item, int index, object recycleKey)
+        {
+            return new GridViewItem();
+        }
         private void OnColumnNumChanged(object sender, AvaloniaPropertyChangedEventArgs e)
         {
             if (!e.IsSameValue())

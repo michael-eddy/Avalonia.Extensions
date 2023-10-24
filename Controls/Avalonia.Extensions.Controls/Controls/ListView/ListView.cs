@@ -130,6 +130,10 @@ namespace Avalonia.Extensions.Controls
             ScrollProperty.Changed.AddClassHandler<ListView>(OnScrollChange);
             BoundsProperty.Changed.AddClassHandler<ListView>(OnBoundsChange);
         }
+        protected override Control CreateContainerForItemOverride(object item, int index, object recycleKey)
+        {
+            return new ListViewItem();
+        }
         protected virtual void OnScrollChange(object sender, AvaloniaPropertyChangedEventArgs e)
         {
             if (!e.IsSameValue() && e.NewValue is ScrollViewer scrollViewer)
