@@ -15,7 +15,7 @@
         <PackageReference Include="Dove.FFmpeg.Windows" Version="1.1.0" />
 		<PackageReference Include="Avalonia.Themes.Fluent" Version="11.0.5" />
 		<PackageReference Include="Avalonia.Themes.Simple" Version="11.0.5" />
-		<PackageReference Include="VideoLAN.LibVLC.Windows" Version="3.0.18" />
+		<PackageReference Include="VideoLAN.LibVLC.Windows" Version="3.0.20" />
 	</ItemGroup>
 	<ItemGroup>
 		<AvaloniaResource Include="Assets\**" />

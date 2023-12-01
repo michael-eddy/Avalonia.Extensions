@@ -14,7 +14,7 @@
   <ItemGroup>
 	  <None Include="..\..\.editorconfig" Link=".editorconfig" />
 	  <PackageReference Include="Downloader" Version="3.0.6" />
-	  <PackageReference Include="SharpCompress" Version="0.34.1" />
+	  <PackageReference Include="SharpCompress" Version="0.34.2" />
 	  <PackageReference Include="CefNet.Avalonia" Version="105.3.22248.142" />
 	  <!--<PackageReference Include="Dove.Avalonia.Controls.Extensions" Version="2.0.1" />-->
       <ProjectReference Include="..\..\Controls\Avalonia.Extensions.Controls\Avalonia.Extensions.Controls.csproj" />
