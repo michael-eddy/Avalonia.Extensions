@@ -1,9 +1,7 @@
 ﻿using Avalonia.Controls;
 using Avalonia.Controls.Metadata;
 using Avalonia.Data;
-using Avalonia.Extensions.Styles;
 using Avalonia.Input;
-using Avalonia.Styling;
 using Avalonia.VisualTree;
 using System;
 using System.Linq;
@@ -11,9 +9,9 @@ using System.Linq;
 namespace Avalonia.Extensions.Controls
 {
     [PseudoClasses(":pressed", ":selected")]
-    public class ListViewItem : ListBoxItem, IStyling
+    public class ListViewItem : ListBoxItem
     {
-        Type IStyleable.StyleKey => typeof(ListBoxItem);
+        protected override Type StyleKeyOverride => typeof(ListBoxItem);
         private ClickMode ClickMode
         {
             get

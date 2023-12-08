@@ -1,6 +1,5 @@
 ﻿using Avalonia.Controls;
 using Avalonia.Extensions.Model;
-using Avalonia.Extensions.Styles;
 using Avalonia.Logging;
 using Avalonia.Markup.Xaml;
 using Avalonia.Media;
@@ -142,9 +141,32 @@ namespace Avalonia.Extensions.Controls
                 }
             }
         }
-        public static void AddStyles(this IStyling styling, AvaloniaProperty avaloniaProperty) => styling.AddStyles(avaloniaProperty);
-        public static void AddStyles(this IStyling styling, AvaloniaProperty avaloniaProperty, params object[] parms) => styling.AddStyles(avaloniaProperty, parms);
-        public static void AddResource(this IStyling styling) => styling.AddResource();
+        public static void AddStyles(this StyledElement styling, AvaloniaProperty avaloniaProperty, params object[] parms)
+        {
+            try
+            {
+                if (styling is Control control)
+                {
+                    string typeName = control.GetType().Name;
+                    var sourceUri = new Uri($"avares://Avalonia.Extensions.Controls/Styles/Xaml/{typeName}.xml");
+                    if (!control.Resources.ContainsKey(typeName) && Core.Instance.InnerClasses.Contains(sourceUri))
+                    {
+                        using var stream = AssetLoader.Open(sourceUri);
+                        var bytes = new byte[stream.Length];
+                        stream.Read(bytes, 0, bytes.Length);
+                        string xaml = parms != null && parms.Length > 0 ? string.Format(Encoding.UTF8.GetString(bytes), parms)
+                            : Encoding.UTF8.GetString(bytes);
+                        var target = AvaloniaRuntimeXamlLoader.Parse(xaml);
+                        control.SetValue(avaloniaProperty, target);
+                        bytes = null;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(styling, ex.Message);
+            }
+        }
         public static Window GetWindow(this Control control, out bool hasBase)
         {
             hasBase = false;

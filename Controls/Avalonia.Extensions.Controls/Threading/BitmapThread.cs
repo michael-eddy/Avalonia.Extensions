@@ -3,13 +3,9 @@ using System;
 
 namespace Avalonia.Extensions.Threading
 {
-    internal sealed class BitmapThread
+    internal sealed class BitmapThread(IBitmapSource owner)
     {
-        private IBitmapSource Owner { get; }
-        public BitmapThread(IBitmapSource owner)
-        {
-            Owner = owner;
-        }
+        private IBitmapSource Owner { get; } = owner;
         public void Run(Uri uri)
         {
             Owner.ToStream(uri);

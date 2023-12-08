@@ -108,22 +108,6 @@
 					<ImageContentButton Content="234567890" ImageSource="https://i0.hdslb.com/bfs/live/c8e6d780a3182c37a96e79f4ed26fcb576f2520a.png" />
 				</StackPanel>
 			</TabItem>
-			<TabItem Header="ExpandableView">
-				<ExpandableView>
-					<ExpandableView.PrimaryView>
-						<ClickableView>
-							<ImageBox Width="64" Source="https://i0.hdslb.com/bfs/live/c8e6d780a3182c37a96e79f4ed26fcb576f2520a.png" />
-						</ClickableView>
-					</ExpandableView.PrimaryView>
-					<ExpandableView.SecondView>
-						<StackPanel Orientation="Vertical">
-							<Label FontSize="20">111111111</Label>
-							<Label FontSize="20">111111111</Label>
-							<Label FontSize="20">111111111</Label>
-						</StackPanel>
-					</ExpandableView.SecondView>
-				</ExpandableView>
-			</TabItem>
 			<TabItem Header="Scroll">
 				<StackPanel Orientation="Vertical">
 					<SeekSlider Minimum="0" Maximum="100" />
@@ -194,7 +178,23 @@
 					<SymbolIcon Glyph="&#xE700;" />
 				</StackPanel>
 			</TabItem>
-			<TabItem Header="PlayerView">
+			<TabItem Header="ExpandableView">
+				<ExpandableView>
+					<ExpandableView.PrimaryView>
+						<ClickableView>
+							<ImageBox Width="64" Source="https://i0.hdslb.com/bfs/live/c8e6d780a3182c37a96e79f4ed26fcb576f2520a.png" />
+						</ClickableView>
+					</ExpandableView.PrimaryView>
+					<ExpandableView.SecondView>
+						<StackPanel Orientation="Vertical">
+							<Label FontSize="20">111111111</Label>
+							<Label FontSize="20">111111111</Label>
+							<Label FontSize="20">111111111</Label>
+						</StackPanel>
+					</ExpandableView.SecondView>
+				</ExpandableView>
+			</TabItem>
+			<!-- <TabItem Header="PlayerView">
 				<PlayerView x:Name="playerView" />
 			</TabItem>
 			<TabItem Header="AudioControl">
@@ -203,7 +203,7 @@
 					<Button Command="{Binding OnAudioClick}">Open Music Player Window</Button>
 				</StackPanel>
 			</TabItem>
-			<!--<TabItem Header="WebView">
+			<TabItem Header="WebView">
 				<WebView Name="webView" />
 			</TabItem>-->
 		</TabControl>

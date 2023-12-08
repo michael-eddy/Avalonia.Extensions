@@ -1,17 +1,15 @@
 ﻿using Avalonia.Extensions.Media;
-using Avalonia.Extensions.Styles;
 using Avalonia.Media;
 using Avalonia.Media.Imaging;
 using Avalonia.Metadata;
-using Avalonia.Styling;
 using System;
 
 namespace Avalonia.Extensions.Controls
 {
-    public class Draw : Shape, IStyling
+    public class Draw : Shape
     {
         private Uri _source;
-        Type IStyleable.StyleKey => typeof(Shape);
+        protected override Type StyleKeyOverride => typeof(Shape);
         /// <summary>
         /// Defines the <see cref="Source"/> property.
         /// </summary>

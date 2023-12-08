@@ -1,6 +1,5 @@
 ﻿using Avalonia.Controls;
 using Avalonia.Controls.Metadata;
-using Avalonia.Extensions.Styles;
 using Avalonia.Input;
 using Avalonia.Layout;
 using Avalonia.Threading;
@@ -12,7 +11,7 @@ namespace Avalonia.Extensions.Controls
     /// it just a uwp like "GridViewItem"
     /// </summary>
     [PseudoClasses(":pressed", ":selected")]
-    public sealed class GridViewItem : ListViewItem, IStyling
+    public sealed class GridViewItem : ListViewItem
     {
         public GridViewItem() : base()
         {

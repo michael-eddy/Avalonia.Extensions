@@ -1,21 +1,19 @@
 ﻿using Avalonia.Controls.Shapes;
 using Avalonia.Extensions.Media;
-using Avalonia.Extensions.Styles;
 using Avalonia.Extensions.Threading;
 using Avalonia.Interactivity;
 using Avalonia.Logging;
 using Avalonia.Media;
 using Avalonia.Media.Imaging;
 using Avalonia.Metadata;
-using Avalonia.Styling;
 using System;
 
 namespace Avalonia.Extensions.Controls
 {
-    public sealed class CircleImage : Ellipse, IStyling, IBitmapSource
+    public sealed class CircleImage : Ellipse, IBitmapSource
     {
         private Uri _source;
-        Type IStyleable.StyleKey => typeof(CircleImage);
+        protected override Type StyleKeyOverride => typeof(CircleImage);
         private BitmapThread Task { get; }
         /// <summary>
         /// Defines the <see cref="Source"/> property.

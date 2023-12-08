@@ -1,6 +1,5 @@
 ﻿using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
-using Avalonia.Extensions.Styles;
 using Avalonia.Interactivity;
 using Avalonia.Layout;
 using PCLUntils.IEnumerables;
@@ -10,7 +9,7 @@ namespace Avalonia.Extensions.Controls
     /// <summary>
     /// the uwp like "GridView",you need to set "ColumnNum" for columns count
     /// </summary>
-    public class GridView : ListView, IStyling
+    public class GridView : ListView
     {
         /// <summary>
         /// Defines the <see cref="ColumnNum"/> property.

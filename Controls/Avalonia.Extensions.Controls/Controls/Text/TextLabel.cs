@@ -1,7 +1,6 @@
 ﻿using Avalonia.Collections;
 using Avalonia.Controls;
 using Avalonia.Extensions.Media;
-using Avalonia.Extensions.Styles;
 using Avalonia.Layout;
 using Avalonia.Logging;
 using Avalonia.LogicalTree;
@@ -18,7 +17,7 @@ using TextRun = Avalonia.Extensions.Media.TextRun;
 
 namespace Avalonia.Extensions.Controls
 {
-    public class TextLabel : Runs, IStyling
+    public class TextLabel : Runs
     {
         /// <summary>
         /// Defines the <see cref="Background"/> property.
@@ -85,8 +84,8 @@ namespace Avalonia.Extensions.Controls
         private string _text;
         private Size _constraint;
         private TextLayout _textLayout;
-        private readonly AvaloniaList<string> _contents = new AvaloniaList<string>();
-        Type IStyleable.StyleKey => typeof(TextBlock);
+        private readonly AvaloniaList<string> _contents = [];
+        protected override Type StyleKeyOverride => typeof(TextBlock);
         internal TextLayout TextLayout => _textLayout ??= CreateTextLayout(_constraint, _text);
         /// <summary>
         /// Gets or sets the padding to place around the <see cref="Children"/>.
@@ -218,7 +217,7 @@ namespace Avalonia.Extensions.Controls
         }
         public TextLabel()
         {
-            _items = new TextRuns();
+            _items = [];
             _text = string.Empty;
             Children.CollectionChanged += ChildrenChanged;
         }
@@ -226,7 +225,7 @@ namespace Avalonia.Extensions.Controls
         {
             try
             {
-                List<string> controls = new List<string>();
+                List<string> controls = [];
                 switch (e.Action)
                 {
                     case NotifyCollectionChangedAction.Add:

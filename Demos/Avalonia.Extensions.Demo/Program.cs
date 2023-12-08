@@ -1,5 +1,4 @@
 using Avalonia.Extensions.Controls;
-using Avalonia.Extensions.Media;
 using Avalonia.ReactiveUI;
 using ReactiveUI;
 using System;
@@ -18,8 +17,8 @@ namespace Avalonia.Controls.Demo
                     .UseDoveExtensions()
                     //.UseChineseInputSupport()
                     //.UseWebView(true)
-                    .UseVideoView()
-                    .UseAudioControl()
+                    //.UseVideoView()
+                    //.UseAudioControl()
             .StartWithClassicDesktopLifetime(args);
         }
     }

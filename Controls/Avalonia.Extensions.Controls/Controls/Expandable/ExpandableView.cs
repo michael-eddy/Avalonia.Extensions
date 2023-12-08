@@ -1,15 +1,13 @@
 ﻿using Avalonia.Controls;
-using Avalonia.Extensions.Styles;
 using Avalonia.Interactivity;
 using Avalonia.Layout;
-using Avalonia.Styling;
 using System;
 
 namespace Avalonia.Extensions.Controls
 {
-    public partial class ExpandableView : StackPanel, IStyling
+    public partial class ExpandableView : StackPanel
     {
-        Type IStyleable.StyleKey => typeof(ExpandableView);
+        protected override Type StyleKeyOverride => typeof(ExpandableView);
         public ExpandableView() : base()
         {
             Status = ExpandStatus.Collapsed;

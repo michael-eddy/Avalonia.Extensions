@@ -1,18 +1,16 @@
-﻿using Avalonia.Extensions.Styles;
-using Avalonia.Logging;
+﻿using Avalonia.Logging;
 using Avalonia.Media;
 using Avalonia.Media.TextFormatting;
 using Avalonia.Metadata;
-using Avalonia.Styling;
 using SkiaSharp;
 using System;
 using FontFamily = Avalonia.Media.FontFamily;
 
 namespace Avalonia.Extensions.Controls
 {
-    public class Text : Shape, IStyling
+    public class Text : Shape
     {
-        Type IStyleable.StyleKey => typeof(Shape);
+        protected override Type StyleKeyOverride => typeof(Shape);
         /// <summary>
         /// Defines the <see cref="Content"/> property
         /// </summary>
