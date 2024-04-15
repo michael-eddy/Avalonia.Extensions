@@ -8,13 +8,13 @@
         <ApplicationManifest>app.manifest</ApplicationManifest>
     </PropertyGroup>
     <ItemGroup>
-        <PackageReference Include="Avalonia" Version="11.0.6" />
-        <PackageReference Include="Avalonia.Desktop" Version="11.0.6" />
-        <PackageReference Include="Avalonia.ReactiveUI" Version="11.0.6" />
-        <PackageReference Include="Avalonia.Diagnostics" Version="11.0.6" />
+        <PackageReference Include="Avalonia" Version="11.0.10" />
+        <PackageReference Include="Avalonia.Desktop" Version="11.0.10" />
+        <PackageReference Include="Avalonia.ReactiveUI" Version="11.0.10" />
+        <PackageReference Include="Avalonia.Diagnostics" Version="11.0.10" />
         <PackageReference Include="Dove.FFmpeg.Windows" Version="1.1.0" />
-		<PackageReference Include="Avalonia.Themes.Fluent" Version="11.0.6" />
-		<PackageReference Include="Avalonia.Themes.Simple" Version="11.0.6" />
+		<PackageReference Include="Avalonia.Themes.Fluent" Version="11.0.10" />
+		<PackageReference Include="Avalonia.Themes.Simple" Version="11.0.10" />
 		<PackageReference Include="VideoLAN.LibVLC.Windows" Version="3.0.20" />
 	</ItemGroup>
 	<ItemGroup>
@@ -22,6 +22,5 @@
 		<None Include="..\..\.editorconfig" Link=".editorconfig" />
 		<ProjectReference Include="..\..\Controls\Avalonia.Extensions.Media\Avalonia.Extensions.Media.csproj" />
 		<ProjectReference Include="..\..\Controls\Avalonia.Extensions.Chinese\Avalonia.Extensions.Chinese.csproj" />
-		<ProjectReference Include="..\..\WebViews\Avalonia.Extensions.WebView\Avalonia.Extensions.WebView.csproj" />
     </ItemGroup>
 </Project>

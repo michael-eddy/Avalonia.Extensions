@@ -194,7 +194,7 @@
 					</ExpandableView.SecondView>
 				</ExpandableView>
 			</TabItem>
-			<!-- <TabItem Header="PlayerView">
+			<TabItem Header="PlayerView">
 				<PlayerView x:Name="playerView" />
 			</TabItem>
 			<TabItem Header="AudioControl">
@@ -203,9 +203,6 @@
 					<Button Command="{Binding OnAudioClick}">Open Music Player Window</Button>
 				</StackPanel>
 			</TabItem>
-			<TabItem Header="WebView">
-				<WebView Name="webView" />
-			</TabItem>-->
 		</TabControl>
 	</Panel>
 </AeroWindow>

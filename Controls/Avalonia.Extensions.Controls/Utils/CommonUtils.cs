@@ -69,13 +69,13 @@ namespace Avalonia.Extensions.Controls
                 return pixelPoint.X > point.X && pixelPoint.Y > point.Y;
         }
         /// <summary>
-        /// only target is Initialized
+        /// only target is after Initialized
         /// </summary>
         /// <param name="visual">target</param>
         /// <returns>size</returns>
         public static double ActualWidth(this Visual visual) => visual.Bounds.Width;
         /// <summary>
-        /// only target is Initialized
+        /// only target is after Initialized
         /// </summary>
         /// <param name="visual">target</param>
         /// <returns>size</returns>

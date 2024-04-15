@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-		<Version>2.0.0</Version>
+		<Version>2.0.1</Version>
 		<Authors>michael_eddy</Authors>
 		<LangVersion>latest</LangVersion>
         <TargetFramework>netstandard2.1</TargetFramework>
@@ -13,24 +13,7 @@
         <None Include="..\..\.editorconfig" Link=".editorconfig" />
     </ItemGroup>
     <ItemGroup>
-        <PackageReference Include="Avalonia" Version="11.0.6" />
-		<PackageReference Include="Avalonia.Skia" Version="11.0.6" />
+        <PackageReference Include="Avalonia" Version="11.0.10" />
         <PackageReference Include="CHSPinYinConv" Version="1.0.0" />
-    </ItemGroup>
-    <ItemGroup>
-      <None Update="readme-zh.md">
-        <Generator>TextTemplatingFileGenerator</Generator>
-        <LastGenOutput>readme-zh.cs</LastGenOutput>
-      </None>
-    </ItemGroup>
-    <ItemGroup>
-      <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
-    </ItemGroup>
-    <ItemGroup>
-      <Compile Update="readme-zh.cs">
-        <DesignTime>True</DesignTime>
-        <AutoGen>True</AutoGen>
-        <DependentUpon>readme-zh.md</DependentUpon>
-      </Compile>
     </ItemGroup>
 </Project>

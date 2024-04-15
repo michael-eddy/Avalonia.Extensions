@@ -1,4 +1,9 @@
-﻿using Avalonia.Collections;
+﻿using System;
+using System.Collections.Generic;
+using System.Collections.Specialized;
+using System.Linq;
+using System.Reactive.Linq;
+using Avalonia.Collections;
 using Avalonia.Controls;
 using Avalonia.Extensions.Media;
 using Avalonia.Layout;
@@ -8,11 +13,6 @@ using Avalonia.Media;
 using Avalonia.Media.TextFormatting;
 using Avalonia.Metadata;
 using Avalonia.Styling;
-using System;
-using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.Linq;
-using System.Reactive.Linq;
 using TextRun = Avalonia.Extensions.Media.TextRun;
 
 namespace Avalonia.Extensions.Controls
@@ -84,7 +84,7 @@ namespace Avalonia.Extensions.Controls
         private string _text;
         private Size _constraint;
         private TextLayout _textLayout;
-        private readonly AvaloniaList<string> _contents = [];
+        private readonly AvaloniaList<string> _contents = new AvaloniaList<string>();
         protected override Type StyleKeyOverride => typeof(TextBlock);
         internal TextLayout TextLayout => _textLayout ??= CreateTextLayout(_constraint, _text);
         /// <summary>
@@ -217,7 +217,7 @@ namespace Avalonia.Extensions.Controls
         }
         public TextLabel()
         {
-            _items = [];
+            _items = new TextRuns();
             _text = string.Empty;
             Children.CollectionChanged += ChildrenChanged;
         }
@@ -225,7 +225,7 @@ namespace Avalonia.Extensions.Controls
         {
             try
             {
-                List<string> controls = [];
+                List<string> controls = new List<string>();
                 switch (e.Action)
                 {
                     case NotifyCollectionChangedAction.Add:

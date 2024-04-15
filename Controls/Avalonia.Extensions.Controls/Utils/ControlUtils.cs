@@ -1,4 +1,9 @@
-﻿using Avalonia.Controls;
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics.Contracts;
+using System.Linq;
+using System.Text;
+using Avalonia.Controls;
 using Avalonia.Extensions.Model;
 using Avalonia.Logging;
 using Avalonia.Markup.Xaml;
@@ -11,11 +16,6 @@ using PCLUntils.Assemblly;
 using PCLUntils.IEnumerables;
 using PCLUntils.Plantform;
 using SkiaSharp;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics.Contracts;
-using System.Linq;
-using System.Text;
 
 namespace Avalonia.Extensions.Controls
 {
@@ -79,7 +79,7 @@ namespace Avalonia.Extensions.Controls
                 var bytes = new byte[stream.Length];
                 stream.Read(bytes);
                 var xaml = Encoding.UTF8.GetString(bytes);
-                var styles = AvaloniaRuntimeXamlLoader.Parse<Styling.Styles>(xaml);
+                var styles = AvaloniaRuntimeXamlLoader.Parse<Styles>(xaml);
                 element.UpdateStyles(styles);
                 bytes = null;
             }
@@ -88,7 +88,7 @@ namespace Avalonia.Extensions.Controls
                 Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(element, ex.Message);
             }
         }
-        internal static void UpdateStyles(this StyledElement element, Styling.Styles styles)
+        internal static void UpdateStyles(this StyledElement element, Styles styles)
         {
             if (styles != null && element != null)
             {
@@ -141,7 +141,7 @@ namespace Avalonia.Extensions.Controls
                 }
             }
         }
-        public static void AddStyles(this StyledElement styling, AvaloniaProperty avaloniaProperty, params object[] parms)
+        internal static void AddStyles(this StyledElement styling, AvaloniaProperty avaloniaProperty, params object[] parms)
         {
             try
             {

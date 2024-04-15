@@ -52,17 +52,16 @@ namespace Avalonia.Controls.Demo
             imgList.ItemsSource = Collection;
             scrollView.ScrollEnd += ScrollView_ScrollEnd;
             scrollView.ScrollTop += ScrollView_ScrollTop;
-            //playerView.Play("http://vfx.mtime.cn/Video/2019/03/18/mp4/190318231014076505.mp4");
-            //audio.Play("http://downsc.chinaz.net/Files/DownLoad/sound1/201906/11582.mp3");
-            //webView.Navigate("bing.com");
+            playerView.Play("http://vfx.mtime.cn/Video/2019/03/18/mp4/190318231014076505.mp4");
+            audio.Play("http://downsc.chinaz.net/Files/DownLoad/sound1/201906/11582.mp3");
         }
         private void ListView_ScrollTop(object? sender, RoutedEventArgs e)
         {
-            MessageBox.Show("ÌáÊ¾", "µ½¶¥ÁË");
+            MessageBox.Show("æç¤º", "åˆ°é¡¶äº†");
         }
         private void ListView_ScrollEnd(object? sender, RoutedEventArgs e)
         {
-            MessageBox.Show("ÌáÊ¾", "µ½µ×ÁË");
+            MessageBox.Show("æç¤º", "åˆ°åº•äº†");
         }
         private void BtnShow_Click(object? sender, RoutedEventArgs e)
         {
@@ -72,7 +71,7 @@ namespace Avalonia.Controls.Demo
                 {
                     case "btnShow":
                         {
-                            PopupMenu popupMenu = new PopupMenu{ Opacity = 0 };
+                            PopupMenu popupMenu = new PopupMenu { Opacity = 0 };
                             popupMenu.Items = new[] { "1234", "1234", "1234", "1234" };
                             popupMenu.ItemClick += PopupMenu_ItemClick;
                             popupMenu.Show(control);
@@ -80,7 +79,7 @@ namespace Avalonia.Controls.Demo
                         }
                     case "btnShow2":
                         {
-                            PopupMenu popupMenu = new PopupMenu{ Opacity = 0 };
+                            PopupMenu popupMenu = new PopupMenu { Opacity = 0 };
                             popupMenu.Items = new[] { new CustomBindingModel("1234"), new CustomBindingModel("1234"),
                                     new CustomBindingModel("1234"), new CustomBindingModel("1234") };
                             popupMenu.ItemTemplate = new FuncDataTemplate<CustomBindingModel>((x, _) => new TextBlock { [!TextBlock.TextProperty] = new Binding("Content") });
@@ -117,8 +116,8 @@ namespace Avalonia.Controls.Demo
         }
         private void OnNotifyPopupClick(object sender, RoutedEventArgs e)
         {
-            this.ShowToast("´ó´ó´ó´ó´ó´ó´ó´ó´ó´ó´ó´ó´ó´ó´ó´ó´ó´ó");
-            PopupToast.Show("´ó´ó´ó´ó´ó´ó´ó´ó´ó´ó´ó´ó´ó´ó´ó´ó´ó´ó");
+            this.ShowToast("å¤§å¤§å¤§å¤§å¤§å¤§å¤§å¤§å¤§å¤§å¤§å¤§å¤§å¤§å¤§å¤§å¤§å¤§");
+            PopupToast.Show("å¤§å¤§å¤§å¤§å¤§å¤§å¤§å¤§å¤§å¤§å¤§å¤§å¤§å¤§å¤§å¤§å¤§å¤§");
         }
         private void OnNotifyClick(object sender, RoutedEventArgs e)
         {
@@ -169,8 +168,8 @@ namespace Avalonia.Controls.Demo
                         break;
                     }
             }
-            NotifyWindow window = new NotifyWindow{ Opacity = 0 };
-            window.Content = new TextBlock { Text = "´ó´ó´ó´ó´ó´ó´ó´ó´ó´ó´ó´ó´ó´ó´ó´ó´ó´ó´ó´ó´ó´ó´ó´ó´ó´ó´ó´ó´ó´ó´ó´ó´ó´ó´ó´ó" };
+            NotifyWindow window = new NotifyWindow { Opacity = 0 };
+            window.Content = new TextBlock { Text = "å¤§å¤§å¤§å¤§å¤§å¤§å¤§å¤§å¤§å¤§å¤§å¤§å¤§å¤§å¤§å¤§å¤§å¤§å¤§å¤§å¤§å¤§å¤§å¤§å¤§å¤§å¤§å¤§å¤§å¤§å¤§å¤§å¤§å¤§å¤§å¤§" };
             var options = new NotifyOptions(position, new Size(160, 60), orientation);
             window.Show(options);
         }

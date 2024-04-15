@@ -7,7 +7,7 @@ namespace Avalonia.Extensions.Controls
 {
     public class IconSourceElement : IconElement
     {
-        public static readonly StyledProperty<IconSource?> IconSourceProperty =
+        protected static readonly StyledProperty<IconSource?> IconSourceProperty =
             AvaloniaProperty.Register<IconSourceElement, IconSource?>(nameof(IconSource));
         [Content]
         public IconSource? IconSource
@@ -22,7 +22,7 @@ namespace Avalonia.Extensions.Controls
     }
     public abstract class IconSource : AvaloniaObject
     {
-        public static StyledProperty<IBrush?> ForegroundProperty = TemplatedControl.ForegroundProperty.AddOwner<IconSource>();
+        protected static readonly StyledProperty<IBrush?> ForegroundProperty = TemplatedControl.ForegroundProperty.AddOwner<IconSource>();
         public IBrush? Foreground
         {
             get => GetValue(ForegroundProperty);
