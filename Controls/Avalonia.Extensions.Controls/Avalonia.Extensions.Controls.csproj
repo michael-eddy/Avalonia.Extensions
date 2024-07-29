@@ -20,13 +20,13 @@
     </ItemGroup>
     <ItemGroup>
         <PackageReference Include="PCLUntils" Version="1.0.9" />
-        <PackageReference Include="Avalonia" Version="11.0.10" />
+        <PackageReference Include="Avalonia" Version="11.1.1" />
         <PackageReference Include="SkiaSharp" Version="2.88.8" />
 		<PackageReference Include="System.Reactive" Version="6.0.0" />
 		<PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
-		<PackageReference Include="Avalonia.Win32" Version="11.0.10" />
+		<PackageReference Include="Avalonia.Win32" Version="11.1.1" />
 		<PackageReference Include="System.Drawing.Common" Version="8.0.4" />
-		<PackageReference Include="Avalonia.Markup.Xaml.Loader" Version="11.0.10" />
-		<PackageReference Include="Avalonia.Controls.ItemsRepeater" Version="11.0.10" />
+		<PackageReference Include="Avalonia.Markup.Xaml.Loader" Version="11.1.1" />
+		<PackageReference Include="Avalonia.Controls.ItemsRepeater" Version="11.1.1" />
     </ItemGroup>
 </Project>
