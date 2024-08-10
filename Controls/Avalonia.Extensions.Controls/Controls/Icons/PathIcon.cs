@@ -10,7 +10,7 @@ namespace Avalonia.Extensions.Controls.Icons
         {
             AffectsRender<PathIcon>(DataProperty);
         }
-        public static readonly StyledProperty<Geometry> DataProperty = Path.DataProperty.AddOwner<PathIcon>();
+        protected static readonly StyledProperty<Geometry> DataProperty = Path.DataProperty.AddOwner<PathIcon>();
         public Geometry Data
         {
             get => GetValue(DataProperty);
@@ -19,7 +19,7 @@ namespace Avalonia.Extensions.Controls.Icons
     }
     public class PathIconSource : IconSource
     {
-        public static readonly StyledProperty<Geometry> DataProperty = Path.DataProperty.AddOwner<PathIcon>();
+        protected static readonly StyledProperty<Geometry> DataProperty = Path.DataProperty.AddOwner<PathIcon>();
         public Geometry Data
         {
             get => GetValue(DataProperty);

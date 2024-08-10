@@ -2,7 +2,6 @@ using Avalonia.Controls.Templates;
 using Avalonia.Data;
 using Avalonia.Extensions.Controls;
 using Avalonia.Extensions.Event;
-using Avalonia.Extensions.Media;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
@@ -12,35 +11,28 @@ namespace Avalonia.Controls.Demo
 {
     public partial class MainWindow : AeroWindow
     {
-        private Button BtnStart { get; set; }
         private ObservableCollection<object> Collection { get; set; }
         public MainWindow()
         {
             AvaloniaXamlLoader.Load(this);
             InitializeComponent();
             Locate = true;
-            this.AttachDevTools();
-        }
-        protected override bool MoveDragEnable => true;
-        private void InitializeComponent()
-        {
             Width = 800;
             Height = 600;
             DataContext = new MainViewModel();
-            var paginationView = this.FindControl<PaginationView>("paginationView");
-            var imgList = this.FindControl<ListBox>("imgList");
-            var listView = this.FindControl<ListView>("listView");
+            this.AttachDevTools();
+            Loaded += OnLoaded;
+        }
+        protected override bool MoveDragEnable => true;
+        private void OnLoaded(object? sender, RoutedEventArgs e)
+        {
             listView.ScrollTop += ListView_ScrollTop;
             listView.ScrollEnd += ListView_ScrollEnd;
-            var splitListView = this.FindControl<GridView>("splitListView");
             splitListView.ScrollTop += ListView_ScrollTop;
             splitListView.ScrollEnd += ListView_ScrollEnd;
             splitListView.ItemClick += SplitListView_ItemRightClick;
-            BtnStart = this.FindControl<Button>("btnStart");
-            BtnStart.Click += BtnStart_Click;
-            var btnShow = this.FindControl<Button>("btnShow");
+            btnStart.Click += BtnStart_Click;
             btnShow.Click += BtnShow_Click;
-            var btnShow2 = this.FindControl<Button>("btnShow2");
             btnShow2.Click += BtnShow_Click;
             Collection = new ObservableCollection<object>
             {
@@ -58,23 +50,18 @@ namespace Avalonia.Controls.Demo
                 new { Url = "https://i0.hdslb.com/bfs/live/c8e6d780a3182c37a96e79f4ed26fcb576f2520a.png" }
             };
             imgList.ItemsSource = Collection;
-            var scrollView = this.FindControl<ScrollView>("scrollView");
             scrollView.ScrollEnd += ScrollView_ScrollEnd;
             scrollView.ScrollTop += ScrollView_ScrollTop;
-            var playerView = this.FindControl<PlayerView>("playerView");
             playerView.Play("http://vfx.mtime.cn/Video/2019/03/18/mp4/190318231014076505.mp4");
-            var audio = this.FindControl<AudioControl>("audio");
             audio.Play("http://downsc.chinaz.net/Files/DownLoad/sound1/201906/11582.mp3");
-            //var webView = this.FindControl<WebView>("webView");
-            //webView.Navigate("bing.com");
         }
         private void ListView_ScrollTop(object? sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Ã· æ", "µΩ∂•¡À");
+            MessageBox.Show("ÊèêÁ§∫", "Âà∞È°∂‰∫Ü");
         }
         private void ListView_ScrollEnd(object? sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Ã· æ", "µΩµ◊¡À");
+            MessageBox.Show("ÊèêÁ§∫", "Âà∞Â∫ï‰∫Ü");
         }
         private void BtnShow_Click(object? sender, RoutedEventArgs e)
         {
@@ -84,7 +71,7 @@ namespace Avalonia.Controls.Demo
                 {
                     case "btnShow":
                         {
-                            PopupMenu popupMenu = new PopupMenu{ Opacity = 0 };
+                            PopupMenu popupMenu = new PopupMenu { Opacity = 0 };
                             popupMenu.Items = new[] { "1234", "1234", "1234", "1234" };
                             popupMenu.ItemClick += PopupMenu_ItemClick;
                             popupMenu.Show(control);
@@ -92,7 +79,7 @@ namespace Avalonia.Controls.Demo
                         }
                     case "btnShow2":
                         {
-                            PopupMenu popupMenu = new PopupMenu{ Opacity = 0 };
+                            PopupMenu popupMenu = new PopupMenu { Opacity = 0 };
                             popupMenu.Items = new[] { new CustomBindingModel("1234"), new CustomBindingModel("1234"),
                                     new CustomBindingModel("1234"), new CustomBindingModel("1234") };
                             popupMenu.ItemTemplate = new FuncDataTemplate<CustomBindingModel>((x, _) => new TextBlock { [!TextBlock.TextProperty] = new Binding("Content") });
@@ -109,7 +96,6 @@ namespace Avalonia.Controls.Demo
         }
         private void BtnStart_Click(object? sender, RoutedEventArgs e)
         {
-            var progressRing = this.FindControl<ProgressRing>("progressRing");
             progressRing.IsActive = !progressRing.IsActive;
         }
         private void SplitListView_ItemRightClick(object? sender, ViewRoutedEventArgs e)
@@ -130,19 +116,18 @@ namespace Avalonia.Controls.Demo
         }
         private void OnNotifyPopupClick(object sender, RoutedEventArgs e)
         {
-            this.ShowToast("¥Û¥Û¥Û¥Û¥Û¥Û¥Û¥Û¥Û¥Û¥Û¥Û¥Û¥Û¥Û¥Û¥Û¥Û");
-            PopupToast.Show("¥Û¥Û¥Û¥Û¥Û¥Û¥Û¥Û¥Û¥Û¥Û¥Û¥Û¥Û¥Û¥Û¥Û¥Û");
+            this.ShowToast("Â§ßÂ§ßÂ§ßÂ§ßÂ§ßÂ§ßÂ§ßÂ§ßÂ§ßÂ§ßÂ§ßÂ§ßÂ§ßÂ§ßÂ§ßÂ§ßÂ§ßÂ§ß");
+            PopupToast.Show("Â§ßÂ§ßÂ§ßÂ§ßÂ§ßÂ§ßÂ§ßÂ§ßÂ§ßÂ§ßÂ§ßÂ§ßÂ§ßÂ§ßÂ§ßÂ§ßÂ§ßÂ§ß");
         }
         private void OnNotifyClick(object sender, RoutedEventArgs e)
         {
-            var text = ((Button)sender).CommandParameter.ToInt32();
+            var text = ((Button)sender).CommandParameter?.ToInt32();
             ShowPosition position = ShowPosition.BottomLeft;
             ScollOrientation orientation = ScollOrientation.Horizontal;
             switch (text)
             {
                 case 0:
                     {
-                        var notifyIcon = this.FindControl<NotifyIcon>("notifyIcon");
                         notifyIcon.Add();
                         break;
                     }
@@ -183,8 +168,8 @@ namespace Avalonia.Controls.Demo
                         break;
                     }
             }
-            NotifyWindow window = new NotifyWindow{ Opacity = 0 };
-            window.Content = new TextBlock { Text = "¥Û¥Û¥Û¥Û¥Û¥Û¥Û¥Û¥Û¥Û¥Û¥Û¥Û¥Û¥Û¥Û¥Û¥Û¥Û¥Û¥Û¥Û¥Û¥Û¥Û¥Û¥Û¥Û¥Û¥Û¥Û¥Û¥Û¥Û¥Û¥Û" };
+            NotifyWindow window = new NotifyWindow { Opacity = 0 };
+            window.Content = new TextBlock { Text = "Â§ßÂ§ßÂ§ßÂ§ßÂ§ßÂ§ßÂ§ßÂ§ßÂ§ßÂ§ßÂ§ßÂ§ßÂ§ßÂ§ßÂ§ßÂ§ßÂ§ßÂ§ßÂ§ßÂ§ßÂ§ßÂ§ßÂ§ßÂ§ßÂ§ßÂ§ßÂ§ßÂ§ßÂ§ßÂ§ßÂ§ßÂ§ßÂ§ßÂ§ßÂ§ßÂ§ß" };
             var options = new NotifyOptions(position, new Size(160, 60), orientation);
             window.Show(options);
         }

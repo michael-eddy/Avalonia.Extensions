@@ -1,10 +1,8 @@
 ﻿using Avalonia.Controls;
 using Avalonia.Extensions.Event;
-using Avalonia.Extensions.Styles;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Logging;
-using Avalonia.Styling;
 using Avalonia.Threading;
 using Avalonia.VisualTree;
 using PCLUntils.IEnumerables;
@@ -14,7 +12,7 @@ using System.Windows.Input;
 
 namespace Avalonia.Extensions.Controls
 {
-    public class ListView : ListBox, IStyling
+    public class ListView : ListBox
     {
         /// <summary>
         /// Defines the <see cref="ItemClick"/> property.
@@ -214,7 +212,7 @@ namespace Avalonia.Extensions.Controls
             }
         }
         public Type Defaultstyle { get; private set; }
-        Type IStyleable.StyleKey => typeof(ListBox);
+        protected override Type StyleKeyOverride => typeof(ListBox);
         private void ApplyNewView()
         {
             ListViewBase newView = View;

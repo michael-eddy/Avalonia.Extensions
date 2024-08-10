@@ -1,17 +1,15 @@
 ﻿using Avalonia.Controls;
 using Avalonia.Layout;
-using Avalonia.Extensions.Styles;
 using Avalonia.Metadata;
-using Avalonia.Styling;
 using System;
 
 namespace Avalonia.Extensions.Controls
 {
-    public class ImageContentButton : Button, IStyling
+    public class ImageContentButton : Button
     {
         private TextBlock text;
         private ImageBox image;
-        Type IStyleable.StyleKey => typeof(Button);
+        protected override Type StyleKeyOverride => typeof(Button);
         public ImageContentButton() : base()
         {
             Init();

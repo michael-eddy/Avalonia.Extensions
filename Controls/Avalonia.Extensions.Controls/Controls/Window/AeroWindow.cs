@@ -1,18 +1,16 @@
 ﻿using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
-using Avalonia.Extensions.Styles;
 using Avalonia.Input;
-using Avalonia.Styling;
 using PCLUntils;
 using PCLUntils.Plantform;
 using System;
 
 namespace Avalonia.Extensions.Controls
 {
-    public class AeroWindow : WindowBase, IStyling
+    public class AeroWindow : WindowBase
     {
         private double moveWidth = 0;
-        Type IStyleable.StyleKey => typeof(Window);
+        protected override Type StyleKeyOverride => typeof(Window);
         static AeroWindow()
         {
             BoundsProperty.Changed.AddClassHandler<AeroWindow>(OnBoundsChange);

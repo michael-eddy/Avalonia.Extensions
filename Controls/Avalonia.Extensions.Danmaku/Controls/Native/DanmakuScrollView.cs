@@ -1,7 +1,6 @@
 ﻿using Avalonia.Animation;
 using Avalonia.Controls;
 using Avalonia.Extensions.Controls;
-using Avalonia.Extensions.Styles;
 using Avalonia.Styling;
 using SkiaSharp;
 using System;
@@ -9,10 +8,10 @@ using System.Threading.Tasks;
 
 namespace Avalonia.Extensions.Danmaku
 {
-    public class DanmakuScrollView : TextBlock, IStyling
+    public class DanmakuScrollView : TextBlock
     {
         private Task animationRun;
-        Type IStyleable.StyleKey => typeof(TextBlock);
+        protected override Type StyleKeyOverride => typeof(TextBlock);
         private readonly Animation.Animation animation;
         public DanmakuScrollView()
         {

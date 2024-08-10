@@ -1,15 +1,13 @@
 ﻿using Avalonia.Controls;
 using Avalonia.Extensions.Controls;
-using Avalonia.Extensions.Styles;
-using Avalonia.Styling;
 using SkiaSharp;
 using System;
 
 namespace Avalonia.Extensions.Danmaku
 {
-    public class DanmakuTipsView : TextBlock, IStyling
+    public class DanmakuTipsView : TextBlock
     {
-        Type IStyleable.StyleKey => typeof(TextBlock);
+        protected override Type StyleKeyOverride => typeof(TextBlock);
         internal float startCursor { get; private set; } = 0;
         public void SetData(DanmakuNativeView parent, DanmakuModel model)
         {

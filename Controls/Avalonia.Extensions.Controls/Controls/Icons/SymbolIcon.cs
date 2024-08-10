@@ -6,7 +6,7 @@ namespace Avalonia.Extensions.Controls
 {
     public class SymbolIcon : IconElement
     {
-        public static readonly StyledProperty<string> GlyphProperty =
+        protected static readonly StyledProperty<string> GlyphProperty =
              AvaloniaProperty.Register<SymbolIcon, string>(nameof(Glyph));
         public string Glyph
         {
@@ -23,17 +23,17 @@ namespace Avalonia.Extensions.Controls
         }
         public class FontIconSource : IconSource
         {
-            public static readonly StyledProperty<string> GlyphProperty =
+            protected static readonly StyledProperty<string> GlyphProperty =
                 SymbolIcon.GlyphProperty.AddOwner<FontIconSource>();
             /// <summary>
             /// Defines the <see cref="FontFamily"/> property.
             /// </summary>
-            internal static readonly StyledProperty<FontFamily> FontFamilyProperty =
+            protected static readonly StyledProperty<FontFamily> FontFamilyProperty =
                 TextBlock.FontFamilyProperty.AddOwner<FontIconSource>();
             /// <summary>
             /// Defines the <see cref="FontSize"/> property.
             /// </summary>
-            public static readonly StyledProperty<double> FontSizeProperty =
+            protected static readonly StyledProperty<double> FontSizeProperty =
                 TextBlock.FontSizeProperty.AddOwner<FontIconSource>();
             /// <summary>
             /// Defines the <see cref="FontStyle"/> property.
@@ -43,7 +43,7 @@ namespace Avalonia.Extensions.Controls
             /// <summary>
             /// Defines the <see cref="FontWeight"/> property.
             /// </summary>
-            public static readonly StyledProperty<FontWeight> FontWeightProperty =
+            protected static readonly StyledProperty<FontWeight> FontWeightProperty =
                 TextBlock.FontWeightProperty.AddOwner<FontIconSource>();
             public string Glyph
             {

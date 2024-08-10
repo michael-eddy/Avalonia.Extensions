@@ -1,16 +1,14 @@
 ﻿using Avalonia.Controls;
 using Avalonia.Layout;
-using Avalonia.Extensions.Styles;
 using Avalonia.Media;
-using Avalonia.Styling;
 using System;
 
 namespace Avalonia.Extensions.Controls
 {
-    public class HyperlinkButton : Button, IStyling
+    public class HyperlinkButton : Button
     {
         private TextBlock TextContent { get; set; }
-        Type IStyleable.StyleKey => typeof(Button);
+        protected override Type StyleKeyOverride => typeof(Button);
         public HyperlinkButton() : base()
         {
             SetValue(ForegroundProperty, new SolidColorBrush(Colors.Blue));

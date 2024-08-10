@@ -1,10 +1,8 @@
 ﻿using Avalonia.Controls;
 using Avalonia.Extensions.Event;
-using Avalonia.Extensions.Styles;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Layout;
-using Avalonia.Styling;
 using Avalonia.Threading;
 using PCLUntils.Assemblly;
 using System;
@@ -15,10 +13,10 @@ namespace Avalonia.Extensions.Controls
     /// <summary>
     /// the itemsrepeater layout <seealso cref="this.Orientation"/> as <seealso cref="Orientation.Vertical"/>
     /// </summary>
-    public class VerticalItemsRepeater : ItemsRepeater, IStyling
+    public class VerticalItemsRepeater : ItemsRepeater
     {
         private ICommand _command;
-        Type IStyleable.StyleKey => typeof(ItemsRepeater);
+        protected override Type StyleKeyOverride => typeof(ItemsRepeater);
         /// <summary>
         /// create an instance
         /// </summary>

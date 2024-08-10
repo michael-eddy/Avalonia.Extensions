@@ -6,7 +6,7 @@ namespace Avalonia.Extensions.Controls
 {
     public class ImageIcon : IconElement
     {
-        public static readonly StyledProperty<IImage> SourceProperty = Image.SourceProperty.AddOwner<ImageIcon>();
+        protected static readonly StyledProperty<IImage> SourceProperty = Image.SourceProperty.AddOwner<ImageIcon>();
         public IImage Source
         {
             get => GetValue(SourceProperty);
@@ -23,7 +23,7 @@ namespace Avalonia.Extensions.Controls
     public class ImageIconSource : IconSource
     {
         /// <inheritdoc cref="Image.SourceProperty" />
-        public static readonly StyledProperty<IImage> SourceProperty = Image.SourceProperty.AddOwner<ImageIcon>();
+        protected static readonly StyledProperty<IImage> SourceProperty = Image.SourceProperty.AddOwner<ImageIcon>();
         /// <inheritdoc cref="Image.Source" />
         public IImage Source
         {

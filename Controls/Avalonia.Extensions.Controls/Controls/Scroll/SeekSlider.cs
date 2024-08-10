@@ -1,15 +1,13 @@
 ﻿using Avalonia.Controls;
 using Avalonia.Extensions.Event;
-using Avalonia.Extensions.Styles;
 using Avalonia.Interactivity;
-using Avalonia.Styling;
 using System;
 
 namespace Avalonia.Extensions.Controls
 {
-    public class SeekSlider : Slider, IStyling
+    public class SeekSlider : Slider
     {
-        Type IStyleable.StyleKey => typeof(Slider);
+        protected override Type StyleKeyOverride => typeof(Slider);
         static SeekSlider()
         {
             ValueProperty.Changed.AddClassHandler<SeekSlider>(OnValueChange);

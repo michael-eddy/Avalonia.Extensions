@@ -1,6 +1,10 @@
-﻿using Avalonia.Controls;
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics.Contracts;
+using System.Linq;
+using System.Text;
+using Avalonia.Controls;
 using Avalonia.Extensions.Model;
-using Avalonia.Extensions.Styles;
 using Avalonia.Logging;
 using Avalonia.Markup.Xaml;
 using Avalonia.Media;
@@ -12,11 +16,6 @@ using PCLUntils.Assemblly;
 using PCLUntils.IEnumerables;
 using PCLUntils.Plantform;
 using SkiaSharp;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics.Contracts;
-using System.Linq;
-using System.Text;
 
 namespace Avalonia.Extensions.Controls
 {
@@ -80,7 +79,7 @@ namespace Avalonia.Extensions.Controls
                 var bytes = new byte[stream.Length];
                 stream.Read(bytes);
                 var xaml = Encoding.UTF8.GetString(bytes);
-                var styles = AvaloniaRuntimeXamlLoader.Parse<Styling.Styles>(xaml);
+                var styles = AvaloniaRuntimeXamlLoader.Parse<Styles>(xaml);
                 element.UpdateStyles(styles);
                 bytes = null;
             }
@@ -89,7 +88,7 @@ namespace Avalonia.Extensions.Controls
                 Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(element, ex.Message);
             }
         }
-        internal static void UpdateStyles(this StyledElement element, Styling.Styles styles)
+        internal static void UpdateStyles(this StyledElement element, Styles styles)
         {
             if (styles != null && element != null)
             {
@@ -142,9 +141,32 @@ namespace Avalonia.Extensions.Controls
                 }
             }
         }
-        public static void AddStyles(this IStyling styling, AvaloniaProperty avaloniaProperty) => styling.AddStyles(avaloniaProperty);
-        public static void AddStyles(this IStyling styling, AvaloniaProperty avaloniaProperty, params object[] parms) => styling.AddStyles(avaloniaProperty, parms);
-        public static void AddResource(this IStyling styling) => styling.AddResource();
+        internal static void AddStyles(this StyledElement styling, AvaloniaProperty avaloniaProperty, params object[] parms)
+        {
+            try
+            {
+                if (styling is Control control)
+                {
+                    string typeName = control.GetType().Name;
+                    var sourceUri = new Uri($"avares://Avalonia.Extensions.Controls/Styles/Xaml/{typeName}.xml");
+                    if (!control.Resources.ContainsKey(typeName) && Core.Instance.InnerClasses.Contains(sourceUri))
+                    {
+                        using var stream = AssetLoader.Open(sourceUri);
+                        var bytes = new byte[stream.Length];
+                        stream.Read(bytes, 0, bytes.Length);
+                        string xaml = parms != null && parms.Length > 0 ? string.Format(Encoding.UTF8.GetString(bytes), parms)
+                            : Encoding.UTF8.GetString(bytes);
+                        var target = AvaloniaRuntimeXamlLoader.Parse(xaml);
+                        control.SetValue(avaloniaProperty, target);
+                        bytes = null;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.TryGet(LogEventLevel.Error, LogArea.Control)?.Log(styling, ex.Message);
+            }
+        }
         public static Window GetWindow(this Control control, out bool hasBase)
         {
             hasBase = false;

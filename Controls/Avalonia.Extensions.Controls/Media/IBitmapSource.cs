@@ -3,14 +3,13 @@ using Avalonia.Interactivity;
 using Avalonia.Logging;
 using Avalonia.Media;
 using Avalonia.Media.Imaging;
-using Avalonia.Styling;
 using PCLUntils.Objects;
 using System;
 using System.IO;
 
 namespace Avalonia.Extensions.Media
 {
-    public interface IBitmapSource : IStyleable
+    public interface IBitmapSource
     {
         Uri Source { get; set; }
         Bitmap Bitmap { get; set; }
