@@ -11,15 +11,15 @@
     <None Remove="Dove.Avalonia.desktop" />
   </ItemGroup>
   <ItemGroup>
-	  <PackageReference Include="Packaging.Targets" Version="0.1.220">
+	  <PackageReference Include="Packaging.Targets" Version="0.1.226">
 		  <PrivateAssets>all</PrivateAssets>
 		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 	  </PackageReference>
-    <PackageReference Include="Avalonia" Version="11.1.1" />
-	<PackageReference Include="Avalonia.Desktop" Version="11.1.1" />
-	<PackageReference Include="Avalonia.Diagnostics" Version="11.1.1" />
-	<PackageReference Include="Avalonia.Themes.Fluent" Version="11.1.1" />
-	<PackageReference Include="Avalonia.Themes.Simple" Version="11.1.1" />
+    <PackageReference Include="Avalonia" Version="11.1.2" />
+	<PackageReference Include="Avalonia.Desktop" Version="11.1.2" />
+	<PackageReference Include="Avalonia.Diagnostics" Version="11.1.2" />
+	<PackageReference Include="Avalonia.Themes.Fluent" Version="11.1.2" />
+	<PackageReference Include="Avalonia.Themes.Simple" Version="11.1.2" />
   </ItemGroup>
   <ItemGroup>
 	  <None Include="..\..\.editorconfig" Link=".editorconfig" />
